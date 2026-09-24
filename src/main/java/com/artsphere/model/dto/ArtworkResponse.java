@@ -1,9 +1,11 @@
-package com.artsphere.model;
+package com.artsphere.model.dto;
+
+import com.artsphere.model.Artwork;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class Artwork {
+public class ArtworkResponse {
 
     private Long id;
     private String title;
@@ -18,20 +20,12 @@ public class Artwork {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Artwork() {
+    public ArtworkResponse() {
     }
 
-    public Artwork(String title, String description, String category, String imageUrl, BigDecimal price, boolean forSale, Long artistId) {
-        this.title = title;
-        this.description = description;
-        this.category = category;
-        this.imageUrl = imageUrl;
-        this.price = price;
-        this.forSale = forSale;
-        this.artistId = artistId;
-    }
-
-    public Artwork(Long id, String title, String description, String category, String imageUrl, BigDecimal price, boolean forSale, Long artistId, String artistName, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public ArtworkResponse(Long id, String title, String description, String category, String imageUrl,
+                           BigDecimal price, boolean forSale, Long artistId, String artistName,
+                           String artistUsername, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -41,8 +35,29 @@ public class Artwork {
         this.forSale = forSale;
         this.artistId = artistId;
         this.artistName = artistName;
+        this.artistUsername = artistUsername;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public static ArtworkResponse fromArtwork(Artwork artwork) {
+        if (artwork == null) {
+            return null;
+        }
+        return new ArtworkResponse(
+                artwork.getId(),
+                artwork.getTitle(),
+                artwork.getDescription(),
+                artwork.getCategory(),
+                artwork.getImageUrl(),
+                artwork.getPrice(),
+                artwork.isForSale(),
+                artwork.getArtistId(),
+                artwork.getArtistName(),
+                artwork.getArtistUsername(),
+                artwork.getCreatedAt(),
+                artwork.getUpdatedAt()
+        );
     }
 
     public Long getId() {
@@ -139,17 +154,5 @@ public class Artwork {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "Artwork{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                ", forSale=" + forSale +
-                ", artistId=" + artistId +
-                '}';
     }
 }

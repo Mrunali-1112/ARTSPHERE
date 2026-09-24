@@ -46,6 +46,7 @@ public class SecurityConfig {
                     "/js/**",
                     "/images/**",
                     "/pages/**",
+                    "/uploads/**",
                     "/api/auth/**"
                 ).permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/artworks/**").permitAll()
