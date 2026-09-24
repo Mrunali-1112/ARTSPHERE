@@ -1,0 +1,102 @@
+/* ArtSphere Login Page Styles - Exact Match to Approved UI (page_02.jpg) */
+
+.login-screen {
+    padding: 0 0 30px;
+    background: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+/* Background Decorative Corner Art */
+.decor-top-wave {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.decor-bottom-jar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 130px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.decor-bottom-palette {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 170px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Form Container */
+.login-form-container {
+    padding: 0 32px 40px;
+    position: relative;
+    z-index: 5;
+    max-width: 440px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.form-options-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+    font-size: 13.5px;
+}
+
+.remember-me-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-heading);
+}
+
+.remember-me-checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary-purple);
+    cursor: pointer;
+}
+
+.forgot-password-link {
+    color: var(--primary-purple);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline;
+}
+
+.login-footer-text {
+    text-align: center;
+    margin-top: 26px;
+    font-size: 14px;
+    color: var(--text-body);
+}
+
+.login-footer-text a {
+    color: var(--primary-magenta);
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.login-footer-text a:hover {
+    text-decoration: underline;
+}

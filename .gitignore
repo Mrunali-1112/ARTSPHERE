@@ -47,4 +47,8 @@ bin/
 # Uploads
 uploads/
 
+# Reference materials
+design_reference/
+
+
 
