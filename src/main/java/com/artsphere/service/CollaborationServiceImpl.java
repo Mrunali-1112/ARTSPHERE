@@ -3,7 +3,6 @@ package com.artsphere.service;
 import com.artsphere.exception.ResourceNotFoundException;
 import com.artsphere.model.Collaboration;
 import com.artsphere.model.CollaborationRequest;
-import com.artsphere.model.User;
 import com.artsphere.model.dto.*;
 import com.artsphere.repository.CollaborationRepository;
 import com.artsphere.repository.UserRepository;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -81,7 +79,7 @@ public class CollaborationServiceImpl implements CollaborationService {
 
     @Override
     public boolean updateCollaborationStatus(Long id, String status, Long currentUserId) {
-        Collaboration c = collaborationRepository.findById(id)
+        collaborationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Collaboration not found with id: " + id));
         return collaborationRepository.updateStatus(id, status);
     }
@@ -137,7 +135,7 @@ public class CollaborationServiceImpl implements CollaborationService {
 
     @Override
     public boolean respondToRequest(Long requestId, String status, Long currentUserId) {
-        CollaborationRequest req = collaborationRepository.findRequestById(requestId)
+        collaborationRepository.findRequestById(requestId)
                 .orElseThrow(() -> new ResourceNotFoundException("Request not found with id: " + requestId));
         String newStatus = "APPROVED".equalsIgnoreCase(status) ? "APPROVED" : "REJECTED";
         return collaborationRepository.updateRequestStatus(requestId, newStatus);

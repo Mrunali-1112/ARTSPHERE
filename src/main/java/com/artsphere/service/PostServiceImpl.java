@@ -3,7 +3,6 @@ package com.artsphere.service;
 import com.artsphere.exception.ResourceNotFoundException;
 import com.artsphere.model.Post;
 import com.artsphere.model.PostComment;
-import com.artsphere.model.User;
 import com.artsphere.model.dto.*;
 import com.artsphere.repository.PostRepository;
 import com.artsphere.repository.UserRepository;

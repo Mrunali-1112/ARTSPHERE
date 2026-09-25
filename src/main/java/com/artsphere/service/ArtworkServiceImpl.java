@@ -159,7 +159,7 @@ public class ArtworkServiceImpl implements ArtworkService {
     @Override
     @Transactional
     public void deletePortfolioItem(Long id, String currentUsername) {
-        Artwork existing = getArtworkById(id);
+        getArtworkById(id);
         artworkRepository.deleteById(id);
     }
 
