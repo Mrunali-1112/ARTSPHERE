@@ -55,7 +55,8 @@ public class SecurityConfig {
                     "/api/posts/**",
                     "/api/collaborations/**",
                     "/api/collaboration-requests/**",
-                    "/api/communities/**"
+                    "/api/communities/**",
+                    "/api/events/**"
                 ).permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/artworks/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/home/**").permitAll()

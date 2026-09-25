@@ -1,8 +1,8 @@
-package com.artsphere.model;
+package com.artsphere.model.dto;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
-public class Event {
+public class EventResponse {
 
     private Long id;
     private String title;
@@ -20,26 +20,11 @@ public class Event {
     private String eventType;
     private Integer attendeesCount;
     private String artForm;
-    private String whatYoullLearn;
-    private String whoCanJoin;
-    private String thingsToBring;
-    private String guidelines;
-    private String quote;
     private Boolean isFeatured;
-    private LocalDateTime createdAt;
+    private boolean registered;
+    private List<String> attendeeAvatars;
 
-    public Event() {
-    }
-
-    public Event(Long id, String title, String organizer, String location, String eventDate, String eventTime, String imageUrl, String description) {
-        this.id = id;
-        this.title = title;
-        this.organizer = organizer;
-        this.location = location;
-        this.eventDate = eventDate;
-        this.eventTime = eventTime;
-        this.imageUrl = imageUrl;
-        this.description = description;
+    public EventResponse() {
     }
 
     public Long getId() {
@@ -170,46 +155,6 @@ public class Event {
         this.artForm = artForm;
     }
 
-    public String getWhatYoullLearn() {
-        return whatYoullLearn;
-    }
-
-    public void setWhatYoullLearn(String whatYoullLearn) {
-        this.whatYoullLearn = whatYoullLearn;
-    }
-
-    public String getWhoCanJoin() {
-        return whoCanJoin;
-    }
-
-    public void setWhoCanJoin(String whoCanJoin) {
-        this.whoCanJoin = whoCanJoin;
-    }
-
-    public String getThingsToBring() {
-        return thingsToBring;
-    }
-
-    public void setThingsToBring(String thingsToBring) {
-        this.thingsToBring = thingsToBring;
-    }
-
-    public String getGuidelines() {
-        return guidelines;
-    }
-
-    public void setGuidelines(String guidelines) {
-        this.guidelines = guidelines;
-    }
-
-    public String getQuote() {
-        return quote;
-    }
-
-    public void setQuote(String quote) {
-        this.quote = quote;
-    }
-
     public Boolean getIsFeatured() {
         return isFeatured;
     }
@@ -218,11 +163,19 @@ public class Event {
         this.isFeatured = isFeatured;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public boolean isRegistered() {
+        return registered;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setRegistered(boolean registered) {
+        this.registered = registered;
+    }
+
+    public List<String> getAttendeeAvatars() {
+        return attendeeAvatars;
+    }
+
+    public void setAttendeeAvatars(List<String> attendeeAvatars) {
+        this.attendeeAvatars = attendeeAvatars;
     }
 }
