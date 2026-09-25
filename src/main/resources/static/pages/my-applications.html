@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications – ArtSphere</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/my-applications.css">
+</head>
+<body>
+    <div class="app-layout">
+        <div class="my-apps-screen">
+
+            <!-- 1. Top App Header -->
+            <header class="app-top-header">
+                <div class="header-left">
+                    <button class="btn-icon-nav" id="btnBack" aria-label="Go Back">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <a href="/pages/home.html" class="header-logo-wrap" aria-label="ArtSphere Home">
+                        <img src="/images/logo_header.png" alt="ArtSphere" class="header-logo-img">
+                    </a>
+                </div>
+                <div class="header-right">
+                    <button class="btn-icon-nav header-bell-btn" id="headerBellBtn" aria-label="Notifications" onclick="alert('No new notifications')">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-badge-dot"></span>
+                    </button>
+                    <a href="/pages/artist-profile.html?id=101" class="header-avatar-link" aria-label="View Profile">
+                        <img src="/images/user_avatar_nav.png" alt="User Profile" class="header-avatar-img" id="userHeaderAvatar">
+                    </a>
+                </div>
+            </header>
+
+            <!-- 2. Hero Title & Artistic Quote Sticker -->
+            <section class="hero-section">
+                <div class="hero-content-row">
+                    <div class="hero-text-col">
+                        <h1 class="page-title">My Applications</h1>
+                        <p class="page-subtitle">Track the events, collaborations and opportunities you've applied for.</p>
+                    </div>
+                    <div class="hero-sticker-col">
+                        <div class="watercolor-quote-sticker">
+                            <div class="sticker-content">
+                                <span class="sticker-line">Small</span>
+                                <span class="sticker-line">steps</span>
+                                <span class="sticker-line">lead to</span>
+                                <span class="sticker-line highlight">big opportunities</span>
+                                <span class="sticker-heart">&#9825;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Primary Category Tabs (Events, Collaborations, Opportunities, All) -->
+                <div class="category-tabs-container">
+                    <div class="segmented-category-bar" role="tablist" aria-label="Application Categories">
+                        <button class="category-tab active" data-category="ALL" role="tab" aria-selected="true">
+                            <span>All</span>
+                        </button>
+                        <button class="category-tab" data-category="EVENTS" role="tab" aria-selected="false">
+                            <span>Events</span>
+                        </button>
+                        <button class="category-tab" data-category="COLLABORATIONS" role="tab" aria-selected="false">
+                            <span>Collaborations</span>
+                        </button>
+                        <button class="category-tab" data-category="OPPORTUNITIES" role="tab" aria-selected="false">
+                            <span>Opportunities</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 4. Secondary Status Filter Pills Bar -->
+                <div class="status-filters-container">
+                    <div class="status-filter-scroll" id="statusFilterBar" role="tablist" aria-label="Status Filters">
+                        <button class="status-pill active" data-status="ALL">
+                            <span class="pill-label">All</span>
+                            <span class="pill-count" id="countAll">(0)</span>
+                        </button>
+                        <button class="status-pill" data-status="UPCOMING">
+                            <span class="pill-label">Upcoming</span>
+                            <span class="pill-count" id="countUpcoming">(0)</span>
+                        </button>
+                        <button class="status-pill" data-status="ACCEPTED">
+                            <span class="pill-label">Accepted</span>
+                            <span class="pill-count" id="countAccepted">(0)</span>
+                        </button>
+                        <button class="status-pill" data-status="PENDING">
+                            <span class="pill-label">Pending</span>
+                            <span class="pill-count" id="countPending">(0)</span>
+                        </button>
+                        <button class="status-pill" data-status="REJECTED">
+                            <span class="pill-label">Rejected</span>
+                            <span class="pill-count" id="countRejected">(0)</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. Applications List Container -->
+            <main class="applications-main">
+                <!-- Loading State -->
+                <div class="loading-state" id="loadingState">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Loading your applications...</p>
+                </div>
+
+                <!-- Applications Cards Feed -->
+                <div class="applications-feed" id="applicationsList">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state-card" id="emptyState" style="display: none;">
+                    <div class="empty-icon-circle">
+                        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#6C5CE7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="9" y1="13" x2="15" y2="13"></line>
+                            <line x1="9" y1="17" x2="13" y2="17"></line>
+                        </svg>
+                    </div>
+                    <h3 class="empty-title" id="emptyTitle">No applications found</h3>
+                    <p class="empty-desc" id="emptyDesc">You haven't submitted any applications under this category yet.</p>
+                    <a href="/pages/discover.html" class="btn-empty-action" id="emptyActionBtn">
+                        <span>Explore Creative Works</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </main>
+
+            <!-- 6. Sticky Bottom Navigation Bar -->
+            <nav class="bottom-nav" aria-label="Bottom Navigation">
+                <a href="/pages/home.html" class="bottom-nav-item" aria-label="Home">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span class="nav-text">Home</span>
+                </a>
+
+                <a href="/pages/discover.html" class="bottom-nav-item" aria-label="Discover">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                    </svg>
+                    <span class="nav-text">Discover</span>
+                </a>
+
+                <div class="bottom-nav-center">
+                    <a href="/pages/create-post.html" class="fab-center-btn" aria-label="Create Post">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </a>
+                </div>
+
+                <a href="/pages/collaboration-requests.html" class="bottom-nav-item" aria-label="Messages">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    <span class="nav-text">Messages</span>
+                </a>
+
+                <a href="/pages/artist-profile.html?id=101" class="bottom-nav-item" aria-label="Profile">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span class="nav-text">Profile</span>
+                </a>
+            </nav>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/api.js"></script>
+    <script src="/js/my-applications.js"></script>
+</body>
+</html>

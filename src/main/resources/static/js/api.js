@@ -593,6 +593,31 @@ const api = {
             throw new Error(result.message || 'Failed to fetch registration status');
         }
         return result.data;
+    },
+
+    // --- Module 10: My Applications ---
+    async getMyApplications(userId, category, status) {
+        const params = new URLSearchParams();
+        if (userId) params.append('userId', userId);
+        if (category && category !== 'ALL') params.append('category', category);
+        if (status && status !== 'ALL') params.append('status', status);
+        const query = params.toString() ? `?${params.toString()}` : '';
+        const response = await fetch(`${API_BASE}/my-applications${query}`);
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to fetch applications');
+        }
+        return result.data;
+    },
+
+    async getMyApplicationsSummary(userId) {
+        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
+        const response = await fetch(`${API_BASE}/my-applications/summary${query}`);
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to fetch applications summary');
+        }
+        return result.data;
     }
 };
 
