@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaboration Details – ArtSphere</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/collaboration-details.css">
+</head>
+<body>
+    <div class="app-layout">
+        <main class="screen-container collab-details-screen">
+
+            <!-- Top Header Navbar -->
+            <header class="details-top-header">
+                <a href="/pages/collaborators.html" class="back-link" aria-label="Back to Collaborations">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </a>
+                <h1 class="header-screen-title" id="pageHeaderTitle">Collaboration Details</h1>
+                <button class="header-action-icon-btn" id="shareCollabBtn" aria-label="Share Collaboration">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    </svg>
+                </button>
+            </header>
+
+            <!-- Loading Spinner Container -->
+            <div id="loadingContainer" class="loading-state">
+                <div class="spinner"></div>
+                <p>Loading collaboration details...</p>
+            </div>
+
+            <!-- Main Content Container (Hidden until loaded) -->
+            <div id="detailsContent" style="display: none;">
+
+                <!-- Own Post Notice Banner (Shown only if ownPost === true) -->
+                <div id="ownPostBanner" class="own-post-banner" style="display: none;">
+                    <div class="banner-tag">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>Your Collaboration Post</span>
+                    </div>
+                    <span class="requests-summary-badge" id="ownRequestsCount">3 Requests Received</span>
+                </div>
+
+                <!-- Creator Profile Card -->
+                <section class="creator-card" aria-label="Creator Information">
+                    <a href="#" id="creatorProfileLink" class="creator-card-link">
+                        <img src="/images/avatar_creator_mrunali.png" alt="Creator Avatar" id="creatorAvatar" class="creator-avatar-large">
+                        <div class="creator-details">
+                            <div class="creator-name-row">
+                                <h2 class="creator-name" id="creatorName">Mrunali S.</h2>
+                                <span class="creator-badge">Creator</span>
+                            </div>
+                            <div class="creator-role" id="creatorRole">Digital Artist & Animator</div>
+                            <div class="creator-location" id="creatorLocation">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                <span id="creatorLocationText">Mumbai, Maharashtra</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" id="viewProfileBtn" class="btn-view-profile">View Profile</a>
+                </section>
+
+                <!-- Post Header: Status, Title, Timestamp -->
+                <section class="post-header-section">
+                    <div class="status-time-row">
+                        <span class="badge-status-open" id="collabStatusBadge">OPEN</span>
+                        <span class="post-time-ago" id="collabTimeAgo">Posted 2 hours ago</span>
+                    </div>
+                    <h1 class="collab-details-title" id="collabTitle">Looking for a Digital Artist for a Short Film Project</h1>
+                </section>
+
+                <!-- Project Overview Quick Facts -->
+                <section class="overview-grid" aria-label="Collaboration Overview">
+                    <div class="overview-item">
+                        <span class="overview-label">Purpose</span>
+                        <span class="overview-value" id="overviewPurpose">Work on a Project</span>
+                    </div>
+                    <div class="overview-item">
+                        <span class="overview-label">Type</span>
+                        <span class="overview-value" id="overviewType">Short Film</span>
+                    </div>
+                    <div class="overview-item">
+                        <span class="overview-label">Availability</span>
+                        <span class="overview-value" id="overviewAvailability">Flexible</span>
+                    </div>
+                    <div class="overview-item">
+                        <span class="overview-label">People Needed</span>
+                        <span class="overview-value" id="overviewPeopleNeeded">1-2 collaborators</span>
+                    </div>
+                    <div class="overview-item full-width">
+                        <span class="overview-label">Location / Mode</span>
+                        <span class="overview-value" id="overviewLocation">Mumbai, MH (Hybrid / Remote friendly)</span>
+                    </div>
+                </section>
+
+                <!-- Project Description -->
+                <section class="content-block">
+                    <h3 class="block-heading">About the Project</h3>
+                    <p class="block-text" id="collabDescription">
+                        I'm working on a short film and looking for a digital artist to collaborate on concept art, character design and backgrounds. Excited to work with creative minds!
+                    </p>
+                </section>
+
+                <!-- Skills Looking For -->
+                <section class="content-block">
+                    <h3 class="block-heading">Skills Needed</h3>
+                    <div class="pills-wrap" id="skillsPillsWrap">
+                        <!-- Populated dynamically -->
+                    </div>
+                </section>
+
+                <!-- Tags -->
+                <section class="content-block">
+                    <h3 class="block-heading">Tags</h3>
+                    <div class="tags-wrap" id="tagsWrap">
+                        <!-- Populated dynamically -->
+                    </div>
+                </section>
+
+                <!-- Reference / Moodboard Link -->
+                <section class="content-block" id="referenceUrlBlock" style="display: none;">
+                    <h3 class="block-heading">Reference / Moodboard</h3>
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="reference-link" id="referenceUrlLink">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                        </svg>
+                        <span id="referenceUrlText">View Reference Materials</span>
+                    </a>
+                </section>
+
+                <!-- Fixed Action Bar at Bottom -->
+                <div class="details-bottom-bar" id="bottomActionBar">
+                    <!-- Dynamic button depending on ownPost vs other artist post -->
+                </div>
+
+            </div>
+
+            <!-- Request Modal (for applying/connecting) -->
+            <div class="modal-backdrop" id="requestModal" style="display: none;">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Send Collaboration Request</h3>
+                        <button class="modal-close-btn" id="closeModalBtn" aria-label="Close Modal">&times;</button>
+                    </div>
+                    <form id="detailsCollabRequestForm" class="modal-body">
+                        <div class="modal-target-info" id="modalCollabTargetInfo">
+                            <!-- Populated with title and creator -->
+                        </div>
+                        <div class="form-group">
+                            <label for="detailsRequestMessage" class="form-label">Your Pitch / Introduction</label>
+                            <textarea id="detailsRequestMessage" class="form-textarea" rows="4" required placeholder="Introduce yourself, mention what role you'd like to take on, and link your best relevant artworks..."></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="cancelModalBtn">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="submitRequestBtn">Send Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Toast -->
+            <div id="toastNotification" class="toast-notification" style="display: none;"></div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/api.js"></script>
+    <script src="/js/collaboration-details.js"></script>
+</body>
+</html>

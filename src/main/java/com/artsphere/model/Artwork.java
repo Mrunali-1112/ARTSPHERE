@@ -15,6 +15,8 @@ public class Artwork {
     private Long artistId;
     private String artistName;
     private String artistUsername;
+    private Integer likesCount = 0;
+    private Integer commentsCount = 0;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -123,6 +125,22 @@ public class Artwork {
 
     public void setArtistUsername(String artistUsername) {
         this.artistUsername = artistUsername;
+    }
+
+    public Integer getLikesCount() {
+        return likesCount != null ? likesCount : 0;
+    }
+
+    public void setLikesCount(Integer likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public Integer getCommentsCount() {
+        return commentsCount != null ? commentsCount : 0;
+    }
+
+    public void setCommentsCount(Integer commentsCount) {
+        this.commentsCount = commentsCount;
     }
 
     public LocalDateTime getCreatedAt() {

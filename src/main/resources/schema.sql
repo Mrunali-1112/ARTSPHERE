@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     bio TEXT,
     profile_picture VARCHAR(255),
     role VARCHAR(20) NOT NULL DEFAULT 'ROLE_USER',
+    location VARCHAR(100) DEFAULT 'Mumbai, MH',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -26,3 +27,35 @@ CREATE TABLE IF NOT EXISTS artworks (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     CONSTRAINT fk_artworks_artist FOREIGN KEY (artist_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS events (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(150) NOT NULL,
+    organizer VARCHAR(100),
+    location VARCHAR(150) NOT NULL,
+    event_date VARCHAR(50) NOT NULL,
+    event_time VARCHAR(50) NOT NULL,
+    image_url VARCHAR(255),
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS communities (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    description TEXT,
+    member_count INT DEFAULT 0,
+    category VARCHAR(50),
+    image_url VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS artist_connections (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    artist_id BIGINT NOT NULL,
+    status VARCHAR(20) DEFAULT 'CONNECTED',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY uq_user_artist (user_id, artist_id)
+);
+

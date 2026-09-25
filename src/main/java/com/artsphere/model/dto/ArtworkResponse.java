@@ -17,6 +17,8 @@ public class ArtworkResponse {
     private Long artistId;
     private String artistName;
     private String artistUsername;
+    private Integer likesCount = 0;
+    private Integer commentsCount = 0;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -25,7 +27,8 @@ public class ArtworkResponse {
 
     public ArtworkResponse(Long id, String title, String description, String category, String imageUrl,
                            BigDecimal price, boolean forSale, Long artistId, String artistName,
-                           String artistUsername, LocalDateTime createdAt, LocalDateTime updatedAt) {
+                           String artistUsername, Integer likesCount, Integer commentsCount,
+                           LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -36,6 +39,8 @@ public class ArtworkResponse {
         this.artistId = artistId;
         this.artistName = artistName;
         this.artistUsername = artistUsername;
+        this.likesCount = likesCount != null ? likesCount : 0;
+        this.commentsCount = commentsCount != null ? commentsCount : 0;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -55,6 +60,8 @@ public class ArtworkResponse {
                 artwork.getArtistId(),
                 artwork.getArtistName(),
                 artwork.getArtistUsername(),
+                artwork.getLikesCount(),
+                artwork.getCommentsCount(),
                 artwork.getCreatedAt(),
                 artwork.getUpdatedAt()
         );
@@ -138,6 +145,22 @@ public class ArtworkResponse {
 
     public void setArtistUsername(String artistUsername) {
         this.artistUsername = artistUsername;
+    }
+
+    public Integer getLikesCount() {
+        return likesCount != null ? likesCount : 0;
+    }
+
+    public void setLikesCount(Integer likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public Integer getCommentsCount() {
+        return commentsCount != null ? commentsCount : 0;
+    }
+
+    public void setCommentsCount(Integer commentsCount) {
+        this.commentsCount = commentsCount;
     }
 
     public LocalDateTime getCreatedAt() {

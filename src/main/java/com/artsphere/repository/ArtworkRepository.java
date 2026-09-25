@@ -15,6 +15,8 @@ public interface ArtworkRepository {
 
     List<Artwork> findByArtistId(Long artistId);
 
+    List<Artwork> findByArtistIdAndCategory(Long artistId, String category);
+
     int update(Artwork artwork);
 
     int deleteById(Long id);

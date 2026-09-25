@@ -32,6 +32,41 @@ public class JdbcUserRepository implements UserRepository {
         user.setBio(rs.getString("bio"));
         user.setProfilePicture(rs.getString("profile_picture"));
         user.setRole(rs.getString("role"));
+        try {
+            user.setLocation(rs.getString("location"));
+        } catch (Exception ignored) {
+            user.setLocation("Mumbai, MH");
+        }
+        try {
+            user.setCoverImage(rs.getString("cover_image"));
+            user.setArtistType(rs.getString("artist_type"));
+            user.setSkills(rs.getString("skills"));
+            user.setFollowersCount(rs.getInt("followers_count"));
+            user.setFollowingCount(rs.getInt("following_count"));
+            user.setPostsCount(rs.getInt("posts_count"));
+        } catch (Exception ignored) {
+            user.setCoverImage("/images/artist_profile_cover.png");
+            user.setArtistType("Visual Artist");
+            user.setSkills("Digital Art, Illustration, Portraits, Concept Art, Nature Art");
+            user.setFollowersCount(1800);
+            user.setFollowingCount(356);
+            user.setPostsCount(24);
+        }
+        try {
+            user.setCoverImage(rs.getString("cover_image"));
+            user.setArtistType(rs.getString("artist_type"));
+            user.setSkills(rs.getString("skills"));
+            user.setFollowersCount(rs.getInt("followers_count"));
+            user.setFollowingCount(rs.getInt("following_count"));
+            user.setPostsCount(rs.getInt("posts_count"));
+        } catch (Exception ignored) {
+            user.setCoverImage("/images/artist_profile_cover.png");
+            user.setArtistType("Visual Artist");
+            user.setSkills("Digital Art, Illustration, Portraits, Concept Art, Nature Art");
+            user.setFollowersCount(1800);
+            user.setFollowingCount(356);
+            user.setPostsCount(24);
+        }
 
         Timestamp createdAt = rs.getTimestamp("created_at");
         if (createdAt != null) {

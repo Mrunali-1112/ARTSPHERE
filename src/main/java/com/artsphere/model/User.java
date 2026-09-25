@@ -12,6 +12,13 @@ public class User {
     private String bio;
     private String profilePicture;
     private String role;
+    private String location;
+    private String coverImage;
+    private String artistType;
+    private String skills;
+    private Integer followersCount;
+    private Integer followingCount;
+    private Integer postsCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -101,6 +108,62 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
+    }
+
+    public String getArtistType() {
+        return artistType;
+    }
+
+    public void setArtistType(String artistType) {
+        this.artistType = artistType;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
+    public Integer getFollowersCount() {
+        return followersCount;
+    }
+
+    public void setFollowersCount(Integer followersCount) {
+        this.followersCount = followersCount;
+    }
+
+    public Integer getFollowingCount() {
+        return followingCount;
+    }
+
+    public void setFollowingCount(Integer followingCount) {
+        this.followingCount = followingCount;
+    }
+
+    public Integer getPostsCount() {
+        return postsCount;
+    }
+
+    public void setPostsCount(Integer postsCount) {
+        this.postsCount = postsCount;
     }
 
     public LocalDateTime getCreatedAt() {

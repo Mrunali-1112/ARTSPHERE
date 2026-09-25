@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Collaboration Post – ArtSphere</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/create-collaboration.css">
+</head>
+<body>
+    <div class="app-layout">
+        <main class="screen-container create-collab-screen">
+
+            <!-- Top App Bar -->
+            <header class="create-top-header">
+                <a href="/pages/collaborators.html" class="back-link" aria-label="Back to Collaborations">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </a>
+                <h1 class="header-screen-title">Create Collaboration</h1>
+                <div class="header-ghost-spacer" style="width: 28px;"></div>
+            </header>
+
+            <!-- Form Container -->
+            <form id="createCollabForm" class="collab-form-container">
+
+                <div class="form-banner-tip">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C5CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <p>Share your vision and connect with passionate artists to collaborate on something extraordinary.</p>
+                </div>
+
+                <!-- Title -->
+                <div class="form-group">
+                    <label for="collabTitle" class="form-label required">Collaboration Title</label>
+                    <input type="text" id="collabTitle" class="form-input" required placeholder="e.g. Looking for a Digital Artist for a Short Film Project">
+                </div>
+
+                <!-- Purpose Chips -->
+                <div class="form-group">
+                    <label class="form-label required">Collaboration Purpose</label>
+                    <div class="purpose-chips-row" id="purposeChipsGroup">
+                        <button type="button" class="purpose-chip active" data-purpose="Work on a Project">Work on a Project</button>
+                        <button type="button" class="purpose-chip" data-purpose="Create Content">Create Content</button>
+                        <button type="button" class="purpose-chip" data-purpose="Learn & Jam">Learn & Jam</button>
+                        <button type="button" class="purpose-chip" data-purpose="Organize an Event">Organize an Event</button>
+                        <button type="button" class="purpose-chip" data-purpose="Other">Other</button>
+                    </div>
+                    <input type="hidden" id="selectedPurpose" value="Work on a Project">
+                </div>
+
+                <!-- Skills Looking For -->
+                <div class="form-group">
+                    <label for="collabSkills" class="form-label required">Skills You're Looking For</label>
+                    <input type="text" id="collabSkills" class="form-input" required placeholder="e.g. Character Design, Digital Painting, Storyboarding">
+                    <span class="field-hint">Comma separated skills or artistic disciplines</span>
+                </div>
+
+                <!-- 2-Column Row: Type & Availability -->
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label for="collabType" class="form-label">Collaboration Type</label>
+                        <input type="text" id="collabType" class="form-input" placeholder="e.g. Short Film, Music Video, Mural">
+                    </div>
+                    <div class="form-group">
+                        <label for="collabAvailability" class="form-label">Availability / Timeline</label>
+                        <input type="text" id="collabAvailability" class="form-input" placeholder="e.g. Flexible, Weekends, 1 Month">
+                    </div>
+                </div>
+
+                <!-- 2-Column Row: People Needed & Location -->
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label for="collabPeopleNeeded" class="form-label">People Needed</label>
+                        <input type="text" id="collabPeopleNeeded" class="form-input" placeholder="e.g. 1-2 collaborators">
+                    </div>
+                    <div class="form-group">
+                        <label for="collabLocation" class="form-label">Location</label>
+                        <input type="text" id="collabLocation" class="form-input" placeholder="e.g. Mumbai, MH or Remote">
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group">
+                    <label for="collabDescription" class="form-label required">Project Description</label>
+                    <textarea id="collabDescription" class="form-textarea" rows="5" required placeholder="Describe what you're working on, what kind of collaborator you need, and what you hope to create together..."></textarea>
+                </div>
+
+                <!-- Reference / Moodboard URL -->
+                <div class="form-group">
+                    <label for="collabRefUrl" class="form-label">Reference / Moodboard Link <span class="optional-label">(Optional)</span></label>
+                    <input type="url" id="collabRefUrl" class="form-input" placeholder="https://drive.google.com/... or portfolio link">
+                </div>
+
+                <!-- Tags -->
+                <div class="form-group">
+                    <label for="collabTags" class="form-label">Tags</label>
+                    <input type="text" id="collabTags" class="form-input" placeholder="#digitalart, #conceptart, #characterdesign, #shortfilm">
+                </div>
+
+                <!-- Submit / Cancel Buttons -->
+                <div class="form-actions-bar">
+                    <a href="/pages/collaborators.html" class="btn btn-cancel">Cancel</a>
+                    <button type="submit" class="btn btn-submit" id="submitCollabBtn">
+                        Post Collaboration
+                    </button>
+                </div>
+
+            </form>
+
+            <!-- Toast -->
+            <div id="toastNotification" class="toast-notification" style="display: none;"></div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/api.js"></script>
+    <script src="/js/create-collaboration.js"></script>
+</body>
+</html>

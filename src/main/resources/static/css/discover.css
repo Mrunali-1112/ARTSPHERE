@@ -1,0 +1,1013 @@
+/* ArtSphere – Discover Page Styling */
+/* Source of Truth: Approved page_10.jpg reference */
+
+.discover-screen {
+    position: relative;
+    background-color: #FAFAFD;
+    padding-bottom: 85px; /* Space for sticky bottom navigation */
+}
+
+/* ------------------------------------------------------------- */
+/* 1. Header Navbar */
+/* ------------------------------------------------------------- */
+.discover-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: #FFFFFF;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid rgba(232, 224, 240, 0.6);
+}
+
+.header-logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.header-logo-img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+.header-right-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-action-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 50%;
+    color: var(--text-heading);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.header-action-btn:hover {
+    background: #F3EDF8;
+    transform: scale(1.05);
+}
+
+.notification-wrapper {
+    position: relative;
+}
+
+.notification-badge-dot {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 9px;
+    height: 9px;
+    background-color: #E65C58;
+    border: 2px solid #FFFFFF;
+    border-radius: 50%;
+}
+
+.user-menu-wrapper {
+    position: relative;
+}
+
+.user-avatar-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 9999px;
+}
+
+.user-avatar-trigger:hover {
+    background: #F8F4FD;
+}
+
+.user-nav-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 2px 6px rgba(74, 29, 121, 0.12);
+}
+
+.chevron-arrow {
+    transition: transform 0.2s ease;
+}
+
+.user-avatar-trigger.open .chevron-arrow {
+    transform: rotate(180deg);
+}
+
+.user-dropdown-panel {
+    position: absolute;
+    top: 48px;
+    right: 0;
+    width: 210px;
+    background: #FFFFFF;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(74, 29, 121, 0.15);
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    display: none;
+    flex-direction: column;
+    z-index: 100;
+    animation: fadeInDown 0.2s ease forwards;
+}
+
+.user-dropdown-panel.show {
+    display: flex;
+}
+
+.dropdown-user-info {
+    padding: 6px 10px 10px;
+}
+
+.dropdown-user-info strong {
+    display: block;
+    font-size: 14px;
+    color: var(--text-heading);
+}
+
+.dropdown-user-info span {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 6px 0;
+}
+
+.dropdown-item-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    color: var(--text-heading);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.dropdown-item-link:hover {
+    background: #F8F3FF;
+    color: var(--primary-purple);
+}
+
+.dropdown-item-link.text-danger {
+    color: #DC2626;
+}
+
+.dropdown-item-link.text-danger:hover {
+    background: #FEF2F2;
+    color: #DC2626;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ------------------------------------------------------------- */
+/* 2. Scrollable Body & Common Section Styles */
+/* ------------------------------------------------------------- */
+.discover-scroll-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.discover-section {
+    padding: 0 20px;
+}
+
+.discover-section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.discover-section-heading {
+    font-family: var(--font-heading);
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--text-heading);
+    line-height: 1.2;
+}
+
+.gradient-text-artists {
+    background: linear-gradient(90deg, #91277A 0%, #D84F78 60%, #E65C58 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-style: italic;
+}
+
+.see-all-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary-purple);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.see-all-link:hover {
+    transform: translateX(2px);
+    opacity: 0.85;
+}
+
+/* ------------------------------------------------------------- */
+/* 3. Hero Section */
+/* ------------------------------------------------------------- */
+.discover-hero-section {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 20px 16px;
+    background: linear-gradient(135deg, #F8F3FF 0%, #FFF7FA 55%, #F4EEFF 100%);
+    border-bottom: 1px solid rgba(232, 224, 240, 0.5);
+    overflow: hidden;
+}
+
+.discover-hero-left {
+    flex: 1;
+    max-width: 58%;
+    z-index: 2;
+}
+
+.discover-heading {
+    font-family: var(--font-heading);
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--text-heading);
+    line-height: 1.18;
+    margin-bottom: 8px;
+}
+
+.discover-subtext {
+    font-size: 12.5px;
+    color: var(--text-body);
+    line-height: 1.45;
+    max-width: 250px;
+}
+
+.discover-hero-right {
+    flex: 1;
+    max-width: 44%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 1;
+}
+
+.discover-hero-brush-img {
+    width: 100%;
+    max-width: 210px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 16px rgba(74, 29, 121, 0.08));
+}
+
+/* ------------------------------------------------------------- */
+/* 4. Search Bar */
+/* ------------------------------------------------------------- */
+.discover-search-section {
+    padding: 0 20px;
+}
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    border: 1.5px solid var(--border-color);
+    border-radius: 16px;
+    padding: 0 14px;
+    height: 52px;
+    box-shadow: 0 4px 14px rgba(74, 29, 121, 0.04);
+    transition: all 0.2s ease;
+}
+
+.search-bar-container:focus-within {
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 0 4px rgba(123, 44, 191, 0.08);
+}
+
+.search-icon-svg {
+    color: var(--text-heading);
+    flex-shrink: 0;
+    margin-right: 10px;
+}
+
+.search-field-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 13.5px;
+    font-family: var(--font-sans);
+    color: var(--text-heading);
+    outline: none;
+    width: 100%;
+}
+
+.search-field-input::placeholder {
+    color: #9C90AD;
+}
+
+.btn-filter-icon {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 8px;
+    color: var(--text-heading);
+    transition: background 0.2s ease;
+}
+
+.btn-filter-icon:hover {
+    background: #F3ECFA;
+    color: var(--primary-purple);
+}
+
+/* ------------------------------------------------------------- */
+/* 5. Art-Form Category Filter Pills */
+/* ------------------------------------------------------------- */
+.discover-filters-section {
+    padding: 0 20px;
+}
+
+.filter-pills-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px 2px 8px;
+    scrollbar-width: none; /* Firefox */
+}
+
+.filter-pills-row::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+.filter-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    height: 38px;
+    border-radius: 9999px;
+    border: 1px solid var(--border-color);
+    background: #FFFFFF;
+    color: var(--text-heading);
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(74, 29, 121, 0.03);
+    flex-shrink: 0;
+}
+
+.filter-pill-btn:hover {
+    background: #F8F4FD;
+    border-color: var(--primary-purple);
+    transform: translateY(-1px);
+}
+
+.filter-pill-btn.active {
+    background: linear-gradient(90deg, #581C87 0%, #872F8B 50%, #C026D3 100%);
+    border-color: transparent;
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(88, 28, 135, 0.3);
+}
+
+.pill-icon-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/* ------------------------------------------------------------- */
+/* 6. Featured Artists Section */
+/* ------------------------------------------------------------- */
+.featured-artists-cards-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.discover-featured-card {
+    background: #FFFFFF;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 18px rgba(74, 29, 121, 0.06);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.discover-featured-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(74, 29, 121, 0.1);
+}
+
+.featured-cover-container {
+    position: relative;
+    width: 100%;
+    height: 112px;
+    background: #EAE6F0;
+    overflow: hidden;
+}
+
+.featured-cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.discover-featured-card:hover .featured-cover-image {
+    transform: scale(1.04);
+}
+
+.btn-card-heart {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.btn-card-heart:hover {
+    transform: scale(1.15);
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.btn-card-heart svg {
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+}
+
+.featured-artist-meta-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 10px 8px;
+}
+
+.featured-avatar-image {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 2px 6px rgba(74, 29, 121, 0.12);
+    flex-shrink: 0;
+}
+
+.featured-meta-text {
+    overflow: hidden;
+}
+
+.featured-artist-name {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-heading);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.25;
+}
+
+.featured-artist-role {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    margin-top: 1px;
+}
+
+.featured-location-line {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10.5px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.btn-connect-artist {
+    margin: 4px 10px 0;
+    display: block;
+    text-align: center;
+    padding: 6px 12px;
+    border: 1.5px solid var(--primary-purple);
+    border-radius: 9999px;
+    color: var(--primary-purple);
+    font-size: 12px;
+    font-weight: 600;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-connect-artist:hover {
+    background: var(--primary-purple);
+    color: #FFFFFF;
+}
+
+.btn-connect-artist.connected {
+    background: var(--primary-purple);
+    color: #FFFFFF;
+    border-color: var(--primary-purple);
+}
+
+.btn-connect-artist.connected::after {
+    content: ' ✓';
+}
+
+/* ------------------------------------------------------------- */
+/* 7. Artists Near You Section */
+/* ------------------------------------------------------------- */
+.near-you-cards-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.near-artist-card {
+    background: #FFFFFF;
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 3px 12px rgba(74, 29, 121, 0.04);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.near-artist-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(74, 29, 121, 0.08);
+}
+
+.near-artist-thumb-wrapper {
+    width: 58px;
+    height: 58px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #EAE6F0;
+}
+
+.near-artist-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.near-artist-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.near-title-heart-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.near-artist-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-heading);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn-near-heart {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: transform 0.2s ease;
+}
+
+.btn-near-heart:hover {
+    transform: scale(1.2);
+    color: #E65C58;
+}
+
+.near-artist-role {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 1px;
+}
+
+.near-location-line {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* ------------------------------------------------------------- */
+/* 8. Find Your Creative Tribe Section */
+/* ------------------------------------------------------------- */
+.tribe-section {
+    margin-top: 4px;
+}
+
+.tribe-banner-card {
+    background: linear-gradient(135deg, #F5EFFE 0%, #FFF6FA 50%, #F5EEFE 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(123, 44, 191, 0.15);
+    box-shadow: 0 4px 18px rgba(74, 29, 121, 0.05);
+    padding: 22px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.tribe-content-left {
+    flex: 1;
+    max-width: 52%;
+    z-index: 2;
+}
+
+.tribe-heading {
+    font-family: var(--font-heading);
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--text-heading);
+    line-height: 1.25;
+    margin-bottom: 6px;
+}
+
+.tribe-description {
+    font-size: 12px;
+    color: var(--text-body);
+    line-height: 1.45;
+    margin-bottom: 16px;
+}
+
+.btn-tribe-join {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(90deg, #581C87 0%, #872F8B 50%, #C026D3 100%);
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 9999px;
+    box-shadow: 0 4px 16px rgba(88, 28, 135, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-tribe-join:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(88, 28, 135, 0.4);
+}
+
+.tribe-visual-right {
+    flex: 1;
+    max-width: 48%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 1;
+}
+
+.tribe-illustration-img {
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 14px rgba(74, 29, 121, 0.08));
+}
+
+.discover-bottom-spacer {
+    height: 16px;
+}
+
+/* ------------------------------------------------------------- */
+/* 9. Sticky Bottom Navigation Bar */
+/* ------------------------------------------------------------- */
+.bottom-nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 520px;
+    height: 72px;
+    background: #FFFFFF;
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -4px 20px rgba(74, 29, 121, 0.07);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 10px;
+    z-index: 60;
+}
+
+@media (min-width: 992px) {
+    .bottom-nav-bar {
+        max-width: 1100px;
+        border-bottom-left-radius: 28px;
+        border-bottom-right-radius: 28px;
+    }
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    transition: color 0.2s ease, transform 0.2s ease;
+    padding: 6px 12px;
+    border-radius: 10px;
+}
+
+.nav-item:hover {
+    color: var(--primary-purple);
+}
+
+.nav-item.active {
+    color: var(--primary-purple);
+}
+
+.nav-label {
+    line-height: 1;
+}
+
+/* Central Floating + Action Button */
+.nav-item-center {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-fab-btn {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7B2CBF 0%, #9D4EDD 40%, #E65C58 100%);
+    border: none;
+    box-shadow: 0 8px 24px rgba(123, 44, 191, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transform: translateY(-16px);
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
+}
+
+.nav-fab-btn:hover {
+    transform: translateY(-20px) scale(1.08);
+    box-shadow: 0 12px 28px rgba(123, 44, 191, 0.5);
+}
+
+.nav-fab-btn:active {
+    transform: translateY(-14px) scale(0.96);
+}
+
+/* ------------------------------------------------------------- */
+/* 10. Action Sheet Modal (Triggered by Central + Button) */
+/* ------------------------------------------------------------- */
+.action-sheet-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(28, 16, 44, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 100;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.action-sheet-backdrop.show {
+    display: flex;
+    animation: fadeIn 0.2s ease forwards;
+}
+
+.action-sheet-card {
+    background: #FFFFFF;
+    width: 100%;
+    max-width: 520px;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    padding: 20px 24px 30px;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.action-sheet-backdrop.show .action-sheet-card {
+    transform: translateY(0);
+}
+
+.action-sheet-handle {
+    width: 44px;
+    height: 4px;
+    background: #E2D9EC;
+    border-radius: 4px;
+    margin: 0 auto 16px;
+}
+
+.action-sheet-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.action-sheet-title {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-heading);
+}
+
+.action-sheet-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.action-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.action-option-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+    background: #FAF8FD;
+    text-decoration: none;
+    color: var(--text-heading);
+    transition: all 0.2s ease;
+}
+
+.action-option-item:hover {
+    background: #F3ECFA;
+    border-color: var(--primary-purple);
+    transform: translateX(3px);
+}
+
+.action-option-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.action-option-icon.icon-art {
+    background: #F3E8FF;
+    color: #7B2CBF;
+}
+
+.action-option-icon.icon-comm {
+    background: #FCE7F3;
+    color: #BE185D;
+}
+
+.action-option-icon.icon-event {
+    background: #FEF3C7;
+    color: #D97706;
+}
+
+.action-option-info strong {
+    display: block;
+    font-size: 14px;
+    color: var(--text-heading);
+    margin-bottom: 2px;
+}
+
+.action-option-info span {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.btn-cancel-action-sheet {
+    width: 100%;
+    height: 48px;
+    border-radius: 12px;
+    background: #F3EDF8;
+    border: none;
+    color: var(--text-heading);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-cancel-action-sheet:hover {
+    background: #E8E0F0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ------------------------------------------------------------- */
+/* 11. Responsive Adjustments */
+/* ------------------------------------------------------------- */
+@media (max-width: 480px) {
+    .discover-heading {
+        font-size: 24px;
+    }
+    .featured-artists-cards-row {
+        gap: 10px;
+    }
+    .near-you-cards-row {
+        gap: 8px;
+    }
+    .tribe-banner-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    .tribe-content-left {
+        max-width: 100%;
+    }
+    .tribe-visual-right {
+        width: 100%;
+        justify-content: center;
+    }
+}

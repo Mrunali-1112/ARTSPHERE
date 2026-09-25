@@ -47,9 +47,17 @@ public class SecurityConfig {
                     "/images/**",
                     "/pages/**",
                     "/uploads/**",
-                    "/api/auth/**"
+                    "/api/auth/**",
+                    "/api/artists/**",
+                    "/api/discover/**",
+                    "/api/portfolio/**",
+                    "/api/opportunities/**",
+                    "/api/posts/**",
+                    "/api/collaborations/**",
+                    "/api/collaboration-requests/**"
                 ).permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/artworks/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/home/**").permitAll()
                 .anyRequest().authenticated()
             )
             .logout(logout -> logout

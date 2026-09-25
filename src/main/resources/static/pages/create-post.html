@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post – ArtSphere</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/create-post.css">
+</head>
+<body>
+    <div class="app-layout">
+        <main class="screen-container create-post-screen">
+
+            <!-- Sticky Top Header Navbar -->
+            <header class="create-post-header">
+                <a href="/pages/feed.html" class="back-link-btn" aria-label="Cancel and go back">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </a>
+
+                <a href="/pages/home.html" class="header-logo-link" aria-label="ArtSphere Home">
+                    <img src="/images/logo_header.png" alt="ArtSphere – The Artist Community" class="header-logo-img">
+                </a>
+
+                <div class="header-profile-dropdown" id="userMenuWrapper">
+                    <div class="avatar-clickable" id="headerUserAvatarBtn" role="button" aria-label="Open User Menu">
+                        <img src="/images/user_avatar_nav.png" alt="User Profile" class="header-user-avatar" id="headerUserAvatar">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Title Row (Matches page_26.jpg) -->
+            <div class="create-title-row">
+                <h1 class="page-title-text">Create Post</h1>
+                <p class="page-subtitle-text">Share your art, thoughts or creative journey with the ArtSphere community.</p>
+            </div>
+
+            <!-- Create Post Form Container -->
+            <form id="createPostForm" class="create-post-form">
+
+                <!-- 1. Media Upload Dropzone (Matches page_26.jpg) -->
+                <div class="form-group media-dropzone-group">
+                    <div class="media-dropzone" id="mediaDropzone">
+                        <input type="file" id="mediaFileInput" accept="image/*,video/mp4" style="display: none;">
+                        
+                        <div class="dropzone-content" id="dropzonePrompt">
+                            <div class="dropzone-icon-circle">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6C5CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                </svg>
+                            </div>
+                            <h3 class="dropzone-title">Add Artwork / Image / Video</h3>
+                            <p class="dropzone-sub">Tap to upload or choose from gallery</p>
+                            <span class="dropzone-formats">JPG, PNG, MP4 (Max 10MB)</span>
+                        </div>
+
+                        <!-- Image Preview (Hidden initially) -->
+                        <div class="dropzone-preview" id="dropzonePreview" style="display: none;">
+                            <img src="" alt="Preview" class="preview-img" id="previewImg">
+                            <button type="button" class="btn-remove-media" id="btnRemoveMedia" aria-label="Remove image">&times;</button>
+                        </div>
+                    </div>
+
+                    <!-- Preset sample image quick pickers -->
+                    <div class="preset-pickers-row">
+                        <span class="preset-label">Or pick sample:</span>
+                        <button type="button" class="preset-thumb-btn" data-url="/images/post_a_brighter_day.png">A Brighter Day</button>
+                        <button type="button" class="preset-thumb-btn" data-url="/images/artwork_sunlit.png">Sunlit</button>
+                        <button type="button" class="preset-thumb-btn" data-url="/images/artwork_beyond_the_hills.png">Hills</button>
+                    </div>
+                </div>
+
+                <!-- 2. Caption Textarea (Matches page_26.jpg) -->
+                <div class="form-group">
+                    <div class="label-row">
+                        <label for="postCaptionInput" class="form-label">Caption</label>
+                        <span class="char-counter" id="charCounter">0/500</span>
+                    </div>
+                    <textarea id="postCaptionInput" class="form-textarea" rows="4" maxlength="500" placeholder="Tell your story, share your thoughts..." required></textarea>
+                </div>
+
+                <!-- 3. Art Form & Category Row (Matches page_26.jpg) -->
+                <div class="form-row-dual">
+                    <div class="form-group">
+                        <label for="postArtFormSelect" class="form-label">Art Form</label>
+                        <div class="select-wrapper">
+                            <select id="postArtFormSelect" class="form-select" required>
+                                <option value="" disabled selected>Select art form</option>
+                                <option value="Painting">Painting</option>
+                                <option value="Digital Art">Digital Art</option>
+                                <option value="Photography">Photography</option>
+                                <option value="Dance">Dance</option>
+                                <option value="Music">Music</option>
+                                <option value="Writing">Writing</option>
+                                <option value="Crafts">Crafts</option>
+                                <option value="Sculpture">Sculpture</option>
+                                <option value="Illustration">Illustration</option>
+                            </select>
+                            <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6F687A" stroke-width="2.5">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postCategorySelect" class="form-label">Category</label>
+                        <div class="select-wrapper">
+                            <select id="postCategorySelect" class="form-select" required>
+                                <option value="" disabled selected>Select category</option>
+                                <option value="Showcase" selected>Showcase</option>
+                                <option value="Work in Progress">Work in Progress</option>
+                                <option value="Tutorial">Tutorial</option>
+                                <option value="Discussion">Discussion</option>
+                                <option value="Inspiration">Inspiration</option>
+                            </select>
+                            <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6F687A" stroke-width="2.5">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Tags Input & Suggestions (Matches page_26.jpg) -->
+                <div class="form-group">
+                    <label for="postTagsInput" class="form-label">Tags (optional)</label>
+                    <input type="text" id="postTagsInput" class="form-input" placeholder="Add tags (e.g. nature, digital art, sketch, portrait...)">
+                    
+                    <div class="suggested-tags-wrapper">
+                        <span class="tag-suggestion-pill" data-tag="#art">#art</span>
+                        <span class="tag-suggestion-pill" data-tag="#nature">#nature</span>
+                        <span class="tag-suggestion-pill" data-tag="#portrait">#portrait</span>
+                        <span class="tag-suggestion-pill" data-tag="#digital">#digital</span>
+                        <span class="tag-suggestion-pill" data-tag="#sketch">#sketch</span>
+                        <span class="tag-suggestion-pill" data-tag="#abstract">#abstract</span>
+                    </div>
+                </div>
+
+                <!-- 5. Post Visibility (Matches page_26.jpg: Public, Followers, Only Me) -->
+                <div class="form-group">
+                    <label class="form-label">Post Visibility</label>
+                    <p class="visibility-subtext">Who can see your post?</p>
+                    
+                    <div class="visibility-options-row">
+                        <label class="visibility-option-label active">
+                            <input type="radio" name="visibility" value="Public" checked>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                            <span>Public</span>
+                        </label>
+
+                        <label class="visibility-option-label">
+                            <input type="radio" name="visibility" value="Followers">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            <span>Followers</span>
+                        </label>
+
+                        <label class="visibility-option-label">
+                            <input type="radio" name="visibility" value="Only Me">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <span>Only Me</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 6. Post Action Button -->
+                <div class="submit-action-group">
+                    <button type="submit" id="btnPublishPost" class="btn-publish-post">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                        <span>Post</span>
+                    </button>
+                </div>
+
+            </form>
+
+            <!-- Bottom Navigation Bar -->
+            <nav class="bottom-nav-bar" aria-label="Main Navigation">
+                <a href="/pages/home.html" class="nav-item" aria-label="Home">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span class="nav-label">Home</span>
+                </a>
+
+                <a href="/pages/discover.html" class="nav-item" aria-label="Discover">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                    </svg>
+                    <span class="nav-label">Discover</span>
+                </a>
+
+                <!-- Central + Action Button -->
+                <div class="nav-item-center">
+                    <button class="nav-fab-btn" id="centralCreateBtn" aria-label="Create New Content" onclick="window.location.href='/pages/create-post.html'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <a href="/pages/feed.html" class="nav-item" aria-label="Feed">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
+                    <span class="nav-label">Feed</span>
+                </a>
+
+                <a href="/pages/artist-profile.html?id=101" class="nav-item" id="bottomNavProfile" aria-label="Profile">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span class="nav-label">Profile</span>
+                </a>
+            </nav>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/api.js"></script>
+    <script src="/js/create-post.js"></script>
+</body>
+</html>

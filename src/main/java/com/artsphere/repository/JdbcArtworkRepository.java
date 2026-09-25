@@ -35,6 +35,14 @@ public class JdbcArtworkRepository implements ArtworkRepository {
         artwork.setArtistId(rs.getLong("artist_id"));
 
         try {
+            artwork.setLikesCount(rs.getInt("likes_count"));
+            artwork.setCommentsCount(rs.getInt("comments_count"));
+        } catch (Exception ignored) {
+            artwork.setLikesCount(0);
+            artwork.setCommentsCount(0);
+        }
+
+        try {
             artwork.setArtistName(rs.getString("artist_name"));
             artwork.setArtistUsername(rs.getString("artist_username"));
         } catch (Exception ignored) {
@@ -56,8 +64,8 @@ public class JdbcArtworkRepository implements ArtworkRepository {
 
     @Override
     public Artwork save(Artwork artwork) {
-        String sql = "INSERT INTO artworks (title, description, category, image_url, price, for_sale, artist_id) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO artworks (title, description, category, image_url, price, for_sale, likes_count, comments_count, artist_id) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
@@ -68,7 +76,9 @@ public class JdbcArtworkRepository implements ArtworkRepository {
             ps.setString(4, artwork.getImageUrl());
             ps.setBigDecimal(5, artwork.getPrice());
             ps.setBoolean(6, artwork.isForSale());
-            ps.setLong(7, artwork.getArtistId());
+            ps.setInt(7, artwork.getLikesCount() != null ? artwork.getLikesCount() : 0);
+            ps.setInt(8, artwork.getCommentsCount() != null ? artwork.getCommentsCount() : 0);
+            ps.setLong(9, artwork.getArtistId());
             return ps;
         }, keyHolder);
 
@@ -127,9 +137,22 @@ public class JdbcArtworkRepository implements ArtworkRepository {
     }
 
     @Override
+    public List<Artwork> findByArtistIdAndCategory(Long artistId, String category) {
+        if (category == null || category.isBlank() || "all".equalsIgnoreCase(category.trim())) {
+            return findByArtistId(artistId);
+        }
+        String sql = "SELECT a.*, u.full_name AS artist_name, u.username AS artist_username " +
+                     "FROM artworks a " +
+                     "JOIN users u ON a.artist_id = u.id " +
+                     "WHERE a.artist_id = ? AND LOWER(a.category) = LOWER(?) " +
+                     "ORDER BY a.created_at DESC";
+        return jdbcTemplate.query(sql, artworkRowMapper, artistId, category.trim());
+    }
+
+    @Override
     public int update(Artwork artwork) {
         String sql = "UPDATE artworks SET title = ?, description = ?, category = ?, " +
-                     "image_url = ?, price = ?, for_sale = ? WHERE id = ?";
+                     "image_url = ?, price = ?, for_sale = ?, likes_count = ?, comments_count = ? WHERE id = ?";
         return jdbcTemplate.update(sql,
                 artwork.getTitle(),
                 artwork.getDescription(),
@@ -137,6 +160,8 @@ public class JdbcArtworkRepository implements ArtworkRepository {
                 artwork.getImageUrl(),
                 artwork.getPrice(),
                 artwork.isForSale(),
+                artwork.getLikesCount() != null ? artwork.getLikesCount() : 0,
+                artwork.getCommentsCount() != null ? artwork.getCommentsCount() : 0,
                 artwork.getId());
     }
 

@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Collaborators – ArtSphere</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/collaborators.css">
+</head>
+<body>
+    <div class="app-layout">
+        <main class="screen-container collab-screen">
+
+            <!-- Top Header Navbar -->
+            <header class="collab-top-header">
+                <a href="/pages/home.html" class="header-logo-link" aria-label="ArtSphere Home">
+                    <img src="/images/logo_header.png" alt="ArtSphere – The Artist Community" class="header-logo-img">
+                </a>
+
+                <div class="header-right-actions">
+                    <!-- Link to Collaboration Requests with Counter Badge -->
+                    <a href="/pages/collaboration-requests.html" class="header-action-btn requests-nav-btn" aria-label="Collaboration Requests" title="Collaboration Requests">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <polyline points="17 11 19 13 23 9"></polyline>
+                        </svg>
+                        <span class="requests-badge" id="requestsBadge">5</span>
+                    </a>
+
+                    <div class="header-profile-dropdown" id="userMenuWrapper">
+                        <div class="avatar-clickable" id="headerUserAvatarBtn" role="button" aria-label="Open User Menu">
+                            <img src="/images/user_avatar_nav.png" alt="User Profile" class="header-user-avatar" id="headerUserAvatar">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.5" class="header-dropdown-chevron">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                        <div class="user-dropdown-menu" id="userDropdownMenu">
+                            <a href="/pages/artist-profile.html?id=101" class="dropdown-item">My Profile</a>
+                            <a href="/pages/portfolio.html?id=101" class="dropdown-item">My Portfolio</a>
+                            <a href="/pages/collaborators.html" class="dropdown-item active-item">Collaborations</a>
+                            <a href="/pages/collaboration-requests.html" class="dropdown-item">Collaboration Requests</a>
+                            <a href="/pages/create-collaboration.html" class="dropdown-item">Post Collab Request</a>
+                            <a href="/pages/feed.html" class="dropdown-item">Creative Feed</a>
+                            <a href="/pages/opportunities.html" class="dropdown-item">Opportunities</a>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item logout-item" id="logoutBtn">Log Out</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Title Section -->
+            <div class="page-intro-header">
+                <div class="intro-titles">
+                    <h1 class="page-title">Find Collaborators</h1>
+                    <p class="page-subtitle">Connect, team up, and build visionary art projects together</p>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="collab-search-container">
+                <div class="collab-search-bar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7A7585" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="collabSearchInput" class="search-input" placeholder="Search by skill, art form, or location...">
+                    <button class="clear-search-btn" id="clearSearchBtn" aria-label="Clear Search" style="display: none;">&times;</button>
+                </div>
+            </div>
+
+            <!-- Category / Skill Filter Pills -->
+            <nav class="skills-filter-nav" aria-label="Filter collaborations by skill">
+                <div class="skills-scroll-wrapper" id="skillsFilterList">
+                    <button class="filter-pill active" data-skill="All">All</button>
+                    <button class="filter-pill" data-skill="Digital Art">Digital Art</button>
+                    <button class="filter-pill" data-skill="Painting">Painting</button>
+                    <button class="filter-pill" data-skill="Photography">Photography</button>
+                    <button class="filter-pill" data-skill="Music">Music</button>
+                    <button class="filter-pill" data-skill="Dance">Dance</button>
+                </div>
+            </nav>
+
+            <!-- Hero Banner: Collaborate. Create. Grow. -->
+            <section class="collab-hero-banner" aria-label="Call to collaborate">
+                <div class="banner-content">
+                    <span class="banner-badge">Community Spotlight</span>
+                    <h2 class="banner-title">Collaborate. Create. Grow.</h2>
+                    <p class="banner-desc">Find artists to collaborate with on projects, events, and creative ideas.</p>
+                    <a href="/pages/create-collaboration.html" class="banner-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        Post a Request
+                    </a>
+                </div>
+                <div class="banner-art">
+                    <img src="/images/collab_hero_banner.png" alt="Collaborate illustration" class="banner-art-img">
+                </div>
+            </section>
+
+            <!-- Active Collaboration Posts Section -->
+            <section class="section-container" aria-labelledby="activePostsHeading">
+                <div class="section-header-row">
+                    <h2 id="activePostsHeading" class="section-heading">Active Collaboration Posts</h2>
+                    <span class="section-count" id="activePostsCount">3 Posts</span>
+                </div>
+
+                <div class="collab-cards-list" id="collabCardsList">
+                    <!-- Populated dynamically via collaborators.js -->
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Loading collaboration posts...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Artists Looking to Collaborate Section -->
+            <section class="section-container artists-section" aria-labelledby="artistsHeading">
+                <div class="section-header-row">
+                    <h2 id="artistsHeading" class="section-heading">Artists Looking to Collaborate</h2>
+                    <a href="/pages/discover.html" class="view-all-link">View All</a>
+                </div>
+
+                <div class="artists-collab-grid" id="artistsCollabGrid">
+                    <!-- Populated dynamically via collaborators.js -->
+                </div>
+            </section>
+
+            <!-- Send Request Modal -->
+            <div class="modal-backdrop" id="requestModal" style="display: none;">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modalTitle">Send Collaboration Request</h3>
+                        <button class="modal-close-btn" id="closeModalBtn" aria-label="Close Modal">&times;</button>
+                    </div>
+                    <form id="collabRequestForm" class="modal-body">
+                        <input type="hidden" id="modalCollabId" value="">
+                        <input type="hidden" id="modalReceiverId" value="">
+                        <div class="modal-target-info" id="modalTargetInfo">
+                            <!-- Target collaboration/artist summary -->
+                        </div>
+                        <div class="form-group">
+                            <label for="requestMessageInput" class="form-label">Your Message / Pitch</label>
+                            <textarea id="requestMessageInput" class="form-textarea" rows="4" required placeholder="Introduce yourself, your artistic background, and what you'd love to create together..."></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="cancelModalBtn">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="sendRequestSubmitBtn">Send Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Toast Notification -->
+            <div id="toastNotification" class="toast-notification" style="display: none;"></div>
+
+            <!-- Bottom Navigation Bar (Elevated + Center Button) -->
+            <nav class="bottom-nav-bar" aria-label="Bottom Navigation">
+                <a href="/pages/home.html" class="nav-item" aria-label="Home">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span class="nav-label">Home</span>
+                </a>
+
+                <a href="/pages/discover.html" class="nav-item" aria-label="Discover">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                    </svg>
+                    <span class="nav-label">Discover</span>
+                </a>
+
+                <!-- Central + Action Button -->
+                <div class="nav-item-center">
+                    <button class="nav-fab-btn" id="centralCreateBtn" aria-label="Post Collaboration" onclick="window.location.href='/pages/create-collaboration.html'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <a href="/pages/collaborators.html" class="nav-item active" aria-label="Collab">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span class="nav-label">Collab</span>
+                </a>
+
+                <a href="/pages/artist-profile.html?id=101" class="nav-item" id="bottomNavProfile" aria-label="Profile">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span class="nav-label">Profile</span>
+                </a>
+            </nav>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/api.js"></script>
+    <script src="/js/collaborators.js"></script>
+</body>
+</html>

@@ -26,6 +26,12 @@ public class ArtworkRequest {
 
     private boolean forSale = false;
 
+    private Long artistId;
+
+    private Integer likesCount = 0;
+
+    private Integer commentsCount = 0;
+
     public ArtworkRequest() {
     }
 
@@ -84,5 +90,29 @@ public class ArtworkRequest {
 
     public void setForSale(boolean forSale) {
         this.forSale = forSale;
+    }
+
+    public Long getArtistId() {
+        return artistId;
+    }
+
+    public void setArtistId(Long artistId) {
+        this.artistId = artistId;
+    }
+
+    public Integer getLikesCount() {
+        return likesCount;
+    }
+
+    public void setLikesCount(Integer likesCount) {
+        this.likesCount = likesCount;
+    }
+
+    public Integer getCommentsCount() {
+        return commentsCount;
+    }
+
+    public void setCommentsCount(Integer commentsCount) {
+        this.commentsCount = commentsCount;
     }
 }

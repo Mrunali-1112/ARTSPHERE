@@ -1,0 +1,295 @@
+﻿/* ArtSphere – Create Collaboration Stylesheet */
+:root {
+    --primary-color: #6C5CE7;
+    --primary-hover: #5A4AD1;
+    --primary-light: #F4F1FD;
+    --primary-border: #E6E0FA;
+    --text-primary: #1C102C;
+    --text-secondary: #6B637B;
+    --text-muted: #958EA5;
+    --bg-page: #FAF9FE;
+    --card-bg: #FFFFFF;
+    --card-border: #ECE8F6;
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-pill: 9999px;
+    --shadow-card: 0 4px 20px rgba(108, 92, 231, 0.06);
+    --shadow-elevated: 0 8px 30px rgba(108, 92, 231, 0.16);
+    --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: #F0EDF6;
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+}
+
+.app-layout {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.create-collab-screen {
+    width: 100%;
+    max-width: 480px;
+    min-height: 100vh;
+    background-color: var(--bg-page);
+    position: relative;
+    padding-bottom: 40px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.08);
+}
+
+@media (min-width: 768px) {
+    .create-collab-screen {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .create-collab-screen {
+        max-width: 860px;
+    }
+}
+
+/* Header */
+.create-top-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #F4F1FD;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: background 0.15s;
+}
+
+.back-link:hover {
+    background: #E8E2FA;
+}
+
+.header-screen-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+/* Form */
+.collab-form-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-banner-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: var(--primary-light);
+    border: 1px solid var(--primary-border);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+}
+
+.form-banner-tip p {
+    font-size: 13px;
+    line-height: 1.45;
+    color: #4B3F72;
+    font-weight: 500;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+@media (min-width: 600px) {
+    .form-row-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.form-label {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.form-label.required::after {
+    content: " *";
+    color: #FF4757;
+}
+
+.optional-label {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.field-hint {
+    font-size: 11.5px;
+    color: var(--text-muted);
+}
+
+.form-input, .form-textarea {
+    width: 100%;
+    font-family: var(--font-main);
+    font-size: 14px;
+    color: var(--text-primary);
+    background: #FFFFFF;
+    border: 1.5px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus, .form-textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.15);
+}
+
+.form-textarea {
+    resize: vertical;
+    line-height: 1.5;
+}
+
+/* Purpose Chips */
+.purpose-chips-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.purpose-chip {
+    padding: 8px 14px;
+    border-radius: var(--radius-pill);
+    font-size: 12.5px;
+    font-weight: 600;
+    background: #FFFFFF;
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.purpose-chip:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.purpose-chip.active {
+    background: var(--primary-color);
+    color: #FFFFFF;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 10px rgba(108, 92, 231, 0.25);
+}
+
+/* Actions */
+.form-actions-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 16px;
+    border-top: 1px solid var(--card-border);
+}
+
+.btn {
+    padding: 12px 24px;
+    border-radius: var(--radius-pill);
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-cancel {
+    background: #F4F1FD;
+    color: var(--text-secondary);
+}
+
+.btn-cancel:hover {
+    background: #ECE8F6;
+    color: var(--text-primary);
+}
+
+.btn-submit {
+    background: var(--primary-color);
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(108, 92, 231, 0.35);
+}
+
+.btn-submit:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(108, 92, 231, 0.45);
+}
+
+.btn-submit:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Toast */
+.toast-notification {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1C102C;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: var(--radius-pill);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    z-index: 250;
+    display: none;
+    animation: fadeInUp 0.2s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translate(-50%, 10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}

@@ -16,6 +16,14 @@ public interface ArtworkService {
 
     List<Artwork> getArtworksByArtist(Long artistId);
 
+    List<Artwork> getPortfolioByArtist(Long artistId, String category);
+
+    Artwork createPortfolioItem(ArtworkRequest request, String currentUsername);
+
+    Artwork updatePortfolioItem(Long id, ArtworkRequest request, String currentUsername);
+
+    void deletePortfolioItem(Long id, String currentUsername);
+
     Artwork updateArtwork(Long id, ArtworkRequest request, String currentUsername);
 
     void deleteArtwork(Long id, String currentUsername);

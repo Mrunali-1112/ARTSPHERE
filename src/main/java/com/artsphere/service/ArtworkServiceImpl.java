@@ -86,6 +86,84 @@ public class ArtworkServiceImpl implements ArtworkService {
     }
 
     @Override
+    public List<Artwork> getPortfolioByArtist(Long artistId, String category) {
+        return artworkRepository.findByArtistIdAndCategory(artistId, category);
+    }
+
+    @Override
+    @Transactional
+    public Artwork createPortfolioItem(ArtworkRequest request, String currentUsername) {
+        User artist = null;
+        if (currentUsername != null && !currentUsername.isBlank() && !currentUsername.equals("anonymousUser")) {
+            artist = userRepository.findByUsername(currentUsername)
+                    .or(() -> userRepository.findByEmail(currentUsername))
+                    .orElse(null);
+        }
+        if (artist == null && request.getArtistId() != null) {
+            artist = userRepository.findById(request.getArtistId()).orElse(null);
+        }
+        if (artist == null) {
+            artist = userRepository.findById(101L).orElseThrow(() -> new ResourceNotFoundException("Artist not found"));
+        }
+
+        Artwork artwork = new Artwork();
+        artwork.setTitle(request.getTitle() != null ? request.getTitle().trim() : "Untitled");
+        artwork.setDescription(request.getDescription());
+        artwork.setCategory(request.getCategory() != null ? request.getCategory().trim() : "Other");
+        artwork.setImageUrl(request.getImageUrl() != null ? request.getImageUrl().trim() : "/images/artwork_sunlit.png");
+        artwork.setPrice(request.getPrice());
+        artwork.setForSale(request.isForSale());
+        artwork.setLikesCount(request.getLikesCount() != null ? request.getLikesCount() : 0);
+        artwork.setCommentsCount(request.getCommentsCount() != null ? request.getCommentsCount() : 0);
+        artwork.setArtistId(artist.getId());
+        artwork.setArtistName(artist.getFullName());
+        artwork.setArtistUsername(artist.getUsername());
+
+        Artwork saved = artworkRepository.save(artwork);
+        saved.setArtistName(artist.getFullName());
+        saved.setArtistUsername(artist.getUsername());
+        return saved;
+    }
+
+    @Override
+    @Transactional
+    public Artwork updatePortfolioItem(Long id, ArtworkRequest request, String currentUsername) {
+        Artwork existing = getArtworkById(id);
+        if (request.getTitle() != null && !request.getTitle().isBlank()) {
+            existing.setTitle(request.getTitle().trim());
+        }
+        if (request.getDescription() != null) {
+            existing.setDescription(request.getDescription().trim());
+        }
+        if (request.getCategory() != null && !request.getCategory().isBlank()) {
+            existing.setCategory(request.getCategory().trim());
+        }
+        if (request.getImageUrl() != null && !request.getImageUrl().isBlank()) {
+            existing.setImageUrl(request.getImageUrl().trim());
+        }
+        if (request.getPrice() != null) {
+            existing.setPrice(request.getPrice());
+        }
+        existing.setForSale(request.isForSale());
+        if (request.getLikesCount() != null) {
+            existing.setLikesCount(request.getLikesCount());
+        }
+        if (request.getCommentsCount() != null) {
+            existing.setCommentsCount(request.getCommentsCount());
+        }
+
+        artworkRepository.update(existing);
+        return existing;
+    }
+
+    @Override
+    @Transactional
+    public void deletePortfolioItem(Long id, String currentUsername) {
+        Artwork existing = getArtworkById(id);
+        artworkRepository.deleteById(id);
+    }
+
+    @Override
     @Transactional
     public Artwork updateArtwork(Long id, ArtworkRequest request, String currentUsername) {
         Artwork existing = getArtworkById(id);

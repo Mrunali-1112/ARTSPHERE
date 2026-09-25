@@ -1,0 +1,773 @@
+/* ArtSphere – Creative Feed Stylesheet (Matches page_25.jpg) */
+
+:root {
+    --primary: #6C5CE7;
+    --primary-hover: #5844E3;
+    --primary-light: #F0EDFD;
+    --primary-gradient: linear-gradient(135deg, #6C5CE7 0%, #8E44AD 100%);
+    --bg-page: #F6F5FC;
+    --card-bg: #FFFFFF;
+    --text-primary: #1C102C;
+    --text-secondary: #6F687A;
+    --text-muted: #8E8B99;
+    --border-color: #E8E4F3;
+    --like-color: #FF4757;
+    --bookmark-color: #6C5CE7;
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-full: 9999px;
+    --shadow-card: 0 4px 16px rgba(28, 16, 44, 0.05);
+    --shadow-hover: 0 8px 24px rgba(108, 92, 231, 0.12);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background-color: #ECEAF5;
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.app-layout {
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--bg-page);
+    min-height: 100vh;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .app-layout {
+        max-width: 580px;
+    }
+}
+
+.feed-screen {
+    padding-bottom: 90px;
+}
+
+/* ==========================================================
+   Header Navbar
+   ========================================================== */
+.feed-top-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: rgba(246, 245, 252, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-logo-img {
+    height: 34px;
+    width: auto;
+    object-fit: contain;
+}
+
+.header-right-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-action-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    position: relative;
+}
+
+.header-action-btn:hover {
+    background-color: rgba(108, 92, 231, 0.08);
+}
+
+.notification-dot {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 8px;
+    height: 8px;
+    background-color: #FF4757;
+    border-radius: 50%;
+    border: 2px solid var(--bg-page);
+}
+
+/* User Avatar Dropdown */
+.header-profile-dropdown {
+    position: relative;
+}
+
+.avatar-clickable {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.header-user-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-light);
+}
+
+.header-dropdown-chevron {
+    transition: transform 0.2s ease;
+}
+
+.user-dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 44px;
+    background: #FFFFFF;
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 28px rgba(28, 16, 44, 0.12);
+    min-width: 170px;
+    display: none;
+    flex-direction: column;
+    padding: 6px 0;
+    z-index: 150;
+    border: 1px solid var(--border-color);
+}
+
+.user-dropdown-menu.show {
+    display: flex;
+}
+
+.dropdown-item {
+    padding: 10px 16px;
+    font-size: 13.5px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.15s;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown-item:hover, .dropdown-item.active-item {
+    background-color: var(--primary-light);
+    color: var(--primary);
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 4px 0;
+}
+
+.logout-item {
+    color: #FF4757;
+}
+
+/* ==========================================================
+   Search Drawer
+   ========================================================== */
+.search-drawer {
+    padding: 10px 18px;
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.search-input-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-page);
+    border-radius: var(--radius-full);
+    padding: 8px 14px;
+    gap: 8px;
+    border: 1.5px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.search-input-wrapper:focus-within {
+    border-color: var(--primary);
+    background-color: #FFFFFF;
+}
+
+.feed-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 13.5px;
+    color: var(--text-primary);
+}
+
+.clear-search-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* ==========================================================
+   Categories Nav
+   ========================================================== */
+.feed-categories-nav {
+    padding: 12px 18px 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.feed-categories-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.categories-scroll-wrapper {
+    display: flex;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.cat-pill {
+    padding: 7px 16px;
+    border-radius: var(--radius-full);
+    background-color: #FFFFFF;
+    border: 1px solid var(--border-color);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.cat-pill:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.cat-pill.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: #FFFFFF;
+    box-shadow: 0 3px 10px rgba(108, 92, 231, 0.25);
+}
+
+/* ==========================================================
+   Section Layouts
+   ========================================================== */
+.feed-section {
+    padding: 16px 18px;
+}
+
+.section-header-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.section-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.section-subtitle {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.section-see-all {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+/* Section 1: Today's Inspiration */
+.inspiration-banner-card {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid var(--border-color);
+    background: #FFFFFF;
+}
+
+.inspiration-banner-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.inspiration-banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* Section 2: Community Highlights */
+.highlights-scroll-row {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+}
+
+.highlights-scroll-row::-webkit-scrollbar {
+    display: none;
+}
+
+.highlight-card {
+    flex: 0 0 210px;
+    background-color: #FFFFFF;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.highlight-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.highlight-thumb-wrapper {
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+    background-color: #EFEAF8;
+}
+
+.highlight-thumb-img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+}
+
+.highlight-info {
+    padding: 10px 12px;
+}
+
+.highlight-badge {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--primary);
+    background: var(--primary-light);
+    padding: 2px 7px;
+    border-radius: var(--radius-full);
+    margin-bottom: 4px;
+}
+
+.highlight-card-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.highlight-artist-meta {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    margin-top: 3px;
+}
+
+.highlight-artist-role {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* ==========================================================
+   Section 3: Recent Posts Feed
+   ========================================================== */
+.feed-posts-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.feed-tabs-row {
+    display: flex;
+    background-color: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    padding: 3px;
+    gap: 4px;
+}
+
+.feed-tab-btn {
+    border: none;
+    background: transparent;
+    padding: 5px 12px;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.feed-tab-btn.active {
+    background-color: var(--primary);
+    color: #FFFFFF;
+}
+
+.feed-sort-select {
+    border: 1px solid var(--border-color);
+    background-color: #FFFFFF;
+    border-radius: var(--radius-full);
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    outline: none;
+    cursor: pointer;
+}
+
+/* Post Cards */
+.posts-feed-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.feed-post-card {
+    background-color: #FFFFFF;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-card);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: box-shadow 0.2s ease;
+}
+
+.feed-post-card:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.post-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.post-author-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.post-author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid var(--primary-light);
+}
+
+.post-author-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.post-meta-sub {
+    font-size: 11.5px;
+    color: var(--text-muted);
+}
+
+.post-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-follow-pill {
+    background-color: var(--primary-light);
+    color: var(--primary);
+    border: none;
+    font-size: 11.5px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-follow-pill.following {
+    background-color: #E2E0EC;
+    color: var(--text-secondary);
+}
+
+.post-caption-text {
+    font-size: 13.5px;
+    color: var(--text-primary);
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.post-media-wrapper {
+    position: relative;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #F0EDFA;
+}
+
+.post-media-img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.post-media-wrapper:hover .post-media-img {
+    transform: scale(1.015);
+}
+
+.post-badge-overlay {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(28, 16, 44, 0.7);
+    backdrop-filter: blur(4px);
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
+}
+
+.post-tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.post-tag-item {
+    font-size: 11.5px;
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.post-tag-item:hover {
+    text-decoration: underline;
+}
+
+/* Post Action Bar (Like, Comment, Share, Bookmark) */
+.post-action-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-color);
+}
+
+.post-actions-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.post-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+}
+
+.post-action-btn:hover {
+    color: var(--primary);
+    background-color: var(--primary-light);
+}
+
+.post-action-btn.liked {
+    color: var(--like-color);
+}
+
+.post-action-btn.liked svg {
+    fill: var(--like-color);
+    stroke: var(--like-color);
+}
+
+.post-action-btn.saved {
+    color: var(--bookmark-color);
+}
+
+.post-action-btn.saved svg {
+    fill: var(--bookmark-color);
+    stroke: var(--bookmark-color);
+}
+
+/* Loading & Empty States */
+.feed-loading-spinner {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 13.5px;
+}
+
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.feed-empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    background: #FFFFFF;
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--border-color);
+}
+
+.feed-empty-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.feed-empty-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+}
+
+.btn-empty-create {
+    background: var(--primary-gradient);
+    color: #FFFFFF;
+    border: none;
+    padding: 9px 20px;
+    border-radius: var(--radius-full);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ==========================================================
+   Bottom Navigation Bar (Standard ArtSphere)
+   ========================================================== */
+.bottom-nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background: #FFFFFF;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 64px;
+    z-index: 100;
+    box-shadow: 0 -4px 16px rgba(28, 16, 44, 0.04);
+}
+
+@media (min-width: 768px) {
+    .bottom-nav-bar {
+        max-width: 580px;
+    }
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    padding: 6px 12px;
+}
+
+.nav-item.active {
+    color: var(--primary);
+}
+
+.nav-item:hover {
+    color: var(--primary);
+}
+
+.nav-item-center {
+    position: relative;
+    top: -14px;
+}
+
+.nav-fab-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--primary-gradient);
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 6px 18px rgba(108, 92, 231, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-fab-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 24px rgba(108, 92, 231, 0.55);
+}
