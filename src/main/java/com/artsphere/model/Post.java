@@ -6,6 +6,7 @@ public class Post {
 
     private Long id;
     private Long userId;
+    private Long communityId;
     private String title;
     private String caption;
     private String mediaUrl;
@@ -52,6 +53,9 @@ public class Post {
 
     public Long getUserId() { return userId; }
     public void setUserId(Long userId) { this.userId = userId; }
+
+    public Long getCommunityId() { return communityId; }
+    public void setCommunityId(Long communityId) { this.communityId = communityId; }
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }

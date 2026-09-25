@@ -65,353 +65,84 @@ const api = {
         return result.data ? result.data.imageUrl : null;
     },
 
+    // --- Module 2: Home APIs ---
     async getFeaturedArtists() {
         const response = await fetch(`${API_BASE}/home/featured-artists`);
         const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to fetch featured artists');
+        }
         return result.data || [];
     },
 
     async getUpcomingEvents() {
         const response = await fetch(`${API_BASE}/home/upcoming-events`);
         const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to fetch upcoming events');
+        }
         return result.data || [];
     },
 
     async getCommunities() {
         const response = await fetch(`${API_BASE}/home/communities`);
         const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to fetch communities');
+        }
         return result.data || [];
     },
 
-    async getArtists(artForm, location, q) {
-        const params = new URLSearchParams();
-        if (artForm && artForm !== 'All') params.append('artForm', artForm);
-        if (location) params.append('location', location);
-        if (q) params.append('q', q);
-        const queryStr = params.toString() ? `?${params.toString()}` : '';
-        const response = await fetch(`${API_BASE}/artists${queryStr}`);
+    // --- Module 3: Discover APIs ---
+    async getDiscoverArtists(params = {}) {
+        const queryParams = new URLSearchParams();
+        if (params.category && params.category !== 'all') {
+            queryParams.append('category', params.category);
+        }
+        if (params.location) {
+            queryParams.append('location', params.location);
+        }
+        if (params.search) {
+            queryParams.append('search', params.search);
+        }
+        const qs = queryParams.toString();
+        const url = `${API_BASE}/discover/artists${qs ? '?' + qs : ''}`;
+        const response = await fetch(url);
         const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to fetch discover artists');
+        }
         return result.data || [];
     },
 
-    async searchArtists(q) {
-        const response = await fetch(`${API_BASE}/artists/search?q=${encodeURIComponent(q)}`);
+    async searchArtists(query) {
+        const url = `${API_BASE}/discover/search?q=${encodeURIComponent(query)}`;
+        const response = await fetch(url);
         const result = await response.json();
-        return result.data || [];
-    },
-
-    async getFeaturedDiscoverArtists() {
-        const response = await fetch(`${API_BASE}/artists/featured`);
-        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Search failed');
+        }
         return result.data || [];
     },
 
     async getNearbyArtists() {
-        const response = await fetch(`${API_BASE}/artists/near-you`);
+        const response = await fetch(`${API_BASE}/discover/near-you`);
         const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to fetch nearby artists');
+        }
         return result.data || [];
     },
 
     async connectArtist(artistId) {
-        const response = await fetch(`${API_BASE}/artists/${artistId}/connect`, {
+        const response = await fetch(`${API_BASE}/discover/connect/${artistId}`, {
             method: 'POST'
         });
         const result = await response.json();
-        return result;
-    },
-
-    async getArtistProfile(artistId) {
-        const response = await fetch(`${API_BASE}/artists/${artistId}`);
-        const result = await response.json();
         if (!response.ok) {
-            throw new Error(result.message || 'Failed to fetch artist profile');
+            throw new Error(result.message || 'Failed to connect with artist');
         }
-        return result.data;
-    },
-
-    async getArtistPortfolio(artistId, category) {
-        const query = (category && category.toLowerCase() !== 'all') ? `?category=${encodeURIComponent(category)}` : '';
-        const response = await fetch(`${API_BASE}/artists/${artistId}/portfolio${query}`);
-        const result = await response.json();
-        return result.data || [];
-    },
-
-    async toggleFollowArtist(artistId) {
-        const response = await fetch(`${API_BASE}/artists/${artistId}/follow`, {
-            method: 'POST'
-        });
-        const result = await response.json();
-        return result.data || result;
-    },
-
-    async createPortfolioItem(data) {
-        const response = await fetch(`${API_BASE}/portfolio`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        const result = await response.json();
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to create portfolio item');
-        }
-        return result.data;
-    },
-
-    async updatePortfolioItem(id, data) {
-        const response = await fetch(`${API_BASE}/portfolio/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        const result = await response.json();
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to update portfolio item');
-        }
-        return result.data;
-    },
-
-    async deletePortfolioItem(id) {
-        const response = await fetch(`${API_BASE}/portfolio/${id}`, {
-            method: 'DELETE'
-        });
-        const result = await response.json();
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to delete portfolio item');
-        }
-        return result;
-    },
-
-    async getOpportunities(category, location, q) {
-        const params = new URLSearchParams();
-        if (category && category.toLowerCase() !== 'all') params.append('category', category);
-        if (location) params.append('location', location);
-        if (q) params.append('search', q);
-        const queryStr = params.toString() ? `?${params.toString()}` : '';
-        const response = await fetch(`${API_BASE}/opportunities${queryStr}`);
-        const result = await response.json();
-        return result.data || [];
-    },
-
-    async searchOpportunities(q) {
-        const response = await fetch(`${API_BASE}/opportunities/search?q=${encodeURIComponent(q)}`);
-        const result = await response.json();
-        return result.data || [];
-    },
-
-    async getFeaturedOpportunity() {
-        const response = await fetch(`${API_BASE}/opportunities/featured`);
-        const result = await response.json();
-        return result.data || null;
-    },
-
-    async getOpportunityDetails(id, userId) {
-        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-        const response = await fetch(`${API_BASE}/opportunities/${id}${query}`);
-        const result = await response.json();
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to fetch opportunity details');
-        }
-        return result.data;
-    },
-
-    async applyToOpportunity(id, userId, notes) {
-        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-        const response = await fetch(`${API_BASE}/opportunities/${id}/apply${query}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ notes: notes || 'Applied via ArtSphere web portal' })
-        });
-        const result = await response.json();
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to submit application');
-        }
-        return result;
-    },
-
-    // --- Module 6: Posts & Feed ---
-    async getPosts(artForm, tab, search, userId) {
-        const params = new URLSearchParams();
-        if (artForm && artForm.toLowerCase() !== 'all') params.append('artForm', artForm);
-        if (tab) params.append('tab', tab);
-        if (search) params.append('search', search);
-        if (userId) params.append('userId', userId);
-        const qStr = params.toString() ? `?${params.toString()}` : '';
-        const response = await fetch(`${API_BASE}/posts${qStr}`);
-        const result = await response.json();
-        return result.data || [];
-    },
-
-    async searchPosts(query, userId) {
-        const params = new URLSearchParams();
-        if (query) params.append('q', query);
-        if (userId) params.append('userId', userId);
-        const qStr = params.toString() ? `?${params.toString()}` : '';
-        const response = await fetch(`${API_BASE}/posts/search${qStr}`);
-        const result = await response.json();
-        return result.data || [];
-    },
-
-    async getPostDetails(id, userId) {
-        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-        const response = await fetch(`${API_BASE}/posts/${id}${query}`);
-        const result = await response.json();
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to fetch post details');
-        }
-        return result.data;
-    },
-
-    async createPost(postData, userId) {
-        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-        const response = await fetch(`${API_BASE}/posts${query}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(postData)
-        });
-        const result = await response.json();
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to create post');
-        }
-        return result.data;
-    },
-
-    async togglePostLike(id, userId) {
-        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-        const response = await fetch(`${API_BASE}/posts/${id}/like${query}`, {
-            method: 'POST'
-        });
-        const result = await response.json();
-        return result.data;
-    },
-
-    async togglePostSave(id, userId) {
-        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-        const response = await fetch(`${API_BASE}/posts/${id}/save${query}`, {
-            method: 'POST'
-        });
-        const result = await response.json();
-        return result.data;
-    },
-
-    async getPostComments(id) {
-        const response = await fetch(`${API_BASE}/posts/${id}/comments`);
-        const result = await response.json();
-        return result.data || [];
-    },
-
-    async addPostComment(id, commentData, userId) {
-        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-        const response = await fetch(`${API_BASE}/posts/${id}/comments${query}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(commentData)
-        });
-        const result = await response.json();
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to add comment');
-        }
-        return result.data;
-    },
-
-    // Module 7: Collaborations & Requests
-    async getCollaborations(skill, location, search, userId) {
-        const params = new URLSearchParams();
-        if (skill && skill.toLowerCase() !== 'all') params.append('skill', skill);
-        if (location) params.append('location', location);
-        if (search) params.append('search', search);
-        if (userId) params.append('userId', userId);
-        const query = params.toString() ? `?${params.toString()}` : '';
-        const response = await fetch(`${API_BASE}/collaborations${query}`);
-        const result = await response.json();
-        return result.data || [];
-    },
-
-    async searchCollaborations(searchQuery, userId) {
-        const params = new URLSearchParams();
-        if (searchQuery) params.append('q', searchQuery);
-        if (userId) params.append('userId', userId);
-        const query = params.toString() ? `?${params.toString()}` : '';
-        const response = await fetch(`${API_BASE}/collaborations/search${query}`);
-        const result = await response.json();
-        return result.data || [];
-    },
-
-    async getCollaborationDetails(id, userId) {
-        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-        const response = await fetch(`${API_BASE}/collaborations/${id}${query}`);
-        const result = await response.json();
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to fetch collaboration details');
-        }
-        return result.data;
-    },
-
-    async createCollaboration(collabData, userId) {
-        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-        const response = await fetch(`${API_BASE}/collaborations${query}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(collabData)
-        });
-        const result = await response.json();
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to create collaboration post');
-        }
-        return result.data;
-    },
-
-    async updateCollaborationStatus(id, status, userId) {
-        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-        const response = await fetch(`${API_BASE}/collaborations/${id}/status${query}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status })
-        });
-        const result = await response.json();
-        return result.data;
-    },
-
-    async sendCollaborationRequest(collabId, requestData, userId) {
-        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-        const url = collabId ? `${API_BASE}/collaborations/${collabId}/requests${query}` : `${API_BASE}/collaboration-requests${query}`;
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(requestData)
-        });
-        const result = await response.json();
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to send collaboration request');
-        }
-        return result.data;
-    },
-
-    async getCollaborationRequests(type = 'received', userId) {
-        const params = new URLSearchParams();
-        if (type) params.append('type', type);
-        if (userId) params.append('userId', userId);
-        const query = params.toString() ? `?${params.toString()}` : '';
-        const response = await fetch(`${API_BASE}/collaboration-requests${query}`);
-        const result = await response.json();
-        return result.data || [];
-    },
-
-    async acceptCollaborationRequest(id, userId) {
-        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-        const response = await fetch(`${API_BASE}/collaboration-requests/${id}/accept${query}`, {
-            method: 'POST'
-        });
-        const result = await response.json();
-        return result.data;
-    },
-
-    async rejectCollaborationRequest(id, userId) {
-        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
-        const response = await fetch(`${API_BASE}/collaboration-requests/${id}/reject${query}`, {
-            method: 'POST'
-        });
-        const result = await response.json();
-        return result.data;
+        return result.data || {};
     }
 };
 

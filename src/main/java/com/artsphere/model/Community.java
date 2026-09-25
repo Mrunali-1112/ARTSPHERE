@@ -10,6 +10,13 @@ public class Community {
     private Integer memberCount;
     private String category;
     private String imageUrl;
+    private String coverImage;
+    private String location;
+    private String artForms;
+    private String rules;
+    private Long ownerId;
+    private Boolean isFeatured;
+    private String createdDate;
     private LocalDateTime createdAt;
 
     public Community() {
@@ -70,6 +77,62 @@ public class Community {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getArtForms() {
+        return artForms;
+    }
+
+    public void setArtForms(String artForms) {
+        this.artForms = artForms;
+    }
+
+    public String getRules() {
+        return rules;
+    }
+
+    public void setRules(String rules) {
+        this.rules = rules;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public Boolean getIsFeatured() {
+        return isFeatured;
+    }
+
+    public void setIsFeatured(Boolean isFeatured) {
+        this.isFeatured = isFeatured;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 
     public LocalDateTime getCreatedAt() {

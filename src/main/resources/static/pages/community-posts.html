@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Posts | ArtSphere</title>
+    <link rel="stylesheet" href="/css/community-details.css">
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        params.set('tab', 'posts');
+        window.location.replace('/pages/community-details.html?' + params.toString());
+    </script>
+</head>
+<body style="display: flex; align-items: center; justify-content: center; height: 100vh; font-family: 'Plus Jakarta Sans', sans-serif;">
+    <p>Redirecting to <a href="/pages/community-details.html?tab=posts">Community Posts</a>...</p>
+</body>
+</html>
