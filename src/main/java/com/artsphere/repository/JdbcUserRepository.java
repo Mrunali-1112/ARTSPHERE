@@ -52,21 +52,6 @@ public class JdbcUserRepository implements UserRepository {
             user.setFollowingCount(356);
             user.setPostsCount(24);
         }
-        try {
-            user.setCoverImage(rs.getString("cover_image"));
-            user.setArtistType(rs.getString("artist_type"));
-            user.setSkills(rs.getString("skills"));
-            user.setFollowersCount(rs.getInt("followers_count"));
-            user.setFollowingCount(rs.getInt("following_count"));
-            user.setPostsCount(rs.getInt("posts_count"));
-        } catch (Exception ignored) {
-            user.setCoverImage("/images/artist_profile_cover.png");
-            user.setArtistType("Visual Artist");
-            user.setSkills("Digital Art, Illustration, Portraits, Concept Art, Nature Art");
-            user.setFollowersCount(1800);
-            user.setFollowingCount(356);
-            user.setPostsCount(24);
-        }
 
         Timestamp createdAt = rs.getTimestamp("created_at");
         if (createdAt != null) {
@@ -149,12 +134,15 @@ public class JdbcUserRepository implements UserRepository {
 
     @Override
     public int update(User user) {
-        String sql = "UPDATE users SET full_name = ?, bio = ?, profile_picture = ?, role = ? WHERE id = ?";
+        String sql = "UPDATE users SET full_name = ?, bio = ?, profile_picture = ?, location = ?, artist_type = ?, skills = ?, role = ? WHERE id = ?";
         return jdbcTemplate.update(sql,
                 user.getFullName(),
                 user.getBio(),
                 user.getProfilePicture(),
-                user.getRole(),
+                user.getLocation() != null ? user.getLocation() : "Mumbai, MH",
+                user.getArtistType() != null ? user.getArtistType() : "Visual Artist",
+                user.getSkills() != null ? user.getSkills() : "Digital Art, Illustration",
+                user.getRole() != null ? user.getRole() : "ROLE_USER",
                 user.getId());
     }
 

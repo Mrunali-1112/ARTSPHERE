@@ -1,10 +1,14 @@
 package com.artsphere.controller;
 
+import com.artsphere.exception.ResourceNotFoundException;
 import com.artsphere.model.Artwork;
+import com.artsphere.model.User;
 import com.artsphere.model.dto.ApiResponse;
 import com.artsphere.model.dto.ArtistProfileResponse;
 import com.artsphere.model.dto.ArtworkResponse;
 import com.artsphere.model.dto.DiscoverArtistResponse;
+import com.artsphere.model.dto.UpdateProfileRequest;
+import com.artsphere.repository.UserRepository;
 import com.artsphere.service.ArtworkService;
 import com.artsphere.service.DiscoverService;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +24,12 @@ public class ArtistController {
 
     private final DiscoverService discoverService;
     private final ArtworkService artworkService;
+    private final UserRepository userRepository;
 
-    public ArtistController(DiscoverService discoverService, ArtworkService artworkService) {
+    public ArtistController(DiscoverService discoverService, ArtworkService artworkService, UserRepository userRepository) {
         this.discoverService = discoverService;
         this.artworkService = artworkService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping({"", "/artists"})
@@ -105,5 +111,36 @@ public class ArtistController {
                 "artistId", artistId,
                 "following", following
         )));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<ArtistProfileResponse>> updateArtistProfile(
+            @PathVariable Long id,
+            @RequestBody UpdateProfileRequest request,
+            Authentication authentication) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Artist not found with id: " + id));
+        if (request.getFullName() != null && !request.getFullName().isBlank()) {
+            user.setFullName(request.getFullName().trim());
+        }
+        if (request.getBio() != null) {
+            user.setBio(request.getBio().trim());
+        }
+        if (request.getLocation() != null && !request.getLocation().isBlank()) {
+            user.setLocation(request.getLocation().trim());
+        }
+        if (request.getArtistType() != null && !request.getArtistType().isBlank()) {
+            user.setArtistType(request.getArtistType().trim());
+        }
+        if (request.getSkills() != null) {
+            user.setSkills(request.getSkills().trim());
+        }
+        if (request.getProfilePicture() != null && !request.getProfilePicture().isBlank()) {
+            user.setProfilePicture(request.getProfilePicture().trim());
+        }
+        userRepository.update(user);
+        String currentUsername = authentication != null ? authentication.getName() : null;
+        ArtistProfileResponse profile = discoverService.getArtistProfile(id, currentUsername);
+        return ResponseEntity.ok(ApiResponse.success("Profile updated successfully", profile));
     }
 }

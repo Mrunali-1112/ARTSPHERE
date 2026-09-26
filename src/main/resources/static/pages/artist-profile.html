@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtSphere – Artist Profile</title>
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/artist-profile.css">
+</head>
+<body>
+    <div class="mobile-frame-container wide-landing">
+        <main class="screen-container profile-screen">
+
+            <!-- Sticky Header Navbar -->
+            <header class="profile-header">
+                <a href="/pages/home.html" class="header-logo-link" aria-label="ArtSphere Home">
+                    <img src="/images/logo_header.png" alt="ArtSphere – The Artist Community" class="header-logo-img">
+                </a>
+
+                <div class="header-right-actions">
+                    <button class="header-action-btn" id="headerSearchBtn" aria-label="Search" onclick="window.location.href='/pages/discover.html'">
+                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+
+                    <button class="header-action-btn bell-btn" id="headerNotifyBtn" aria-label="Notifications" onclick="alert('No new notifications')">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-dot"></span>
+                    </button>
+
+                    <div class="header-profile-dropdown" id="userMenuWrapper">
+                        <div class="avatar-clickable" id="headerUserAvatarBtn" role="button" aria-label="Open User Menu">
+                            <img src="/images/user_avatar_nav.png" alt="User Profile" class="header-user-avatar" id="headerUserAvatar">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.5" class="header-dropdown-chevron">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Profile Sub-header (Back + Title + More) -->
+            <div class="profile-nav-bar">
+                <button class="btn-nav-back" id="btnBack" aria-label="Go Back">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                </button>
+                <h1 class="profile-nav-title">Artist Profile</h1>
+                <button class="btn-more-options" id="btnMoreOptions" aria-label="More Options">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="5" cy="12" r="2"></circle>
+                        <circle cx="12" cy="12" r="2"></circle>
+                        <circle cx="19" cy="12" r="2"></circle>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Profile Body Content -->
+            <div class="profile-content-wrap">
+
+                <!-- 1. Cover & Avatar Banner -->
+                <div class="profile-banner-container">
+                    <div class="cover-image-box">
+                        <img src="/images/artist_profile_cover.png" alt="Cover Banner" id="artistCoverImg" class="profile-cover-img" onerror="this.src='/images/artist_profile_cover.png'">
+                    </div>
+                    <div class="profile-avatar-container">
+                        <div class="avatar-ring">
+                            <img src="/images/artist_profile_avatar.png" alt="Artist Profile" id="artistAvatarImg" class="profile-avatar-img" onerror="this.src='/images/artist_profile_avatar.png'">
+                            <span class="online-status-dot" title="Active Creator"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Artist Identity & Action Buttons -->
+                <div class="profile-meta-section">
+                    <div class="profile-title-row">
+                        <div class="profile-identity">
+                            <h2 class="artist-name" id="artistName">Aanya Kulkarni</h2>
+                            <div class="artist-subline">
+                                <span class="artist-craft" id="artistCraft">Visual Artist</span>
+                                <span class="meta-pipe">|</span>
+                                <div class="artist-location">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6C5CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    <span id="artistLocation">Mumbai, MH</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-action-buttons">
+                            <button class="btn-profile-follow" id="btnFollow">Follow</button>
+                            <a href="/pages/messages.html" class="btn-profile-message" id="btnMessage">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                </svg>
+                                <span>Message</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 3. Stats Card (Posts, Followers, Following) -->
+                    <div class="profile-stats-card">
+                        <div class="stat-cell">
+                            <span class="stat-number" id="postsCount">24</span>
+                            <span class="stat-label">Posts</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-cell">
+                            <span class="stat-number" id="followersCount">1.8K</span>
+                            <span class="stat-label">Followers</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-cell">
+                            <span class="stat-number" id="followingCount">356</span>
+                            <span class="stat-label">Following</span>
+                        </div>
+                    </div>
+
+                    <!-- 4. Bio -->
+                    <p class="profile-bio-text" id="artistBio">
+                        Illustrator and digital artist exploring everyday moments through art.
+                    </p>
+
+                    <!-- 5. Skill & Style Pills -->
+                    <div class="profile-skills-row" id="artistSkillsContainer">
+                        <span class="profile-skill-pill">Digital Art</span>
+                        <span class="profile-skill-pill">Illustration</span>
+                        <span class="profile-skill-pill">Portraits</span>
+                        <span class="profile-skill-pill">Concept Art</span>
+                        <span class="profile-skill-pill">Nature Art</span>
+                    </div>
+
+                    <!-- 6. Social Media Links -->
+                    <div class="profile-social-row">
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" id="socialInstagram" aria-label="Instagram">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="social-icon-btn" id="socialBehance" aria-label="Behance">
+                            <span class="behance-text-icon">Bē</span>
+                        </a>
+                        <a href="https://artsphere.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn" id="socialWebsite" aria-label="Website">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 7. Section Navigation Tabs Bar -->
+                <div class="profile-tabs-bar">
+                    <button class="profile-nav-tab active" data-tab="portfolio">Portfolio</button>
+                    <button class="profile-nav-tab" data-tab="about">About</button>
+                    <button class="profile-nav-tab" data-tab="opportunities">Opportunities</button>
+                    <button class="profile-nav-tab" data-tab="collections">Collections</button>
+                </div>
+
+                <!-- 8. Portfolio Section Preview -->
+                <section class="profile-portfolio-section">
+                    <div class="section-title-row">
+                        <h2 class="section-heading">Portfolio</h2>
+                        <a href="/pages/portfolio.html?id=101" class="section-see-all" id="linkSeeAllPortfolio">
+                            <span>See All</span>
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- 3x2 Grid of Artworks -->
+                    <div class="portfolio-grid" id="profilePortfolioGrid">
+                        <!-- Populated dynamically via /api/artists/{id} -->
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Sticky Bottom Navigation Bar -->
+            <nav class="discover-bottom-nav" aria-label="Bottom Navigation">
+                <a href="/pages/home.html" class="nav-item" aria-label="Home">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span class="nav-label">Home</span>
+                </a>
+
+                <a href="/pages/discover.html" class="nav-item" aria-label="Discover">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                    </svg>
+                    <span class="nav-label">Discover</span>
+                </a>
+
+                <!-- Central + Action Button -->
+                <div class="nav-item-center">
+                    <button class="nav-fab-btn" id="centralCreateBtn" aria-label="Create New Content">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <a href="/pages/messages.html" class="nav-item" aria-label="Messages">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                    <span class="nav-label">Messages</span>
+                </a>
+
+                <a href="/pages/artist-profile.html?id=101" class="nav-item active" id="bottomNavProfile" aria-label="Profile">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                    <span class="nav-label">Profile</span>
+                </a>
+            </nav>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/api.js"></script>
+    <script src="/js/artist-profile.js"></script>
+</body>
+</html>

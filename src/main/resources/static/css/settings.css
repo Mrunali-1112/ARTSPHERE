@@ -1,0 +1,349 @@
+/* ==========================================================================
+   ArtSphere – Settings CSS
+   Source of Truth: Approved page_21.jpg and page_23.jpg references
+   ========================================================================== */
+
+.settings-screen {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: #FAF9FE;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 80px;
+}
+
+/* Header */
+.settings-screen .app-top-header {
+    height: 60px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #ECE8F6;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.settings-screen .header-left,
+.settings-screen .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.settings-screen .header-logo-img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+}
+
+.settings-screen .header-avatar-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #EDE8F8;
+    transition: transform 0.2s ease;
+}
+
+.settings-screen .header-avatar-img:hover {
+    transform: scale(1.05);
+}
+
+.settings-screen .btn-icon-nav {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #1C102C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+    transition: background-color 0.15s ease;
+    text-decoration: none;
+}
+
+.settings-screen .btn-icon-nav:hover {
+    background-color: #F1EDFB;
+    color: #7C5DFA;
+}
+
+/* Hero */
+.settings-hero {
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px 20px 16px 20px;
+    box-sizing: border-box;
+}
+
+.settings-title {
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'Playfair Display', Georgia, serif;
+    color: #1C102C;
+    margin: 0 0 6px 0;
+    letter-spacing: -0.3px;
+}
+
+.settings-subtitle {
+    font-size: 14px;
+    color: #64748B;
+    margin: 0;
+}
+
+/* Settings Items */
+.settings-content-wrap {
+    max-width: 720px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.settings-card-group {
+    background: #FFFFFF;
+    border-radius: 20px;
+    border: 1px solid #ECE7F6;
+    box-shadow: 0 2px 10px rgba(100, 80, 160, 0.05);
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.settings-item-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-bottom: 1px solid #F6F4FB;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    outline: none;
+}
+
+.settings-item-row:last-child {
+    border-bottom: none;
+}
+
+.settings-item-row:hover {
+    background-color: #FBF9FF;
+}
+
+/* Icon Box */
+.settings-item-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.icon-account {
+    background-color: #EFF6FF;
+    color: #3B82F6;
+}
+
+.icon-bell {
+    background-color: #F3EEFE;
+    color: #7C5DFA;
+}
+
+.icon-privacy {
+    background-color: #ECFDF5;
+    color: #10B981;
+}
+
+.icon-palette {
+    background-color: #F5F3FF;
+    color: #8B5CF6;
+}
+
+.icon-help {
+    background-color: #EFF6FF;
+    color: #0284C7;
+}
+
+.icon-terms {
+    background-color: #F1F5F9;
+    color: #64748B;
+}
+
+.icon-logout {
+    background-color: #FEF2F2;
+    color: #EF4444;
+}
+
+/* Item Text */
+.settings-item-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.settings-item-title {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: #1C102C;
+    margin: 0 0 3px 0;
+    line-height: 1.3;
+}
+
+.settings-item-desc {
+    font-size: 13px;
+    color: #64748B;
+    margin: 0;
+    line-height: 1.35;
+}
+
+.settings-item-arrow {
+    color: #CBD5E1;
+    display: flex;
+    align-items: center;
+    transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.settings-item-row:hover .settings-item-arrow {
+    transform: translateX(3px);
+    color: #7C5DFA;
+}
+
+/* Logout Specific */
+.settings-item-row.logout-row:hover {
+    background-color: #FFF5F5;
+}
+
+.logout-text {
+    color: #EF4444 !important;
+}
+
+.logout-arrow {
+    color: #FCA5A5 !important;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #CBD5E1;
+    transition: 0.25s;
+    border-radius: 24px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.25s;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+input:checked + .toggle-slider {
+    background: linear-gradient(135deg, #7C5DFA 0%, #6C5CE7 100%);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(20px);
+}
+
+/* Modal */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 8, 30, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-card {
+    background: #FFFFFF;
+    border-radius: 20px;
+    max-width: 480px;
+    width: 100%;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.modal-header h2 {
+    font-size: 18px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    color: #1C102C;
+    margin: 0;
+}
+
+.btn-close-modal {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #64748B;
+    padding: 4px;
+}
+
+.modal-body {
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-modal-primary {
+    background: linear-gradient(135deg, #7C5DFA 0%, #6C5CE7 100%);
+    color: #FFFFFF;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 16px;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+}

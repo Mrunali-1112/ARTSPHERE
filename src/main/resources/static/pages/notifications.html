@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications – ArtSphere</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/notifications.css">
+</head>
+<body>
+    <div class="app-layout">
+        <div class="notifications-screen">
+
+            <!-- 1. Top App Header -->
+            <header class="app-top-header">
+                <div class="header-left">
+                    <button class="btn-icon-nav" id="btnBack" aria-label="Go Back">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    <a href="/pages/home.html" class="header-logo-wrap" aria-label="ArtSphere Home">
+                        <img src="/images/logo_header.png" alt="ArtSphere" class="header-logo-img">
+                    </a>
+                </div>
+                <div class="header-right">
+                    <a href="/pages/notifications.html" class="btn-icon-nav header-bell-btn active" aria-label="Notifications" title="Notifications">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-badge-dot" id="headerBellDot" style="display:none;"></span>
+                    </a>
+                    <a href="/pages/artist-profile.html?id=101" class="header-avatar-link" aria-label="View Profile">
+                        <img src="/images/user_avatar_nav.png" alt="User Profile" class="header-avatar-img" id="userHeaderAvatar">
+                    </a>
+                </div>
+            </header>
+
+            <!-- 2. Hero Section -->
+            <section class="notifications-hero">
+                <div class="hero-content-row">
+                    <div class="hero-text-col">
+                        <div class="title-with-badge">
+                            <h1 class="page-title">Notifications</h1>
+                            <span class="unread-count-pill" id="unreadCountPill" style="display:none;">0 new</span>
+                        </div>
+                        <p class="page-subtitle">Stay updated with what's happening in your creative world.</p>
+                    </div>
+                    <div class="hero-sticker-col">
+                        <div class="watercolor-quote-sticker">
+                            <div class="sticker-content">
+                                <span class="sticker-line">Create</span>
+                                <span class="sticker-line">Connect</span>
+                                <span class="sticker-line highlight">Belong</span>
+                                <span class="sticker-heart">&#9825;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Bar (Mark all read) -->
+                <div class="notifications-actions-bar">
+                    <div class="category-tabs-container">
+                        <div class="segmented-category-bar" role="tablist" aria-label="Notification Categories">
+                            <button class="category-tab active" data-category="ALL" role="tab" aria-selected="true">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                                <span>All</span>
+                            </button>
+                            <button class="category-tab" data-category="COLLABORATION" role="tab" aria-selected="false">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                <span>Collaborations</span>
+                            </button>
+                            <button class="category-tab" data-category="OPPORTUNITY" role="tab" aria-selected="false">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                <span>Opportunities</span>
+                            </button>
+                            <button class="category-tab" data-category="EVENT" role="tab" aria-selected="false">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                <span>Events</span>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn-mark-all-read" id="btnMarkAllRead" title="Mark all notifications as read">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Mark all read</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 3. Notifications Groups Container -->
+            <main class="notifications-feed-wrap">
+                <!-- Dynamic notification groups (Today, This Week, Earlier) injected by notifications.js -->
+                <div class="notifications-stream" id="notificationsStream">
+                    <!-- Loading skeleton -->
+                    <div class="notification-skeleton-card"></div>
+                    <div class="notification-skeleton-card"></div>
+                    <div class="notification-skeleton-card"></div>
+                </div>
+
+                <!-- Empty State -->
+                <div class="notifications-empty-state" id="notificationsEmptyState" style="display:none;">
+                    <div class="empty-icon-box">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#7C5DFA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                    </div>
+                    <h3>All caught up!</h3>
+                    <p>No new notifications right now. Keep exploring art, events, and collaborations.</p>
+                    <a href="/pages/discover.html" class="btn-discover-fallback">Discover ArtSphere</a>
+                </div>
+
+                <!-- 4. Inspiring Banner Quote (Matching page_36.jpg) -->
+                <div class="inspiring-banner-box">
+                    <div class="banner-flower-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C5DFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a5 5 0 0 0-5 5c0 3 5 8 5 8s5-5 5-8a5 5 0 0 0-5-5z"></path>
+                            <circle cx="12" cy="7" r="1.5"></circle>
+                        </svg>
+                    </div>
+                    <div class="banner-text-wrap">
+                        <p class="banner-main-text">Small moments. Big opportunities.</p>
+                        <p class="banner-sub-text">STAY NOTICED. STAY INSPIRED.</p>
+                    </div>
+                </div>
+            </main>
+
+            <!-- 5. Bottom Navigation Bar -->
+            <nav class="bottom-nav" aria-label="Main Navigation">
+                <a href="/pages/home.html" class="bottom-nav-item" aria-label="Home">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span class="nav-text">Home</span>
+                </a>
+
+                <a href="/pages/discover.html" class="bottom-nav-item" aria-label="Discover">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+                    </svg>
+                    <span class="nav-text">Discover</span>
+                </a>
+
+                <div class="bottom-nav-center">
+                    <a href="/pages/create-post.html" class="fab-center-btn" aria-label="Create Post">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </a>
+                </div>
+
+                <a href="/pages/notifications.html" class="bottom-nav-item active" aria-label="Notifications" aria-current="page">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="nav-text">Activity</span>
+                </a>
+
+                <a href="/pages/artist-profile.html?id=101" class="bottom-nav-item" aria-label="Profile">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span class="nav-text">Profile</span>
+                </a>
+            </nav>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/api.js"></script>
+    <script src="/js/notifications.js"></script>
+</body>
+</html>

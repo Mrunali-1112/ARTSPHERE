@@ -8,8 +8,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.http.MediaType;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -116,5 +119,28 @@ class ArtistControllerTest {
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data.artistId").value(101))
                 .andExpect(jsonPath("$.data.following").exists());
+    }
+
+    @Test
+    @DisplayName("Should update artist profile by id")
+    void testUpdateArtistProfile() throws Exception {
+        String jsonPayload = """
+            {
+                "fullName": "Aanya Sharma Updated",
+                "bio": "Updated bio text for testing",
+                "location": "Pune, India",
+                "artistType": "Illustrator",
+                "skills": "Digital Art, Watercolor"
+            }
+            """;
+
+        mockMvc.perform(put("/api/artists/101")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonPayload))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.data.id").value(101))
+                .andExpect(jsonPath("$.data.fullName").value("Aanya Sharma Updated"))
+                .andExpect(jsonPath("$.data.bio").value("Updated bio text for testing"));
     }
 }

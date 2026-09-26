@@ -59,3 +59,20 @@ CREATE TABLE IF NOT EXISTS artist_connections (
     UNIQUE KEY uq_user_artist (user_id, artist_id)
 );
 
+CREATE TABLE IF NOT EXISTS notifications (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    type VARCHAR(50) NOT NULL,
+    title VARCHAR(150) NOT NULL,
+    message TEXT NOT NULL,
+    sender_id BIGINT,
+    sender_name VARCHAR(100),
+    sender_avatar VARCHAR(255),
+    entity_type VARCHAR(50),
+    entity_id BIGINT,
+    action_url VARCHAR(255),
+    is_read BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_notifications_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+

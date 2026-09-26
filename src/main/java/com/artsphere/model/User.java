@@ -143,7 +143,7 @@ public class User {
     }
 
     public Integer getFollowersCount() {
-        return followersCount;
+        return followersCount != null ? followersCount : 0;
     }
 
     public void setFollowersCount(Integer followersCount) {
@@ -151,7 +151,7 @@ public class User {
     }
 
     public Integer getFollowingCount() {
-        return followingCount;
+        return followingCount != null ? followingCount : 0;
     }
 
     public void setFollowingCount(Integer followingCount) {
@@ -159,7 +159,7 @@ public class User {
     }
 
     public Integer getPostsCount() {
-        return postsCount;
+        return postsCount != null ? postsCount : 0;
     }
 
     public void setPostsCount(Integer postsCount) {

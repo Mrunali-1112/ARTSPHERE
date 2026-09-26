@@ -126,6 +126,19 @@ const api = {
         return result.data;
     },
 
+    async updateArtistProfile(artistId, data) {
+        const response = await fetch(`${API_BASE}/artists/${artistId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to update profile');
+        }
+        return result.data;
+    },
+
     async getArtistPortfolio(artistId, category) {
         const query = (category && category.toLowerCase() !== 'all') ? `?category=${encodeURIComponent(category)}` : '';
         const response = await fetch(`${API_BASE}/artists/${artistId}/portfolio${query}`);
@@ -617,6 +630,38 @@ const api = {
         if (!response.ok) {
             throw new Error(result.message || 'Failed to fetch applications summary');
         }
+        return result.data;
+    },
+
+    // --- Notifications ---
+    async getNotifications(userId, category) {
+        const params = new URLSearchParams();
+        if (userId) params.append('userId', userId);
+        if (category && category !== 'ALL') params.append('category', category);
+        const query = params.toString() ? `?${params.toString()}` : '';
+        const response = await fetch(`${API_BASE}/notifications${query}`);
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to fetch notifications');
+        }
+        return result.data;
+    },
+
+    async markNotificationRead(id, userId) {
+        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
+        const response = await fetch(`${API_BASE}/notifications/${id}/read${query}`, {
+            method: 'POST'
+        });
+        const result = await response.json();
+        return result.data;
+    },
+
+    async markAllNotificationsRead(userId) {
+        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
+        const response = await fetch(`${API_BASE}/notifications/read-all${query}`, {
+            method: 'POST'
+        });
+        const result = await response.json();
         return result.data;
     }
 };
