@@ -1,39 +1,48 @@
 /**
- * ArtSphere – Help & Support Live Chat Controller
- * Matches Approved Design Reference: page_22.jpg
+ * ArtSphere — Help & Support Live Chat Script (Editorial Neo-Brutalist)
+ * Handles conversational inquiries, FAQ chip auto-responses, and steward knowledge base
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Elements
-    const btnHeaderBack = document.getElementById('btnHeaderBack');
-    const btnPageBack = document.getElementById('btnPageBack');
-    const userHeaderAvatar = document.getElementById('userHeaderAvatar');
+    // 1. Universal Nav Dropdown & Mobile Toggle
+    const userAvatarBtn = document.getElementById('userAvatarBtn');
+    const userDropdownPanel = document.getElementById('userDropdownPanel');
+    const navMobileToggle = document.getElementById('navMobileToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    if (userAvatarBtn && userDropdownPanel) {
+        userAvatarBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdownPanel.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!userDropdownPanel.contains(e.target) && !userAvatarBtn.contains(e.target)) {
+                userDropdownPanel.classList.remove('active');
+            }
+        });
+    }
+
+    if (navMobileToggle && navLinks) {
+        navMobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('nav-links-mobile-open');
+        });
+    }
+
+    // 2. Chat Elements
     const chatArea = document.getElementById('chatArea');
     const messagesList = document.getElementById('messagesList');
     const chatMessageInput = document.getElementById('chatMessageInput');
     const btnSendMessage = document.getElementById('btnSendMessage');
-    const btnAttachment = document.getElementById('btnAttachment');
-    const fileAttachInput = document.getElementById('fileAttachInput');
+    const faqChips = document.querySelectorAll('.faq-chip');
 
-    // 2. Navigation
-    const goBack = () => {
-        if (window.history.length > 1) {
-            window.history.back();
-        } else {
-            window.location.href = '/pages/settings.html';
-        }
-    };
-    if (btnHeaderBack) btnHeaderBack.addEventListener('click', goBack);
-    if (btnPageBack) btnPageBack.addEventListener('click', goBack);
-
-    // 3. Time Formatter Helper
+    // 3. Time Helper
     const formatTime = () => {
         const now = new Date();
         let hours = now.getHours();
         const minutes = now.getMinutes();
         const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        hours = hours ? hours : 12;
+        hours = hours % 12 || 12;
         const minutesStr = minutes < 10 ? '0' + minutes : minutes;
         return `${hours}:${minutesStr} ${ampm}`;
     };
@@ -46,45 +55,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 top: chatArea.scrollHeight,
                 behavior: 'smooth'
             });
-        }, 80);
+        }, 60);
     };
 
     // 5. Bot Knowledge Base
     const BOT_RESPONSES = {
-        'How do I create a post?': "To create a post, tap the '+' button at the bottom center, choose the type of post, add your content and click 'Publish'. Let me know if you need more help!",
-        'What types of posts are allowed?': "ArtSphere welcomes all forms of creative expression! You can share digital illustrations, sketches, paintings, photography, concept art, 3D renders, and project work in progress. Please ensure you own or have permission for any media you share.",
-        'Can I edit or delete my post?': "Yes! Go to your profile or feed, locate your post, tap the options menu (⋯), and select 'Edit Post' to update details or 'Delete' to permanently remove it.",
-        'Why is my post not visible?': "If your post was recently created, check your network connection and pull to refresh your feed. You can also visit your Profile to view all published works under your portfolio.",
-        'I need help with something else': "We're here for you! You can type your question directly in the message box below, or reach out to our team at support@artsphere.com."
+        'How do I pitch a collaboration?': "To propose a collaboration, open any artist's profile or visit the Collaborations board. Tap 'Post Collab Pitch' or 'Send Inquiry', outline your concept, roles needed, and timeline.",
+        'Portfolio showcase standards': "ArtSphere supports high-res PNG, JPG, and WebP media up to 25MB. Each piece can feature detailed captions explaining materials, process sketches, and medium tags.",
+        'Submitting open calls': "Browse active residency, grant, and exhibition opportunities under 'Opportunities'. When you find an open call that fits your practice, click 'Submit Application' to attach your portfolio works and cover statement.",
+        'Joining fellowship guilds': "Visit 'Communities' to explore specialized collectives (e.g., Acoustic Guitarists, Film Scoring, Watercolorists). Tap 'Join Guild' to participate in jam sessions and private critiques."
     };
 
     const getBotResponseForQuery = (query) => {
+        if (BOT_RESPONSES[query]) return BOT_RESPONSES[query];
+
         const q = query.toLowerCase();
-        if (BOT_RESPONSES[query]) {
-            return BOT_RESPONSES[query];
+        if (q.includes('collab') || q.includes('partner') || q.includes('pitch')) {
+            return BOT_RESPONSES['How do I pitch a collaboration?'];
         }
-        if (q.includes('create') && q.includes('post')) {
-            return BOT_RESPONSES['How do I create a post?'];
+        if (q.includes('portfolio') || q.includes('art') || q.includes('upload') || q.includes('image')) {
+            return BOT_RESPONSES['Portfolio showcase standards'];
         }
-        if (q.includes('portfolio') || q.includes('artwork') || q.includes('image')) {
-            return "You can showcase and organize your artworks in your Portfolio tab. Navigate to Profile > Add Artwork to upload high-res images and descriptions.";
+        if (q.includes('open call') || q.includes('opportunity') || q.includes('grant') || q.includes('apply')) {
+            return BOT_RESPONSES['Submitting open calls'];
         }
-        if (q.includes('collab') || q.includes('collaboration') || q.includes('partner')) {
-            return "Visit the Collaborations hub to discover projects, find creative partners, or send a collaboration request directly from artist profiles.";
+        if (q.includes('community') || q.includes('guild') || q.includes('group')) {
+            return BOT_RESPONSES['Joining fellowship guilds'];
         }
-        if (q.includes('event') || q.includes('workshop') || q.includes('exhibition')) {
-            return "Head over to the Events page to explore upcoming exhibitions, webinars, and masterclasses. You can register instantly with one tap!";
+        if (q.includes('event') || q.includes('workshop')) {
+            return "Head over to the Events hub to RSVP for masterclasses and live jams. Registrations can be viewed anytime under 'My Applications'.";
         }
-        if (q.includes('application') || q.includes('applied') || q.includes('status')) {
-            return "You can check all your active event registrations and collaboration requests under 'My Applications' to track their live status.";
+        if (q.includes('settings') || q.includes('profile') || q.includes('bio')) {
+            return "You can edit your artist bio, primary discipline, location, and social links in Studio Settings > Edit Profile.";
         }
-        if (q.includes('settings') || q.includes('account') || q.includes('profile')) {
-            return "You can update your personal information, bio, creative skills, and social links anytime from Settings > Edit Profile.";
-        }
-        return "Thank you for reaching out! Our support team has logged your message. If you need immediate assistance, feel free to email support@artsphere.com or browse the quick options above.";
+        return "Thank you for reaching out! A community steward has received your dispatch and will respond promptly. For urgent assistance, email stewards@artsphere.com.";
     };
 
-    // 6. Append User Message
+    // 6. Message Appenders
     const appendUserMessage = (text) => {
         const row = document.createElement('div');
         row.className = 'msg-row user-msg';
@@ -93,165 +100,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="msg-bubble user-bubble">
                     <p class="bubble-p">${escapeHTML(text)}</p>
                 </div>
-                <span class="msg-time">${formatTime()} <span class="checkmarks">✔✔</span></span>
+                <span class="msg-time">${formatTime()}</span>
             </div>
         `;
         messagesList.appendChild(row);
         scrollToBottom();
     };
 
-    // 7. Append Typing Indicator
-    const showTypingIndicator = () => {
-        const row = document.createElement('div');
-        row.className = 'msg-row bot-msg typing-row';
-        row.id = 'botTypingRow';
-        row.innerHTML = `
-            <div class="bot-avatar">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                </svg>
-            </div>
-            <div class="msg-body">
-                <div class="typing-bubble">
-                    <span class="typing-dot"></span>
-                    <span class="typing-dot"></span>
-                    <span class="typing-dot"></span>
-                </div>
-            </div>
-        `;
-        messagesList.appendChild(row);
-        scrollToBottom();
-    };
-
-    const removeTypingIndicator = () => {
-        const row = document.getElementById('botTypingRow');
-        if (row) row.remove();
-    };
-
-    // 8. Append Bot Message & Feedback
-    const appendBotMessage = (text, withFeedback = true) => {
+    const appendBotMessage = (text) => {
         const row = document.createElement('div');
         row.className = 'msg-row bot-msg';
         row.innerHTML = `
-            <div class="bot-avatar">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                </svg>
-            </div>
+            <div class="bot-avatar">✦</div>
             <div class="msg-body">
                 <div class="msg-bubble bot-bubble">
                     <p class="bubble-p">${escapeHTML(text)}</p>
                 </div>
-                <span class="msg-time">${formatTime()}</span>
+                <span class="msg-time">${formatTime()} &bull; Steward Response</span>
             </div>
         `;
         messagesList.appendChild(row);
-
-        if (withFeedback) {
-            appendFeedbackWidget();
-        }
         scrollToBottom();
     };
 
-    // 9. Feedback Widget
-    const appendFeedbackWidget = () => {
-        const row = document.createElement('div');
-        row.className = 'msg-row bot-msg feedback-widget-row';
-        row.innerHTML = `
-            <div class="bot-avatar">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                </svg>
-            </div>
-            <div class="msg-body">
-                <div class="msg-bubble bot-bubble">
-                    <p class="bubble-p">Was this helpful?</p>
-                    <div class="feedback-actions-row">
-                        <button type="button" class="btn-feedback btn-feedback-yes" aria-label="Yes, this was helpful">
-                            <span>👍 Yes</span>
-                        </button>
-                        <button type="button" class="btn-feedback btn-feedback-no" aria-label="No, this was not helpful">
-                            <span>👎 No</span>
-                        </button>
-                        <button type="button" class="btn-feedback btn-feedback-share" aria-label="Share Feedback">
-                            <span>💬 Share Feedback</span>
-                        </button>
-                    </div>
-                </div>
-                <span class="msg-time">${formatTime()}</span>
-            </div>
-        `;
-
-        const yesBtn = row.querySelector('.btn-feedback-yes');
-        const noBtn = row.querySelector('.btn-feedback-no');
-        const shareBtn = row.querySelector('.btn-feedback-share');
-        const actionsRow = row.querySelector('.feedback-actions-row');
-
-        if (yesBtn) {
-            yesBtn.addEventListener('click', () => {
-                actionsRow.innerHTML = '<span style="font-size:13px; color:#10b981; font-weight:600;">Glad we could help! 😊</span>';
-            });
-        }
-        if (noBtn) {
-            noBtn.addEventListener('click', () => {
-                actionsRow.innerHTML = '<span style="font-size:13px; color:#637083;">Thanks for letting us know. You can email support@artsphere.com anytime! ✉️</span>';
-            });
-        }
-        if (shareBtn) {
-            shareBtn.addEventListener('click', () => {
-                actionsRow.innerHTML = '<span style="font-size:13px; color:#5540d9; font-weight:600;">Thank you for sharing your feedback with the ArtSphere team! ✨</span>';
-            });
-        }
-
-        messagesList.appendChild(row);
-    };
-
-    // 10. Handle Question Chip Click
-    const handleQuestionChipClick = (question) => {
-        appendUserMessage(question);
-        showTypingIndicator();
-
-        setTimeout(() => {
-            removeTypingIndicator();
-            const reply = getBotResponseForQuery(question);
-            appendBotMessage(reply, true);
-        }, 550);
-    };
-
-    // Bind initial question chips
-    const initQuestionChips = () => {
-        const chips = document.querySelectorAll('.btn-question-chip');
-        chips.forEach(chip => {
-            chip.addEventListener('click', () => {
-                const question = chip.getAttribute('data-question') || chip.textContent.trim();
-                handleQuestionChipClick(question);
-            });
-        });
-    };
-
-    // 11. Send Message Handler
-    const handleSendMessage = () => {
-        if (!chatMessageInput) return;
-        const text = chatMessageInput.value.trim();
+    // 7. Send Message Flow
+    const handleSendMessage = (messageText) => {
+        const text = messageText || (chatMessageInput ? chatMessageInput.value.trim() : '');
         if (!text) return;
 
         appendUserMessage(text);
-        chatMessageInput.value = '';
-        showTypingIndicator();
+        if (chatMessageInput) chatMessageInput.value = '';
 
+        // Bot response after short natural delay
         setTimeout(() => {
-            removeTypingIndicator();
             const reply = getBotResponseForQuery(text);
-            appendBotMessage(reply, true);
-        }, 650);
+            appendBotMessage(reply);
+        }, 500);
     };
 
     if (btnSendMessage) {
-        btnSendMessage.addEventListener('click', handleSendMessage);
+        btnSendMessage.addEventListener('click', () => handleSendMessage());
     }
+
     if (chatMessageInput) {
         chatMessageInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
@@ -261,36 +151,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 12. File Attachment Handler
-    if (btnAttachment && fileAttachInput) {
-        btnAttachment.addEventListener('click', () => {
-            fileAttachInput.click();
-        });
-
-        fileAttachInput.addEventListener('change', (e) => {
-            const file = e.target.files && e.target.files[0];
-            if (file) {
-                appendUserMessage(`📎 Attached file: ${file.name}`);
-                showTypingIndicator();
-                setTimeout(() => {
-                    removeTypingIndicator();
-                    appendBotMessage(`We received your attachment: "${file.name}". Our team will review this shortly!`, false);
-                }, 600);
+    // FAQ Chips
+    faqChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            const query = chip.dataset.query;
+            if (query) {
+                handleSendMessage(query);
             }
         });
-    }
+    });
 
-    // Helper: Escape HTML
     function escapeHTML(str) {
-        return str
+        if (!str) return '';
+        return String(str)
             .replace(/&/g, '&amp;')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
     }
-
-    // Initialize
-    initQuestionChips();
-    scrollToBottom();
 });

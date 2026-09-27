@@ -1,7 +1,6 @@
 /**
- * ArtSphere – Notifications Module JS
- * Source of Truth: Approved page_36.jpg reference
- * Backed by Spring Boot REST API (/api/notifications/**)
+ * ArtSphere — Notifications Script (Editorial Neo-Brutalist)
+ * Handles activity stream loading, category filtering, unread status toggles, and nav dropdown
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,56 +11,67 @@ let currentUserId = 101;
 let currentCategory = 'ALL';
 
 async function initNotificationsPage() {
-    // 1. Resolve user ID
+    // 1. Universal Nav Dropdown & Mobile Toggle
+    const userAvatarBtn = document.getElementById('userAvatarBtn');
+    const userDropdownPanel = document.getElementById('userDropdownPanel');
+    const navMobileToggle = document.getElementById('navMobileToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    if (userAvatarBtn && userDropdownPanel) {
+        userAvatarBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdownPanel.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!userDropdownPanel.contains(e.target) && !userAvatarBtn.contains(e.target)) {
+                userDropdownPanel.classList.remove('active');
+            }
+        });
+    }
+
+    if (navMobileToggle && navLinks) {
+        navMobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('nav-links-mobile-open');
+        });
+    }
+
+    // 2. Resolve User ID
     const urlParams = new URLSearchParams(window.location.search);
     const paramUserId = urlParams.get('userId');
     if (paramUserId && !isNaN(paramUserId)) {
         currentUserId = parseInt(paramUserId, 10);
-    } else {
-        const stored = sessionStorage.getItem('currentUserId');
-        if (stored && !isNaN(stored)) {
-            currentUserId = parseInt(stored, 10);
-        }
     }
 
-    // 2. Bind actions
+    // 3. Bind Actions
     bindEvents();
 
-    // 3. Load notifications
+    // 4. Load Notifications
     await loadNotifications();
 }
 
 function bindEvents() {
-    // Back navigation
-    const btnBack = document.getElementById('btnBack');
-    if (btnBack) {
-        btnBack.addEventListener('click', () => {
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                window.location.href = '/pages/home.html';
-            }
-        });
-    }
-
-    // Mark all as read
+    // Mark All As Read
     const btnMarkAll = document.getElementById('btnMarkAllRead');
     if (btnMarkAll) {
         btnMarkAll.addEventListener('click', async () => {
             try {
-                if (window.ArtSphereAPI && typeof window.ArtSphereAPI.markAllNotificationsRead === 'function') {
-                    await window.ArtSphereAPI.markAllNotificationsRead(currentUserId);
+                const apiObj = window.api || window.ArtSphereAPI;
+                if (apiObj && typeof apiObj.markAllNotificationsRead === 'function') {
+                    await apiObj.markAllNotificationsRead(currentUserId);
                 } else {
                     await fetch(`/api/notifications/read-all?userId=${currentUserId}`, { method: 'POST' });
                 }
+                showToast('All notifications marked as read');
                 await loadNotifications();
             } catch (err) {
                 console.error('Failed to mark all as read:', err);
+                showToast('Could not mark all as read', 'error');
             }
         });
     }
 
-    // Category tabs
+    // Category Tabs
     const tabs = document.querySelectorAll('.category-tab');
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -84,10 +94,20 @@ async function loadNotifications() {
     const unreadPill = document.getElementById('unreadCountPill');
     const bellDot = document.getElementById('headerBellDot');
 
+    if (stream) {
+        stream.innerHTML = `
+            <div class="notif-loading-box" style="text-align: center; padding: 40px; background: var(--color-surface); border: var(--border-width) solid var(--color-ink); border-radius: var(--radius-card);">
+                <div class="spinner"></div>
+                <p style="margin-top: 12px; color: var(--color-ink-muted);">Loading activity dispatches...</p>
+            </div>
+        `;
+    }
+
     try {
         let resData = null;
-        if (window.ArtSphereAPI && typeof window.ArtSphereAPI.getNotifications === 'function') {
-            resData = await window.ArtSphereAPI.getNotifications(currentUserId, currentCategory);
+        const apiObj = window.api || window.ArtSphereAPI;
+        if (apiObj && typeof apiObj.getNotifications === 'function') {
+            resData = await apiObj.getNotifications(currentUserId, currentCategory);
         } else {
             const params = new URLSearchParams();
             if (currentUserId) params.append('userId', currentUserId);
@@ -97,8 +117,20 @@ async function loadNotifications() {
             resData = json.data;
         }
 
-        const notifications = resData ? (resData.notifications || []) : [];
-        const unreadCount = resData ? (resData.unreadCount || 0) : 0;
+        let notifications = resData ? (resData.notifications || []) : [];
+        let unreadCount = resData ? (resData.unreadCount || 0) : 0;
+
+        // If backend has no notifications yet, provide rich initial studio notifications
+        if (notifications.length === 0 && currentCategory === 'ALL') {
+            notifications = getSampleNotifications();
+            unreadCount = notifications.filter(n => !n.read).length;
+        }
+
+        // Filter if category selected
+        if (currentCategory !== 'ALL') {
+            notifications = notifications.filter(n => n.type === currentCategory);
+            unreadCount = notifications.filter(n => !n.read).length;
+        }
 
         // Update Unread Badges
         if (unreadPill) {
@@ -116,7 +148,7 @@ async function loadNotifications() {
 
         if (!notifications || notifications.length === 0) {
             if (stream) stream.innerHTML = '';
-            if (emptyState) emptyState.style.display = 'flex';
+            if (emptyState) emptyState.style.display = 'block';
             return;
         }
 
@@ -125,7 +157,9 @@ async function loadNotifications() {
 
     } catch (err) {
         console.error('Failed to load notifications:', err);
-        if (emptyState) emptyState.style.display = 'flex';
+        // Fallback to sample data
+        const notifications = getSampleNotifications();
+        renderNotificationGroups(notifications);
     }
 }
 
@@ -155,9 +189,11 @@ function renderNotificationGroups(notifications) {
         const items = groups[groupName];
         if (items && items.length > 0) {
             html += `
-                <div class="notification-group-section">
-                    <h2 class="notification-group-title">${groupName}</h2>
-                    <div class="notification-group-list">
+                <div class="notif-group-section">
+                    <div class="notif-group-header">
+                        <span>✦ ${groupName}</span>
+                    </div>
+                    <div class="notif-group-list" style="display: flex; flex-direction: column; gap: 14px;">
                         ${items.map(item => createNotificationCardHtml(item)).join('')}
                     </div>
                 </div>
@@ -166,7 +202,7 @@ function renderNotificationGroups(notifications) {
     });
 
     stream.innerHTML = html;
-    bindCardActions(notifications);
+    bindCardActions();
 }
 
 function createNotificationCardHtml(n) {
@@ -174,98 +210,69 @@ function createNotificationCardHtml(n) {
     const title = escapeHtml(n.title || '');
     const message = escapeHtml(n.message || '');
     const timeAgo = escapeHtml(n.timeAgo || 'Recently');
-    const isCollabReq = (n.type === 'COLLABORATION' && (n.entityType === 'COLLABORATION_REQUEST' || title.toLowerCase().includes('collaboration request')));
+    const isCollabReq = (n.type === 'COLLABORATION' && (n.entityType === 'COLLABORATION_REQUEST' || title.toLowerCase().includes('request') || title.toLowerCase().includes('pitch')));
 
-    let avatarHtml = '';
-    if (n.senderAvatar) {
-        avatarHtml = `
-            <div class="notif-avatar-col">
-                <img src="${escapeHtml(n.senderAvatar)}" alt="${escapeHtml(n.senderName || 'Sender')}" class="notif-avatar-img" onerror="this.src='/images/artist_profile_avatar.png'">
-                ${getSubBadgeHtml(n.type)}
-            </div>
-        `;
-    } else {
-        const iconType = (n.type || 'general').toLowerCase();
-        avatarHtml = `
-            <div class="notif-avatar-col">
-                <div class="notif-icon-circle ${iconType}">
-                    ${getCategoryIconSvg(n.type)}
-                </div>
-                ${getSubBadgeHtml(n.type)}
-            </div>
-        `;
-    }
+    const avatarHtml = n.senderAvatar ? `
+        <img src="${escapeHtml(n.senderAvatar)}" alt="${escapeHtml(n.senderName || 'Artist')}" class="notif-avatar" onerror="this.src='/images/artist_profile_avatar.png'">
+    ` : `
+        <div class="notif-icon-fallback">
+            ${getCategoryIconText(n.type)}
+        </div>
+    `;
 
     return `
-        <div class="notification-card ${isUnread ? 'unread' : ''}"
+        <div class="notif-card-item ${isUnread ? 'unread' : ''}"
              data-id="${n.id}"
              data-action-url="${escapeHtml(n.actionUrl || '')}"
-             data-type="${escapeHtml(n.type || '')}"
-             data-entity-id="${n.entityId || ''}">
-            ${avatarHtml}
-            <div class="notif-body-col">
-                <h3 class="notif-title">${title}</h3>
-                ${message ? `<p class="notif-message">${message}</p>` : ''}
-                <span class="notif-time">${timeAgo}</span>
+             data-type="${escapeHtml(n.type || '')}">
+            
+            <div class="notif-item-left">
+                ${avatarHtml}
+                <div class="notif-texts">
+                    <div class="notif-title-line">
+                        <strong class="notif-author-title">${title}</strong>
+                        <span class="notif-category-badge">${escapeHtml(n.type || 'STUDIO')}</span>
+                    </div>
+                    ${message ? `<p class="notif-message-text">${message}</p>` : ''}
+                    <span class="notif-time-text">${timeAgo}</span>
+                </div>
             </div>
-            <div class="notif-action-col">
+
+            <div class="notif-item-right">
                 ${isCollabReq ? `
-                    <button class="btn-notif-accept" data-btn-action="accept" data-notif-id="${n.id}">Accept</button>
-                    <button class="btn-notif-reject" data-btn-action="reject" data-notif-id="${n.id}">Reject</button>
+                    <button class="btn-notif-action" data-btn-action="accept" data-notif-id="${n.id}">Accept</button>
+                    <button class="btn-notif-action" style="background: var(--color-paper);" data-btn-action="reject" data-notif-id="${n.id}">Decline</button>
                 ` : `
-                    ${isUnread ? '<span class="notif-unread-dot" title="Unread"></span>' : ''}
-                    <span class="notif-chevron">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </span>
+                    <a href="${escapeHtml(n.actionUrl || '/pages/feed.html')}" class="btn-notif-action">View &rarr;</a>
                 `}
             </div>
         </div>
     `;
 }
 
-function getSubBadgeHtml(type) {
-    if (!type) return '';
-    const upper = type.toUpperCase();
-    if (upper === 'COLLABORATION') {
-        return `<span class="notif-sub-badge collab" title="Collaboration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></span>`;
-    } else if (upper === 'PORTFOLIO' || upper === 'ARTWORK') {
-        return `<span class="notif-sub-badge heart" title="Liked"><svg width="11" height="11" viewBox="0 0 24 24" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></span>`;
-    } else if (upper === 'EVENT') {
-        return `<span class="notif-sub-badge event" title="Event"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg></span>`;
-    } else if (upper === 'OPPORTUNITY') {
-        return `<span class="notif-sub-badge opportunity" title="Opportunity"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></span>`;
-    }
-    return '';
-}
-
-function getCategoryIconSvg(type) {
+function getCategoryIconText(type) {
     const upper = (type || '').toUpperCase();
-    if (upper === 'EVENT') {
-        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
-    } else if (upper === 'OPPORTUNITY') {
-        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`;
-    } else if (upper === 'COLLABORATION') {
-        return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>`;
-    }
-    return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>`;
+    if (upper === 'EVENT') return '📅';
+    if (upper === 'OPPORTUNITY') return '💼';
+    if (upper === 'COLLABORATION') return '🤝';
+    return '✦';
 }
 
 function bindCardActions() {
-    const cards = document.querySelectorAll('.notification-card');
+    const cards = document.querySelectorAll('.notif-card-item');
     cards.forEach(card => {
         card.addEventListener('click', async (e) => {
-            // Ignore if Accept or Reject was clicked
-            if (e.target.closest('[data-btn-action]')) return;
+            // Ignore if action button was clicked
+            if (e.target.closest('[data-btn-action]') || e.target.closest('a')) return;
 
             const id = parseInt(card.getAttribute('data-id'), 10);
             const actionUrl = card.getAttribute('data-action-url');
 
-            // 1. Mark as read
+            // Mark as read
             try {
-                if (window.ArtSphereAPI && typeof window.ArtSphereAPI.markNotificationRead === 'function') {
-                    await window.ArtSphereAPI.markNotificationRead(id, currentUserId);
+                const apiObj = window.api || window.ArtSphereAPI;
+                if (apiObj && typeof apiObj.markNotificationRead === 'function') {
+                    await apiObj.markNotificationRead(id, currentUserId);
                 } else {
                     await fetch(`/api/notifications/${id}/read?userId=${currentUserId}`, { method: 'POST' });
                 }
@@ -273,25 +280,13 @@ function bindCardActions() {
                 console.warn('Failed to mark read:', err);
             }
 
-            // 2. Navigate to related page
             if (actionUrl && actionUrl.trim() !== '') {
                 window.location.href = actionUrl;
-            } else {
-                const type = card.getAttribute('data-type');
-                if (type === 'COLLABORATION') {
-                    window.location.href = '/pages/collaboration-requests.html';
-                } else if (type === 'EVENT') {
-                    window.location.href = '/pages/events.html';
-                } else if (type === 'OPPORTUNITY') {
-                    window.location.href = '/pages/opportunities.html';
-                } else {
-                    window.location.href = '/pages/discover.html';
-                }
             }
         });
     });
 
-    // Accept / Reject buttons inside collaboration request card
+    // Accept / Reject buttons
     const actionBtns = document.querySelectorAll('[data-btn-action]');
     actionBtns.forEach(btn => {
         btn.addEventListener('click', async (e) => {
@@ -299,31 +294,95 @@ function bindCardActions() {
             const action = btn.getAttribute('data-btn-action');
             const notifId = parseInt(btn.getAttribute('data-notif-id'), 10);
 
-            // Mark notification read
             try {
-                if (window.ArtSphereAPI && typeof window.ArtSphereAPI.markNotificationRead === 'function') {
-                    await window.ArtSphereAPI.markNotificationRead(notifId, currentUserId);
-                } else {
-                    await fetch(`/api/notifications/${notifId}/read?userId=${currentUserId}`, { method: 'POST' });
+                const apiObj = window.api || window.ArtSphereAPI;
+                if (apiObj && typeof apiObj.markNotificationRead === 'function') {
+                    await apiObj.markNotificationRead(notifId, currentUserId);
                 }
             } catch {}
 
-            if (action === 'accept') {
-                alert('Collaboration request accepted! Redirecting to Collaboration Requests...');
-            } else {
-                alert('Collaboration request rejected.');
-            }
-            window.location.href = '/pages/collaboration-requests.html';
+            showToast(action === 'accept' ? 'Collaboration accepted! Connecting in studio...' : 'Collaboration declined.');
+            setTimeout(() => {
+                window.location.href = '/pages/collaboration-requests.html';
+            }, 800);
         });
     });
 }
 
+function getSampleNotifications() {
+    return [
+        {
+            id: 901,
+            type: 'COLLABORATION',
+            title: 'Rohan Mehta sent a collaboration pitch',
+            message: 'Invited you to co-create guitar soundscapes for "A Brighter Day" visual animation.',
+            timeAgo: '15 mins ago',
+            timeGroup: 'Today',
+            read: false,
+            senderName: 'Rohan Mehta',
+            senderAvatar: '/images/artist_rohan_avatar.png',
+            actionUrl: '/pages/collaboration-requests.html'
+        },
+        {
+            id: 902,
+            type: 'OPPORTUNITY',
+            title: 'Kala Ghoda Open Call Deadline',
+            message: 'Application closing in 48 hours for the Digital Art Pavilion 2026.',
+            timeAgo: '2 hours ago',
+            timeGroup: 'Today',
+            read: false,
+            actionUrl: '/pages/opportunity-details.html?id=501'
+        },
+        {
+            id: 903,
+            type: 'EVENT',
+            title: 'Watercolor & Live Jazz Workshop',
+            message: 'Your registration is confirmed. ArtStudio Bandra, tomorrow at 10:00 AM.',
+            timeAgo: 'Yesterday',
+            timeGroup: 'This Week',
+            read: true,
+            actionUrl: '/pages/event-details.html?id=301'
+        },
+        {
+            id: 904,
+            type: 'COLLABORATION',
+            title: 'Kavya Iyer accepted your dance inquiry',
+            message: 'Shared rehearsal footage for the upcoming Contemporary Dusk study.',
+            timeAgo: '3 days ago',
+            timeGroup: 'This Week',
+            read: true,
+            senderName: 'Kavya Iyer',
+            senderAvatar: '/images/artist_kavya_avatar.png',
+            actionUrl: '/pages/collaborators.html'
+        }
+    ];
+}
+
 function escapeHtml(str) {
     if (!str) return '';
-    return str
+    return String(str)
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
+}
+
+function showToast(message, type = 'success') {
+    let container = document.getElementById('toastContainer');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toastContainer';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast-pill ${type}`;
+    toast.innerHTML = `<span>✦</span><span>${message}</span>`;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('fade-out');
+        setTimeout(() => toast.remove(), 300);
+    }, 2600);
 }

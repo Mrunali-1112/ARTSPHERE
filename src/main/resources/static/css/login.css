@@ -1,102 +1,386 @@
-/* ArtSphere Login Page Styles - Exact Match to Approved UI (page_02.jpg) */
+/* ==========================================================================
+   ArtSphere — Login (Editorial Neo-Brutalist)
+   ========================================================================== */
 
-.login-screen {
-    padding: 0 0 30px;
-    background: #FFFFFF;
-    position: relative;
-    overflow: hidden;
+.auth-page-body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Background Decorative Corner Art */
-.decor-top-wave {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 200px;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.decor-bottom-jar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 130px;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.decor-bottom-palette {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 170px;
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* Form Container */
-.login-form-container {
-    padding: 0 32px 40px;
-    position: relative;
-    z-index: 5;
-    max-width: 440px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-.form-options-row {
+.auth-viewport-wrapper {
+    flex: 1;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 22px;
-    font-size: 13.5px;
+    justify-content: center;
+    padding: 32px 20px;
 }
 
-.remember-me-label {
+.auth-split-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1160px;
+    width: 100%;
+    gap: 48px;
+    align-items: center;
+}
+
+/* Left Pillar: Editorial Branding */
+.auth-editorial-pillar {
+    background: var(--color-paper-alt);
+    border: var(--border-width) solid var(--color-ink);
+    border-radius: var(--radius-card);
+    padding: 44px;
+    box-shadow: var(--shadow-hard);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.pillar-top-brand {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.auth-brand-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.auth-brand-link .brand-motif {
+    color: var(--color-orange);
+    font-size: 1.6rem;
+}
+
+.editorial-kicker {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.pillar-title {
+    font-size: clamp(2rem, 3.2vw, 2.8rem);
+    line-height: 1.15;
+    margin: 0 0 16px 0;
+}
+
+.pillar-narrative {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-ink-muted);
+    margin: 0 0 24px 0;
+}
+
+/* Testimonial Quote Card */
+.pillar-quote-card {
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-ink);
+    border-radius: var(--radius-card);
+    padding: 20px 24px;
+    box-shadow: 2px 2px 0 var(--color-ink);
+}
+
+.quote-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.quote-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: var(--border-width) solid var(--color-ink);
+    object-fit: cover;
+}
+
+.quote-author {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.quote-role {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-ink-muted);
+}
+
+.quote-text {
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+    color: var(--color-ink);
+}
+
+.pillar-footer-stamp {
     display: flex;
     align-items: center;
     gap: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    color: var(--text-heading);
-}
-
-.remember-me-checkbox {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--primary-purple);
-    cursor: pointer;
-}
-
-.forgot-password-link {
-    color: var(--primary-purple);
+    font-size: 0.85rem;
     font-weight: 600;
-    text-decoration: none;
+    color: var(--color-ink-muted);
+    padding-top: 16px;
+    border-top: 1px solid rgba(10, 10, 10, 0.15);
 }
 
-.forgot-password-link:hover {
+/* Right Pillar: Auth Card */
+.auth-form-pillar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-card-box {
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-ink);
+    border-radius: var(--radius-card);
+    padding: 40px;
+    box-shadow: var(--shadow-hard);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.auth-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-orange);
+}
+
+.auth-title {
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.auth-desc {
+    font-size: 0.95rem;
+    color: var(--color-ink-muted);
+    margin: 0;
+}
+
+/* Demo Credentials Banner */
+.demo-creds-banner {
+    background: var(--color-yellow-light);
+    border: var(--border-width) solid var(--color-ink);
+    border-radius: var(--radius-card);
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.demo-creds-title {
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.demo-creds-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.demo-fill-btn {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-ink);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    box-shadow: 1px 1px 0 var(--color-ink);
+    transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.demo-fill-btn:hover {
+    background: var(--color-yellow);
+    transform: translateY(-1px);
+}
+
+/* Alert Message */
+.auth-alert-message {
+    padding: 12px 16px;
+    border: var(--border-width) solid var(--color-ink);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.auth-alert-message.error {
+    background: #FFECE8;
+    color: #C02E00;
+}
+
+.auth-alert-message.success {
+    background: #E8F7EC;
+    color: #15733B;
+}
+
+/* Form */
+.editorial-auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-group-block {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-field-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-sub-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-ink-muted);
     text-decoration: underline;
 }
 
-.login-footer-text {
-    text-align: center;
-    margin-top: 26px;
-    font-size: 14px;
-    color: var(--text-body);
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
-.login-footer-text a {
-    color: var(--primary-magenta);
-    font-weight: 700;
-    text-decoration: none;
-    margin-left: 4px;
+.neo-input.has-toggle {
+    padding-right: 48px;
+}
+
+.btn-toggle-pw {
+    position: absolute;
+    right: 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--color-ink-muted);
+    display: flex;
+    align-items: center;
+    padding: 4px;
+}
+
+.btn-toggle-pw:hover {
+    color: var(--color-ink);
+}
+
+.remember-row {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-label {
     display: inline-flex;
     align-items: center;
-    gap: 2px;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
 }
 
-.login-footer-text a:hover {
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--color-ink);
+    cursor: pointer;
+}
+
+.auth-submit-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 24px;
+    font-size: 1rem;
+    margin-top: 6px;
+}
+
+/* Footer Switcher */
+.auth-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    padding-top: 14px;
+    border-top: var(--border-width) solid var(--color-ink);
+}
+
+.auth-switch-link {
+    font-weight: 700;
+    color: var(--color-ink);
     text-decoration: underline;
+}
+
+.auth-back-home-wrap {
+    text-align: center;
+}
+
+.back-home-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-ink-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.back-home-link:hover {
+    color: var(--color-ink);
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .auth-split-grid {
+        grid-template-columns: 1fr;
+        max-width: 540px;
+        gap: 32px;
+    }
+
+    .auth-editorial-pillar {
+        padding: 32px 24px;
+    }
+
+    .auth-card-box {
+        padding: 32px 24px;
+    }
 }
