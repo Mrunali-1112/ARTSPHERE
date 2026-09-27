@@ -1,186 +1,351 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Collaboration Details – ArtSphere</title>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- CSS -->
+    <title>ArtSphere — Collaboration Details</title>
+    <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/collaboration-details.css">
 </head>
 <body>
-    <div class="app-layout">
-        <main class="screen-container collab-details-screen">
+    <!-- Universal Floating Capsule Navigation -->
+    <header class="capsule-nav-wrapper" id="navWrapper">
+        <nav class="capsule-nav">
+            <a href="/pages/home.html" class="nav-brand">
+                <span class="brand-motif">✦</span>
+                <span>ArtSphere</span>
+            </a>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="/pages/home.html" class="nav-link">Home</a>
+                <a href="/pages/discover.html" class="nav-link">Discover</a>
+                <a href="/pages/communities.html" class="nav-link">Communities</a>
+                <a href="/pages/events.html" class="nav-link">Events</a>
+                <a href="/pages/collaborators.html" class="nav-link active">Collaborate</a>
+                <a href="/pages/opportunities.html" class="nav-link">Opportunities</a>
+            </div>
 
-            <!-- Top Header Navbar -->
-            <header class="details-top-header">
-                <a href="/pages/collaborators.html" class="back-link" aria-label="Back to Collaborations">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
+            <div class="nav-actions">
+                <!-- Notification Bell -->
+                <a href="/pages/notifications.html" class="nav-icon-btn notification-nav-wrapper" aria-label="Notifications">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                     </svg>
+                    <span class="notification-dot"></span>
                 </a>
-                <h1 class="header-screen-title" id="pageHeaderTitle">Collaboration Details</h1>
-                <button class="header-action-icon-btn" id="shareCollabBtn" aria-label="Share Collaboration">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="18" cy="5" r="3"></circle>
-                        <circle cx="6" cy="12" r="3"></circle>
-                        <circle cx="18" cy="19" r="3"></circle>
-                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                    </svg>
+
+                <!-- Creator Avatar & Dropdown -->
+                <div class="user-menu-wrapper">
+                    <button class="user-avatar-trigger" id="userAvatarBtn" aria-label="User Account Menu">
+                        <img src="/images/user_avatar_nav.png" alt="Creator Profile" class="user-nav-avatar" id="headerUserAvatar">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="chevron-arrow">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    
+                    <div class="user-dropdown-panel" id="userDropdownPanel">
+                        <div class="dropdown-user-info">
+                            <strong id="dropdownUserName">Aanya Deshmukh</strong>
+                            <span id="dropdownUserBio">Visual & Digital Artist</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>My Artist Profile</span>
+                        </a>
+                        <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            <span>My Portfolio</span>
+                        </a>
+                        <a href="/pages/create-collaboration.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Post Collab Request</span>
+                        </a>
+                        <a href="/pages/collaboration-requests.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                            <span>Manage Inquiries</span>
+                        </a>
+                        <a href="/pages/my-applications.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            <span>My Applications</span>
+                        </a>
+                        <a href="/pages/settings.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item-link text-danger" id="logoutBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                            <span>Log Out</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Toggle -->
+                <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
                 </button>
-            </header>
+            </div>
+        </nav>
+    </header>
 
-            <!-- Loading Spinner Container -->
-            <div id="loadingContainer" class="loading-state">
-                <div class="spinner"></div>
-                <p>Loading collaboration details...</p>
+    <div class="page-wrapper">
+        <main>
+            <!-- Top Breadcrumb -->
+            <div class="collab-top-breadcrumb">
+                <a href="/pages/collaborators.html" class="collab-back-link">
+                    <span class="back-arrow">&larr;</span>
+                    <span>All Collaborations &amp; Pitches</span>
+                </a>
             </div>
 
-            <!-- Main Content Container (Hidden until loaded) -->
-            <div id="detailsContent" style="display: none;">
-
-                <!-- Own Post Notice Banner (Shown only if ownPost === true) -->
-                <div id="ownPostBanner" class="own-post-banner" style="display: none;">
-                    <div class="banner-tag">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                        <span>Your Collaboration Post</span>
-                    </div>
-                    <span class="requests-summary-badge" id="ownRequestsCount">3 Requests Received</span>
-                </div>
-
-                <!-- Creator Profile Card -->
-                <section class="creator-card" aria-label="Creator Information">
-                    <a href="#" id="creatorProfileLink" class="creator-card-link">
-                        <img src="/images/avatar_creator_mrunali.png" alt="Creator Avatar" id="creatorAvatar" class="creator-avatar-large">
-                        <div class="creator-details">
-                            <div class="creator-name-row">
-                                <h2 class="creator-name" id="creatorName">Mrunali S.</h2>
-                                <span class="creator-badge">Creator</span>
-                            </div>
-                            <div class="creator-role" id="creatorRole">Digital Artist & Animator</div>
-                            <div class="creator-location" id="creatorLocation">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                    <circle cx="12" cy="10" r="3"></circle>
-                                </svg>
-                                <span id="creatorLocationText">Mumbai, Maharashtra</span>
-                            </div>
-                        </div>
+            <!-- Creator Profile Header Card -->
+            <section class="creator-profile-card">
+                <div class="creator-profile-row">
+                    <a href="/pages/artist-profile.html?id=101" id="creatorProfileLink" class="creator-avatar-wrap">
+                        <img src="/images/user_avatar_nav.png" alt="Creator Avatar" id="creatorAvatar" class="creator-avatar-large">
                     </a>
-                    <a href="#" id="viewProfileBtn" class="btn-view-profile">View Profile</a>
-                </section>
 
-                <!-- Post Header: Status, Title, Timestamp -->
-                <section class="post-header-section">
-                    <div class="status-time-row">
-                        <span class="badge-status-open" id="collabStatusBadge">OPEN</span>
-                        <span class="post-time-ago" id="collabTimeAgo">Posted 2 hours ago</span>
+                    <div class="creator-identity-col">
+                        <div class="creator-badges-row">
+                            <span class="pill-tag accent-yellow">PROJECT CREATOR</span>
+                            <span class="creator-location-pill" id="creatorLocationText">Mumbai, Maharashtra</span>
+                        </div>
+                        <h2 class="creator-full-name" id="creatorName">Mrunali S.</h2>
+                        <span class="creator-discipline-title" id="creatorRole">Digital Artist &amp; Animator</span>
                     </div>
-                    <h1 class="collab-details-title" id="collabTitle">Looking for a Digital Artist for a Short Film Project</h1>
-                </section>
 
-                <!-- Project Overview Quick Facts -->
-                <section class="overview-grid" aria-label="Collaboration Overview">
-                    <div class="overview-item">
-                        <span class="overview-label">Purpose</span>
-                        <span class="overview-value" id="overviewPurpose">Work on a Project</span>
+                    <div class="creator-cta-col">
+                        <a href="/pages/artist-profile.html?id=101" id="viewProfileBtn" class="btn-pill-secondary">
+                            <span>View Artist Profile</span>
+                            <span>&rarr;</span>
+                        </a>
                     </div>
-                    <div class="overview-item">
-                        <span class="overview-label">Type</span>
-                        <span class="overview-value" id="overviewType">Short Film</span>
-                    </div>
-                    <div class="overview-item">
-                        <span class="overview-label">Availability</span>
-                        <span class="overview-value" id="overviewAvailability">Flexible</span>
-                    </div>
-                    <div class="overview-item">
-                        <span class="overview-label">People Needed</span>
-                        <span class="overview-value" id="overviewPeopleNeeded">1-2 collaborators</span>
-                    </div>
-                    <div class="overview-item full-width">
-                        <span class="overview-label">Location / Mode</span>
-                        <span class="overview-value" id="overviewLocation">Mumbai, MH (Hybrid / Remote friendly)</span>
-                    </div>
-                </section>
+                </div>
+            </section>
 
-                <!-- Project Description -->
-                <section class="content-block">
-                    <h3 class="block-heading">About the Project</h3>
-                    <p class="block-text" id="collabDescription">
-                        I'm working on a short film and looking for a digital artist to collaborate on concept art, character design and backgrounds. Excited to work with creative minds!
-                    </p>
-                </section>
-
-                <!-- Skills Looking For -->
-                <section class="content-block">
-                    <h3 class="block-heading">Skills Needed</h3>
-                    <div class="pills-wrap" id="skillsPillsWrap">
-                        <!-- Populated dynamically -->
-                    </div>
-                </section>
-
-                <!-- Tags -->
-                <section class="content-block">
-                    <h3 class="block-heading">Tags</h3>
-                    <div class="tags-wrap" id="tagsWrap">
-                        <!-- Populated dynamically -->
-                    </div>
-                </section>
-
-                <!-- Reference / Moodboard Link -->
-                <section class="content-block" id="referenceUrlBlock" style="display: none;">
-                    <h3 class="block-heading">Reference / Moodboard</h3>
-                    <a href="#" target="_blank" rel="noopener noreferrer" class="reference-link" id="referenceUrlLink">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                        </svg>
-                        <span id="referenceUrlText">View Reference Materials</span>
-                    </a>
-                </section>
-
-                <!-- Fixed Action Bar at Bottom -->
-                <div class="details-bottom-bar" id="bottomActionBar">
-                    <!-- Dynamic button depending on ownPost vs other artist post -->
+            <!-- Collaboration Header & Overview Facts -->
+            <section class="collab-header-card">
+                <div class="collab-status-timestamp-row">
+                    <span class="pill-tag" style="background:#0A0A0A; color:#FFFFFF;" id="collabStatusBadge">OPEN CALL</span>
+                    <span class="post-time-stamp" id="collabTimeAgo">Posted 2 hours ago</span>
                 </div>
 
-            </div>
+                <h1 class="text-display collab-hub-title" id="collabTitle">Looking for a Digital Artist for a Short Film Project</h1>
 
-            <!-- Request Modal (for applying/connecting) -->
-            <div class="modal-backdrop" id="requestModal" style="display: none;">
-                <div class="modal-card">
-                    <div class="modal-header">
-                        <h3 class="modal-title">Send Collaboration Request</h3>
-                        <button class="modal-close-btn" id="closeModalBtn" aria-label="Close Modal">&times;</button>
+                <!-- Quick Facts Ledger -->
+                <div class="collab-overview-ledger">
+                    <div class="ledger-item">
+                        <span class="ledger-label">PURPOSE</span>
+                        <span class="ledger-data" id="overviewPurpose">Work on a Project</span>
                     </div>
-                    <form id="detailsCollabRequestForm" class="modal-body">
-                        <div class="modal-target-info" id="modalCollabTargetInfo">
-                            <!-- Populated with title and creator -->
+                    <div class="ledger-item">
+                        <span class="ledger-label">TYPE</span>
+                        <span class="ledger-data" id="overviewType">Short Film</span>
+                    </div>
+                    <div class="ledger-item">
+                        <span class="ledger-label">TIMELINE</span>
+                        <span class="ledger-data" id="overviewAvailability">Flexible • 2 Months</span>
+                    </div>
+                    <div class="ledger-item">
+                        <span class="ledger-label">TEAM NEEDED</span>
+                        <span class="ledger-data" id="overviewPeople">1-2 Animators</span>
+                    </div>
+                    <div class="ledger-item">
+                        <span class="ledger-label">LOCATION</span>
+                        <span class="ledger-data" id="overviewLocation">Mumbai, MH</span>
+                    </div>
+                </div>
+
+                <!-- Actions Row -->
+                <div class="collab-actions-bar">
+                    <button class="btn-pill-primary" id="btnApplyCollab">
+                        <span>Request to Collaborate</span>
+                        <span>&rarr;</span>
+                    </button>
+                    <button class="btn-pill-secondary" id="shareCollabBtn">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                        <span>Share Pitch</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 2-Column Content Layout (8 cols left, 4 cols right) -->
+            <div class="grid-12 collab-details-grid">
+                <!-- Left 8 Columns -->
+                <div class="col-8 col-md-8 col-sm-4 collab-col-left">
+                    <!-- Project Vision -->
+                    <div class="hub-content-card">
+                        <div class="card-title-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="card-heading">Project Vision &amp; Narrative</h3>
                         </div>
-                        <div class="form-group">
-                            <label for="detailsRequestMessage" class="form-label">Your Pitch / Introduction</label>
-                            <textarea id="detailsRequestMessage" class="form-textarea" rows="4" required placeholder="Introduce yourself, mention what role you'd like to take on, and link your best relevant artworks..."></textarea>
+                        <p class="collab-narrative-text" id="collabDescription">
+                            We are producing a 7-minute poetic narrative short film exploring nocturnal mythologies in old Mumbai. We have finalized the script, voiceover recordings, and soundscape design. We are now looking for a digital animator and background illustrator to build evocative, textured 2D scenes.
+                        </p>
+                    </div>
+
+                    <!-- Desired Skills -->
+                    <div class="hub-content-card">
+                        <div class="card-title-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="card-heading">Skills &amp; Disciplines Desired</h3>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" id="cancelModalBtn">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="submitRequestBtn">Send Request</button>
+                        <div class="skills-pill-tags-row" id="skillsPillsRow">
+                            <span class="collab-skill-pill">Digital Art</span>
+                            <span class="collab-skill-pill">Character Design</span>
+                            <span class="collab-skill-pill">Background Painting</span>
+                            <span class="collab-skill-pill">Storyboarding</span>
                         </div>
-                    </form>
+                    </div>
+
+                    <!-- Moodboard / Reference Link -->
+                    <div class="hub-content-card" id="referenceLinkBlock">
+                        <div class="card-title-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="card-heading">Reference Moodboard &amp; Visual Notes</h3>
+                        </div>
+                        <p class="reference-desc">Explore the visual palette, lighting references, and character sketches prepared for this project:</p>
+                        <a href="https://drive.google.com" target="_blank" rel="noopener noreferrer" class="reference-url-box" id="referenceUrlLink">
+                            <span class="ref-link-icon">🔗</span>
+                            <span class="ref-link-text">https://drive.google.com/drive/folders/art-short-film-moodboard</span>
+                            <span class="ref-link-arrow">&rarr;</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right 4 Columns -->
+                <div class="col-4 col-md-8 col-sm-4 collab-col-right">
+                    <!-- Host Studio Card -->
+                    <div class="hub-content-card host-studio-card">
+                        <div class="card-title-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="card-heading">Project Lead</h3>
+                        </div>
+                        <div class="host-studio-info">
+                            <strong class="host-studio-name">Mrunali's Visual Studio</strong>
+                            <p class="host-studio-bio">Indie digital artist with 4+ years creating hand-painted animations, comic panels, and visual poems.</p>
+                            <a href="/pages/portfolio.html?id=101" class="btn-pill-subtle full-width">
+                                <span>Browse Creator's Portfolio</span>
+                                <span>&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Collaboration Guidelines Card -->
+                    <div class="card-cream collab-ip-guidelines-card">
+                        <div class="card-title-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="card-heading">Co-Creation Guidelines</h3>
+                        </div>
+                        <ul class="ip-bullet-list">
+                            <li>All creators retain shared author attribution on collaborative releases.</li>
+                            <li>Discuss deliverables, timelines, and credit expectations upfront.</li>
+                            <li>Open communication and constructive artistic respect required.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
-            <!-- Toast -->
-            <div id="toastNotification" class="toast-notification" style="display: none;"></div>
-
         </main>
+
+        <!-- Request to Collaborate Modal -->
+        <div class="modal-backdrop" id="requestModal" style="display: none;">
+            <div class="modal-card collab-modal-card">
+                <button class="modal-close-cross" id="closeRequestModal">&times;</button>
+                <div class="modal-title-header">
+                    <span class="card-motif">✦</span>
+                    <h3 class="card-heading">Request to Collaborate</h3>
+                </div>
+                <p class="modal-lead">Introduce your practice, share your relevant work, and pitch how you'd like to collaborate on this project.</p>
+                <form id="collabRequestForm" class="collab-request-form">
+                    <div class="form-group">
+                        <label for="requestMessageInput" class="form-label">Message / Cover Note</label>
+                        <textarea id="requestMessageInput" class="form-textarea" rows="4" required placeholder="Hi! I loved your pitch. I specialize in atmospheric background painting and would love to contribute..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="requestPortfolioInput" class="form-label">Portfolio or Sample Work Link (Optional)</label>
+                        <input type="url" id="requestPortfolioInput" class="form-input" placeholder="https://artsphere.net/portfolio?id=101 or Behance/Instagram">
+                    </div>
+                    <div class="modal-actions-row">
+                        <button type="button" class="btn-pill-secondary" id="cancelRequestBtn">Cancel</button>
+                        <button type="submit" class="btn-pill-primary" id="submitRequestBtn">Send Inquiry &rarr;</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Request Success Modal -->
+        <div class="modal-backdrop" id="requestSuccessModal" style="display: none;">
+            <div class="modal-card reg-success-card">
+                <button class="modal-close-cross" id="closeSuccessModal">&times;</button>
+                <div class="reg-success-icon-box">
+                    <span>✦</span>
+                </div>
+                <h3 class="reg-modal-title">Inquiry Sent!</h3>
+                <p class="reg-modal-subtitle">Your collaboration request has been delivered.</p>
+                <p class="reg-modal-desc">The project lead has been notified. You can track this thread in your Collaboration Requests manager.</p>
+                <div class="modal-btn-row">
+                    <a href="/pages/collaboration-requests.html" class="btn-pill-primary">View Requests &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Universal Editorial Footer -->
+        <footer class="editorial-footer">
+            <div class="grid-12 footer-grid">
+                <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
+                    <a href="/pages/home.html" class="footer-logo">
+                        <span class="brand-motif">✦</span>
+                        <span>ArtSphere</span>
+                    </a>
+                    <p class="footer-bio">
+                        The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
+                    </p>
+                    <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
+                </div>
+
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">DIRECTORY</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/discover.html">Discover Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
+                        <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
+                        <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">PLATFORM</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/home.html">Studio Feed</a></li>
+                        <li><a href="/pages/communities.html">Communities</a></li>
+                        <li><a href="/pages/events.html">Events &amp; Jams</a></li>
+                        <li><a href="/pages/collaborators.html">Collaborations</a></li>
+                        <li><a href="/pages/opportunities.html">Open Calls</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-3 col-md-4 col-sm-4 footer-col-links">
+                    <div class="footer-heading">ACCOUNT</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
+                        <li><a href="/pages/my-applications.html">My Applications</a></li>
+                        <li><a href="/pages/settings.html">Account Settings</a></li>
+                        <li><a href="/pages/help-support.html">Help &amp; Guidelines</a></li>
+                    </ul>
+                    <div class="footer-badge-box">
+                        <span class="pill-tag accent-yellow">NO ADS. PURE ART.</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer"></div>
 
     <!-- Scripts -->
     <script src="/js/api.js"></script>
