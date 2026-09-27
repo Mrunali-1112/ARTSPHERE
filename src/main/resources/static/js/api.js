@@ -718,3 +718,137 @@ const api = {
 };
 
 window.ArtSphereAPI = api;
+
+// ==============================================================================
+// Universal Liquid Glass Navigation & User Dropdown Controller
+// ==============================================================================
+function initUniversalNavigation() {
+    // 1. Scroll Liquid Glass Dynamics
+    const navWrapper = document.getElementById('navWrapper') || document.querySelector('.capsule-nav-wrapper');
+    const capsuleNav = document.querySelector('.capsule-nav');
+    
+    function updateScrollState() {
+        const isScrolled = window.scrollY > 20;
+        if (navWrapper) navWrapper.classList.toggle('scrolled', isScrolled);
+        if (capsuleNav) capsuleNav.classList.toggle('scrolled', isScrolled);
+    }
+    window.addEventListener('scroll', updateScrollState, { passive: true });
+    updateScrollState();
+
+    // 2. Active Link Highlighting based on pathname
+    const currentPath = window.location.pathname.toLowerCase();
+    const navLinks = document.querySelectorAll('.nav-links .nav-link');
+    if (navLinks.length > 0) {
+        navLinks.forEach(link => {
+            const linkName = link.textContent.trim().toLowerCase();
+            let isActive = false;
+
+            if (currentPath.includes('/home') && linkName === 'home') isActive = true;
+            else if ((currentPath.includes('/discover') || currentPath.includes('/artist-profile') || currentPath.includes('/portfolio')) && linkName === 'discover') isActive = true;
+            else if (currentPath.includes('/communit') && linkName === 'communities') isActive = true;
+            else if (currentPath.includes('/event') && linkName === 'events') isActive = true;
+            else if (currentPath.includes('/collab') && linkName === 'collaborate') isActive = true;
+            else if (currentPath.includes('/opportunit') && linkName === 'opportunities') isActive = true;
+
+            if (isActive) {
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            }
+        });
+    }
+
+    // 3. Creator Avatar & User Dropdown Toggle
+    const userAvatarBtn = document.getElementById('userAvatarBtn');
+    const userDropdownPanel = document.getElementById('userDropdownPanel');
+
+    if (userAvatarBtn && userDropdownPanel) {
+        if (!userAvatarBtn._hasUniversalListener) {
+            userAvatarBtn._hasUniversalListener = true;
+            userAvatarBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const isOpen = userDropdownPanel.classList.toggle('active');
+                userDropdownPanel.classList.toggle('show', isOpen);
+                userAvatarBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+        }
+
+        // Close on click outside
+        document.addEventListener('click', (e) => {
+            if (!userDropdownPanel.contains(e.target) && !userAvatarBtn.contains(e.target)) {
+                userDropdownPanel.classList.remove('active', 'show');
+                userAvatarBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && (userDropdownPanel.classList.contains('active') || userDropdownPanel.classList.contains('show'))) {
+                userDropdownPanel.classList.remove('active', 'show');
+                userAvatarBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+
+    // 4. Mobile Menu Toggle
+    const navMobileToggle = document.getElementById('navMobileToggle');
+    if (navMobileToggle && navWrapper) {
+        if (!navMobileToggle._hasUniversalListener) {
+            navMobileToggle._hasUniversalListener = true;
+            navMobileToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                navWrapper.classList.toggle('menu-open');
+            });
+        }
+    }
+
+    // 5. Logout Button
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        if (!logoutBtn._hasUniversalListener) {
+            logoutBtn._hasUniversalListener = true;
+            logoutBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                await api.logout();
+            });
+        }
+    }
+
+    // 6. Check unread notifications dot
+    const notifDots = document.querySelectorAll('.notification-dot, #navNotificationDot');
+    if (notifDots.length > 0) {
+        api.getNotifications(101).then(notifs => {
+            if (Array.isArray(notifs)) {
+                const unreadCount = notifs.filter(n => !n.isRead && !n.read).length;
+                notifDots.forEach(dot => {
+                    dot.style.display = unreadCount > 0 ? 'block' : 'none';
+                    dot.classList.toggle('active', unreadCount > 0);
+                });
+            }
+        }).catch(() => {});
+    }
+
+    // 7. Load Current User info into nav
+    api.getCurrentUser().then(user => {
+        if (user) {
+            const nameEl = document.getElementById('dropdownUserName');
+            const bioEl = document.getElementById('dropdownUserBio');
+            const avatarImg = document.getElementById('headerUserAvatar');
+            if (nameEl && user.fullName) nameEl.textContent = user.fullName;
+            if (bioEl && (user.artistType || user.bio)) bioEl.textContent = user.artistType || user.bio;
+            if (avatarImg && user.profilePicture) avatarImg.src = user.profilePicture;
+        }
+    }).catch(() => {});
+}
+
+// Global export & auto-init on DOMContentLoaded
+window.initNavigation = initUniversalNavigation;
+window.initUniversalNavigation = initUniversalNavigation;
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initUniversalNavigation);
+} else {
+    initUniversalNavigation();
+}
+
