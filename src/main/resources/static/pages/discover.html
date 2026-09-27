@@ -3,418 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArtSphere – Discover Amazing Artists</title>
+    <title>ArtSphere — Creator & Artist Directory</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/discover.css">
 </head>
 <body>
-    <div class="mobile-frame-container wide-landing">
-        <main class="screen-container discover-screen">
+    <!-- Universal Floating Capsule Navigation -->
+    <header class="capsule-nav-wrapper" id="navWrapper">
+        <nav class="capsule-nav">
+            <a href="/pages/home.html" class="nav-brand">
+                <span class="brand-motif">✦</span>
+                <span>ArtSphere</span>
+            </a>
             
-            <!-- Sticky Header Navbar -->
-            <header class="discover-header">
-                <a href="/pages/home.html" class="header-logo-link" aria-label="ArtSphere Home">
-                    <img src="/images/logo_header.png" alt="ArtSphere – The Artist Community" class="header-logo-img">
+            <div class="nav-links" id="navLinks">
+                <a href="/pages/home.html" class="nav-link">Home</a>
+                <a href="/pages/discover.html" class="nav-link active">Discover</a>
+                <a href="/pages/communities.html" class="nav-link">Communities</a>
+                <a href="/pages/events.html" class="nav-link">Events</a>
+                <a href="/pages/collaborators.html" class="nav-link">Collaborate</a>
+                <a href="/pages/opportunities.html" class="nav-link">Opportunities</a>
+            </div>
+
+            <div class="nav-actions">
+                <!-- Notification Bell -->
+                <a href="/pages/notifications.html" class="nav-icon-btn notification-nav-wrapper" aria-label="Notifications">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    <span class="notification-dot"></span>
                 </a>
-                
-                <div class="header-right-actions">
-                    <!-- Search Icon (Scrolls/Focuses search bar) -->
-                    <button class="header-action-btn" id="headerSearchBtn" aria-label="Focus Search">
-                        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+
+                <!-- Creator Avatar & Dropdown -->
+                <div class="user-menu-wrapper">
+                    <button class="user-avatar-trigger" id="userAvatarBtn" aria-label="User Account Menu">
+                        <img src="/images/user_avatar_nav.png" alt="Creator Profile" class="user-nav-avatar" id="headerUserAvatar">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="chevron-arrow">
+                            <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </button>
-
-                    <!-- Notifications with coral dot badge -->
-                    <div class="notification-wrapper">
-                        <button class="header-action-btn" id="headerNotificationsBtn" aria-label="Notifications">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                            </svg>
-                            <span class="notification-badge-dot"></span>
-                        </button>
-                    </div>
-
-                    <!-- User Avatar and Dropdown Toggle -->
-                    <div class="user-menu-wrapper">
-                        <button class="user-avatar-trigger" id="userAvatarBtn" aria-label="User Account">
-                            <img src="/images/user_avatar_nav.png" alt="User Profile" class="user-nav-avatar" id="headerUserAvatar">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="chevron-arrow">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                        
-                        <div class="user-dropdown-panel" id="userDropdownPanel">
-                            <div class="dropdown-user-info">
-                                <strong id="dropdownUserName">Creative User</strong>
-                                <span id="dropdownUserBio">Artist Member</span>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                <span>My Profile</span>
-                            </a>
-                            <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                                <span>My Portfolio</span>
-                            </a>
-                            <a href="/pages/opportunities.html" class="dropdown-item-link">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                                <span>Opportunities</span>
-                            </a>
-                            <a href="/pages/account-setup.html" class="dropdown-item-link">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                                <span>Settings</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <button class="dropdown-item-link text-danger" id="logoutBtn">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                                <span>Log Out</span>
-                            </button>
+                    
+                    <div class="user-dropdown-panel" id="userDropdownPanel">
+                        <div class="dropdown-user-info">
+                            <strong id="dropdownUserName">Aanya Deshmukh</strong>
+                            <span id="dropdownUserBio">Visual & Digital Artist</span>
                         </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>My Artist Profile</span>
+                        </a>
+                        <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            <span>My Portfolio</span>
+                        </a>
+                        <a href="/pages/create-post.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Share New Work</span>
+                        </a>
+                        <a href="/pages/my-applications.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            <span>My Applications</span>
+                        </a>
+                        <a href="/pages/settings.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item-link text-danger" id="logoutBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                            <span>Log Out</span>
+                        </button>
                     </div>
                 </div>
-            </header>
 
-            <!-- Scrollable Page Content -->
-            <div class="discover-scroll-content">
+                <!-- Mobile Toggle -->
+                <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-                <!-- 1. Discover Hero Section -->
-                <section class="discover-hero-section">
-                    <div class="discover-hero-left">
-                        <h1 class="discover-heading">
-                            Discover<br>Amazing <span class="gradient-text-artists">Artists</span>
+    <div class="page-wrapper">
+        <main>
+            <!-- 1. Search & Discovery Hero (Asymmetric 8 + 4 Grid) -->
+            <section class="discover-hero-section">
+                <div class="grid-12">
+                    <div class="col-8 col-md-8 col-sm-4 discover-hero-left">
+                        <div class="pill-tag accent-yellow">
+                            <span>✦</span>
+                            <span>CREATIVE DIRECTORY</span>
+                        </div>
+                        <h1 class="text-display discover-title">
+                            Discover Multidisciplinary<br>
+                            <span class="hero-title-accent">Craft.</span>
                         </h1>
-                        <p class="discover-subtext">
-                            Explore, connect and collaborate with creative minds from around you.
+                        <p class="discover-lead-text">
+                            Explore, filter, and collaborate with verified artists, musicians, dancers, photographers, and writers from Mumbai and across India.
                         </p>
-                    </div>
-                    <div class="discover-hero-right">
-                        <img src="/images/discover_hero_brush.png" alt="Different Art Forms, One Community" class="discover-hero-brush-img">
-                    </div>
-                </section>
-
-                <!-- 2. Search Bar -->
-                <section class="discover-search-section">
-                    <div class="search-bar-container">
-                        <svg class="search-icon-svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        </svg>
-                        <input type="text" id="searchInput" class="search-field-input" placeholder="Search artists, skills, or location..." autocomplete="off">
-                        <button class="btn-filter-icon" id="filterToggleBtn" aria-label="Filter Options">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="4" y1="21" x2="4" y2="14"></line>
-                                <line x1="4" y1="10" x2="4" y2="3"></line>
-                                <line x1="12" y1="21" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12" y2="3"></line>
-                                <line x1="20" y1="21" x2="20" y2="16"></line>
-                                <line x1="20" y1="12" x2="20" y2="3"></line>
-                                <line x1="1" y1="14" x2="7" y2="14"></line>
-                                <line x1="9" y1="8" x2="15" y2="8"></line>
-                                <line x1="17" y1="16" x2="23" y2="16"></line>
+                        
+                        <!-- Search Bar -->
+                        <div class="directory-search-wrapper">
+                            <svg class="search-lens-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
-                        </button>
-                    </div>
-                </section>
-
-                <!-- 3. Category Filter Pills -->
-                <section class="discover-filters-section">
-                    <div class="filter-pills-row" id="categoryPillsRow">
-                        <button class="filter-pill-btn active" data-category="all">
-                            <span>All</span>
-                        </button>
-
-                        <button class="filter-pill-btn" data-category="Music">
-                            <img src="/images/cat_music.png" alt="Music" class="pill-icon-img">
-                            <span>Music</span>
-                        </button>
-
-                        <button class="filter-pill-btn" data-category="Dance">
-                            <img src="/images/cat_dance.png" alt="Dance" class="pill-icon-img">
-                            <span>Dance</span>
-                        </button>
-
-                        <button class="filter-pill-btn" data-category="Visual Arts">
-                            <img src="/images/cat_visual_arts.png" alt="Visual Arts" class="pill-icon-img">
-                            <span>Visual Arts</span>
-                        </button>
-
-                        <button class="filter-pill-btn" data-category="Photography">
-                            <img src="/images/cat_photography.png" alt="Photography" class="pill-icon-img">
-                            <span>Photography</span>
-                        </button>
-
-                        <button class="filter-pill-btn" data-category="Writing">
-                            <img src="/images/cat_writing.png" alt="Writing" class="pill-icon-img">
-                            <span>Writing</span>
-                        </button>
-                    </div>
-                </section>
-
-                <!-- 4. Featured Artists Section (Dynamic via REST API) -->
-                <section class="discover-section featured-artists-section">
-                    <div class="discover-section-header">
-                        <h2 class="discover-section-heading">Featured <span class="gradient-text-artists">Artists</span></h2>
-                        <a href="#" class="see-all-link" id="seeAllFeaturedBtn">See All &rarr;</a>
-                    </div>
-
-                    <!-- Populated dynamically via GET /api/discover/artists?category=... -->
-                    <div class="featured-artists-cards-row" id="featuredArtistsContainer">
-                        <!-- Initial seed cards -->
-                        <div class="discover-featured-card" data-artist-id="101">
-                            <div class="featured-cover-container">
-                                <img src="/images/discover_aanya_cover.png" alt="Aanya Deshmukh Artwork" class="featured-cover-image">
-                                <button class="btn-card-heart" aria-label="Favorite">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                                </button>
-                            </div>
-                            <div class="featured-artist-meta-row">
-                                <img src="/images/artist_aanya_avatar.png" alt="Aanya Deshmukh" class="featured-avatar-image">
-                                <div class="featured-meta-text">
-                                    <h3 class="featured-artist-name">Aanya Deshmukh</h3>
-                                    <span class="featured-artist-role">Visual Artist</span>
-                                    <div class="featured-location-line">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#857996" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                        <span>Mumbai, MH</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn-connect-artist" data-artist-id="101">Connect</button>
+                            <input type="text" id="searchInput" class="directory-search-input" placeholder="Search by artist name, skill, or medium (e.g. guitar, digital art, acrylic)..." autocomplete="off">
+                            <button id="clearSearchBtn" class="search-clear-btn" aria-label="Clear Search" style="display:none;">&times;</button>
                         </div>
 
-                        <div class="discover-featured-card" data-artist-id="102">
-                            <div class="featured-cover-container">
-                                <img src="/images/artist_rohan_cover.png" alt="Rohan Mehta Artwork" class="featured-cover-image">
-                                <button class="btn-card-heart" aria-label="Favorite">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                                </button>
-                            </div>
-                            <div class="featured-artist-meta-row">
-                                <img src="/images/artist_rohan_avatar.png" alt="Rohan Mehta" class="featured-avatar-image">
-                                <div class="featured-meta-text">
-                                    <h3 class="featured-artist-name">Rohan Mehta</h3>
-                                    <span class="featured-artist-role">Musician</span>
-                                    <div class="featured-location-line">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#857996" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                        <span>Pune, MH</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn-connect-artist" data-artist-id="102">Connect</button>
-                        </div>
-
-                        <div class="discover-featured-card" data-artist-id="103">
-                            <div class="featured-cover-container">
-                                <img src="/images/artist_kavya_cover.png" alt="Kavya Iyer Artwork" class="featured-cover-image">
-                                <button class="btn-card-heart" aria-label="Favorite">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                                </button>
-                            </div>
-                            <div class="featured-artist-meta-row">
-                                <img src="/images/artist_kavya_avatar.png" alt="Kavya Iyer" class="featured-avatar-image">
-                                <div class="featured-meta-text">
-                                    <h3 class="featured-artist-name">Kavya Iyer</h3>
-                                    <span class="featured-artist-role">Dancer</span>
-                                    <div class="featured-location-line">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#857996" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                        <span>Bengaluru, KA</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn-connect-artist" data-artist-id="103">Connect</button>
+                        <div class="search-results-meta">
+                            <span id="resultsCountLabel" class="results-count-stamp">Showing all verified artists</span>
                         </div>
                     </div>
-                </section>
 
-                <!-- 5. Artists Near You Section (Dynamic via REST API) -->
-                <section class="discover-section near-you-section">
-                    <div class="discover-section-header">
-                        <h2 class="discover-section-heading">Artists <span class="gradient-text-artists">Near You</span></h2>
-                        <a href="#" class="see-all-link" id="seeAllNearYouBtn">See All &rarr;</a>
-                    </div>
-
-                    <!-- Populated dynamically via GET /api/discover/near-you -->
-                    <div class="near-you-cards-row" id="nearYouContainer">
-                        <!-- Arjun Rao -->
-                        <div class="near-artist-card" data-artist-id="104">
-                            <div class="near-artist-thumb-wrapper">
-                                <img src="/images/artist_arjun_thumb.png" alt="Arjun Rao" class="near-artist-thumb-img">
+                    <div class="col-4 col-md-8 col-sm-4 discover-hero-right">
+                        <!-- Location Filter Ledger -->
+                        <div class="card-cream location-filter-card">
+                            <div class="filter-card-header">
+                                <span class="pill-tag">FILTER BY REGION</span>
+                                <span class="filter-counter">INDIA</span>
                             </div>
-                            <div class="near-artist-info">
-                                <div class="near-title-heart-row">
-                                    <h3 class="near-artist-name">Arjun Rao</h3>
-                                    <button class="btn-near-heart" aria-label="Favorite">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#857996" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                                    </button>
-                                </div>
-                                <span class="near-artist-role">Photographer</span>
-                                <div class="near-location-line">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#857996" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                    <span>Navi Mumbai</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Meera Singh -->
-                        <div class="near-artist-card" data-artist-id="105">
-                            <div class="near-artist-thumb-wrapper">
-                                <img src="/images/artist_meera_thumb.png" alt="Meera Singh" class="near-artist-thumb-img">
-                            </div>
-                            <div class="near-artist-info">
-                                <div class="near-title-heart-row">
-                                    <h3 class="near-artist-name">Meera Singh</h3>
-                                    <button class="btn-near-heart" aria-label="Favorite">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#857996" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                                    </button>
-                                </div>
-                                <span class="near-artist-role">Singer</span>
-                                <div class="near-location-line">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#857996" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                    <span>Mumbai</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Ishita Kulkarni -->
-                        <div class="near-artist-card" data-artist-id="106">
-                            <div class="near-artist-thumb-wrapper">
-                                <img src="/images/artist_ishita_thumb.png" alt="Ishita Kulkarni" class="near-artist-thumb-img">
-                            </div>
-                            <div class="near-artist-info">
-                                <div class="near-title-heart-row">
-                                    <h3 class="near-artist-name">Ishita Kulkarni</h3>
-                                    <button class="btn-near-heart" aria-label="Favorite">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#857996" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                                    </button>
-                                </div>
-                                <span class="near-artist-role">Painter</span>
-                                <div class="near-location-line">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#857996" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                    <span>Thane</span>
-                                </div>
+                            <p class="filter-card-desc">Quickly isolate creators based in specific creative hubs:</p>
+                            <div class="location-pills-grid" id="locationPillsGrid">
+                                <button class="location-pill active" data-location="all">All Cities</button>
+                                <button class="location-pill" data-location="Mumbai">Mumbai</button>
+                                <button class="location-pill" data-location="Pune">Pune</button>
+                                <button class="location-pill" data-location="Bengaluru">Bengaluru</button>
+                                <button class="location-pill" data-location="Thane">Thane</button>
                             </div>
                         </div>
                     </div>
-                </section>
-
-                <!-- 6. Find Your Creative Tribe Section -->
-                <section class="discover-section tribe-section">
-                    <div class="tribe-banner-card">
-                        <div class="tribe-content-left">
-                            <h2 class="tribe-heading">
-                                Find Your<br><span class="gradient-text-artists">Creative Tribe</span>
-                            </h2>
-                            <p class="tribe-description">
-                                Connect with artists, join communities and create something extraordinary.
-                            </p>
-                            <a href="/pages/communities.html" class="btn-tribe-join">
-                                <span>Join Communities</span>
-                                <span class="arrow-right">&rarr;</span>
-                            </a>
-                        </div>
-                        <div class="tribe-visual-right">
-                            <img src="/images/discover_tribe_banner.png" alt="Artists Create a Brighter World" class="tribe-illustration-img">
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Bottom spacer to prevent fixed nav overlap -->
-                <div class="discover-bottom-spacer"></div>
-
-            </div>
-
-            <!-- Sticky Bottom Navigation Bar -->
-            <nav class="bottom-nav-bar" id="bottomNavBar">
-                <!-- 1. Home -->
-                <a href="/pages/home.html" class="nav-item" aria-label="Home">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-                    </svg>
-                    <span class="nav-label">Home</span>
-                </a>
-
-                <!-- 2. Discover (Active) -->
-                <a href="/pages/discover.html" class="nav-item active" aria-label="Discover">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
-                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                    </svg>
-                    <span class="nav-label">Discover</span>
-                </a>
-
-                <!-- 3. Central + Action Button -->
-                <div class="nav-item-center">
-                    <button class="nav-fab-btn" id="centralCreateBtn" aria-label="Create New Content">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                    </button>
                 </div>
+            </section>
 
-                <!-- 4. Messages -->
-                <a href="/pages/messages.html" class="nav-item" aria-label="Messages">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                    </svg>
-                    <span class="nav-label">Messages</span>
-                </a>
-
-                <!-- 5. Profile -->
-                <a href="/pages/profile.html" class="nav-item" id="bottomNavProfile" aria-label="Profile">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span class="nav-label">Profile</span>
-                </a>
-            </nav>
-
-            <!-- Creation / Action Menu Modal triggered by Central + Button -->
-            <div class="action-sheet-backdrop" id="createSheetBackdrop">
-                <div class="action-sheet-card" id="createSheetCard">
-                    <div class="action-sheet-handle"></div>
-                    <div class="action-sheet-header">
-                        <h3 class="action-sheet-title">Create on ArtSphere</h3>
-                        <p class="action-sheet-subtitle">Share your art, start a circle, or host an event</p>
-                    </div>
-                    <div class="action-options-list">
-                        <a href="/pages/account-setup.html" class="action-option-item">
-                            <div class="action-option-icon icon-art">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                            </div>
-                            <div class="action-option-info">
-                                <strong>Publish New Artwork</strong>
-                                <span>Upload visual art, songs, or poetry to your portfolio</span>
-                            </div>
-                        </a>
-                        <a href="/pages/communities.html" class="action-option-item">
-                            <div class="action-option-icon icon-comm">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                            </div>
-                            <div class="action-option-info">
-                                <strong>Start an Art Community</strong>
-                                <span>Build a group for collaboration and discussions</span>
-                            </div>
-                        </a>
-                        <a href="/pages/discover.html?action=new-event" class="action-option-item">
-                            <div class="action-option-icon icon-event">
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                            </div>
-                            <div class="action-option-info">
-                                <strong>Host an Event / Workshop</strong>
-                                <span>Connect with fellow creators in Mumbai & beyond</span>
-                            </div>
-                        </a>
-                    </div>
-                    <button class="btn-cancel-action-sheet" id="btnCancelActionSheet">Cancel</button>
+            <!-- 2. Disciplines Pill Filter Strip -->
+            <section class="section-discipline-filters">
+                <div class="discipline-bar-header">
+                    <span class="eyebrow">FILTER BY DISCIPLINE</span>
                 </div>
-            </div>
+                <div class="discipline-pills-row" id="categoryPillsRow">
+                    <button class="filter-pill-btn active" data-category="all">All Art Forms</button>
+                    <button class="filter-pill-btn" data-category="Music">Musicians</button>
+                    <button class="filter-pill-btn" data-category="Dance">Dancers</button>
+                    <button class="filter-pill-btn" data-category="Visual Arts">Visual Artists</button>
+                    <button class="filter-pill-btn" data-category="Photography">Photographers</button>
+                    <button class="filter-pill-btn" data-category="Writing">Writers & Lyricists</button>
+                </div>
+            </section>
 
+            <!-- 3. Artists Directory Grid -->
+            <section class="section-directory-results">
+                <div class="grid-12 artists-results-grid" id="artistsResultsGrid">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </section>
         </main>
+
+        <!-- Universal Editorial Footer -->
+        <footer class="editorial-footer">
+            <div class="grid-12 footer-grid">
+                <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
+                    <a href="/pages/home.html" class="footer-logo">
+                        <span class="brand-motif">✦</span>
+                        <span>ArtSphere</span>
+                    </a>
+                    <p class="footer-bio">
+                        The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
+                    </p>
+                    <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
+                </div>
+
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">DIRECTORY</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/discover.html">Discover Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
+                        <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
+                        <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">PLATFORM</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/home.html">Studio Feed</a></li>
+                        <li><a href="/pages/communities.html">Communities</a></li>
+                        <li><a href="/pages/events.html">Events & Jams</a></li>
+                        <li><a href="/pages/collaborators.html">Collaborations</a></li>
+                        <li><a href="/pages/opportunities.html">Open Calls</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-3 col-md-4 col-sm-4 footer-col-links">
+                    <div class="footer-heading">ACCOUNT</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
+                        <li><a href="/pages/my-applications.html">My Applications</a></li>
+                        <li><a href="/pages/settings.html">Account Settings</a></li>
+                        <li><a href="/pages/help-support.html">Help & Guidelines</a></li>
+                    </ul>
+                    <div class="footer-badge-box">
+                        <span class="pill-tag accent-yellow">NO ADS. PURE ART.</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <!-- Scripts -->
