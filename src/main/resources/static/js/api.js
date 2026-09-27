@@ -633,6 +633,57 @@ const api = {
         return result.data;
     },
 
+    // --- Module 11: Opportunities ---
+    async getOpportunities(category, location, search) {
+        const params = new URLSearchParams();
+        if (category && category.toLowerCase() !== 'all') params.append('category', category);
+        if (location) params.append('location', location);
+        if (search) params.append('search', search);
+        const query = params.toString() ? `?${params.toString()}` : '';
+        const response = await fetch(`${API_BASE}/opportunities${query}`);
+        const result = await response.json();
+        return result.data || [];
+    },
+
+    async getFeaturedOpportunity() {
+        const response = await fetch(`${API_BASE}/opportunities/featured`);
+        const result = await response.json();
+        return result.data;
+    },
+
+    async getOpportunityDetails(id, userId) {
+        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
+        const response = await fetch(`${API_BASE}/opportunities/${id}${query}`);
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to fetch opportunity details');
+        }
+        return result.data;
+    },
+
+    async applyToOpportunity(id, userId, notes) {
+        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
+        const response = await fetch(`${API_BASE}/opportunities/${id}/apply${query}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ notes: notes || 'Applied via ArtSphere web portal' })
+        });
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to apply to opportunity');
+        }
+        return result.data;
+    },
+
+    async toggleOpportunityBookmark(id, userId) {
+        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
+        const response = await fetch(`${API_BASE}/opportunities/${id}/bookmark${query}`, {
+            method: 'POST'
+        });
+        const result = await response.json();
+        return result.data;
+    },
+
     // --- Notifications ---
     async getNotifications(userId, category) {
         const params = new URLSearchParams();
