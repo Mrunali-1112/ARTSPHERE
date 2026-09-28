@@ -96,76 +96,80 @@
 
     <div class="page-wrapper">
         <main>
-            <!-- 1. Search & Discovery Hero (Asymmetric 8 + 4 Grid) -->
-            <section class="discover-hero-section">
-                <div class="grid-12">
-                    <div class="col-8 col-md-8 col-sm-4 discover-hero-left">
-                        <div class="pill-tag accent-yellow">
-                            <span>✦</span>
-                            <span>CREATIVE DIRECTORY</span>
+            <!-- 1. Compact Discovery Toolbar -->
+            <section class="discover-toolbar-section">
+                <div class="toolbar-inner-container">
+                    <!-- Search Input -->
+                    <div class="toolbar-search-wrapper">
+                        <svg class="search-lens-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="searchInput" class="toolbar-search-input" placeholder="Search by artist name, skill, or medium (e.g. guitar, digital art, acrylic)..." autocomplete="off">
+                        <button id="clearSearchBtn" class="search-clear-btn" aria-label="Clear Search" style="display:none;">&times;</button>
+                    </div>
+
+                    <!-- Category / Discipline Pills -->
+                    <div class="toolbar-pills-wrapper">
+                        <div class="toolbar-pills-row" id="categoryPillsRow">
+                            <button class="filter-pill-btn active" data-category="all">All</button>
+                            <button class="filter-pill-btn" data-category="Musicians">Musicians</button>
+                            <button class="filter-pill-btn" data-category="Dancers">Dancers</button>
+                            <button class="filter-pill-btn" data-category="Visual Artists">Visual Artists</button>
+                            <button class="filter-pill-btn" data-category="Photographers">Photographers</button>
+                            <button class="filter-pill-btn" data-category="Writers">Writers &amp; Lyricists</button>
+                            <button class="filter-pill-btn" data-category="Actors">Actors</button>
+                            <button class="filter-pill-btn" data-category="Filmmakers">Filmmakers</button>
+                            <button class="filter-pill-btn" data-category="Designers">Designers</button>
                         </div>
-                        <h1 class="text-display discover-title">
-                            Discover Multidisciplinary<br>
-                            <span class="hero-title-accent">Craft.</span>
-                        </h1>
-                        <p class="discover-lead-text">
-                            Explore, filter, and collaborate with verified artists, musicians, dancers, photographers, and writers from Mumbai and across India.
-                        </p>
-                        
-                        <!-- Search Bar -->
-                        <div class="directory-search-wrapper">
-                            <svg class="search-lens-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <button class="pills-scroll-right-btn" id="pillsScrollRightBtn" aria-label="Scroll disciplines">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
                             </svg>
-                            <input type="text" id="searchInput" class="directory-search-input" placeholder="Search by artist name, skill, or medium (e.g. guitar, digital art, acrylic)..." autocomplete="off">
-                            <button id="clearSearchBtn" class="search-clear-btn" aria-label="Clear Search" style="display:none;">&times;</button>
-                        </div>
-
-                        <div class="search-results-meta">
-                            <span id="resultsCountLabel" class="results-count-stamp">Showing all verified artists</span>
-                        </div>
+                        </button>
                     </div>
 
-                    <div class="col-4 col-md-8 col-sm-4 discover-hero-right">
-                        <!-- Location Filter Ledger -->
-                        <div class="card-cream location-filter-card">
-                            <div class="filter-card-header">
-                                <span class="pill-tag">FILTER BY REGION</span>
-                                <span class="filter-counter">INDIA</span>
-                            </div>
-                            <p class="filter-card-desc">Quickly isolate creators based in specific creative hubs:</p>
-                            <div class="location-pills-grid" id="locationPillsGrid">
-                                <button class="location-pill active" data-location="all">All Cities</button>
-                                <button class="location-pill" data-location="Mumbai">Mumbai</button>
-                                <button class="location-pill" data-location="Pune">Pune</button>
-                                <button class="location-pill" data-location="Bengaluru">Bengaluru</button>
-                                <button class="location-pill" data-location="Thane">Thane</button>
-                            </div>
+                    <!-- Location & Sort Controls -->
+                    <div class="toolbar-controls-group">
+                        <div class="select-pill-wrapper">
+                            <svg class="select-pin-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <select id="locationSelect" class="pill-select-control" aria-label="Filter by Location">
+                                <option value="all">All Cities</option>
+                                <option value="Mumbai" selected>Mumbai</option>
+                                <option value="Pune">Pune</option>
+                                <option value="Bengaluru">Bengaluru</option>
+                                <option value="Thane">Thane</option>
+                                <option value="Navi Mumbai">Navi Mumbai</option>
+                            </select>
+                            <svg class="select-chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+
+                        <div class="select-pill-wrapper">
+                            <select id="sortSelect" class="pill-select-control" aria-label="Sort Feed">
+                                <option value="relevant" selected>Most Relevant</option>
+                                <option value="followers">Most Followers</option>
+                                <option value="recent">Recently Added</option>
+                            </select>
+                            <svg class="select-chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 2. Disciplines Pill Filter Strip -->
-            <section class="section-discipline-filters">
-                <div class="discipline-bar-header">
-                    <span class="eyebrow">FILTER BY DISCIPLINE</span>
+            <!-- 2. Dense Pinterest Masonry Discovery Feed -->
+            <section class="discover-masonry-section">
+                <div class="feed-header-meta">
+                    <span id="resultsCountLabel" class="results-count-stamp">Showing all creative discoveries</span>
                 </div>
-                <div class="discipline-pills-row" id="categoryPillsRow">
-                    <button class="filter-pill-btn active" data-category="all">All Art Forms</button>
-                    <button class="filter-pill-btn" data-category="Music">Musicians</button>
-                    <button class="filter-pill-btn" data-category="Dance">Dancers</button>
-                    <button class="filter-pill-btn" data-category="Visual Arts">Visual Artists</button>
-                    <button class="filter-pill-btn" data-category="Photography">Photographers</button>
-                    <button class="filter-pill-btn" data-category="Writing">Writers & Lyricists</button>
-                </div>
-            </section>
-
-            <!-- 3. Artists Directory Grid -->
-            <section class="section-directory-results">
-                <div class="grid-12 artists-results-grid" id="artistsResultsGrid">
-                    <!-- Populated dynamically via JS -->
+                <div class="masonry-discovery-feed" id="discoverMasonryFeed">
+                    <!-- Populated dynamically via discover.js -->
                 </div>
             </section>
         </main>

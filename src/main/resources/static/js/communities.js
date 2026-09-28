@@ -1,115 +1,27 @@
 /**
- * ArtSphere – Creative Communities & Guilds Script
- * Editorial Neo-Brutalist Architecture & Dynamic Search Filter
+ * ArtSphere – Creative Groups & Communities Script
+ * Clean 4-Column Directory Architecture matching Reference Image 2
  */
 
-let allCommunities = [];
-let activeCategory = 'All';
+let allGroups = [];
+let activeTab = 'all';
+let currentLocation = 'all';
+let currentSort = 'members';
+let currentView = 'grid';
 let searchQuery = '';
 let searchDebounceTimeout = null;
 let currentUserId = 101;
 
-// Curated default guilds in case backend returns empty
-const DEFAULT_GUILDS = [
-    {
-        id: 401,
-        name: "Creative Souls Network",
-        category: "All",
-        artForms: "Multidisciplinary",
-        description: "A welcoming collective for artists across all mediums to share feedback, form collab crews, and host jam sessions.",
-        memberCount: 1250,
-        postCount: 84,
-        location: "Global",
-        imageUrl: "/images/comm_creative_souls_cover.png",
-        avatarUrl: "/images/comm_creative_souls_avatar.png",
-        joined: true
-    },
-    {
-        id: 402,
-        name: "Canvas & Ink Guild",
-        category: "Painting",
-        artForms: "Oil, Acrylic & Gouache",
-        description: "Traditional and contemporary painters gathering weekly for live critique, texture studies, and gallery group shows.",
-        memberCount: 820,
-        postCount: 52,
-        location: "Mumbai",
-        imageUrl: "/images/comm_painting_souls.png",
-        avatarUrl: "/images/category_visual_arts.png",
-        joined: false
-    },
-    {
-        id: 403,
-        name: "Analog Frames Collective",
-        category: "Photography",
-        artForms: "35mm Film & Documentary",
-        description: "Dedicated to the art of darkroom chemistry, 35mm street photography, and slow visual storytelling.",
-        memberCount: 640,
-        postCount: 41,
-        location: "Bengaluru",
-        imageUrl: "/images/comm_photography_circle.png",
-        avatarUrl: "/images/category_photography.png",
-        joined: false
-    },
-    {
-        id: 404,
-        name: "Modular Sound Explorers",
-        category: "Music",
-        artForms: "Ambient & Electronic",
-        description: "Patch cable architects, ambient producers, and sound designers hosting monthly tape swaps and listening sessions.",
-        memberCount: 490,
-        postCount: 38,
-        location: "Pune",
-        imageUrl: "/images/comm_indie_musicians.png",
-        avatarUrl: "/images/category_music.png",
-        joined: true
-    },
-    {
-        id: 405,
-        name: "Kinetic Motion Lab",
-        category: "Dance",
-        artForms: "Contemporary & Kathak Fusion",
-        description: "Exploring bodily architecture, site-specific choreography, and improvisational physical theatre.",
-        memberCount: 380,
-        postCount: 29,
-        location: "Mumbai",
-        imageUrl: "/images/comm_dance_creators.png",
-        avatarUrl: "/images/category_dance.png",
-        joined: false
-    },
-    {
-        id: 406,
-        name: "Midnight Verses Circle",
-        category: "Writing",
-        artForms: "Poetry & Flash Fiction",
-        description: "A sanctuary for poets, librettists, and lyricists. Prompt marathons, chapbook exchanges, and open mics.",
-        memberCount: 510,
-        postCount: 67,
-        location: "New Delhi",
-        imageUrl: "/images/comm_poetry_writers.png",
-        avatarUrl: "/images/category_creative_writing.png",
-        joined: false
-    },
-    {
-        id: 407,
-        name: "Terra & Fire Ceramic Guild",
-        category: "Crafts",
-        artForms: "Stoneware & Raku Pottery",
-        description: "Studio potters and ceramic sculptors sharing kiln glaze recipes, wheel techniques, and pop-up market stalls.",
-        memberCount: 320,
-        postCount: 24,
-        location: "Thane",
-        imageUrl: "/images/comm_ceramics_craft.png",
-        avatarUrl: "/images/category_crafts.png",
-        joined: false
-    }
-];
+// Joined groups local state tracking
+const JOINED_STORAGE_KEY = 'artsphere_joined_groups';
+let joinedGroupIds = new Set(JSON.parse(localStorage.getItem(JOINED_STORAGE_KEY) || '[601, 604]'));
 
 document.addEventListener('DOMContentLoaded', () => {
     initNavigationDrawer();
     initUserMenu();
-    initFiltersAndSearch();
+    initToolbarAndTabs();
     checkUrlQueryParams();
-    loadCommunities();
+    loadGroupsData();
 });
 
 /**
@@ -138,27 +50,13 @@ function initNavigationDrawer() {
 /**
  * 2. User Account Dropdown Menu & Auth State
  */
-function initUserMenu() {
+async function initUserMenu() {
     const userAvatarBtn = document.getElementById('userAvatarBtn');
     const userDropdownPanel = document.getElementById('userDropdownPanel');
     const logoutBtn = document.getElementById('logoutBtn');
     const dropdownUserName = document.getElementById('dropdownUserName');
     const dropdownUserBio = document.getElementById('dropdownUserBio');
     const headerUserAvatar = document.getElementById('headerUserAvatar');
-
-    // Retrieve user session
-    try {
-        const stored = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
-        if (stored) {
-            const user = JSON.parse(stored);
-            if (user.id) currentUserId = user.id;
-            if (user.name && dropdownUserName) dropdownUserName.textContent = user.name;
-            if (user.bio && dropdownUserBio) dropdownUserBio.textContent = user.bio;
-            if (user.avatarUrl && headerUserAvatar) headerUserAvatar.src = user.avatarUrl;
-        }
-    } catch (e) {
-        console.warn('Could not read user session', e);
-    }
 
     if (userAvatarBtn && userDropdownPanel) {
         userAvatarBtn.addEventListener('click', (e) => {
@@ -168,30 +66,61 @@ function initUserMenu() {
         });
 
         document.addEventListener('click', (e) => {
-            if (userDropdownPanel.classList.contains('show') && !userDropdownPanel.contains(e.target)) {
+            if (!userDropdownPanel.contains(e.target) && !userAvatarBtn.contains(e.target)) {
                 userDropdownPanel.classList.remove('show');
-                userAvatarBtn.setAttribute('aria-expanded', 'false');
             }
         });
     }
 
+    try {
+        if (window.ArtSphereAPI && typeof window.ArtSphereAPI.getCurrentUser === 'function') {
+            const user = await window.ArtSphereAPI.getCurrentUser();
+            if (user) {
+                if (user.id) currentUserId = user.id;
+                if (dropdownUserName) dropdownUserName.textContent = user.fullName || user.username;
+                if (dropdownUserBio) dropdownUserBio.textContent = user.bio || 'Artist Member';
+                if (user.profilePicture && headerUserAvatar) {
+                    headerUserAvatar.src = user.profilePicture;
+                }
+            }
+        }
+    } catch (e) {
+        console.warn('Could not read user session', e);
+    }
+
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            sessionStorage.removeItem('currentUser');
-            localStorage.removeItem('currentUser');
-            window.location.href = '/pages/landing.html';
+        logoutBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            if (window.ArtSphereAPI && typeof window.ArtSphereAPI.logout === 'function') {
+                await window.ArtSphereAPI.logout();
+            } else {
+                window.location.href = '/pages/login.html';
+            }
         });
     }
+
+    // Global listener to close open 3-dots menus
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.card-menu-trigger-wrapper')) {
+            document.querySelectorAll('.card-menu-dropdown.show').forEach(menu => {
+                menu.classList.remove('show');
+            });
+        }
+    });
 }
 
 /**
- * 3. Search and Category Filter Setup
+ * 3. Toolbar, Tabs, Location, Sort, and View Setup
  */
-function initFiltersAndSearch() {
+function initToolbarAndTabs() {
     const searchInput = document.getElementById('communitySearchInput');
     const clearSearchBtn = document.getElementById('clearSearchBtn');
-    const categoriesScrollRow = document.getElementById('categoriesScrollRow');
+    const filterTabs = document.querySelectorAll('.group-tab-btn');
+    const locationSelect = document.getElementById('groupLocationSelect');
+    const sortSelect = document.getElementById('groupSortSelect');
+    const viewButtons = document.querySelectorAll('.view-btn');
 
+    // Debounced Search Input
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             searchQuery = e.target.value.trim();
@@ -200,33 +129,63 @@ function initFiltersAndSearch() {
             }
             clearTimeout(searchDebounceTimeout);
             searchDebounceTimeout = setTimeout(() => {
-                applyLocalFilters();
-            }, 250);
+                filterAndRenderGroups();
+            }, 200);
         });
     }
 
+    // Clear Search
     if (clearSearchBtn && searchInput) {
         clearSearchBtn.addEventListener('click', () => {
             searchInput.value = '';
             searchQuery = '';
             clearSearchBtn.style.display = 'none';
             searchInput.focus();
-            applyLocalFilters();
+            filterAndRenderGroups();
         });
     }
 
-    if (categoriesScrollRow) {
-        categoriesScrollRow.addEventListener('click', (e) => {
-            const pill = e.target.closest('.filter-pill-btn');
-            if (!pill) return;
+    // Filter Tabs (All, My, Public, Private)
+    filterTabs.forEach(tabBtn => {
+        tabBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            filterTabs.forEach(b => b.classList.remove('active'));
+            tabBtn.classList.add('active');
+            activeTab = tabBtn.getAttribute('data-tab') || 'all';
+            filterAndRenderGroups();
+        });
+    });
 
-            categoriesScrollRow.querySelectorAll('.filter-pill-btn').forEach(b => b.classList.remove('active'));
-            pill.classList.add('active');
-
-            activeCategory = pill.getAttribute('data-category') || 'All';
-            applyLocalFilters();
+    // Location Select Dropdown
+    if (locationSelect) {
+        locationSelect.addEventListener('change', (e) => {
+            currentLocation = e.target.value;
+            filterAndRenderGroups();
         });
     }
+
+    // Sort Select Dropdown
+    if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            filterAndRenderGroups();
+        });
+    }
+
+    // View Switcher (Grid vs List)
+    viewButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            viewButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentView = btn.getAttribute('data-view') || 'grid';
+            
+            const grid = document.getElementById('popularCommunitiesGrid');
+            if (grid) {
+                grid.classList.toggle('list-view', currentView === 'list');
+            }
+        });
+    });
 }
 
 /**
@@ -234,299 +193,519 @@ function initFiltersAndSearch() {
  */
 function checkUrlQueryParams() {
     const params = new URLSearchParams(window.location.search);
-    const cat = params.get('category');
-    const search = params.get('q') || params.get('search');
+    const tab = params.get('tab');
+    const loc = params.get('location');
+    const q = params.get('q') || params.get('search');
 
-    if (cat) {
-        activeCategory = cat;
-        const pill = document.querySelector(`.filter-pill-btn[data-category="${cat}"]`);
-        if (pill) {
-            document.querySelectorAll('.filter-pill-btn').forEach(b => b.classList.remove('active'));
-            pill.classList.add('active');
+    if (tab) {
+        activeTab = tab;
+        const targetTab = document.querySelector(`.group-tab-btn[data-tab="${CSS.escape(tab)}"]`);
+        if (targetTab) {
+            document.querySelectorAll('.group-tab-btn').forEach(b => b.classList.remove('active'));
+            targetTab.classList.add('active');
         }
     }
 
-    if (search) {
-        searchQuery = search;
+    if (loc) {
+        currentLocation = loc;
+        const locSelect = document.getElementById('groupLocationSelect');
+        if (locSelect) locSelect.value = loc;
+    }
+
+    if (q) {
+        searchQuery = q;
         const searchInput = document.getElementById('communitySearchInput');
-        const clearSearchBtn = document.getElementById('clearSearchBtn');
-        if (searchInput) searchInput.value = search;
-        if (clearSearchBtn) clearSearchBtn.style.display = 'flex';
+        const clearBtn = document.getElementById('clearSearchBtn');
+        if (searchInput) searchInput.value = q;
+        if (clearBtn) clearBtn.style.display = 'flex';
     }
 }
 
 /**
- * 5. Fetch Communities from API
+ * 5. Fetch Communities Data
  */
-async function loadCommunities() {
-    const grid = document.getElementById('popularCommunitiesGrid');
-    if (!grid) return;
-
-    grid.innerHTML = `
-        <div class="loading-state-wrapper">
-            <div class="loading-spinner"></div>
-            <p>Accessing guild directory archives...</p>
-        </div>
-    `;
+async function loadGroupsData() {
+    let items = getReferenceGroupsData();
 
     try {
+        let apiCommunities = [];
         if (window.ArtSphereAPI && typeof window.ArtSphereAPI.getCommunities === 'function') {
-            const res = await window.ArtSphereAPI.getCommunities(null, null, currentUserId);
-            if (res && res.length > 0) {
-                // Merge backend data with fallback attributes for rich presentation
-                allCommunities = res.map(comm => {
-                    const fallback = DEFAULT_GUILDS.find(d => String(d.id) === String(comm.id)) || {};
-                    return {
-                        ...fallback,
-                        ...comm,
-                        imageUrl: comm.imageUrl || comm.coverImage || fallback.imageUrl || '/images/comm_creative_souls_cover.png',
-                        avatarUrl: comm.avatarUrl || fallback.avatarUrl || '/images/comm_creative_souls_avatar.png',
-                        location: comm.location || fallback.location || 'Global',
-                        memberCount: comm.memberCount || fallback.memberCount || 100,
-                        postCount: comm.postCount !== undefined ? comm.postCount : (fallback.postCount || 12)
-                    };
-                });
-            } else {
-                allCommunities = [...DEFAULT_GUILDS];
-            }
+            apiCommunities = await window.ArtSphereAPI.getCommunities(null, null, currentUserId);
         } else {
-            allCommunities = [...DEFAULT_GUILDS];
+            const res = await fetch('/api/communities');
+            if (res.ok) {
+                const json = await res.json();
+                apiCommunities = json.data || [];
+            }
+        }
+
+        if (apiCommunities && apiCommunities.length > 0) {
+            apiCommunities.forEach(comm => {
+                const existing = items.find(g => String(g.id) === String(comm.id));
+                if (existing) {
+                    existing.memberCount = comm.memberCount || existing.memberCount;
+                    existing.location = comm.location || existing.location;
+                    if (comm.imageUrl) existing.imageUrl = comm.imageUrl;
+                } else {
+                    items.push({
+                        id: comm.id,
+                        name: comm.name,
+                        status: comm.category === 'Crafts' || comm.category === 'Writing' ? 'PRIVATE' : 'PUBLIC',
+                        memberCount: comm.memberCount || 340,
+                        description: comm.description || 'A vibrant community of creators collaborating and sharing art.',
+                        location: comm.location || 'Mumbai, MH',
+                        imageUrl: comm.coverImage || comm.imageUrl || '/images/comm_creative_souls_cover.png',
+                        avatars: ['/images/artist_profile_avatar.png', '/images/artist_arjun_thumb.png', '/images/avatar_riya.png']
+                    });
+                }
+            });
         }
     } catch (err) {
-        console.warn('API error, using curated editorial guilds:', err);
-        allCommunities = [...DEFAULT_GUILDS];
+        console.warn('Network notice: using curated directory groups data:', err);
     }
 
-    applyLocalFilters();
+    // Set initial joined state from localStorage
+    items.forEach(group => {
+        group.joined = joinedGroupIds.has(Number(group.id)) || joinedGroupIds.has(String(group.id));
+    });
+
+    allGroups = items;
+    updateTabCounts();
+    filterAndRenderGroups();
 }
 
 /**
- * 6. Local Filter and Search Engine
+ * 6. Update Dynamic Filter Tab Counts
  */
-function applyLocalFilters() {
+function updateTabCounts() {
+    const totalAll = allGroups.length;
+    const totalMy = allGroups.filter(g => g.joined).length;
+    const totalPublic = allGroups.filter(g => g.status === 'PUBLIC').length;
+    const totalPrivate = allGroups.filter(g => g.status === 'PRIVATE').length;
+
+    const countAllEl = document.getElementById('tabCountAll');
+    const countMyEl = document.getElementById('tabCountMy');
+    const countPublicEl = document.getElementById('tabCountPublic');
+    const countPrivateEl = document.getElementById('tabCountPrivate');
+
+    if (countAllEl) countAllEl.textContent = totalAll;
+    if (countMyEl) countMyEl.textContent = totalMy;
+    if (countPublicEl) countPublicEl.textContent = totalPublic;
+    if (countPrivateEl) countPrivateEl.textContent = totalPrivate;
+}
+
+/**
+ * 7. Filter & Render Groups into 4-Column Grid
+ */
+function filterAndRenderGroups() {
     const grid = document.getElementById('popularCommunitiesGrid');
     const resultsCountLabel = document.getElementById('resultsCountLabel');
     if (!grid) return;
 
-    let filtered = [...allCommunities];
+    let filtered = allGroups.filter(group => {
+        // 1. Tab Filter
+        if (activeTab === 'my' && !group.joined) return false;
+        if (activeTab === 'public' && group.status !== 'PUBLIC') return false;
+        if (activeTab === 'private' && group.status !== 'PRIVATE') return false;
 
-    // Filter by Category
-    if (activeCategory && activeCategory.toLowerCase() !== 'all') {
-        const catLower = activeCategory.toLowerCase();
-        filtered = filtered.filter(item => {
-            const c = (item.category || '').toLowerCase();
-            const af = (item.artForms || '').toLowerCase();
-            return c.includes(catLower) || af.includes(catLower);
-        });
-    }
-
-    // Filter by Search Query
-    if (searchQuery) {
-        const q = searchQuery.toLowerCase();
-        filtered = filtered.filter(item => {
-            const name = (item.name || '').toLowerCase();
-            const desc = (item.description || '').toLowerCase();
-            const medium = (item.artForms || '').toLowerCase();
-            const loc = (item.location || '').toLowerCase();
-            return name.includes(q) || desc.includes(q) || medium.includes(q) || loc.includes(q);
-        });
-    }
-
-    // Update Result Stamp
-    if (resultsCountLabel) {
-        if (filtered.length === allCommunities.length && !searchQuery && activeCategory === 'All') {
-            resultsCountLabel.textContent = `Showing all ${filtered.length} creative collectives`;
-        } else {
-            resultsCountLabel.textContent = `Showing ${filtered.length} guild${filtered.length === 1 ? '' : 's'} matching filter`;
+        // 2. Location Filter
+        if (currentLocation !== 'all') {
+            const locLower = currentLocation.toLowerCase();
+            const groupLoc = (group.location || '').toLowerCase();
+            if (!groupLoc.includes(locLower)) return false;
         }
+
+        // 3. Search Filter
+        if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            const name = (group.name || '').toLowerCase();
+            const desc = (group.description || '').toLowerCase();
+            const loc = (group.location || '').toLowerCase();
+            const cat = (group.category || '').toLowerCase();
+
+            if (!name.includes(q) && !desc.includes(q) && !loc.includes(q) && !cat.includes(q)) {
+                return false;
+            }
+        }
+
+        return true;
+    });
+
+    // Sorting
+    if (currentSort === 'members') {
+        filtered.sort((a, b) => (b.memberCount || 0) - (a.memberCount || 0));
+    } else if (currentSort === 'alphabetical') {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (currentSort === 'active') {
+        filtered.sort((a, b) => (b.id || 0) - (a.id || 0));
     }
 
-    renderGuildGrid(filtered);
-}
+    // Results Counter
+    if (resultsCountLabel) {
+        const tabTitle = activeTab === 'all' ? 'creative groups' : `${activeTab} groups`;
+        const locTitle = currentLocation === 'all' ? '' : ` in ${currentLocation}`;
+        resultsCountLabel.textContent = `Showing ${filtered.length} ${tabTitle}${locTitle}`;
+    }
 
-/**
- * 7. Render Guild Bento Grid
- */
-function renderGuildGrid(guilds) {
-    const grid = document.getElementById('popularCommunitiesGrid');
-    if (!grid) return;
-
-    if (!guilds || guilds.length === 0) {
+    // Empty State
+    if (filtered.length === 0) {
         grid.innerHTML = `
-            <div class="empty-state-card">
-                <div class="empty-icon">✦</div>
-                <h3>No creative guilds found</h3>
-                <p>No collectives match your active filters. Try searching for different art mediums or reset filters.</p>
-                <button class="btn-pill-reset" id="resetGuildFiltersBtn">Reset All Filters</button>
+            <div class="empty-directory-card">
+                <div class="empty-directory-icon">✦</div>
+                <h3 class="empty-directory-title">No groups found</h3>
+                <p class="empty-directory-sub">Try expanding your search query or selecting 'All Groups'.</p>
+                <button class="filter-pill-btn active" style="margin: 0 auto; display: inline-block;" onclick="resetGroupsFilters()">Reset All Filters</button>
             </div>
         `;
-        const resetBtn = document.getElementById('resetGuildFiltersBtn');
-        if (resetBtn) {
-            resetBtn.addEventListener('click', () => {
-                activeCategory = 'All';
-                searchQuery = '';
-                const searchInput = document.getElementById('communitySearchInput');
-                const clearSearchBtn = document.getElementById('clearSearchBtn');
-                if (searchInput) searchInput.value = '';
-                if (clearSearchBtn) clearSearchBtn.style.display = 'none';
-                document.querySelectorAll('.filter-pill-btn').forEach(b => {
-                    b.classList.toggle('active', b.getAttribute('data-category') === 'All');
-                });
-                applyLocalFilters();
-            });
-        }
         return;
     }
 
-    grid.innerHTML = guilds.map(guild => createGuildCardHtml(guild)).join('');
+    // Render 4-Column Grid Cards
+    grid.innerHTML = filtered.map(group => createGroupCardHtml(group)).join('');
 
-    // Attach Join Toggle Listeners
-    grid.querySelectorAll('.btn-card-join-toggle').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
+    // Attach Three-Dots Menu Triggers
+    grid.querySelectorAll('.card-menu-trigger').forEach(btn => {
+        btn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            const guildId = btn.getAttribute('data-id');
-            await toggleGuildJoin(guildId, btn);
+            const parent = btn.closest('.card-menu-trigger-wrapper');
+            const dropdown = parent.querySelector('.card-menu-dropdown');
+            
+            // Close other open menus
+            document.querySelectorAll('.card-menu-dropdown.show').forEach(m => {
+                if (m !== dropdown) m.classList.remove('show');
+            });
+
+            dropdown.classList.toggle('show');
+        });
+    });
+
+    // Attach Join Buttons
+    grid.querySelectorAll('.btn-join-pill').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const groupId = btn.getAttribute('data-id');
+            toggleGroupJoin(groupId, btn);
         });
     });
 }
 
 /**
- * 8. Guild Card HTML Generator
+ * 8. Group Card HTML Generator (Matching Reference Image 2)
  */
-function createGuildCardHtml(guild) {
-    const isJoined = Boolean(guild.joined);
-    const joinedClass = isJoined ? 'joined' : '';
-    const joinedText = isJoined ? 'Joined ✦' : 'Join Guild';
-    const memberFormatted = formatCount(guild.memberCount || 0);
+function createGroupCardHtml(group) {
+    const isPublic = group.status === 'PUBLIC';
+    const statusText = isPublic ? 'PUBLIC GROUP' : 'PRIVATE GROUP';
+    const statusClass = isPublic ? 'status-public' : 'status-private';
+    const isJoined = Boolean(group.joined);
+    const joinText = isJoined ? 'Joined ✓' : 'Join Group';
+    const joinClass = isJoined ? 'joined' : '';
+    const formattedCount = formatMemberCount(group.memberCount);
+
+    const avatarImages = group.avatars || [
+        '/images/artist_profile_avatar.png',
+        '/images/artist_rohan_avatar.png',
+        '/images/artist_kavya_avatar.png'
+    ];
 
     return `
-        <a href="/pages/community-details.html?id=${guild.id}" class="guild-bento-card" data-id="${guild.id}">
-            <div class="guild-card-media">
-                <img src="${escapeHtml(guild.imageUrl)}" alt="${escapeHtml(guild.name)}" class="guild-cover-img" onerror="this.src='/images/comm_creative_souls_cover.png'">
-                <div class="guild-media-badge-left">
-                    <span class="pill-tag accent-yellow">${escapeHtml(guild.category || 'Collective')}</span>
+        <article class="group-directory-card" data-id="${group.id}">
+            <div>
+                <!-- Top Bar -->
+                <div class="group-card-top-bar">
+                    <span class="status-pill ${statusClass}">${statusText}</span>
+                    <div class="card-top-meta-right">
+                        <span class="card-member-summary">${formattedCount} members</span>
+                        <div class="card-menu-trigger-wrapper">
+                            <button class="card-menu-trigger" aria-label="Group options" title="Options">⋮</button>
+                            <div class="card-menu-dropdown">
+                                <a href="/pages/community-details.html?id=${group.id}" class="card-menu-item">
+                                    <span>↗</span>
+                                    <span>View Details</span>
+                                </a>
+                                <button class="card-menu-item" onclick="toggleGroupJoin('${group.id}')">
+                                    <span>${isJoined ? '✕' : '＋'}</span>
+                                    <span>${isJoined ? 'Leave Group' : 'Join Group'}</span>
+                                </button>
+                                <button class="card-menu-item" onclick="copyGroupLink('${group.id}')">
+                                    <span>⎘</span>
+                                    <span>Copy Link</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="guild-media-badge-right">
-                    <span>${escapeHtml(guild.location || 'Global')}</span>
+
+                <!-- Banner Image Box -->
+                <a href="/pages/community-details.html?id=${group.id}" class="group-banner-wrapper">
+                    <img src="${escapeHtml(group.imageUrl)}" 
+                         alt="${escapeHtml(group.name)}" 
+                         class="group-banner-img"
+                         loading="lazy"
+                         onerror="this.src='/images/comm_creative_souls_cover.png'">
+                </a>
+
+                <!-- Group Title & Description -->
+                <div class="group-card-body">
+                    <a href="/pages/community-details.html?id=${group.id}" class="group-card-title">${escapeHtml(group.name)}</a>
+                    <p class="group-card-desc">${escapeHtml(group.description)}</p>
                 </div>
             </div>
 
-            <div class="guild-card-content">
-                <div class="guild-card-header-row">
-                    <img src="${escapeHtml(guild.avatarUrl)}" alt="${escapeHtml(guild.name)}" class="guild-mini-avatar" onerror="this.src='/images/comm_creative_souls_avatar.png'">
-                    <div>
-                        <h3 class="guild-name">${escapeHtml(guild.name)}</h3>
-                    </div>
+            <!-- Footer Row -->
+            <div class="group-card-footer">
+                <div class="group-avatars-row">
+                    ${avatarImages.slice(0, 3).map(av => `
+                        <img src="${escapeHtml(av)}" class="stacked-mini-avatar" alt="Member" loading="lazy" onerror="this.src='/images/artist_profile_avatar.png'">
+                    `).join('')}
+                    <span class="avatars-count-text">+${formattedCount}</span>
                 </div>
-
-                <p class="guild-desc">${escapeHtml(guild.description || '')}</p>
-
-                <div class="guild-stats-ledger">
-                    <div class="guild-stat-cell">
-                        <span class="stat-label">MEMBERS</span>
-                        <span class="stat-val" id="memberCount-${guild.id}">${memberFormatted}</span>
-                    </div>
-                    <div class="guild-stat-cell">
-                        <span class="stat-label">FOCUS</span>
-                        <span class="stat-val">${escapeHtml(guild.artForms || 'Art')}</span>
-                    </div>
-                </div>
-
-                <div class="guild-card-footer">
-                    <span class="btn-card-explore">
-                        <span>Enter Guild</span>
-                        <span>&rarr;</span>
-                    </span>
-                    <button class="btn-card-join-toggle ${joinedClass}" data-id="${guild.id}">
-                        ${joinedText}
-                    </button>
-                </div>
+                <button class="btn-join-pill ${joinClass}" data-id="${group.id}">
+                    <span>${joinText}</span>
+                </button>
             </div>
-        </a>
+        </article>
     `;
 }
 
 /**
- * 9. Join / Leave Toggle Action
+ * 9. Toggle Group Join/Leave Action
  */
-async function toggleGuildJoin(guildId, btnElement) {
-    const isCurrentlyJoined = btnElement.classList.contains('joined');
-    btnElement.disabled = true;
+window.toggleGroupJoin = async function(groupId, buttonEl) {
+    const group = allGroups.find(g => String(g.id) === String(groupId));
+    if (!group) return;
 
+    group.joined = !group.joined;
+
+    if (group.joined) {
+        joinedGroupIds.add(Number(groupId));
+        group.memberCount = (group.memberCount || 100) + 1;
+    } else {
+        joinedGroupIds.delete(Number(groupId));
+        group.memberCount = Math.max(1, (group.memberCount || 100) - 1);
+    }
+
+    localStorage.setItem(JOINED_STORAGE_KEY, JSON.stringify(Array.from(joinedGroupIds)));
+
+    // Optional API call
     try {
-        if (window.ArtSphereAPI) {
-            if (isCurrentlyJoined) {
-                if (typeof window.ArtSphereAPI.leaveCommunity === 'function') {
-                    await window.ArtSphereAPI.leaveCommunity(guildId, currentUserId);
-                }
-            } else {
-                if (typeof window.ArtSphereAPI.joinCommunity === 'function') {
-                    await window.ArtSphereAPI.joinCommunity(guildId, currentUserId);
-                }
+        if (window.ArtSphereAPI && typeof window.ArtSphereAPI.joinCommunity === 'function') {
+            if (group.joined) {
+                await window.ArtSphereAPI.joinCommunity(groupId, currentUserId);
+            } else if (typeof window.ArtSphereAPI.leaveCommunity === 'function') {
+                await window.ArtSphereAPI.leaveCommunity(groupId, currentUserId);
             }
         }
-
-        // Toggle state locally
-        const targetGuild = allCommunities.find(g => String(g.id) === String(guildId));
-        if (targetGuild) {
-            targetGuild.joined = !isCurrentlyJoined;
-            targetGuild.memberCount = (targetGuild.memberCount || 100) + (targetGuild.joined ? 1 : -1);
-            
-            const countDisplay = document.getElementById(`memberCount-${guildId}`);
-            if (countDisplay) {
-                countDisplay.textContent = formatCount(targetGuild.memberCount);
-            }
-        }
-
-        if (isCurrentlyJoined) {
-            btnElement.classList.remove('joined');
-            btnElement.textContent = 'Join Guild';
-            showToast('Left community guild');
-        } else {
-            btnElement.classList.add('joined');
-            btnElement.textContent = 'Joined ✦';
-            showToast('Welcome to the guild!');
-        }
-    } catch (err) {
-        console.error('Error toggling join status:', err);
-        showToast('Action failed. Please try again.');
-    } finally {
-        btnElement.disabled = false;
+    } catch (e) {
+        // Non-blocking
     }
+
+    updateTabCounts();
+    filterAndRenderGroups();
+};
+
+/**
+ * 10. Copy Group Link Action
+ */
+window.copyGroupLink = function(groupId) {
+    const url = `${window.location.origin}/pages/community-details.html?id=${groupId}`;
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(() => {
+            alert('Community link copied to clipboard!');
+        });
+    } else {
+        alert(`Community Link: ${url}`);
+    }
+};
+
+/**
+ * 11. Reset Filters Helper
+ */
+window.resetGroupsFilters = function() {
+    activeTab = 'all';
+    currentLocation = 'all';
+    currentSort = 'members';
+    searchQuery = '';
+
+    const searchInput = document.getElementById('communitySearchInput');
+    if (searchInput) searchInput.value = '';
+    const clearBtn = document.getElementById('clearSearchBtn');
+    if (clearBtn) clearBtn.style.display = 'none';
+
+    const locSelect = document.getElementById('groupLocationSelect');
+    if (locSelect) locSelect.value = 'all';
+
+    const sortSelect = document.getElementById('groupSortSelect');
+    if (sortSelect) sortSelect.value = 'members';
+
+    document.querySelectorAll('.group-tab-btn').forEach((b, idx) => {
+        b.classList.toggle('active', idx === 0);
+    });
+
+    filterAndRenderGroups();
+};
+
+/**
+ * 12. Helper: Format Member Count
+ */
+function formatMemberCount(count) {
+    if (!count) return '100';
+    if (count >= 1000) {
+        return (count / 1000).toFixed(1).replace('.0', '') + 'K';
+    }
+    return String(count);
 }
 
-function formatCount(num) {
-    if (num >= 1000) {
-        return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-    }
-    return num.toString();
+/**
+ * 13. Curated Reference Groups Dataset (Matching Reference Image 2)
+ */
+function getReferenceGroupsData() {
+    return [
+        {
+            id: 601,
+            name: "Creative Souls",
+            status: "PUBLIC",
+            memberCount: 1200,
+            location: "Mumbai",
+            category: "All",
+            description: "A space for all kinds of artists to share, support and inspire each other.",
+            imageUrl: "/images/comm_creative_souls_cover.png",
+            avatars: ["/images/artist_profile_avatar.png", "/images/artist_arjun_thumb.png", "/images/avatar_riya.png"]
+        },
+        {
+            id: 608,
+            name: "Illustration Hub",
+            status: "PRIVATE",
+            memberCount: 856,
+            location: "Mumbai",
+            category: "Visual Arts",
+            description: "Character design, digital art, concept art and everything in between.",
+            imageUrl: "/images/artwork_bloom.png",
+            avatars: ["/images/avatar_riya.png", "/images/avatar_sneha.png", "/images/artist_ishita_thumb.png"]
+        },
+        {
+            id: 604,
+            name: "SoundSphere",
+            status: "PUBLIC",
+            memberCount: 642,
+            location: "Mumbai",
+            category: "Music",
+            description: "Musicians, producers, lyricists and indie bands jamming and collaborating.",
+            imageUrl: "/images/cat_music.png",
+            avatars: ["/images/artist_rohan_avatar.png", "/images/artist_meera_thumb.png", "/images/artist_arjun_thumb.png"]
+        },
+        {
+            id: 603,
+            name: "Lens & Life",
+            status: "PUBLIC",
+            memberCount: 1100,
+            location: "Pune",
+            category: "Photography",
+            description: "Street, portrait, travel and experimental photography.",
+            imageUrl: "/images/opp_lens_and_life.png",
+            avatars: ["/images/artist_arjun_thumb.png", "/images/artist_profile_avatar.png", "/images/avatar_karan.png"]
+        },
+        {
+            id: 605,
+            name: "Move Together",
+            status: "PRIVATE",
+            memberCount: 498,
+            location: "Bengaluru",
+            category: "Dance",
+            description: "Dancers, choreographers and movement artists uniting to express through rhythm.",
+            imageUrl: "/images/opp_dance_performance.png",
+            avatars: ["/images/artist_kavya_avatar.png", "/images/avatar_riya.png", "/images/artist_meera_thumb.png"]
+        },
+        {
+            id: 607,
+            name: "Create & Craft",
+            status: "PUBLIC",
+            memberCount: 521,
+            location: "Mumbai",
+            category: "Crafts",
+            description: "Ceramic sculptors, clay artists, and DIY makers turning raw materials into magic.",
+            imageUrl: "/images/highlight_clay_character.png",
+            avatars: ["/images/artist_ishita_thumb.png", "/images/avatar_sneha.png", "/images/artist_rohan_avatar.png"]
+        },
+        {
+            id: 606,
+            name: "Words & Worlds",
+            status: "PUBLIC",
+            memberCount: 379,
+            location: "Global",
+            category: "Writing",
+            description: "Poets, authors, and scriptwriters spinning universes with ink and imagination.",
+            imageUrl: "/images/opp_content_writer.png",
+            avatars: ["/images/avatar_sneha.png", "/images/artist_profile_avatar.png", "/images/artist_meera_thumb.png"]
+        },
+        {
+            id: 609,
+            name: "Frame by Frame",
+            status: "PRIVATE",
+            memberCount: 310,
+            location: "Mumbai",
+            category: "Film",
+            description: "Filmmakers, editors, and visual storytellers bringing ideas to life.",
+            imageUrl: "/images/opp_short_film_illustrator.png",
+            avatars: ["/images/avatar_arjun_collab.png", "/images/artist_arjun_thumb.png", "/images/avatar_karan.png"]
+        },
+        {
+            id: 610,
+            name: "Design Circle",
+            status: "PUBLIC",
+            memberCount: 293,
+            location: "Mumbai",
+            category: "Design",
+            description: "Graphic design, UI/UX, typography and visual communication.",
+            imageUrl: "/images/artwork_city_shades.png",
+            avatars: ["/images/avatar_karan.png", "/images/avatar_riya.png", "/images/artist_profile_avatar.png"]
+        },
+        {
+            id: 611,
+            name: "Live & Local",
+            status: "PUBLIC",
+            memberCount: 264,
+            location: "Mumbai",
+            category: "Music",
+            description: "Share upcoming shows, jam sessions and open mics in your city.",
+            imageUrl: "/images/opp_campus_band.png",
+            avatars: ["/images/artist_rohan_avatar.png", "/images/artist_arjun_thumb.png", "/images/avatar_sneha.png"]
+        },
+        {
+            id: 612,
+            name: "Exhibition Space",
+            status: "PRIVATE",
+            memberCount: 198,
+            location: "Thane",
+            category: "Visual Arts",
+            description: "Share works, get feedback, and organize virtual or local exhibitions.",
+            imageUrl: "/images/comm_event_exhibition.png",
+            avatars: ["/images/artist_ishita_thumb.png", "/images/artwork_beyond_the_hills.png", "/images/avatar_karan.png"]
+        },
+        {
+            id: 613,
+            name: "Animation Station",
+            status: "PUBLIC",
+            memberCount: 176,
+            location: "Mumbai",
+            category: "Animation",
+            description: "2D, 3D, motion graphics, and animation enthusiasts.",
+            imageUrl: "/images/artwork_sunlit.png",
+            avatars: ["/images/avatar_riya.png", "/images/artist_profile_avatar.png", "/images/artist_rohan_avatar.png"]
+        }
+    ];
 }
 
+/**
+ * 14. HTML Escape Utility
+ */
 function escapeHtml(str) {
-    if (!str) return '';
-    return str
+    if (str === null || str === undefined) return '';
+    return String(str)
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
-}
-
-function showToast(message) {
-    let container = document.getElementById('toastContainer');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'toastContainer';
-        document.body.appendChild(container);
-    }
-    const toast = document.createElement('div');
-    toast.className = 'toast-message';
-    toast.textContent = message;
-    container.appendChild(toast);
-
-    setTimeout(() => {
-        toast.classList.add('fade-out');
-        setTimeout(() => toast.remove(), 350);
-    }, 2400);
 }

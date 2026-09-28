@@ -96,76 +96,116 @@
 
     <div class="page-wrapper">
         <main>
-            <!-- 1. Search & Spotlight Hero (Asymmetric 8 + 4 Grid) -->
-            <section class="communities-hero-section">
-                <div class="grid-12">
-                    <div class="col-8 col-md-8 col-sm-4 communities-hero-left">
+            <!-- 1. Groups Directory Header & Controls -->
+            <section class="groups-header-section">
+                <div class="groups-header-container">
+                    <!-- Left: Title, Subtitle, and Filter Tabs -->
+                    <div class="groups-header-left">
                         <div class="pill-tag accent-yellow">
                             <span>✦</span>
                             <span>CREATIVE GUILDS</span>
                         </div>
-                        <h1 class="text-display communities-title">
-                            Join Guilds.<br>
-                            <span class="hero-title-accent">Create in Tandem.</span>
-                        </h1>
-                        <p class="communities-lead-text">
-                            Find local studio circles, genre-specific collectives, and collaborative squads. Share works in progress, host jams, and build creative projects together.
+                        <h1 class="groups-page-title">Groups</h1>
+                        <p class="groups-lead-text">
+                            Find local studio circles, genre-specific collectives, and collaborative squads.<br>
+                            Share works in progress, host jams, and build creative projects together.
                         </p>
                         
+                        <!-- Filter Tabs Row -->
+                        <div class="groups-filter-tabs" id="groupsFilterTabs">
+                            <button class="group-tab-btn active" data-tab="all">
+                                <span>All Groups</span>
+                                <span class="tab-count-badge" id="tabCountAll">31</span>
+                            </button>
+                            <button class="group-tab-btn" data-tab="my">
+                                <span>My Groups</span>
+                                <span class="tab-count-badge" id="tabCountMy">10</span>
+                            </button>
+                            <button class="group-tab-btn" data-tab="public">
+                                <span>Public Groups</span>
+                                <span class="tab-count-badge" id="tabCountPublic">23</span>
+                            </button>
+                            <button class="group-tab-btn" data-tab="private">
+                                <span>Private Groups</span>
+                                <span class="tab-count-badge" id="tabCountPrivate">8</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Search, Location, Sort, and View Switcher -->
+                    <div class="groups-header-right">
                         <!-- Search Bar -->
-                        <div class="guild-search-wrapper">
-                            <svg class="search-lens-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                        <div class="groups-search-wrapper">
+                            <svg class="search-lens-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
-                            <input type="text" id="communitySearchInput" class="guild-search-input" placeholder="Search guilds by name, medium, or creative focus..." autocomplete="off">
+                            <input type="text" id="communitySearchInput" class="groups-search-input" placeholder="Search groups by name, medium, or creative focus..." autocomplete="off">
                             <button id="clearSearchBtn" class="search-clear-btn" aria-label="Clear Search" style="display:none;">&times;</button>
                         </div>
 
-                        <div class="search-results-meta">
-                            <span id="resultsCountLabel" class="results-count-stamp">Showing all creative collectives</span>
-                        </div>
-                    </div>
-
-                    <div class="col-4 col-md-8 col-sm-4 communities-hero-right">
-                        <!-- Featured Guild Spotlight -->
-                        <div class="card-yellow featured-guild-card" id="featuredBannerCard" data-community-id="401">
-                            <div class="guild-card-top">
-                                <span class="pill-tag" style="background:#0A0A0A; color:#FFFFFF;">FEATURED GUILD</span>
-                                <span class="guild-members-badge">1,250+ Members</span>
+                        <!-- Controls Row: Location, Sort, and Grid/List -->
+                        <div class="groups-controls-row">
+                            <div class="select-pill-wrapper">
+                                <svg class="select-pin-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                <select id="groupLocationSelect" class="pill-select-control" aria-label="Filter by Location">
+                                    <option value="all">All Cities</option>
+                                    <option value="Mumbai" selected>Mumbai</option>
+                                    <option value="Pune">Pune</option>
+                                    <option value="Bengaluru">Bengaluru</option>
+                                    <option value="Thane">Thane</option>
+                                    <option value="Global">Global</option>
+                                </select>
+                                <svg class="select-chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
                             </div>
-                            <h3 class="text-h1 guild-spotlight-title">Creative Souls Network</h3>
-                            <p class="guild-spotlight-desc">
-                                A welcoming collective for artists of all forms to share feedback, form collab crews, and host jam sessions.
-                            </p>
-                            <a href="/pages/community-details.html?id=401" class="btn-pill-primary guild-enter-btn">
-                                <span>Enter Community Guild</span>
-                                <span>&rarr;</span>
-                            </a>
+
+                            <div class="select-pill-wrapper">
+                                <select id="groupSortSelect" class="pill-select-control" aria-label="Sort Groups">
+                                    <option value="members" selected>Most Members</option>
+                                    <option value="active">Recently Active</option>
+                                    <option value="alphabetical">Alphabetical</option>
+                                </select>
+                                <svg class="select-chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
+
+                            <div class="view-switcher-group" id="viewSwitcher">
+                                <button class="view-btn active" data-view="grid" aria-label="Grid View">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                                        <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                                        <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                                        <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                                        <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+                                    </svg>
+                                </button>
+                                <button class="view-btn" data-view="list" aria-label="List View">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 2. Disciplines Category Filter Bar -->
-            <section class="section-discipline-filters">
-                <div class="discipline-bar-header">
-                    <span class="eyebrow">EXPLORE BY MEDIUM</span>
+            <!-- 2. Clean 4-Column Groups Directory Grid -->
+            <section class="section-groups-directory">
+                <div class="groups-meta-bar">
+                    <span id="resultsCountLabel" class="results-count-stamp">Showing all groups</span>
                 </div>
-                <div class="discipline-pills-row" id="categoriesScrollRow">
-                    <button class="filter-pill-btn active" data-category="All">All Guilds</button>
-                    <button class="filter-pill-btn" data-category="Painting">Painting & Fine Art</button>
-                    <button class="filter-pill-btn" data-category="Photography">Photography</button>
-                    <button class="filter-pill-btn" data-category="Music">Music & Sound</button>
-                    <button class="filter-pill-btn" data-category="Dance">Dance & Motion</button>
-                    <button class="filter-pill-btn" data-category="Writing">Writing & Poetry</button>
-                    <button class="filter-pill-btn" data-category="Crafts">Crafts & Ceramics</button>
-                </div>
-            </section>
-
-            <!-- 3. Guilds Directory Bento Grid -->
-            <section class="section-guilds-directory">
-                <div class="grid-12 guilds-bento-grid" id="popularCommunitiesGrid">
+                <div class="groups-4col-grid" id="popularCommunitiesGrid">
                     <!-- Populated dynamically via communities.js -->
                 </div>
             </section>

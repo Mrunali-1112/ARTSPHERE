@@ -1,383 +1,780 @@
 /* ==========================================================================
-   ArtSphere - Editorial Neo-Brutalist Discover Directory Styles
-   Strict adherence to Docs/design.md
+   ArtSphere - Editorial Pinterest-Inspired Discover Feed Styles
+   High-density masonry discovery layout matching Reference 4
    ========================================================================== */
 
-/* Discover Hero */
-.discover-hero-section {
-    padding: 36px 0 46px;
+/* --------------------------------------------------------------------------
+   1. Compact Discovery Toolbar
+   -------------------------------------------------------------------------- */
+.discover-toolbar-section {
+    padding: 16px 0 20px;
+    width: 100%;
 }
 
-.discover-hero-left {
+.toolbar-inner-container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-right: 24px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    flex-wrap: nowrap;
 }
 
-.discover-title {
-    margin: 18px 0 20px;
-}
-
-.hero-title-accent {
-    color: var(--color-ink);
-    text-decoration: underline;
-    text-decoration-color: var(--color-orange);
-    text-underline-offset: 8px;
-    text-decoration-thickness: 4px;
-}
-
-.discover-lead-text {
-    font-size: 18px;
-    line-height: 1.5;
-    color: var(--color-ink);
-    max-width: 580px;
-    margin-bottom: 28px;
-    font-weight: 500;
-}
-
-/* Directory Search Bar */
-.directory-search-wrapper {
+/* Search Box */
+.toolbar-search-wrapper {
     position: relative;
     display: flex;
     align-items: center;
-    width: 100%;
-    max-width: 640px;
-    margin-bottom: 14px;
+    flex: 1 1 320px;
+    max-width: 420px;
+    min-width: 240px;
+    height: 42px;
+    padding: 0 14px 0 38px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(10, 10, 10, 0.14);
+    background-color: var(--color-white);
+    box-shadow: 0 1px 4px rgba(10, 10, 10, 0.02);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.search-lens-icon {
+.toolbar-search-wrapper:focus-within {
+    border-color: var(--color-ink);
+    box-shadow: 0 0 0 2px rgba(10, 10, 10, 0.08);
+}
+
+.toolbar-search-wrapper .search-lens-icon {
     position: absolute;
-    left: 18px;
-    color: var(--color-ink);
+    left: 14px;
+    color: var(--color-mid-grey);
     pointer-events: none;
 }
 
-.directory-search-input {
+.toolbar-search-input {
     width: 100%;
-    height: 54px;
-    padding: 0 48px 0 52px;
-    border-radius: var(--radius-pill);
-    border: var(--border-standard);
-    background-color: var(--color-white);
-    font-size: 15px;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 13px;
     font-family: var(--font-primary);
     color: var(--color-ink);
-    outline: none;
-    transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
-.directory-search-input:focus {
-    border-color: var(--color-ink);
-    box-shadow: 0 0 0 2px var(--color-ink);
-}
-
-.directory-search-input::placeholder {
-    color: var(--color-mid-grey);
+.toolbar-search-input::placeholder {
+    color: #8C887E;
+    font-size: 12.5px;
 }
 
 .search-clear-btn {
     position: absolute;
-    right: 14px;
-    width: 28px;
-    height: 28px;
+    right: 10px;
+    width: 22px;
+    height: 22px;
     border-radius: var(--radius-pill);
-    border: 1px solid var(--color-ink);
+    border: 1px solid #D6D2CA;
     background-color: var(--color-paper);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 1;
     color: var(--color-ink);
 }
 
-.search-results-meta {
-    margin-top: 4px;
-}
-
-.results-count-stamp {
-    font-size: 12.5px;
-    font-weight: 700;
-    color: var(--color-mid-grey);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-/* Location Filter Ledger */
-.location-filter-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-}
-
-.filter-card-header {
+/* Discipline Pills Horizontal Strip */
+.toolbar-pills-wrapper {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
+    gap: 6px;
+    flex: 2 1 auto;
+    overflow: hidden;
+    position: relative;
 }
 
-.filter-counter {
-    font-size: 11px;
-    font-weight: 800;
-    color: var(--color-mid-grey);
-    letter-spacing: 0.06em;
-}
-
-.filter-card-desc {
-    font-size: 13.5px;
-    line-height: 1.45;
-    color: var(--color-mid-grey);
-    margin-bottom: 18px;
-}
-
-.location-pills-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.location-pill {
-    padding: 7px 14px;
-    border-radius: var(--radius-pill);
-    border: var(--border-thin);
-    background-color: var(--color-white);
-    color: var(--color-ink);
-    font-size: 12.5px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
-}
-
-.location-pill:hover {
-    background-color: var(--color-paper);
-    transform: translateY(-1px);
-}
-
-.location-pill.active {
-    background-color: var(--color-ink);
-    color: var(--color-white);
-}
-
-/* Disciplines Filter Bar */
-.section-discipline-filters {
-    padding: 24px 0 32px;
-    border-top: var(--border-standard);
-    border-bottom: var(--border-standard);
-    margin-bottom: 50px;
-}
-
-.discipline-bar-header {
-    margin-bottom: 14px;
-}
-
-.discipline-pills-row {
+.toolbar-pills-row {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 7px;
     overflow-x: auto;
-    padding-bottom: 4px;
+    scroll-behavior: smooth;
     scrollbar-width: none;
+    padding: 2px 0;
 }
 
-.discipline-pills-row::-webkit-scrollbar {
+.toolbar-pills-row::-webkit-scrollbar {
     display: none;
 }
 
 .filter-pill-btn {
-    padding: 9px 20px;
+    padding: 7px 15px;
     border-radius: var(--radius-pill);
-    border: var(--border-standard);
+    border: 1px solid rgba(10, 10, 10, 0.12);
     background-color: var(--color-white);
     color: var(--color-ink);
-    font-size: 13.5px;
+    font-size: 12.5px;
     font-weight: 700;
     white-space: nowrap;
     cursor: pointer;
-    transition: transform var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
 }
 
 .filter-pill-btn:hover {
-    background-color: var(--color-cream);
-    transform: translateY(-2px);
+    background-color: #EFEBE3;
+    border-color: rgba(10, 10, 10, 0.25);
+    transform: translateY(-1px);
 }
 
 .filter-pill-btn.active {
     background-color: var(--color-ink);
     color: var(--color-white);
+    border-color: var(--color-ink);
 }
 
-/* Artists Directory Grid */
-.section-directory-results {
-    margin-bottom: 80px;
-}
-
-.artists-results-grid {
-    align-items: stretch;
-}
-
-.artist-directory-card {
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    border-radius: var(--radius-card);
-    border: var(--border-standard);
+.pills-scroll-right-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(10, 10, 10, 0.12);
     background-color: var(--color-white);
-    overflow: hidden;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    color: var(--color-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
-.artist-directory-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(10, 10, 10, 0.08);
+.pills-scroll-right-btn:hover {
+    background-color: #EFEBE3;
+    border-color: var(--color-ink);
 }
 
-.artist-directory-card.alt-cream {
-    background-color: var(--color-cream);
+/* Region & Sort Controls Group */
+.toolbar-controls-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
 }
 
-.card-cover-box {
+.select-pill-wrapper {
     position: relative;
-    height: 180px;
-    width: 100%;
-    background-color: var(--color-paper);
-    border-bottom: var(--border-standard);
-    overflow: hidden;
-}
-
-.card-cover-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.card-discipline-pill {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 4px 10px;
-    border-radius: var(--radius-pill);
+    display: flex;
+    align-items: center;
     background-color: var(--color-white);
-    border: var(--border-thin);
-}
-
-.card-content-body {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    justify-content: space-between;
-}
-
-.card-artist-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-}
-
-.card-artist-avatar {
-    width: 48px;
-    height: 48px;
+    border: 1px solid rgba(10, 10, 10, 0.12);
     border-radius: var(--radius-pill);
-    border: var(--border-standard);
-    object-fit: cover;
+    padding: 0 10px 0 12px;
+    height: 40px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(10, 10, 10, 0.02);
+    transition: border-color var(--transition-fast);
 }
 
-.card-artist-name {
-    font-size: 18px;
-    font-weight: 800;
-    line-height: 1.15;
+.select-pill-wrapper:hover,
+.select-pill-wrapper:focus-within {
+    border-color: var(--color-ink);
 }
 
-.card-artist-location {
-    font-size: 12px;
-    color: var(--color-mid-grey);
-    font-weight: 600;
+.select-pin-icon {
+    margin-right: 5px;
+    color: var(--color-ink);
+    flex-shrink: 0;
 }
 
-.card-artist-bio {
-    font-size: 13.5px;
-    line-height: 1.45;
-    color: var(--color-mid-grey);
-    margin-bottom: 16px;
-    flex-grow: 1;
-}
-
-.card-skills-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 20px;
-}
-
-.skill-pill-tag {
-    font-size: 11px;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: var(--radius-micro);
-    background-color: var(--color-paper);
-    border: 1px solid var(--color-ink);
-}
-
-.card-footer-action {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 14px;
-    border-top: var(--border-thin);
-}
-
-.card-follower-count {
+.pill-select-control {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: var(--font-primary);
     font-size: 12.5px;
     font-weight: 700;
     color: var(--color-ink);
+    padding-right: 18px;
+    cursor: pointer;
 }
 
-.btn-card-action {
-    height: 38px;
-    padding: 0 18px;
+.select-chevron-icon {
+    position: absolute;
+    right: 10px;
+    color: var(--color-mid-grey);
+    pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   2. Pinterest-Inspired Masonry Grid Layout
+   -------------------------------------------------------------------------- */
+.discover-masonry-section {
+    padding: 6px 0 60px;
+    width: 100%;
+}
+
+.feed-header-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding: 0 2px;
+}
+
+.results-count-stamp {
+    font-size: 11.5px;
+    font-weight: 800;
+    color: #8C887E;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Native CSS Multi-Column Masonry Flow */
+.masonry-discovery-feed {
+    column-count: 6;
+    column-gap: 16px;
+    width: 100%;
+}
+
+@media (max-width: 1600px) {
+    .masonry-discovery-feed {
+        column-count: 5;
+        column-gap: 16px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .masonry-discovery-feed {
+        column-count: 4;
+        column-gap: 14px;
+    }
+}
+
+@media (max-width: 960px) {
+    .masonry-discovery-feed {
+        column-count: 3;
+        column-gap: 14px;
+    }
+}
+
+@media (max-width: 680px) {
+    .masonry-discovery-feed {
+        column-count: 2;
+        column-gap: 12px;
+    }
+}
+
+@media (max-width: 440px) {
+    .masonry-discovery-feed {
+        column-count: 1;
+        column-gap: 0;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   3. Universal Masonry Card Styles
+   -------------------------------------------------------------------------- */
+.masonry-item-card {
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 16px;
+    background-color: var(--color-white);
+    border: 1px solid rgba(10, 10, 10, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(10, 10, 10, 0.02);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.masonry-item-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(10, 10, 10, 0.07);
+    border-color: rgba(10, 10, 10, 0.16);
+}
+
+/* Card Media / Image Header */
+.card-media-box {
+    position: relative;
+    width: 100%;
+    background-color: var(--color-paper);
+    overflow: hidden;
+    border-bottom: 1px solid rgba(10, 10, 10, 0.06);
+}
+
+.card-media-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 300ms ease;
+}
+
+.masonry-item-card:hover .card-media-img {
+    transform: scale(1.02);
+}
+
+/* Varied Image Heights for Natural Uneven Rhythm */
+.height-tall {
+    height: 280px;
+}
+
+.height-medium {
+    height: 210px;
+}
+
+.height-compact {
+    height: 160px;
+}
+
+.height-square {
+    height: 240px;
+}
+
+.height-editorial {
+    height: 310px;
+}
+
+/* Pill Badges On Media */
+.card-badge-pill {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 9.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 9px;
+    border-radius: var(--radius-pill);
+    background-color: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(6px);
+    color: var(--color-ink);
+    border: 1px solid rgba(10, 10, 10, 0.08);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    z-index: 2;
+}
+
+/* Bookmark Action Button */
+.card-bookmark-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(10, 10, 10, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-ink);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    z-index: 2;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.card-bookmark-btn:hover {
+    background-color: var(--color-white);
+    transform: scale(1.06);
+}
+
+.card-bookmark-btn.bookmarked svg {
+    fill: var(--color-ink);
+}
+
+/* Event High-Contrast Date Badge */
+.event-date-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--color-ink);
+    color: var(--color-white);
+    border-radius: 8px;
+    padding: 4px 7px;
+    text-align: center;
+    line-height: 1;
+    z-index: 2;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.event-date-day {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.event-date-month {
+    display: block;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* Card Content Body */
+.card-info-content {
+    padding: 13px 14px 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --------------------------------------------------------------------------
+   4. Card Typology 1: Artist Profile Card
+   -------------------------------------------------------------------------- */
+.creator-header-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 9px;
+}
+
+.creator-thumb-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(10, 10, 10, 0.08);
+    flex-shrink: 0;
+}
+
+.creator-name-box {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.creator-full-name {
+    font-size: 13.5px;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--color-ink);
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.creator-full-name:hover {
+    text-decoration: underline;
+}
+
+.creator-city-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #76746E;
+    margin-top: 1px;
+}
+
+.creator-bio-snippet {
+    font-size: 12px;
+    line-height: 1.42;
+    color: #4A4A46;
+    margin-bottom: 11px;
+}
+
+.creator-skills-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 12px;
+}
+
+.skill-tag-pill {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2.5px 7px;
+    border-radius: 4px;
+    background-color: #F5F2EA;
+    border: 1px solid #E4E0D6;
+    color: #383834;
+    white-space: nowrap;
+}
+
+.creator-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid #F0ECE4;
+}
+
+.creator-followers-count {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #5C5A54;
+}
+
+.portfolio-link-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-ink);
+    padding: 3.5px 9px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-ink);
+    background-color: transparent;
+    text-decoration: none;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.portfolio-link-pill:hover {
+    background-color: var(--color-ink);
+    color: var(--color-white);
+}
+
+/* --------------------------------------------------------------------------
+   5. Card Typology 2: Event & Jam Session Card
+   -------------------------------------------------------------------------- */
+.event-item-title {
+    font-size: 14.5px;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--color-ink);
+    margin-bottom: 5px;
+}
+
+.event-venue-meta {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6C6860;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.event-attendees-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid #F0ECE4;
+}
+
+.attendees-avatars-group {
+    display: flex;
+    align-items: center;
+}
+
+.stacked-attendee-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-white);
+    object-fit: cover;
+    margin-left: -6px;
+}
+
+.stacked-attendee-avatar:first-child {
+    margin-left: 0;
+}
+
+.attendees-count-text {
+    font-size: 11px;
+    font-weight: 700;
+    color: #5C5A54;
+    margin-left: 6px;
+}
+
+.circular-arrow-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--color-ink);
+    background-color: transparent;
+    color: var(--color-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
     font-size: 13px;
+    font-weight: 700;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
-/* Empty Directory State */
+.circular-arrow-btn:hover {
+    background-color: var(--color-ink);
+    color: var(--color-white);
+}
+
+/* --------------------------------------------------------------------------
+   6. Card Typology 3: Community Highlight Card
+   -------------------------------------------------------------------------- */
+.community-highlight-card {
+    background-color: #F5F3FD;
+    border-color: #E2DFED;
+}
+
+.community-highlight-card .card-info-content {
+    padding: 18px 16px 16px;
+}
+
+.highlight-star-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    color: #4A3E94;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+.community-highlight-title {
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--color-ink);
+    margin-bottom: 12px;
+}
+
+.community-thumbnails-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.community-thumb-img {
+    width: 100%;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid rgba(10, 10, 10, 0.06);
+}
+
+.community-card-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* --------------------------------------------------------------------------
+   7. Card Typology 4: Collaboration Opportunity Card
+   -------------------------------------------------------------------------- */
+.opportunity-item-title {
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--color-ink);
+    margin-bottom: 3px;
+}
+
+.opportunity-location-tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: #76746E;
+    margin-bottom: 8px;
+}
+
+.opportunity-desc {
+    font-size: 11.5px;
+    line-height: 1.4;
+    color: #4A4A46;
+    margin-bottom: 10px;
+}
+
+.apply-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-ink);
+    padding: 3.5px 10px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-ink);
+    background-color: transparent;
+    text-decoration: none;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.apply-pill-btn:hover {
+    background-color: var(--color-ink);
+    color: var(--color-white);
+}
+
+/* --------------------------------------------------------------------------
+   8. Empty State View
+   -------------------------------------------------------------------------- */
 .empty-directory-card {
-    grid-column: span 12;
+    column-span: all;
     padding: 60px 24px;
     text-align: center;
     background-color: var(--color-white);
-    border: var(--border-standard);
+    border: 1px solid rgba(10, 10, 10, 0.08);
     border-radius: var(--radius-card);
+    margin: 20px 0;
 }
 
 .empty-directory-icon {
-    font-size: 36px;
-    margin-bottom: 16px;
+    font-size: 32px;
+    margin-bottom: 12px;
 }
 
 .empty-directory-title {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 800;
     margin-bottom: 8px;
 }
 
 .empty-directory-sub {
-    font-size: 15px;
+    font-size: 14px;
     color: var(--color-mid-grey);
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 900px) {
-    .discover-hero-section {
-        padding: 24px 0 36px;
+/* --------------------------------------------------------------------------
+   9. Responsive Navigation & Toolbar Overrides
+   -------------------------------------------------------------------------- */
+@media (max-width: 1100px) {
+    .toolbar-inner-container {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .toolbar-search-wrapper {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .toolbar-pills-wrapper {
+        order: 2;
+        width: calc(100% - 240px);
+    }
+
+    .toolbar-controls-group {
+        order: 3;
+    }
+}
+
+@media (max-width: 768px) {
+    .toolbar-pills-wrapper {
+        width: 100%;
+        order: 2;
+    }
+
+    .toolbar-controls-group {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .select-pill-wrapper {
+        flex: 1;
+    }
+
+    .pill-select-control {
+        width: 100%;
     }
 }
