@@ -1,126 +1,313 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Collaboration Post – ArtSphere</title>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- CSS -->
+    <title>ArtSphere — Publish a Collaboration Pitch</title>
+    <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/create-collaboration.css">
 </head>
 <body>
-    <div class="app-layout">
-        <main class="screen-container create-collab-screen">
+    <!-- Universal Floating Capsule Navigation -->
+    <header class="capsule-nav-wrapper" id="navWrapper">
+        <nav class="capsule-nav">
+            <a href="/pages/home.html" class="nav-brand">
+                <span class="brand-motif">✦</span>
+                <span>ArtSphere</span>
+            </a>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="/pages/home.html" class="nav-link">Home</a>
+                <a href="/pages/discover.html" class="nav-link">Discover</a>
+                <a href="/pages/communities.html" class="nav-link">Communities</a>
+                <a href="/pages/events.html" class="nav-link">Events</a>
+                <a href="/pages/collaborators.html" class="nav-link active">Collaborate</a>
+                <a href="/pages/opportunities.html" class="nav-link">Opportunities</a>
+            </div>
 
-            <!-- Top App Bar -->
-            <header class="create-top-header">
-                <a href="/pages/collaborators.html" class="back-link" aria-label="Back to Collaborations">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
+            <div class="nav-actions">
+                                <!-- Search Button -->
+                <a href="/pages/discover.html" class="nav-icon-btn" aria-label="Search Creators & Art">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
                 </a>
-                <h1 class="header-screen-title">Create Collaboration</h1>
-                <div class="header-ghost-spacer" style="width: 28px;"></div>
-            </header>
-
-            <!-- Form Container -->
-            <form id="createCollabForm" class="collab-form-container">
-
-                <div class="form-banner-tip">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C5CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                <!-- Notification Bell -->
+                <a href="/pages/notifications.html" class="nav-icon-btn notification-nav-wrapper" aria-label="Notifications">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                     </svg>
-                    <p>Share your vision and connect with passionate artists to collaborate on something extraordinary.</p>
-                </div>
+                    <span class="notification-dot"></span>
+                </a>
 
-                <!-- Title -->
-                <div class="form-group">
-                    <label for="collabTitle" class="form-label required">Collaboration Title</label>
-                    <input type="text" id="collabTitle" class="form-input" required placeholder="e.g. Looking for a Digital Artist for a Short Film Project">
-                </div>
-
-                <!-- Purpose Chips -->
-                <div class="form-group">
-                    <label class="form-label required">Collaboration Purpose</label>
-                    <div class="purpose-chips-row" id="purposeChipsGroup">
-                        <button type="button" class="purpose-chip active" data-purpose="Work on a Project">Work on a Project</button>
-                        <button type="button" class="purpose-chip" data-purpose="Create Content">Create Content</button>
-                        <button type="button" class="purpose-chip" data-purpose="Learn & Jam">Learn & Jam</button>
-                        <button type="button" class="purpose-chip" data-purpose="Organize an Event">Organize an Event</button>
-                        <button type="button" class="purpose-chip" data-purpose="Other">Other</button>
-                    </div>
-                    <input type="hidden" id="selectedPurpose" value="Work on a Project">
-                </div>
-
-                <!-- Skills Looking For -->
-                <div class="form-group">
-                    <label for="collabSkills" class="form-label required">Skills You're Looking For</label>
-                    <input type="text" id="collabSkills" class="form-input" required placeholder="e.g. Character Design, Digital Painting, Storyboarding">
-                    <span class="field-hint">Comma separated skills or artistic disciplines</span>
-                </div>
-
-                <!-- 2-Column Row: Type & Availability -->
-                <div class="form-row-2">
-                    <div class="form-group">
-                        <label for="collabType" class="form-label">Collaboration Type</label>
-                        <input type="text" id="collabType" class="form-input" placeholder="e.g. Short Film, Music Video, Mural">
-                    </div>
-                    <div class="form-group">
-                        <label for="collabAvailability" class="form-label">Availability / Timeline</label>
-                        <input type="text" id="collabAvailability" class="form-input" placeholder="e.g. Flexible, Weekends, 1 Month">
-                    </div>
-                </div>
-
-                <!-- 2-Column Row: People Needed & Location -->
-                <div class="form-row-2">
-                    <div class="form-group">
-                        <label for="collabPeopleNeeded" class="form-label">People Needed</label>
-                        <input type="text" id="collabPeopleNeeded" class="form-input" placeholder="e.g. 1-2 collaborators">
-                    </div>
-                    <div class="form-group">
-                        <label for="collabLocation" class="form-label">Location</label>
-                        <input type="text" id="collabLocation" class="form-input" placeholder="e.g. Mumbai, MH or Remote">
-                    </div>
-                </div>
-
-                <!-- Description -->
-                <div class="form-group">
-                    <label for="collabDescription" class="form-label required">Project Description</label>
-                    <textarea id="collabDescription" class="form-textarea" rows="5" required placeholder="Describe what you're working on, what kind of collaborator you need, and what you hope to create together..."></textarea>
-                </div>
-
-                <!-- Reference / Moodboard URL -->
-                <div class="form-group">
-                    <label for="collabRefUrl" class="form-label">Reference / Moodboard Link <span class="optional-label">(Optional)</span></label>
-                    <input type="url" id="collabRefUrl" class="form-input" placeholder="https://drive.google.com/... or portfolio link">
-                </div>
-
-                <!-- Tags -->
-                <div class="form-group">
-                    <label for="collabTags" class="form-label">Tags</label>
-                    <input type="text" id="collabTags" class="form-input" placeholder="#digitalart, #conceptart, #characterdesign, #shortfilm">
-                </div>
-
-                <!-- Submit / Cancel Buttons -->
-                <div class="form-actions-bar">
-                    <a href="/pages/collaborators.html" class="btn btn-cancel">Cancel</a>
-                    <button type="submit" class="btn btn-submit" id="submitCollabBtn">
-                        Post Collaboration
+                <!-- Creator Avatar & Dropdown -->
+                <div class="user-menu-wrapper">
+                    <button class="user-avatar-trigger" id="userAvatarBtn" aria-label="User Account Menu">
+                        <img src="/images/user_avatar_nav.png" alt="Creator Profile" class="user-nav-avatar" id="headerUserAvatar">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="chevron-arrow">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
                     </button>
+                    
+                    <div class="user-dropdown-panel" id="userDropdownPanel">
+                        <div class="dropdown-user-info">
+                            <strong id="dropdownUserName">Aanya Deshmukh</strong>
+                            <span id="dropdownUserBio">Visual &amp; Digital Artist</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>My Artist Profile</span>
+                        </a>
+                        <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            <span>My Portfolio</span>
+                        </a>
+                        <a href="/pages/create-collaboration.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Post Collab Request</span>
+                        </a>
+                        <a href="/pages/collaboration-requests.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                            <span>Manage Inquiries</span>
+                        </a>
+                        <a href="/pages/my-applications.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            <span>My Applications</span>
+                        </a>
+                        <a href="/pages/settings.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item-link text-danger" id="logoutBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                            <span>Log Out</span>
+                        </button>
+                    </div>
                 </div>
 
-            </form>
+                <!-- Mobile Toggle -->
+                <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-            <!-- Toast -->
-            <div id="toastNotification" class="toast-notification" style="display: none;"></div>
+    <div class="page-wrapper">
+        <main>
+            <!-- Breadcrumbs -->
+            <div class="create-top-breadcrumb">
+                <a href="/pages/collaborators.html" class="breadcrumb-back-link">
+                    <span class="back-arrow">&larr;</span>
+                    <span>All Collaborations &amp; Open Calls</span>
+                </a>
+            </div>
 
+            <!-- Hero Section -->
+            <section class="create-hero-banner">
+                <div class="hero-badge-row">
+                    <span class="pill-tag accent-yellow">OPEN CO-CREATION CALL</span>
+                    <span class="step-indicator-pill">Step 1 of 1 • Public Pitch</span>
+                </div>
+                <h1 class="text-display create-title">Publish a Collaboration Pitch</h1>
+                <p class="create-subtext">
+                    Assemble your multidisciplinary crew. Post an open artistic pitch for visual artists, musicians, writers, choreographers, or performers.
+                </p>
+            </section>
+
+            <!-- 12-Column Layout (8 cols form, 4 cols sidebar) -->
+            <div class="grid-12 create-grid-layout">
+                <!-- Left 8 Columns Form -->
+                <div class="col-8 col-md-8 col-sm-4 create-form-col">
+                    <form id="createCollabForm" class="editorial-collab-form">
+                        
+                        <!-- Title Field -->
+                        <div class="form-group-block">
+                            <label for="collabTitle" class="form-field-label">
+                                <span>Collaboration Title</span>
+                                <span class="required-star">*</span>
+                            </label>
+                            <input type="text" id="collabTitle" class="neo-input" required placeholder="e.g. Looking for a 2D Animator for a Poetic Short Film">
+                            <span class="form-field-hint">A concise, hook-driven headline summarizing your artistic project.</span>
+                        </div>
+
+                        <!-- Purpose Chips -->
+                        <div class="form-group-block">
+                            <label class="form-field-label">
+                                <span>Collaboration Purpose</span>
+                                <span class="required-star">*</span>
+                            </label>
+                            <div class="purpose-chips-row" id="purposeChipsGroup">
+                                <button type="button" class="purpose-chip active" data-purpose="Work on a Project">Work on a Project</button>
+                                <button type="button" class="purpose-chip" data-purpose="Create Content">Create Content</button>
+                                <button type="button" class="purpose-chip" data-purpose="Learn &amp; Jam">Learn &amp; Jam</button>
+                                <button type="button" class="purpose-chip" data-purpose="Organize an Event">Organize an Event</button>
+                                <button type="button" class="purpose-chip" data-purpose="Form a Band / Ensemble">Form Ensemble</button>
+                                <button type="button" class="purpose-chip" data-purpose="Other">Other</button>
+                            </div>
+                            <input type="hidden" id="selectedPurpose" value="Work on a Project">
+                        </div>
+
+                        <!-- Skills Looking For -->
+                        <div class="form-group-block">
+                            <label for="collabSkills" class="form-field-label">
+                                <span>Skills / Disciplines Looking For</span>
+                                <span class="required-star">*</span>
+                            </label>
+                            <input type="text" id="collabSkills" class="neo-input" required placeholder="e.g. Character Design, Background Painting, Storyboarding">
+                            <span class="form-field-hint">Separate multiple disciplines with commas.</span>
+                        </div>
+
+                        <!-- 2-Column Row: Type & Timeline -->
+                        <div class="form-row-2col">
+                            <div class="form-group-block">
+                                <label for="collabType" class="form-field-label">Collaboration Medium / Format</label>
+                                <input type="text" id="collabType" class="neo-input" placeholder="e.g. Short Film, Music EP, Art Zine">
+                            </div>
+                            <div class="form-group-block">
+                                <label for="collabAvailability" class="form-field-label">Availability / Timeline</label>
+                                <input type="text" id="collabAvailability" class="neo-input" placeholder="e.g. Flexible, Weekends, 2 Months">
+                            </div>
+                        </div>
+
+                        <!-- 2-Column Row: Team Needed & Location -->
+                        <div class="form-row-2col">
+                            <div class="form-group-block">
+                                <label for="collabPeopleNeeded" class="form-field-label">People Needed</label>
+                                <input type="text" id="collabPeopleNeeded" class="neo-input" placeholder="e.g. 1-2 Animators, Solo Cellist">
+                            </div>
+                            <div class="form-group-block">
+                                <label for="collabLocation" class="form-field-label">Location / Mode</label>
+                                <input type="text" id="collabLocation" class="neo-input" placeholder="e.g. Mumbai, MH or Remote">
+                            </div>
+                        </div>
+
+                        <!-- Detailed Description -->
+                        <div class="form-group-block">
+                            <label for="collabDescription" class="form-field-label">
+                                <span>Project Vision &amp; Narrative</span>
+                                <span class="required-star">*</span>
+                            </label>
+                            <textarea id="collabDescription" class="neo-textarea" rows="6" required placeholder="Detail the story, visual direction, deliverables, and why other creatives will love working with you on this..."></textarea>
+                        </div>
+
+                        <!-- Moodboard / Reference Link -->
+                        <div class="form-group-block">
+                            <label for="collabRefUrl" class="form-field-label">Reference Moodboard or Pitch Deck Link (Optional)</label>
+                            <input type="url" id="collabRefUrl" class="neo-input" placeholder="https://drive.google.com/... or Figma / Notion link">
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="form-group-block">
+                            <label for="collabTags" class="form-field-label">Discoverability Tags</label>
+                            <input type="text" id="collabTags" class="neo-input" placeholder="#digitalart, #conceptart, #animation, #shortfilm">
+                        </div>
+
+                        <!-- Submit Buttons -->
+                        <div class="form-actions-row">
+                            <a href="/pages/collaborators.html" class="btn-pill-secondary">Cancel</a>
+                            <button type="submit" class="btn-pill-primary" id="submitCollabBtn">
+                                <span>Publish Collaboration Call</span>
+                                <span>&rarr;</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right 4 Columns Sidebar -->
+                <div class="col-4 col-md-8 col-sm-4 create-sidebar-col">
+                    <!-- Creator Ethics & IP Guidelines -->
+                    <div class="sidebar-guide-card">
+                        <div class="guide-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="guide-title">Co-Creation Guidelines</h3>
+                        </div>
+                        <ul class="guide-bullet-list">
+                            <li>
+                                <strong>Shared Artistic Attribution:</strong> All collaborators must receive clear, uncompromised credit in final releases.
+                            </li>
+                            <li>
+                                <strong>Transparent Expectations:</strong> State your timeline, milestones, and whether compensation/stipend is offered.
+                            </li>
+                            <li>
+                                <strong>Independent &amp; Respectful:</strong> ArtSphere is a space for mutual artistic growth without corporate gatekeeping.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Tips for Great Pitches -->
+                    <div class="sidebar-guide-card highlight-card">
+                        <div class="guide-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="guide-title">How to Attract Great Partners</h3>
+                        </div>
+                        <p class="guide-lead-text">
+                            Creators receive 3x more relevant responses when they attach a moodboard link and clearly define their artistic role versus what they need help with.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </main>
+
+        <!-- Universal Editorial Footer -->
+        <footer class="editorial-footer">
+            <div class="grid-12 footer-grid">
+                <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
+                    <a href="/pages/home.html" class="footer-logo">
+                        <span class="brand-motif">✦</span>
+                        <span>ArtSphere</span>
+                    </a>
+                    <p class="footer-bio">
+                        The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
+                    </p>
+                    <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
+                </div>
+
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">DIRECTORY</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/discover.html">Discover Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
+                        <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
+                        <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">PLATFORM</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/home.html">Studio Feed</a></li>
+                        <li><a href="/pages/communities.html">Communities</a></li>
+                        <li><a href="/pages/events.html">Events &amp; Jams</a></li>
+                        <li><a href="/pages/collaborators.html">Collaborations</a></li>
+                        <li><a href="/pages/opportunities.html">Open Calls</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-3 col-md-4 col-sm-4 footer-col-links">
+                    <div class="footer-heading">ACCOUNT</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
+                        <li><a href="/pages/my-applications.html">My Applications</a></li>
+                        <li><a href="/pages/settings.html">Account Settings</a></li>
+                        <li><a href="/pages/help-support.html">Help &amp; Guidelines</a></li>
+                    </ul>
+                    <div class="footer-badge-box">
+                        <span class="pill-tag accent-yellow">NO ADS. PURE ART.</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer"></div>
 
     <!-- Scripts -->
     <script src="/js/api.js"></script>

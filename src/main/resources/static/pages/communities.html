@@ -3,300 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Communities | ArtSphere</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/home.css">
+    <title>ArtSphere — Creative Communities & Guilds</title>
+    <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/communities.css">
 </head>
 <body>
-    <div class="mobile-viewport">
-        <!-- Top App Bar Header -->
-        <header class="app-header">
-            <div class="header-left">
-                <a href="/pages/home.html" class="btn-icon" aria-label="Go Back">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
+    <!-- Universal Floating Capsule Navigation -->
+    <header class="capsule-nav-wrapper" id="navWrapper">
+        <nav class="capsule-nav">
+            <a href="/pages/home.html" class="nav-brand">
+                <span class="brand-motif">✦</span>
+                <span>ArtSphere</span>
+            </a>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="/pages/home.html" class="nav-link">Home</a>
+                <a href="/pages/discover.html" class="nav-link">Discover</a>
+                <a href="/pages/communities.html" class="nav-link active">Communities</a>
+                <a href="/pages/events.html" class="nav-link">Events</a>
+                <a href="/pages/collaborators.html" class="nav-link">Collaborate</a>
+                <a href="/pages/opportunities.html" class="nav-link">Opportunities</a>
+            </div>
+
+            <div class="nav-actions">
+                                <!-- Search Button -->
+                <a href="/pages/discover.html" class="nav-icon-btn" aria-label="Search Creators & Art">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
                 </a>
-                <a href="/pages/home.html" class="logo-link">
-                    <img src="/images/logo_header.png" alt="ArtSphere Logo" class="header-logo-img">
-                </a>
-            </div>
-            <div class="header-right">
-                <a href="/pages/notifications.html" class="btn-icon header-notification-btn" aria-label="Notifications">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Notification Bell -->
+                <a href="/pages/notifications.html" class="nav-icon-btn notification-nav-wrapper" aria-label="Notifications">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                         <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                     </svg>
-                    <span class="notification-badge-dot"></span>
+                    <span class="notification-dot"></span>
                 </a>
-                <a href="/pages/artist-profile.html?id=101" class="header-avatar-link">
-                    <img src="/images/artist_profile_avatar.png" alt="User Profile" class="header-user-avatar">
-                </a>
-            </div>
-        </header>
 
-        <!-- Main Communities Content -->
-        <main class="communities-main-content">
-            <!-- Hero Title & Sticker Section -->
-            <section class="communities-header-section">
-                <div class="title-row">
-                    <div class="title-text-col">
-                        <h1 class="page-title">Communities</h1>
-                        <p class="page-subtitle">Find your people. Share. Learn. Grow together.</p>
-                    </div>
-                    <div class="sticker-col">
-                        <div class="quote-sticker">
-                            <span class="sticker-line1">Different</span>
-                            <span class="sticker-line2">Art</span>
-                            <span class="sticker-line3">Same Passion</span>
-                            <span class="sticker-heart">&hearts;</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Search Input Bar -->
-                <div class="search-bar-wrapper">
-                    <div class="search-input-box">
-                        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C5CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                <!-- Creator Avatar & Dropdown -->
+                <div class="user-menu-wrapper">
+                    <button class="user-avatar-trigger" id="userAvatarBtn" aria-label="User Account Menu">
+                        <img src="/images/user_avatar_nav.png" alt="Creator Profile" class="user-nav-avatar" id="headerUserAvatar">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="chevron-arrow">
+                            <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
-                        <input type="text" id="communitySearchInput" class="community-search-input" placeholder="Search communities..." autocomplete="off">
-                        <button id="clearSearchBtn" class="clear-search-btn" style="display: none;" aria-label="Clear Search">&times;</button>
-                    </div>
-                </div>
-
-                <!-- Explore by Art Form Categories -->
-                <div class="categories-section">
-                    <div class="category-header-row">
-                        <span class="category-section-title">Explore by Art Form</span>
-                        <a href="#" class="see-all-link" id="resetCategoryFilter">See All &rsaquo;</a>
-                    </div>
-                    <div class="categories-scroll-row" id="categoriesScrollRow">
-                        <button class="cat-pill active" data-category="All">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                            </div>
-                            <span class="cat-label">All</span>
-                        </button>
-                        <button class="cat-pill" data-category="Painting">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a4.5 4.5 0 0 0 0 9 4.5 4.5 0 0 1 0 9 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9z"></path></svg>
-                            </div>
-                            <span class="cat-label">Painting</span>
-                        </button>
-                        <button class="cat-pill" data-category="Photography">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                            </div>
-                            <span class="cat-label">Photography</span>
-                        </button>
-                        <button class="cat-pill" data-category="Music">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-                            </div>
-                            <span class="cat-label">Music</span>
-                        </button>
-                        <button class="cat-pill" data-category="Dance">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                            </div>
-                            <span class="cat-label">Dance</span>
-                        </button>
-                        <button class="cat-pill" data-category="Writing">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                            </div>
-                            <span class="cat-label">Writing</span>
-                        </button>
-                        <button class="cat-pill" data-category="Crafts">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><line x1="20" y1="4" x2="8.12" y2="15.88"></line><line x1="14.47" y1="14.48" x2="20" y2="20"></line><line x1="8.12" y1="8.12" x2="12" y2="12"></line></svg>
-                            </div>
-                            <span class="cat-label">Crafts</span>
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Featured Community Section -->
-            <section class="featured-community-section" id="featuredCommunitySection">
-                <h2 class="section-title">Featured Community</h2>
-                <div class="featured-banner-card" id="featuredBannerCard" data-community-id="601">
-                    <div class="featured-bg-wrapper">
-                        <img src="/images/comm_featured_banner.png" alt="Featured Community" class="featured-banner-img">
-                    </div>
-                    <div class="featured-content-overlay">
-                        <h3 class="featured-title" id="featuredTitle">Creative Souls</h3>
-                        <p class="featured-desc" id="featuredDesc">A space for all kinds of artists to share, support and inspire each other.</p>
-                        <div class="featured-meta-row">
-                            <span class="meta-pill" id="featuredMembers">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                1.2K members
-                            </span>
-                            <span class="meta-pill" id="featuredArtForms">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                All art forms
-                            </span>
+                    </button>
+                    
+                    <div class="user-dropdown-panel" id="userDropdownPanel">
+                        <div class="dropdown-user-info">
+                            <strong id="dropdownUserName">Aanya Deshmukh</strong>
+                            <span id="dropdownUserBio">Visual & Digital Artist</span>
                         </div>
-                        <div class="featured-action-row">
-                            <button class="btn-join-featured" id="btnJoinFeatured" data-id="601">Joined &check;</button>
-                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>My Artist Profile</span>
+                        </a>
+                        <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            <span>My Portfolio</span>
+                        </a>
+                        <a href="/pages/create-post.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Share New Work</span>
+                        </a>
+                        <a href="/pages/my-applications.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            <span>My Applications</span>
+                        </a>
+                        <a href="/pages/settings.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item-link text-danger" id="logoutBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                            <span>Log Out</span>
+                        </button>
                     </div>
                 </div>
-            </section>
 
-            <!-- Popular Communities Grid Section -->
-            <section class="popular-communities-section">
-                <div class="popular-header-row">
-                    <h2 class="section-title">Popular Communities</h2>
-                    <a href="#" class="see-all-link" id="seeAllPopularBtn">See All &rsaquo;</a>
-                </div>
+                <!-- Mobile Toggle -->
+                <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-                <div class="popular-communities-grid" id="popularCommunitiesGrid">
-                    <!-- Populated dynamically via GET /api/communities -->
-                </div>
-            </section>
+    <div class="page-wrapper">
+        <main>
+            <!-- 1. Groups Directory Header & Controls -->
+            <section class="groups-header-section">
+                <div class="groups-header-container">
+                    <!-- Left: Title, Subtitle, and Filter Tabs -->
+                    <div class="groups-header-left">
+                        <div class="pill-tag accent-yellow">
+                            <span>✦</span>
+                            <span>CREATIVE GUILDS</span>
+                        </div>
+                        <h1 class="groups-page-title">Groups</h1>
+                        <p class="groups-lead-text">
+                            Find local studio circles, genre-specific collectives, and collaborative squads.<br>
+                            Share works in progress, host jams, and build creative projects together.
+                        </p>
+                        
+                        <!-- Filter Tabs Row -->
+                        <div class="groups-filter-tabs" id="groupsFilterTabs">
+                            <button class="group-tab-btn active" data-tab="all">
+                                <span>All Groups</span>
+                                <span class="tab-count-badge" id="tabCountAll">31</span>
+                            </button>
+                            <button class="group-tab-btn" data-tab="my">
+                                <span>My Groups</span>
+                                <span class="tab-count-badge" id="tabCountMy">10</span>
+                            </button>
+                            <button class="group-tab-btn" data-tab="public">
+                                <span>Public Groups</span>
+                                <span class="tab-count-badge" id="tabCountPublic">23</span>
+                            </button>
+                            <button class="group-tab-btn" data-tab="private">
+                                <span>Private Groups</span>
+                                <span class="tab-count-badge" id="tabCountPrivate">8</span>
+                            </button>
+                        </div>
+                    </div>
 
-            <!-- Bottom CTA Banner: Don't see your community? -->
-            <section class="create-community-cta-section">
-                <div class="cta-banner-card">
-                    <div class="cta-left-content">
-                        <div class="cta-plus-circle">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <!-- Right: Search, Location, Sort, and View Switcher -->
+                    <div class="groups-header-right">
+                        <!-- Search Bar -->
+                        <div class="groups-search-wrapper">
+                            <svg class="search-lens-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
+                            <input type="text" id="communitySearchInput" class="groups-search-input" placeholder="Search groups by name, medium, or creative focus..." autocomplete="off">
+                            <button id="clearSearchBtn" class="search-clear-btn" aria-label="Clear Search" style="display:none;">&times;</button>
                         </div>
-                        <div class="cta-text-wrap">
-                            <h4 class="cta-heading">Don't see your community?</h4>
-                            <p class="cta-subtext">Create your own community and bring artists together.</p>
+
+                        <!-- Controls Row: Location, Sort, and Grid/List -->
+                        <div class="groups-controls-row">
+                            <div class="select-pill-wrapper">
+                                <svg class="select-pin-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                <select id="groupLocationSelect" class="pill-select-control" aria-label="Filter by Location">
+                                    <option value="all">All Cities</option>
+                                    <option value="Mumbai" selected>Mumbai</option>
+                                    <option value="Pune">Pune</option>
+                                    <option value="Bengaluru">Bengaluru</option>
+                                    <option value="Thane">Thane</option>
+                                    <option value="Global">Global</option>
+                                </select>
+                                <svg class="select-chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
+
+                            <div class="select-pill-wrapper">
+                                <select id="groupSortSelect" class="pill-select-control" aria-label="Sort Groups">
+                                    <option value="members" selected>Most Members</option>
+                                    <option value="active">Recently Active</option>
+                                    <option value="alphabetical">Alphabetical</option>
+                                </select>
+                                <svg class="select-chevron-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </div>
+
+                            <div class="view-switcher-group" id="viewSwitcher">
+                                <button class="view-btn active" data-view="grid" aria-label="Grid View">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                                        <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                                        <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                                        <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+                                        <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+                                    </svg>
+                                </button>
+                                <button class="view-btn" data-view="list" aria-label="List View">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <button class="btn-create-community" id="btnOpenCreateCommunityModal">Create Community</button>
                 </div>
             </section>
 
-            <!-- Spacer for fixed bottom nav -->
-            <div class="nav-bottom-spacer"></div>
+            <!-- 2. Clean 4-Column Groups Directory Grid -->
+            <section class="section-groups-directory">
+                <div class="groups-meta-bar">
+                    <span id="resultsCountLabel" class="results-count-stamp">Showing all groups</span>
+                </div>
+                <div class="groups-4col-grid" id="popularCommunitiesGrid">
+                    <!-- Populated dynamically via communities.js -->
+                </div>
+            </section>
         </main>
 
-        <!-- Create Community Modal -->
-        <div class="modal-backdrop" id="createCommunityModal" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-header">
-                    <h3 class="modal-title">Create a New Community</h3>
-                    <button class="modal-close-btn" id="closeCreateModalBtn">&times;</button>
+        <!-- Universal Editorial Footer -->
+        <footer class="editorial-footer">
+            <div class="grid-12 footer-grid">
+                <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
+                    <a href="/pages/home.html" class="footer-logo">
+                        <span class="brand-motif">✦</span>
+                        <span>ArtSphere</span>
+                    </a>
+                    <p class="footer-bio">
+                        The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
+                    </p>
+                    <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
                 </div>
-                <form id="createCommunityForm" class="create-community-form">
-                    <div class="form-group">
-                        <label for="commNameInput">Community Name *</label>
-                        <input type="text" id="commNameInput" class="form-input" placeholder="e.g., Acoustic Jam Sessions" required maxlength="100">
-                    </div>
-                    <div class="form-group">
-                        <label for="commCategorySelect">Art Form / Category *</label>
-                        <select id="commCategorySelect" class="form-input" required>
-                            <option value="All">All Art Forms</option>
-                            <option value="Painting">Painting</option>
-                            <option value="Photography">Photography</option>
-                            <option value="Music">Music</option>
-                            <option value="Dance">Dance</option>
-                            <option value="Writing">Writing</option>
-                            <option value="Crafts">Crafts</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="commDescInput">Description *</label>
-                        <textarea id="commDescInput" class="form-textarea" placeholder="Tell artists what your community is all about..." required rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="commLocationInput">Location</label>
-                        <input type="text" id="commLocationInput" class="form-input" placeholder="e.g., Mumbai, India or Global" value="Global">
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-modal-cancel" id="cancelCreateModalBtn">Cancel</button>
-                        <button type="submit" class="btn-modal-submit" id="submitCreateCommunityBtn">Create Community</button>
-                    </div>
-                </form>
-            </div>
-        </div>
 
-        <!-- Toast Notifications -->
-        <div class="toast-container" id="toastContainer"></div>
-
-        <!-- Central + Creation Popup Modal -->
-        <div class="plus-menu-backdrop" id="plusMenuBackdrop" style="display: none;">
-            <div class="plus-menu-card">
-                <div class="plus-menu-header">
-                    <span class="plus-menu-title">Create on ArtSphere</span>
-                    <button class="btn-close-plus-menu" id="btnClosePlusMenu">&times;</button>
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">DIRECTORY</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/discover.html">Discover Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
+                        <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
+                        <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
+                    </ul>
                 </div>
-                <div class="plus-menu-grid">
-                    <a href="/pages/create-post.html" class="plus-menu-item">
-                        <div class="plus-menu-icon-circle icon-post">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                        </div>
-                        <span class="plus-menu-label">Share Art / Post</span>
-                    </a>
-                    <a href="/pages/create-collaboration.html" class="plus-menu-item">
-                        <div class="plus-menu-icon-circle icon-collab">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                        </div>
-                        <span class="plus-menu-label">Collaboration</span>
-                    </a>
-                    <a href="#" class="plus-menu-item" id="plusMenuCreateCommBtn">
-                        <div class="plus-menu-icon-circle icon-community">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a4.5 4.5 0 0 0 0 9 4.5 4.5 0 0 1 0 9 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9z"></path></svg>
-                        </div>
-                        <span class="plus-menu-label">New Community</span>
-                    </a>
+
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">PLATFORM</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/home.html">Studio Feed</a></li>
+                        <li><a href="/pages/communities.html">Communities</a></li>
+                        <li><a href="/pages/events.html">Events & Jams</a></li>
+                        <li><a href="/pages/collaborators.html">Collaborations</a></li>
+                        <li><a href="/pages/opportunities.html">Open Calls</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-3 col-md-4 col-sm-4 footer-col-links">
+                    <div class="footer-heading">ACCOUNT</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
+                        <li><a href="/pages/my-applications.html">My Applications</a></li>
+                        <li><a href="/pages/settings.html">Account Settings</a></li>
+                        <li><a href="/pages/help-support.html">Help & Guidelines</a></li>
+                    </ul>
+                    <div class="footer-badge-box">
+                        <span class="pill-tag accent-yellow">NO ADS. PURE ART.</span>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Sticky Bottom Navigation Bar -->
-        <nav class="bottom-nav-bar" id="bottomNavBar">
-            <a href="/pages/home.html" class="nav-item" aria-label="Home">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-                <span class="nav-label">Home</span>
-            </a>
-
-            <a href="/pages/discover.html" class="nav-item" aria-label="Discover">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                </svg>
-                <span class="nav-label">Discover</span>
-            </a>
-
-            <button class="nav-fab-btn" id="centralPlusBtn" aria-label="Create New">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
-            </button>
-
-            <a href="/pages/communities.html" class="nav-item active" aria-label="Communities">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
-                </svg>
-                <span class="nav-label">Community</span>
-            </a>
-
-            <a href="/pages/artist-profile.html?id=101" class="nav-item" aria-label="Profile">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                <span class="nav-label">Profile</span>
-            </a>
-        </nav>
+        </footer>
     </div>
 
     <!-- Scripts -->
@@ -304,4 +268,3 @@
     <script src="/js/communities.js"></script>
 </body>
 </html>
-

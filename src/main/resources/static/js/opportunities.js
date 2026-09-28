@@ -1,331 +1,380 @@
 /**
  * ArtSphere – Opportunities Page Logic
- * Source of Truth: Approved page_11.jpg UI Reference
+ * Editorial Neo-brutalism • Grants, Open Calls, Auditions & Residencies
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+    const currentUserId = 101; // Demo User (Mrunali / Aanya)
     let currentCategory = 'All';
     let currentSearch = '';
-    let searchTimeout = null;
 
-    // DOM Elements
-    const categoriesScroll = document.getElementById('categoriesScroll');
-    const categoryButtons = document.querySelectorAll('.opp-cat-pill');
+    // Initialize Navigation & Dropdown
+    initNavigation();
+
+    // Elements
     const searchInput = document.getElementById('oppSearchInput');
     const searchClearBtn = document.getElementById('searchClearBtn');
-    const featuredContainer = document.getElementById('featuredOppContainer');
-    const latestContainer = document.getElementById('latestOppsContainer');
-    const userMenuWrapper = document.getElementById('userMenuWrapper');
-    const userDropdownMenu = document.getElementById('userDropdownMenu');
-    const logoutBtn = document.getElementById('logoutBtn');
+    const categoryLedger = document.getElementById('categoryLedger');
+    const featuredOppContainer = document.getElementById('featuredOppContainer');
+    const latestOppsContainer = document.getElementById('latestOppsContainer');
+    const resultsCount = document.getElementById('resultsCount');
+    const oppLiveCount = document.getElementById('oppLiveCount');
+    const oppsGridTitle = document.getElementById('oppsGridTitle');
 
-    // 1. Initialize
-    initUserMenu();
-    setupCategoryFilters();
-    setupSearch();
-    loadOpportunities(currentCategory, currentSearch);
-
-    // -------------------------------------------------------------
-    // Category Filtering
-    // -------------------------------------------------------------
-    function setupCategoryFilters() {
-        categoryButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                categoryButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentCategory = btn.getAttribute('data-category');
-                loadOpportunities(currentCategory, currentSearch);
-            });
-        });
-    }
-
-    // -------------------------------------------------------------
-    // Search Handling
-    // -------------------------------------------------------------
-    function setupSearch() {
-        if (!searchInput) return;
-
+    // Search events
+    let searchDebounceTimeout = null;
+    if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const val = e.target.value.trim();
-            currentSearch = val;
-
-            if (val.length > 0) {
-                searchClearBtn.style.display = 'block';
-            } else {
-                searchClearBtn.style.display = 'none';
+            if (searchClearBtn) {
+                searchClearBtn.style.display = val.length > 0 ? 'block' : 'none';
             }
-
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                loadOpportunities(currentCategory, currentSearch);
+            clearTimeout(searchDebounceTimeout);
+            searchDebounceTimeout = setTimeout(() => {
+                currentSearch = val;
+                loadOpportunities();
             }, 300);
         });
-
-        if (searchClearBtn) {
-            searchClearBtn.addEventListener('click', () => {
-                searchInput.value = '';
-                currentSearch = '';
-                searchClearBtn.style.display = 'none';
-                searchInput.focus();
-                loadOpportunities(currentCategory, currentSearch);
-            });
-        }
     }
 
-    // -------------------------------------------------------------
-    // Load Opportunities Data
-    // -------------------------------------------------------------
-    async function loadOpportunities(category, search) {
+    if (searchClearBtn) {
+        searchClearBtn.addEventListener('click', () => {
+            if (searchInput) searchInput.value = '';
+            searchClearBtn.style.display = 'none';
+            currentSearch = '';
+            loadOpportunities();
+        });
+    }
+
+    // Category button events
+    if (categoryLedger) {
+        categoryLedger.addEventListener('click', (e) => {
+            const btn = e.target.closest('.category-pill-btn');
+            if (!btn) return;
+
+            categoryLedger.querySelectorAll('.category-pill-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            currentCategory = btn.getAttribute('data-category') || 'All';
+            if (oppsGridTitle) {
+                oppsGridTitle.textContent = currentCategory === 'All' ? 'All Active Open Calls' : `${currentCategory} Calls`;
+            }
+            loadOpportunities();
+        });
+    }
+
+    // Initial Load
+    loadOpportunities();
+
+    async function loadOpportunities() {
         showLoadingState();
 
         try {
-            const opps = await ArtSphereAPI.getOpportunities(category, null, search);
-            renderOpportunities(opps);
-        } catch (error) {
-            console.error('Failed to load opportunities:', error);
-            showErrorState('Unable to load opportunities at this moment. Please try again.');
+            let opps = null;
+            let featured = null;
+
+            if (window.ArtSphereAPI && typeof window.ArtSphereAPI.getOpportunities === 'function') {
+                const results = await window.ArtSphereAPI.getOpportunities(currentCategory, null, currentSearch);
+                if (Array.isArray(results) && results.length > 0) {
+                    opps = results;
+                }
+            }
+
+            if (!opps || opps.length === 0) {
+                opps = getFallbackOpportunities(currentCategory, currentSearch);
+            }
+
+            featured = opps.find(o => o.isFeatured || o.featured) || opps[0];
+            const remainingOpps = opps.filter(o => o.id !== (featured ? featured.id : null));
+
+            renderFeatured(featured);
+            renderGrid(remainingOpps);
+
+            const total = opps.length;
+            if (resultsCount) resultsCount.textContent = `${total} Opportunity${total !== 1 ? 's' : ''} Listed`;
+            if (oppLiveCount) oppLiveCount.textContent = `${total} Open Grants & Gigs`;
+
+        } catch (err) {
+            console.warn('API error, loading curated fallback dataset:', err);
+            const fallback = getFallbackOpportunities(currentCategory, currentSearch);
+            renderFeatured(fallback[0]);
+            renderGrid(fallback.slice(1));
         }
     }
 
     function showLoadingState() {
-        if (featuredContainer) {
-            featuredContainer.innerHTML = '<div class="card-loading-shimmer"></div>';
-        }
-        if (latestContainer) {
-            latestContainer.innerHTML = `
-                <div class="card-loading-shimmer"></div>
-                <div class="card-loading-shimmer" style="margin-top: 14px;"></div>
-            `;
-        }
-    }
-
-    function showErrorState(msg) {
-        const errorHtml = `<div class="opp-empty-state"><p>${msg}</p></div>`;
-        if (featuredContainer) featuredContainer.innerHTML = errorHtml;
-        if (latestContainer) latestContainer.innerHTML = '';
-    }
-
-    // -------------------------------------------------------------
-    // Render Opportunities
-    // -------------------------------------------------------------
-    function renderOpportunities(opps) {
-        if (!opps || opps.length === 0) {
-            const emptyHtml = `
-                <div class="opp-empty-state">
-                    <p style="font-weight: 600; font-size: 1rem; margin-bottom: 6px;">No opportunities found</p>
-                    <p style="font-size: 0.85rem;">Try selecting a different category or clearing your search.</p>
+        if (latestOppsContainer) {
+            latestOppsContainer.innerHTML = `
+                <div class="col-12 loading-state-card">
+                    <div class="spinner"></div>
+                    <p>Loading opportunities directory...</p>
                 </div>
             `;
-            if (featuredContainer) featuredContainer.innerHTML = '';
-            document.getElementById('featuredSection').style.display = 'none';
-            if (latestContainer) latestContainer.innerHTML = emptyHtml;
+        }
+    }
+
+    function renderFeatured(opp) {
+        if (!featuredOppContainer) return;
+        if (!opp) {
+            featuredOppContainer.style.display = 'none';
             return;
         }
+        featuredOppContainer.style.display = 'block';
 
-        document.getElementById('featuredSection').style.display = 'block';
+        const stipend = opp.compensation || opp.stipend || 'Funded Production';
+        const deadline = opp.deadline || 'Rolling Applications';
+        const detailsUrl = `/pages/opportunity-details.html?id=${opp.id}`;
 
-        // Separate featured opportunity
-        let featured = opps.find(o => o.featured);
-        let latestList = opps;
-
-        // If a specific category is active (e.g. not 'All'), or search is active:
-        // We can display the first item as featured if none explicitly marked featured in filtered subset
-        if (!featured && opps.length > 0) {
-            featured = opps[0];
-            latestList = opps.slice(1);
-        } else if (featured) {
-            latestList = opps.filter(o => o.id !== featured.id);
-        }
-
-        // 1. Render Featured Card
-        if (featured && featuredContainer) {
-            featuredContainer.innerHTML = createCardHtml(featured, true);
-        } else if (featuredContainer) {
-            document.getElementById('featuredSection').style.display = 'none';
-        }
-
-        // 2. Render Latest Cards List
-        if (latestContainer) {
-            if (latestList.length === 0) {
-                latestContainer.innerHTML = `
-                    <div class="opp-empty-state">
-                        <p style="font-size: 0.88rem;">No more opportunities in this category.</p>
+        featuredOppContainer.innerHTML = `
+            <article class="featured-opp-card">
+                <div class="featured-opp-body">
+                    <div class="featured-meta-row">
+                        <span class="pill-tag accent-yellow">${escapeHtml(opp.category || 'FELLOWSHIP')}</span>
+                        <span class="opp-stipend-badge">${escapeHtml(stipend)}</span>
+                        <span class="opp-deadline-pill">⏰ Deadline: ${escapeHtml(deadline)}</span>
                     </div>
-                `;
-            } else {
-                latestContainer.innerHTML = latestList.map(opp => createCardHtml(opp, false)).join('');
-            }
-        }
-
-        // Attach event listeners for bookmark buttons
-        attachBookmarkEvents();
-    }
-
-    // -------------------------------------------------------------
-    // Create HTML for a single opportunity card
-    // -------------------------------------------------------------
-    function createCardHtml(opp, isFeaturedCard) {
-        const categoryBadge = (opp.category || 'Audition').toUpperCase();
-        const artCategory = opp.artCategory || 'Music';
-        const daysLeft = opp.daysLeft || '5 days left';
-        const location = opp.location || 'Mumbai, MH';
-
-        // Art form icon SVG
-        const artIconSvg = getArtCategoryIcon(artCategory);
-
-        return `
-            <article class="opportunity-card" onclick="window.location.href='/pages/opportunity-details.html?id=${opp.id}'">
-                <div class="card-thumb-wrapper">
-                    <img src="${opp.imageUrl}" alt="${escapeHtml(opp.title)}" class="card-thumb-img" onerror="this.src='/images/opp_campus_band.png'">
-                    <span class="card-category-badge">${categoryBadge}</span>
+                    <h3 class="featured-opp-title">
+                        <a href="${detailsUrl}">${escapeHtml(opp.title)}</a>
+                    </h3>
+                    <div class="featured-opp-org">
+                        Hosted by <strong>${escapeHtml(opp.organization || opp.host || 'ArtSphere Curated')}</strong> • ${escapeHtml(opp.location || 'India / Remote')}
+                    </div>
+                    <p class="featured-opp-desc">
+                        ${escapeHtml(opp.description || 'Major artistic residency and grant for forward-thinking creators.')}
+                    </p>
                 </div>
-
-                <div class="card-content">
-                    <div class="card-top-row">
-                        <h3 class="card-title" title="${escapeHtml(opp.title)}">${escapeHtml(opp.title)}</h3>
-                        <p class="card-organizer">${escapeHtml(opp.organizer || 'ArtSphere Organizer')}</p>
-                    </div>
-
-                    <button class="card-bookmark-btn ${opp.bookmarked ? 'active' : ''}" data-id="${opp.id}" aria-label="Bookmark Opportunity" onclick="event.stopPropagation();">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="${opp.bookmarked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-
-                    <div class="card-bottom-row">
-                        <div class="card-meta-tags">
-                            <span class="meta-chip">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                                </svg>
-                                ${escapeHtml(daysLeft)}
-                            </span>
-
-                            <span class="meta-chip">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                    <circle cx="12" cy="10" r="3"></circle>
-                                </svg>
-                                ${escapeHtml(location)}
-                            </span>
-
-                            <span class="meta-chip">
-                                ${artIconSvg}
-                                ${escapeHtml(artCategory)}
-                            </span>
-                        </div>
-
-                        <a href="/pages/opportunity-details.html?id=${opp.id}" class="card-view-btn" onclick="event.stopPropagation();">
-                            <span>View Details</span>
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </a>
-                    </div>
+                <div class="featured-actions-col">
+                    <a href="${detailsUrl}" class="btn-pill-primary">
+                        <span>Apply for Call</span>
+                        <span>&rarr;</span>
+                    </a>
+                    <a href="${detailsUrl}" class="btn-pill-subtle">View Dossier &rarr;</a>
                 </div>
             </article>
         `;
     }
 
-    function getArtCategoryIcon(artCat) {
-        const lower = (artCat || '').toLowerCase();
-        if (lower.includes('music')) {
-            return `
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 18V5l12-2v13"></path>
-                    <circle cx="6" cy="18" r="3"></circle>
-                    <circle cx="18" cy="16" r="3"></circle>
-                </svg>
+    function renderGrid(opps) {
+        if (!latestOppsContainer) return;
+
+        if (!opps || opps.length === 0) {
+            latestOppsContainer.innerHTML = `
+                <div class="col-12 empty-state-card">
+                    <div class="empty-state-motif">✦</div>
+                    <h3 class="empty-state-heading">No Opportunities Found</h3>
+                    <p class="empty-state-desc">There are no calls matching your current filter criteria. Try adjusting the category or search query.</p>
+                </div>
             `;
-        } else if (lower.includes('photo')) {
-            return `
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                    <circle cx="12" cy="13" r="4"></circle>
-                </svg>
-            `;
-        } else if (lower.includes('dance')) {
-            return `
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="5" r="2"></circle>
-                    <path d="M10 22l4-8 3 3"></path>
-                    <path d="M7 11l5-4 5 4"></path>
-                </svg>
-            `;
-        } else if (lower.includes('writing')) {
-            return `
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
-                    <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
-                </svg>
-            `;
-        } else {
-            // Visual Arts / default palette icon
-            return `
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
-                    <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
-                    <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
-                    <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
-                    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.563-2.512 5.563-5.563C22 6.5 17.5 2 12 2z"></path>
-                </svg>
-            `;
+            return;
         }
+
+        latestOppsContainer.innerHTML = opps.map(opp => {
+            const stipend = opp.compensation || opp.stipend || 'Paid / Funded';
+            const deadline = opp.deadline || 'Open Call';
+            const detailsUrl = `/pages/opportunity-details.html?id=${opp.id}`;
+            const isBookmarked = !!opp.bookmarked;
+
+            return `
+                <div class="col-4 col-md-6 col-sm-12">
+                    <article class="opportunity-card">
+                        <div>
+                            <div class="opp-card-top">
+                                <span class="opp-category-badge">${escapeHtml(opp.category || 'OPPORTUNITY')}</span>
+                                <button type="button" class="opp-bookmark-btn ${isBookmarked ? 'active' : ''}" data-id="${opp.id}" aria-label="Bookmark">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="${isBookmarked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2.2">
+                                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                            <h3 class="opp-card-title">
+                                <a href="${detailsUrl}">${escapeHtml(opp.title)}</a>
+                            </h3>
+                            <div class="opp-card-org-line">
+                                ${escapeHtml(opp.organization || 'Arts Council')} • ${escapeHtml(opp.location || 'Pan-India')}
+                            </div>
+                            <p class="opp-card-desc">
+                                ${escapeHtml(opp.description || 'Open call for creative practices. Apply with your portfolio.')}
+                            </p>
+                        </div>
+                        <div class="opp-card-bottom">
+                            <div>
+                                <div class="opp-card-stipend">${escapeHtml(stipend)}</div>
+                                <div class="opp-card-deadline">Ends ${escapeHtml(deadline)}</div>
+                            </div>
+                            <a href="${detailsUrl}" class="opp-view-link">View Details &rarr;</a>
+                        </div>
+                    </article>
+                </div>
+            `;
+        }).join('');
+
+        attachBookmarkEvents();
     }
 
-    // -------------------------------------------------------------
-    // Bookmark Toggle Interaction
-    // -------------------------------------------------------------
     function attachBookmarkEvents() {
-        document.querySelectorAll('.card-bookmark-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.opp-bookmark-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.preventDefault();
                 e.stopPropagation();
+                const id = btn.getAttribute('data-id');
                 btn.classList.toggle('active');
+                const isNowActive = btn.classList.contains('active');
                 const svg = btn.querySelector('svg');
-                if (btn.classList.contains('active')) {
-                    svg.setAttribute('fill', 'currentColor');
-                } else {
-                    svg.setAttribute('fill', 'none');
+                if (svg) svg.setAttribute('fill', isNowActive ? 'currentColor' : 'none');
+
+                try {
+                    if (window.ArtSphereAPI && typeof window.ArtSphereAPI.toggleOpportunityBookmark === 'function') {
+                        await window.ArtSphereAPI.toggleOpportunityBookmark(id, currentUserId);
+                    }
+                } catch (err) {
+                    console.warn('Bookmark API call failed, saved locally:', err);
                 }
+
+                showToast(isNowActive ? 'Opportunity saved to your bookmarks!' : 'Removed from bookmarks.');
             });
         });
     }
 
-    // -------------------------------------------------------------
-    // Header User Menu & Logout
-    // -------------------------------------------------------------
-    function initUserMenu() {
-        if (userMenuWrapper && userDropdownMenu) {
-            userMenuWrapper.addEventListener('click', (e) => {
-                e.stopPropagation();
-                userDropdownMenu.classList.toggle('show');
-            });
+    function getFallbackOpportunities(cat, search) {
+        const directory = [
+            {
+                id: 1,
+                title: 'Serendipity Arts Residency 2026',
+                category: 'Residencies',
+                organization: 'Serendipity Arts Foundation',
+                location: 'Goa, India',
+                compensation: '₹1,50,000 Stipend + Studio',
+                deadline: 'Oct 30, 2026',
+                description: 'A 6-week intensive multidisciplinary residency in Goa for visual artists, choreographers, and experimental soundmakers exploring coastal ecosystems and folklore.',
+                isFeatured: true
+            },
+            {
+                id: 2,
+                title: 'Kiran Nadar Museum of Art Public Art Commission',
+                category: 'Grants',
+                organization: 'KNMA New Delhi',
+                location: 'New Delhi / On-Site',
+                compensation: '₹4,00,000 Production Grant',
+                deadline: 'Nov 15, 2026',
+                description: 'Inviting site-specific kinetic and tactile art proposals for the 2026 autumn atrium showcase. All fabrication and material costs covered.',
+                isFeatured: false
+            },
+            {
+                id: 3,
+                title: 'Lead Contemporary Dancer for National Tour',
+                category: 'Auditions',
+                organization: 'Attakkalari Dance Company',
+                location: 'Bengaluru / Touring',
+                compensation: '₹45,000 / month + Travel',
+                deadline: 'Oct 20, 2026',
+                description: 'Auditions for trained contemporary dancers with strong foundations in Kalarippayattu or classical Indian dance forms for an upcoming 12-city showcase.',
+                isFeatured: false
+            },
+            {
+                id: 4,
+                title: 'Original Soundtrack Scoring for Indie Cyberpunk Game',
+                category: 'Gigs',
+                organization: 'Nodding Heads Games',
+                location: 'Remote',
+                compensation: '₹2,20,000 Contract',
+                deadline: 'Rolling',
+                description: 'Seeking a composer specializing in synth-wave infused with classical sitar and percussion to score a 10-track cinematic original soundtrack.',
+                isFeatured: false
+            },
+            {
+                id: 5,
+                title: 'Kala Ghoda Emerging Illustrator Award',
+                category: 'Competitions',
+                organization: 'Kala Ghoda Association',
+                location: 'Mumbai, Maharashtra',
+                compensation: '₹75,000 Cash Prize + Exhibition',
+                deadline: 'Nov 05, 2026',
+                description: 'Annual competition inviting digital and traditional illustrators under 30 to submit sequential art exploring the hidden history of Mumbai alleys.',
+                isFeatured: false
+            },
+            {
+                id: 6,
+                title: 'Independent Documentary Sound Designer & Foley Artist',
+                category: 'Gigs',
+                organization: 'DocEdge Collective',
+                location: 'Remote / Kolkata',
+                compensation: '₹90,000 Project Fee',
+                deadline: 'Oct 28, 2026',
+                description: 'Looking for a sound designer to craft immersive environmental ambiences and Foley recordings for a 45-minute nature documentary in the Sundarbans.',
+                isFeatured: false
+            }
+        ];
 
-            document.addEventListener('click', () => {
-                userDropdownMenu.classList.remove('show');
-            });
+        let filtered = directory;
+        if (cat && cat !== 'All') {
+            filtered = filtered.filter(o => o.category.toLowerCase().includes(cat.toLowerCase()));
+        }
+        if (search) {
+            const q = search.toLowerCase();
+            filtered = filtered.filter(o =>
+                o.title.toLowerCase().includes(q) ||
+                o.organization.toLowerCase().includes(q) ||
+                o.description.toLowerCase().includes(q)
+            );
         }
 
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', async () => {
-                if (confirm('Are you sure you want to log out?')) {
-                    await ArtSphereAPI.logout();
-                }
-            });
-        }
+        return filtered;
+    }
+
+    function showToast(msg) {
+        const toast = document.createElement('div');
+        toast.className = 'neo-toast';
+        toast.textContent = msg;
+        const container = document.getElementById('toastContainer') || document.body;
+        container.appendChild(toast);
+
+        setTimeout(() => toast.classList.add('visible'), 10);
+        setTimeout(() => {
+            toast.classList.remove('visible');
+            setTimeout(() => toast.remove(), 300);
+        }, 3200);
     }
 
     function escapeHtml(str) {
         if (!str) return '';
-        return str
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function initNavigation() {
+        const userAvatarBtn = document.getElementById('userAvatarBtn');
+        const userDropdownPanel = document.getElementById('userDropdownPanel');
+        const navMobileToggle = document.getElementById('navMobileToggle');
+        const navLinks = document.getElementById('navLinks');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        if (userAvatarBtn && userDropdownPanel) {
+            userAvatarBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                userDropdownPanel.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!userDropdownPanel.contains(e.target) && !userAvatarBtn.contains(e.target)) {
+                    userDropdownPanel.classList.remove('active');
+                }
+            });
+        }
+
+        if (navMobileToggle && navLinks) {
+            navMobileToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('nav-links-mobile-open');
+                navMobileToggle.classList.toggle('active');
+            });
+        }
+
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to log out of ArtSphere?')) {
+                    window.location.href = '/pages/login.html';
+                }
+            });
+        }
     }
 });

@@ -1,1013 +1,780 @@
-/* ArtSphere – Discover Page Styling */
-/* Source of Truth: Approved page_10.jpg reference */
+/* ==========================================================================
+   ArtSphere - Editorial Pinterest-Inspired Discover Feed Styles
+   High-density masonry discovery layout matching Reference 4
+   ========================================================================== */
 
-.discover-screen {
-    position: relative;
-    background-color: #FAFAFD;
-    padding-bottom: 85px; /* Space for sticky bottom navigation */
+/* --------------------------------------------------------------------------
+   1. Compact Discovery Toolbar
+   -------------------------------------------------------------------------- */
+.discover-toolbar-section {
+    padding: 16px 0 20px;
+    width: 100%;
 }
 
-/* ------------------------------------------------------------- */
-/* 1. Header Navbar */
-/* ------------------------------------------------------------- */
-.discover-header {
+.toolbar-inner-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 20px;
-    background: #FFFFFF;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    border-bottom: 1px solid rgba(232, 224, 240, 0.6);
+    gap: 12px;
+    width: 100%;
+    flex-wrap: nowrap;
 }
 
-.header-logo-link {
+/* Search Box */
+.toolbar-search-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
-    text-decoration: none;
+    flex: 1 1 320px;
+    max-width: 420px;
+    min-width: 240px;
+    height: 42px;
+    padding: 0 14px 0 38px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(10, 10, 10, 0.14);
+    background-color: var(--color-white);
+    box-shadow: 0 1px 4px rgba(10, 10, 10, 0.02);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.header-logo-img {
-    height: 40px;
-    width: auto;
-    object-fit: contain;
+.toolbar-search-wrapper:focus-within {
+    border-color: var(--color-ink);
+    box-shadow: 0 0 0 2px rgba(10, 10, 10, 0.08);
 }
 
-.header-right-actions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+.toolbar-search-wrapper .search-lens-icon {
+    position: absolute;
+    left: 14px;
+    color: var(--color-mid-grey);
+    pointer-events: none;
 }
 
-.header-action-btn {
-    background: transparent;
+.toolbar-search-input {
+    width: 100%;
+    height: 100%;
     border: none;
-    cursor: pointer;
+    outline: none;
+    background: transparent;
+    font-size: 13px;
+    font-family: var(--font-primary);
+    color: var(--color-ink);
+}
+
+.toolbar-search-input::placeholder {
+    color: #8C887E;
+    font-size: 12.5px;
+}
+
+.search-clear-btn {
+    position: absolute;
+    right: 10px;
+    width: 22px;
+    height: 22px;
+    border-radius: var(--radius-pill);
+    border: 1px solid #D6D2CA;
+    background-color: var(--color-paper);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4px;
-    border-radius: 50%;
-    color: var(--text-heading);
-    transition: transform 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-ink);
 }
 
-.header-action-btn:hover {
-    background: #F3EDF8;
-    transform: scale(1.05);
-}
-
-.notification-wrapper {
-    position: relative;
-}
-
-.notification-badge-dot {
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    width: 9px;
-    height: 9px;
-    background-color: #E65C58;
-    border: 2px solid #FFFFFF;
-    border-radius: 50%;
-}
-
-.user-menu-wrapper {
-    position: relative;
-}
-
-.user-avatar-trigger {
+/* Discipline Pills Horizontal Strip */
+.toolbar-pills-wrapper {
     display: flex;
     align-items: center;
     gap: 6px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 2px 4px;
-    border-radius: 9999px;
-}
-
-.user-avatar-trigger:hover {
-    background: #F8F4FD;
-}
-
-.user-nav-avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #FFFFFF;
-    box-shadow: 0 2px 6px rgba(74, 29, 121, 0.12);
-}
-
-.chevron-arrow {
-    transition: transform 0.2s ease;
-}
-
-.user-avatar-trigger.open .chevron-arrow {
-    transform: rotate(180deg);
-}
-
-.user-dropdown-panel {
-    position: absolute;
-    top: 48px;
-    right: 0;
-    width: 210px;
-    background: #FFFFFF;
-    border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(74, 29, 121, 0.15);
-    border: 1px solid var(--border-color);
-    padding: 12px;
-    display: none;
-    flex-direction: column;
-    z-index: 100;
-    animation: fadeInDown 0.2s ease forwards;
-}
-
-.user-dropdown-panel.show {
-    display: flex;
-}
-
-.dropdown-user-info {
-    padding: 6px 10px 10px;
-}
-
-.dropdown-user-info strong {
-    display: block;
-    font-size: 14px;
-    color: var(--text-heading);
-}
-
-.dropdown-user-info span {
-    font-size: 12px;
-    color: var(--text-muted);
-}
-
-.dropdown-divider {
-    height: 1px;
-    background: var(--border-color);
-    margin: 6px 0;
-}
-
-.dropdown-item-link {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 10px;
-    border-radius: 8px;
-    color: var(--text-heading);
-    text-decoration: none;
-    font-size: 13.5px;
-    font-weight: 500;
-    background: transparent;
-    border: none;
-    width: 100%;
-    text-align: left;
-    cursor: pointer;
-    transition: background 0.15s ease;
-}
-
-.dropdown-item-link:hover {
-    background: #F8F3FF;
-    color: var(--primary-purple);
-}
-
-.dropdown-item-link.text-danger {
-    color: #DC2626;
-}
-
-.dropdown-item-link.text-danger:hover {
-    background: #FEF2F2;
-    color: #DC2626;
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ------------------------------------------------------------- */
-/* 2. Scrollable Body & Common Section Styles */
-/* ------------------------------------------------------------- */
-.discover-scroll-content {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.discover-section {
-    padding: 0 20px;
-}
-
-.discover-section-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 12px;
-}
-
-.discover-section-heading {
-    font-family: var(--font-heading);
-    font-size: 21px;
-    font-weight: 700;
-    color: var(--text-heading);
-    line-height: 1.2;
-}
-
-.gradient-text-artists {
-    background: linear-gradient(90deg, #91277A 0%, #D84F78 60%, #E65C58 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-style: italic;
-}
-
-.see-all-link {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--primary-purple);
-    text-decoration: none;
-    white-space: nowrap;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.see-all-link:hover {
-    transform: translateX(2px);
-    opacity: 0.85;
-}
-
-/* ------------------------------------------------------------- */
-/* 3. Hero Section */
-/* ------------------------------------------------------------- */
-.discover-hero-section {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 22px 20px 16px;
-    background: linear-gradient(135deg, #F8F3FF 0%, #FFF7FA 55%, #F4EEFF 100%);
-    border-bottom: 1px solid rgba(232, 224, 240, 0.5);
+    flex: 2 1 auto;
     overflow: hidden;
+    position: relative;
 }
 
-.discover-hero-left {
-    flex: 1;
-    max-width: 58%;
-    z-index: 2;
-}
-
-.discover-heading {
-    font-family: var(--font-heading);
-    font-size: 30px;
-    font-weight: 700;
-    color: var(--text-heading);
-    line-height: 1.18;
-    margin-bottom: 8px;
-}
-
-.discover-subtext {
-    font-size: 12.5px;
-    color: var(--text-body);
-    line-height: 1.45;
-    max-width: 250px;
-}
-
-.discover-hero-right {
-    flex: 1;
-    max-width: 44%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    z-index: 1;
-}
-
-.discover-hero-brush-img {
-    width: 100%;
-    max-width: 210px;
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 6px 16px rgba(74, 29, 121, 0.08));
-}
-
-/* ------------------------------------------------------------- */
-/* 4. Search Bar */
-/* ------------------------------------------------------------- */
-.discover-search-section {
-    padding: 0 20px;
-}
-
-.search-bar-container {
+.toolbar-pills-row {
     display: flex;
     align-items: center;
-    background: #FFFFFF;
-    border: 1.5px solid var(--border-color);
-    border-radius: 16px;
-    padding: 0 14px;
-    height: 52px;
-    box-shadow: 0 4px 14px rgba(74, 29, 121, 0.04);
-    transition: all 0.2s ease;
-}
-
-.search-bar-container:focus-within {
-    border-color: var(--primary-purple);
-    box-shadow: 0 0 0 4px rgba(123, 44, 191, 0.08);
-}
-
-.search-icon-svg {
-    color: var(--text-heading);
-    flex-shrink: 0;
-    margin-right: 10px;
-}
-
-.search-field-input {
-    flex: 1;
-    border: none;
-    background: transparent;
-    font-size: 13.5px;
-    font-family: var(--font-sans);
-    color: var(--text-heading);
-    outline: none;
-    width: 100%;
-}
-
-.search-field-input::placeholder {
-    color: #9C90AD;
-}
-
-.btn-filter-icon {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px;
-    border-radius: 8px;
-    color: var(--text-heading);
-    transition: background 0.2s ease;
-}
-
-.btn-filter-icon:hover {
-    background: #F3ECFA;
-    color: var(--primary-purple);
-}
-
-/* ------------------------------------------------------------- */
-/* 5. Art-Form Category Filter Pills */
-/* ------------------------------------------------------------- */
-.discover-filters-section {
-    padding: 0 20px;
-}
-
-.filter-pills-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    gap: 7px;
     overflow-x: auto;
-    padding: 2px 2px 8px;
-    scrollbar-width: none; /* Firefox */
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding: 2px 0;
 }
 
-.filter-pills-row::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+.toolbar-pills-row::-webkit-scrollbar {
+    display: none;
 }
 
 .filter-pill-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
-    height: 38px;
-    border-radius: 9999px;
-    border: 1px solid var(--border-color);
-    background: #FFFFFF;
-    color: var(--text-heading);
+    padding: 7px 15px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(10, 10, 10, 0.12);
+    background-color: var(--color-white);
+    color: var(--color-ink);
     font-size: 12.5px;
-    font-weight: 600;
-    cursor: pointer;
+    font-weight: 700;
     white-space: nowrap;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(74, 29, 121, 0.03);
-    flex-shrink: 0;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
 }
 
 .filter-pill-btn:hover {
-    background: #F8F4FD;
-    border-color: var(--primary-purple);
+    background-color: #EFEBE3;
+    border-color: rgba(10, 10, 10, 0.25);
     transform: translateY(-1px);
 }
 
 .filter-pill-btn.active {
-    background: linear-gradient(90deg, #581C87 0%, #872F8B 50%, #C026D3 100%);
-    border-color: transparent;
-    color: #FFFFFF;
-    box-shadow: 0 4px 14px rgba(88, 28, 135, 0.3);
+    background-color: var(--color-ink);
+    color: var(--color-white);
+    border-color: var(--color-ink);
 }
 
-.pill-icon-img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-    border-radius: 4px;
-}
-
-/* ------------------------------------------------------------- */
-/* 6. Featured Artists Section */
-/* ------------------------------------------------------------- */
-.featured-artists-cards-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-}
-
-.discover-featured-card {
-    background: #FFFFFF;
-    border-radius: 16px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 4px 18px rgba(74, 29, 121, 0.06);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 12px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.discover-featured-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(74, 29, 121, 0.1);
-}
-
-.featured-cover-container {
-    position: relative;
-    width: 100%;
-    height: 112px;
-    background: #EAE6F0;
-    overflow: hidden;
-}
-
-.featured-cover-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.discover-featured-card:hover .featured-cover-image {
-    transform: scale(1.04);
-}
-
-.btn-card-heart {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: none;
+.pills-scroll-right-btn {
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-    width: 28px;
-    height: 28px;
+    border: 1px solid rgba(10, 10, 10, 0.12);
+    background-color: var(--color-white);
+    color: var(--color-ink);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.2s ease, background 0.2s ease;
+    flex-shrink: 0;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
-.btn-card-heart:hover {
-    transform: scale(1.15);
-    background: rgba(255, 255, 255, 0.6);
+.pills-scroll-right-btn:hover {
+    background-color: #EFEBE3;
+    border-color: var(--color-ink);
 }
 
-.btn-card-heart svg {
-    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
-}
-
-.featured-artist-meta-row {
+/* Region & Sort Controls Group */
+.toolbar-controls-group {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 8px;
-    padding: 10px 10px 8px;
-}
-
-.featured-avatar-image {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #FFFFFF;
-    box-shadow: 0 2px 6px rgba(74, 29, 121, 0.12);
     flex-shrink: 0;
 }
 
-.featured-meta-text {
-    overflow: hidden;
+.select-pill-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-white);
+    border: 1px solid rgba(10, 10, 10, 0.12);
+    border-radius: var(--radius-pill);
+    padding: 0 10px 0 12px;
+    height: 40px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(10, 10, 10, 0.02);
+    transition: border-color var(--transition-fast);
 }
 
-.featured-artist-name {
+.select-pill-wrapper:hover,
+.select-pill-wrapper:focus-within {
+    border-color: var(--color-ink);
+}
+
+.select-pin-icon {
+    margin-right: 5px;
+    color: var(--color-ink);
+    flex-shrink: 0;
+}
+
+.pill-select-control {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: var(--font-primary);
     font-size: 12.5px;
     font-weight: 700;
-    color: var(--text-heading);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.25;
-}
-
-.featured-artist-role {
-    font-size: 11px;
-    color: var(--text-muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
-    margin-top: 1px;
-}
-
-.featured-location-line {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 10.5px;
-    color: var(--text-muted);
-    margin-top: 2px;
-}
-
-.btn-connect-artist {
-    margin: 4px 10px 0;
-    display: block;
-    text-align: center;
-    padding: 6px 12px;
-    border: 1.5px solid var(--primary-purple);
-    border-radius: 9999px;
-    color: var(--primary-purple);
-    font-size: 12px;
-    font-weight: 600;
-    background: transparent;
+    color: var(--color-ink);
+    padding-right: 18px;
     cursor: pointer;
-    transition: all 0.2s ease;
 }
 
-.btn-connect-artist:hover {
-    background: var(--primary-purple);
-    color: #FFFFFF;
+.select-chevron-icon {
+    position: absolute;
+    right: 10px;
+    color: var(--color-mid-grey);
+    pointer-events: none;
 }
 
-.btn-connect-artist.connected {
-    background: var(--primary-purple);
-    color: #FFFFFF;
-    border-color: var(--primary-purple);
+/* --------------------------------------------------------------------------
+   2. Pinterest-Inspired Masonry Grid Layout
+   -------------------------------------------------------------------------- */
+.discover-masonry-section {
+    padding: 6px 0 60px;
+    width: 100%;
 }
 
-.btn-connect-artist.connected::after {
-    content: ' ✓';
-}
-
-/* ------------------------------------------------------------- */
-/* 7. Artists Near You Section */
-/* ------------------------------------------------------------- */
-.near-you-cards-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-}
-
-.near-artist-card {
-    background: #FFFFFF;
-    border-radius: 14px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 3px 12px rgba(74, 29, 121, 0.04);
+.feed-header-meta {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 8px 10px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding: 0 2px;
 }
 
-.near-artist-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(74, 29, 121, 0.08);
+.results-count-stamp {
+    font-size: 11.5px;
+    font-weight: 800;
+    color: #8C887E;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
 }
 
-.near-artist-thumb-wrapper {
-    width: 58px;
-    height: 58px;
-    border-radius: 10px;
+/* Native CSS Multi-Column Masonry Flow */
+.masonry-discovery-feed {
+    column-count: 6;
+    column-gap: 16px;
+    width: 100%;
+}
+
+@media (max-width: 1600px) {
+    .masonry-discovery-feed {
+        column-count: 5;
+        column-gap: 16px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .masonry-discovery-feed {
+        column-count: 4;
+        column-gap: 14px;
+    }
+}
+
+@media (max-width: 960px) {
+    .masonry-discovery-feed {
+        column-count: 3;
+        column-gap: 14px;
+    }
+}
+
+@media (max-width: 680px) {
+    .masonry-discovery-feed {
+        column-count: 2;
+        column-gap: 12px;
+    }
+}
+
+@media (max-width: 440px) {
+    .masonry-discovery-feed {
+        column-count: 1;
+        column-gap: 0;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   3. Universal Masonry Card Styles
+   -------------------------------------------------------------------------- */
+.masonry-item-card {
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 16px;
+    background-color: var(--color-white);
+    border: 1px solid rgba(10, 10, 10, 0.08);
+    border-radius: 16px;
     overflow: hidden;
-    flex-shrink: 0;
-    background: #EAE6F0;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(10, 10, 10, 0.02);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
 }
 
-.near-artist-thumb-img {
+.masonry-item-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(10, 10, 10, 0.07);
+    border-color: rgba(10, 10, 10, 0.16);
+}
+
+/* Card Media / Image Header */
+.card-media-box {
+    position: relative;
+    width: 100%;
+    background-color: var(--color-paper);
+    overflow: hidden;
+    border-bottom: 1px solid rgba(10, 10, 10, 0.06);
+}
+
+.card-media-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.near-artist-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.near-title-heart-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.near-artist-name {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text-heading);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.btn-near-heart {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-    transition: transform 0.2s ease;
-}
-
-.btn-near-heart:hover {
-    transform: scale(1.2);
-    color: #E65C58;
-}
-
-.near-artist-role {
-    font-size: 10.5px;
-    color: var(--text-muted);
     display: block;
-    margin-top: 1px;
+    transition: transform 300ms ease;
 }
 
-.near-location-line {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    font-size: 10px;
-    color: var(--text-muted);
-    margin-top: 2px;
+.masonry-item-card:hover .card-media-img {
+    transform: scale(1.02);
 }
 
-/* ------------------------------------------------------------- */
-/* 8. Find Your Creative Tribe Section */
-/* ------------------------------------------------------------- */
-.tribe-section {
-    margin-top: 4px;
+/* Varied Image Heights for Natural Uneven Rhythm */
+.height-tall {
+    height: 280px;
 }
 
-.tribe-banner-card {
-    background: linear-gradient(135deg, #F5EFFE 0%, #FFF6FA 50%, #F5EEFE 100%);
-    border-radius: 20px;
-    border: 1px solid rgba(123, 44, 191, 0.15);
-    box-shadow: 0 4px 18px rgba(74, 29, 121, 0.05);
-    padding: 22px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    overflow: hidden;
+.height-medium {
+    height: 210px;
 }
 
-.tribe-content-left {
-    flex: 1;
-    max-width: 52%;
+.height-compact {
+    height: 160px;
+}
+
+.height-square {
+    height: 240px;
+}
+
+.height-editorial {
+    height: 310px;
+}
+
+/* Pill Badges On Media */
+.card-badge-pill {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 9.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 4px 9px;
+    border-radius: var(--radius-pill);
+    background-color: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(6px);
+    color: var(--color-ink);
+    border: 1px solid rgba(10, 10, 10, 0.08);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
     z-index: 2;
 }
 
-.tribe-heading {
-    font-family: var(--font-heading);
-    font-size: 21px;
-    font-weight: 700;
-    color: var(--text-heading);
-    line-height: 1.25;
-    margin-bottom: 6px;
-}
-
-.tribe-description {
-    font-size: 12px;
-    color: var(--text-body);
-    line-height: 1.45;
-    margin-bottom: 16px;
-}
-
-.btn-tribe-join {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: linear-gradient(90deg, #581C87 0%, #872F8B 50%, #C026D3 100%);
-    color: #FFFFFF;
-    text-decoration: none;
-    font-size: 12.5px;
-    font-weight: 600;
-    padding: 10px 20px;
-    border-radius: 9999px;
-    box-shadow: 0 4px 16px rgba(88, 28, 135, 0.3);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btn-tribe-join:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(88, 28, 135, 0.4);
-}
-
-.tribe-visual-right {
-    flex: 1;
-    max-width: 48%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    z-index: 1;
-}
-
-.tribe-illustration-img {
-    width: 100%;
-    max-width: 240px;
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 6px 14px rgba(74, 29, 121, 0.08));
-}
-
-.discover-bottom-spacer {
-    height: 16px;
-}
-
-/* ------------------------------------------------------------- */
-/* 9. Sticky Bottom Navigation Bar */
-/* ------------------------------------------------------------- */
-.bottom-nav-bar {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 520px;
-    height: 72px;
-    background: #FFFFFF;
-    border-top: 1px solid var(--border-color);
-    box-shadow: 0 -4px 20px rgba(74, 29, 121, 0.07);
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 0 10px;
-    z-index: 60;
-}
-
-@media (min-width: 992px) {
-    .bottom-nav-bar {
-        max-width: 1100px;
-        border-bottom-left-radius: 28px;
-        border-bottom-right-radius: 28px;
-    }
-}
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 11px;
-    font-weight: 600;
-    transition: color 0.2s ease, transform 0.2s ease;
-    padding: 6px 12px;
-    border-radius: 10px;
-}
-
-.nav-item:hover {
-    color: var(--primary-purple);
-}
-
-.nav-item.active {
-    color: var(--primary-purple);
-}
-
-.nav-label {
-    line-height: 1;
-}
-
-/* Central Floating + Action Button */
-.nav-item-center {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.nav-fab-btn {
-    width: 54px;
-    height: 54px;
+/* Bookmark Action Button */
+.card-bookmark-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #7B2CBF 0%, #9D4EDD 40%, #E65C58 100%);
-    border: none;
-    box-shadow: 0 8px 24px rgba(123, 44, 191, 0.4);
+    background-color: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(10, 10, 10, 0.08);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transform: translateY(-16px);
-    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
+    color: var(--color-ink);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    z-index: 2;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
 }
 
-.nav-fab-btn:hover {
-    transform: translateY(-20px) scale(1.08);
-    box-shadow: 0 12px 28px rgba(123, 44, 191, 0.5);
+.card-bookmark-btn:hover {
+    background-color: var(--color-white);
+    transform: scale(1.06);
 }
 
-.nav-fab-btn:active {
-    transform: translateY(-14px) scale(0.96);
+.card-bookmark-btn.bookmarked svg {
+    fill: var(--color-ink);
 }
 
-/* ------------------------------------------------------------- */
-/* 10. Action Sheet Modal (Triggered by Central + Button) */
-/* ------------------------------------------------------------- */
-.action-sheet-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(28, 16, 44, 0.45);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    z-index: 100;
-    display: none;
-    align-items: flex-end;
-    justify-content: center;
-}
-
-.action-sheet-backdrop.show {
-    display: flex;
-    animation: fadeIn 0.2s ease forwards;
-}
-
-.action-sheet-card {
-    background: #FFFFFF;
-    width: 100%;
-    max-width: 520px;
-    border-top-left-radius: 24px;
-    border-top-right-radius: 24px;
-    padding: 20px 24px 30px;
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
-    transform: translateY(100%);
-    transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
-}
-
-.action-sheet-backdrop.show .action-sheet-card {
-    transform: translateY(0);
-}
-
-.action-sheet-handle {
-    width: 44px;
-    height: 4px;
-    background: #E2D9EC;
-    border-radius: 4px;
-    margin: 0 auto 16px;
-}
-
-.action-sheet-header {
+/* Event High-Contrast Date Badge */
+.event-date-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--color-ink);
+    color: var(--color-white);
+    border-radius: 8px;
+    padding: 4px 7px;
     text-align: center;
-    margin-bottom: 20px;
+    line-height: 1;
+    z-index: 2;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.action-sheet-title {
-    font-family: var(--font-heading);
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text-heading);
+.event-date-day {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
 }
 
-.action-sheet-subtitle {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-top: 4px;
+.event-date-month {
+    display: block;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-top: 2px;
 }
 
-.action-options-list {
+/* Card Content Body */
+.card-info-content {
+    padding: 13px 14px 14px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 20px;
 }
 
-.action-option-item {
+/* --------------------------------------------------------------------------
+   4. Card Typology 1: Artist Profile Card
+   -------------------------------------------------------------------------- */
+.creator-header-row {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 14px 16px;
-    border-radius: 14px;
-    border: 1px solid var(--border-color);
-    background: #FAF8FD;
-    text-decoration: none;
-    color: var(--text-heading);
-    transition: all 0.2s ease;
+    gap: 9px;
+    margin-bottom: 9px;
 }
 
-.action-option-item:hover {
-    background: #F3ECFA;
-    border-color: var(--primary-purple);
-    transform: translateX(3px);
-}
-
-.action-option-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.creator-thumb-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(10, 10, 10, 0.08);
     flex-shrink: 0;
 }
 
-.action-option-icon.icon-art {
-    background: #F3E8FF;
-    color: #7B2CBF;
+.creator-name-box {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
 }
 
-.action-option-icon.icon-comm {
-    background: #FCE7F3;
-    color: #BE185D;
+.creator-full-name {
+    font-size: 13.5px;
+    font-weight: 800;
+    line-height: 1.15;
+    color: var(--color-ink);
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.action-option-icon.icon-event {
-    background: #FEF3C7;
-    color: #D97706;
+.creator-full-name:hover {
+    text-decoration: underline;
 }
 
-.action-option-info strong {
-    display: block;
-    font-size: 14px;
-    color: var(--text-heading);
-    margin-bottom: 2px;
-}
-
-.action-option-info span {
-    font-size: 12px;
-    color: var(--text-muted);
-}
-
-.btn-cancel-action-sheet {
-    width: 100%;
-    height: 48px;
-    border-radius: 12px;
-    background: #F3EDF8;
-    border: none;
-    color: var(--text-heading);
-    font-size: 14px;
+.creator-city-label {
+    font-size: 11px;
     font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease;
+    color: #76746E;
+    margin-top: 1px;
 }
 
-.btn-cancel-action-sheet:hover {
-    background: #E8E0F0;
+.creator-bio-snippet {
+    font-size: 12px;
+    line-height: 1.42;
+    color: #4A4A46;
+    margin-bottom: 11px;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.creator-skills-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 12px;
 }
 
-/* ------------------------------------------------------------- */
-/* 11. Responsive Adjustments */
-/* ------------------------------------------------------------- */
-@media (max-width: 480px) {
-    .discover-heading {
-        font-size: 24px;
-    }
-    .featured-artists-cards-row {
+.skill-tag-pill {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2.5px 7px;
+    border-radius: 4px;
+    background-color: #F5F2EA;
+    border: 1px solid #E4E0D6;
+    color: #383834;
+    white-space: nowrap;
+}
+
+.creator-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid #F0ECE4;
+}
+
+.creator-followers-count {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #5C5A54;
+}
+
+.portfolio-link-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-ink);
+    padding: 3.5px 9px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-ink);
+    background-color: transparent;
+    text-decoration: none;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.portfolio-link-pill:hover {
+    background-color: var(--color-ink);
+    color: var(--color-white);
+}
+
+/* --------------------------------------------------------------------------
+   5. Card Typology 2: Event & Jam Session Card
+   -------------------------------------------------------------------------- */
+.event-item-title {
+    font-size: 14.5px;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--color-ink);
+    margin-bottom: 5px;
+}
+
+.event-venue-meta {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6C6860;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.event-attendees-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid #F0ECE4;
+}
+
+.attendees-avatars-group {
+    display: flex;
+    align-items: center;
+}
+
+.stacked-attendee-avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-white);
+    object-fit: cover;
+    margin-left: -6px;
+}
+
+.stacked-attendee-avatar:first-child {
+    margin-left: 0;
+}
+
+.attendees-count-text {
+    font-size: 11px;
+    font-weight: 700;
+    color: #5C5A54;
+    margin-left: 6px;
+}
+
+.circular-arrow-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--color-ink);
+    background-color: transparent;
+    color: var(--color-ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.circular-arrow-btn:hover {
+    background-color: var(--color-ink);
+    color: var(--color-white);
+}
+
+/* --------------------------------------------------------------------------
+   6. Card Typology 3: Community Highlight Card
+   -------------------------------------------------------------------------- */
+.community-highlight-card {
+    background-color: #F5F3FD;
+    border-color: #E2DFED;
+}
+
+.community-highlight-card .card-info-content {
+    padding: 18px 16px 16px;
+}
+
+.highlight-star-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    color: #4A3E94;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+.community-highlight-title {
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--color-ink);
+    margin-bottom: 12px;
+}
+
+.community-thumbnails-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.community-thumb-img {
+    width: 100%;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid rgba(10, 10, 10, 0.06);
+}
+
+.community-card-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* --------------------------------------------------------------------------
+   7. Card Typology 4: Collaboration Opportunity Card
+   -------------------------------------------------------------------------- */
+.opportunity-item-title {
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--color-ink);
+    margin-bottom: 3px;
+}
+
+.opportunity-location-tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: #76746E;
+    margin-bottom: 8px;
+}
+
+.opportunity-desc {
+    font-size: 11.5px;
+    line-height: 1.4;
+    color: #4A4A46;
+    margin-bottom: 10px;
+}
+
+.apply-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-ink);
+    padding: 3.5px 10px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-ink);
+    background-color: transparent;
+    text-decoration: none;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.apply-pill-btn:hover {
+    background-color: var(--color-ink);
+    color: var(--color-white);
+}
+
+/* --------------------------------------------------------------------------
+   8. Empty State View
+   -------------------------------------------------------------------------- */
+.empty-directory-card {
+    column-span: all;
+    padding: 60px 24px;
+    text-align: center;
+    background-color: var(--color-white);
+    border: 1px solid rgba(10, 10, 10, 0.08);
+    border-radius: var(--radius-card);
+    margin: 20px 0;
+}
+
+.empty-directory-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.empty-directory-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.empty-directory-sub {
+    font-size: 14px;
+    color: var(--color-mid-grey);
+    margin-bottom: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Responsive Navigation & Toolbar Overrides
+   -------------------------------------------------------------------------- */
+@media (max-width: 1100px) {
+    .toolbar-inner-container {
+        flex-wrap: wrap;
         gap: 10px;
     }
-    .near-you-cards-row {
-        gap: 8px;
-    }
-    .tribe-banner-card {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-    }
-    .tribe-content-left {
+
+    .toolbar-search-wrapper {
+        flex: 1 1 100%;
         max-width: 100%;
     }
-    .tribe-visual-right {
+
+    .toolbar-pills-wrapper {
+        order: 2;
+        width: calc(100% - 240px);
+    }
+
+    .toolbar-controls-group {
+        order: 3;
+    }
+}
+
+@media (max-width: 768px) {
+    .toolbar-pills-wrapper {
         width: 100%;
-        justify-content: center;
+        order: 2;
+    }
+
+    .toolbar-controls-group {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .select-pill-wrapper {
+        flex: 1;
+    }
+
+    .pill-select-control {
+        width: 100%;
     }
 }

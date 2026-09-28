@@ -3,312 +3,366 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Details | ArtSphere</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/home.css">
+    <title>ArtSphere — Event Details &amp; Workshop</title>
+    <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/event-details.css">
 </head>
 <body>
-    <div class="mobile-viewport">
-        <!-- Top App Bar Header -->
-        <header class="app-header">
-            <div class="header-left">
-                <a href="/pages/events.html" class="btn-icon" aria-label="Back to Events">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
+    <!-- Universal Floating Capsule Navigation -->
+    <header class="capsule-nav-wrapper" id="navWrapper">
+        <nav class="capsule-nav">
+            <a href="/pages/home.html" class="nav-brand">
+                <span class="brand-motif">✦</span>
+                <span>ArtSphere</span>
+            </a>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="/pages/home.html" class="nav-link">Home</a>
+                <a href="/pages/discover.html" class="nav-link">Discover</a>
+                <a href="/pages/communities.html" class="nav-link">Communities</a>
+                <a href="/pages/events.html" class="nav-link active">Events</a>
+                <a href="/pages/collaborators.html" class="nav-link">Collaborate</a>
+                <a href="/pages/opportunities.html" class="nav-link">Opportunities</a>
+            </div>
+
+            <div class="nav-actions">
+                                <!-- Search Button -->
+                <a href="/pages/discover.html" class="nav-icon-btn" aria-label="Search Creators & Art">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
                 </a>
-                <a href="/pages/home.html" class="logo-link">
-                    <img src="/images/logo_header.png" alt="ArtSphere Logo" class="header-logo-img">
-                </a>
-            </div>
-            <div class="header-right">
-                <a href="/pages/notifications.html" class="btn-icon header-notification-btn" aria-label="Notifications">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Notification Bell -->
+                <a href="/pages/notifications.html" class="nav-icon-btn notification-nav-wrapper" aria-label="Notifications">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                         <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                     </svg>
-                    <span class="notification-badge-dot"></span>
+                    <span class="notification-dot"></span>
                 </a>
-                <a href="/pages/artist-profile.html?id=101" class="header-avatar-link">
-                    <img src="/images/artist_profile_avatar.png" alt="User Profile" class="header-user-avatar">
+
+                <!-- Creator Avatar & Dropdown -->
+                <div class="user-menu-wrapper">
+                    <button class="user-avatar-trigger" id="userAvatarBtn" aria-label="User Account Menu">
+                        <img src="/images/user_avatar_nav.png" alt="Creator Profile" class="user-nav-avatar" id="headerUserAvatar">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="chevron-arrow">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    
+                    <div class="user-dropdown-panel" id="userDropdownPanel">
+                        <div class="dropdown-user-info">
+                            <strong id="dropdownUserName">Aanya Deshmukh</strong>
+                            <span id="dropdownUserBio">Visual & Digital Artist</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>My Artist Profile</span>
+                        </a>
+                        <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            <span>My Portfolio</span>
+                        </a>
+                        <a href="/pages/create-post.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Share New Work</span>
+                        </a>
+                        <a href="/pages/my-applications.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            <span>My Applications</span>
+                        </a>
+                        <a href="/pages/settings.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item-link text-danger" id="logoutBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                            <span>Log Out</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Toggle -->
+                <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-wrapper">
+        <main>
+            <!-- Top Breadcrumb -->
+            <div class="event-top-breadcrumb">
+                <a href="/pages/events.html" class="event-back-link">
+                    <span class="back-arrow">&larr;</span>
+                    <span>All Events &amp; Workshops</span>
                 </a>
             </div>
-        </header>
 
-        <!-- Main Content Area -->
-        <main class="event-details-main">
             <!-- Event Cover Banner -->
-            <div class="event-hero-banner-wrap">
-                <img id="eventCoverImg" src="/images/event_detail_banner_watercolor.png" alt="Event Cover Banner" class="event-hero-banner" onerror="this.src='/images/comm_event_detail_cover.png'">
+            <div class="event-cover-frame">
+                <img id="eventCoverImg" src="/images/event_detail_banner_watercolor.png" alt="Event Cover Banner" class="event-cover-img" onerror="this.src='/images/comm_event_detail_cover.png'">
             </div>
 
-            <!-- Event Header Info Block -->
-            <section class="event-header-block">
+            <!-- Event Header Profile Card -->
+            <section class="event-header-card">
                 <div class="event-header-content">
-                    <span class="event-badge" id="eventBadge">Workshop</span>
-                    <h1 class="event-title" id="eventTitle">Watercolor Basics Workshop</h1>
-                    <p class="event-subtitle" id="eventSubtitle">
+                    <div class="event-badges-row">
+                        <span class="pill-tag accent-yellow" id="eventBadge">WORKSHOP</span>
+                        <span class="event-live-status-pill">✦ LIVE CREATIVE SESSION</span>
+                    </div>
+
+                    <h1 class="text-display event-hub-title" id="eventTitle">Watercolor Basics &amp; Granulation Masterclass</h1>
+                    <p class="event-hub-desc" id="eventSubtitle">
                         Learn the fundamentals of watercolor painting with easy techniques and step-by-step guidance. Perfect for beginners and art enthusiasts!
                     </p>
 
-                    <!-- Meta Row -->
+                    <!-- Meta Badges -->
                     <div class="event-meta-info-row">
-                        <span class="meta-info-pill">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                            <span id="eventDateText">15 Mar 2024</span>
+                        <span class="event-meta-pill">
+                            <span class="meta-emoji">📅</span>
+                            <span id="eventDateText">15 Mar 2026</span>
                         </span>
-                        <span class="meta-info-pill">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                            <span id="eventTimeText">4:00 PM - 6:00 PM (IST)</span>
+                        <span class="event-meta-pill">
+                            <span class="meta-emoji">⏰</span>
+                            <span id="eventTimeText">4:00 PM – 6:30 PM (IST)</span>
                         </span>
-                        <span class="meta-info-pill">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                            <span id="eventAttendeesText">32 going</span>
+                        <span class="event-meta-pill">
+                            <span class="meta-emoji">📍</span>
+                            <span id="eventVenueText">Art Studio, Bandra West, Mumbai</span>
+                        </span>
+                        <span class="event-meta-pill">
+                            <span class="meta-emoji">✦</span>
+                            <span id="eventAttendeesText">34 artists going</span>
                         </span>
                     </div>
 
-                    <!-- Action Buttons Row -->
-                    <div class="event-action-buttons-row">
-                        <button class="btn-action-register" id="btnRegisterNow">Register Now</button>
-                        <button class="btn-action-secondary" id="btnSaveEvent">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                            <span>Save Event</span>
+                    <!-- Action Buttons -->
+                    <div class="event-actions-row">
+                        <button class="btn-pill-primary btn-action-register" id="btnRegisterNow">Register Now</button>
+                        <button class="btn-pill-secondary btn-action-secondary" id="btnSaveEvent">
+                            <span>✦ Save Event</span>
                         </button>
-                        <button class="btn-action-secondary" id="btnShareEvent">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                            <span>Share Event</span>
+                        <button class="btn-pill-secondary btn-action-secondary" id="btnShareEvent">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                            <span>Share</span>
                         </button>
                     </div>
                 </div>
             </section>
 
-            <!-- Organizer Card -->
-            <section class="organizer-section">
-                <a href="/pages/community-details.html?id=601" class="organizer-card-link" id="organizerCardLink">
-                    <div class="org-avatar-wrap">
-                        <img id="orgAvatar" src="/images/comm_creative_souls_avatar.png" alt="Organizer" class="org-avatar" onerror="this.src='/images/artist_profile_avatar.png'">
-                    </div>
-                    <div class="org-content-col">
-                        <span class="org-label-text">Organized by</span>
-                        <h3 class="org-name-text" id="orgNameText">Creative Souls</h3>
-                        <p class="org-tagline-text" id="orgTaglineText">A community for all kinds of artists.</p>
-                    </div>
-                    <div class="org-chevron-wrap">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                    </div>
-                </a>
-            </section>
-
-            <!-- Details Content Grid (Left & Right columns) -->
-            <div class="event-details-grid">
-                <!-- Left Column -->
-                <div class="details-left-column">
+            <!-- 2-Column Editorial Grid (8 cols left, 4 cols right) -->
+            <div class="grid-12 event-content-grid">
+                <!-- Left 8 Columns -->
+                <div class="col-8 col-md-8 col-sm-4 event-col-left">
                     <!-- About This Event -->
-                    <div class="details-card">
-                        <div class="details-card-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                            <h3 class="details-card-title">About This Event</h3>
+                    <div class="hub-content-card">
+                        <div class="card-title-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="card-heading">About This Session</h3>
                         </div>
-                        <p class="details-card-text" id="aboutEventText">
-                            This hands-on workshop will introduce you to the world of watercolors. You will learn basic tools, color mixing, different brush techniques, and create your own small artwork by the end of the session. No prior experience is needed — just bring your creativity!
+                        <p class="event-body-text" id="aboutEventText">
+                            This immersive, hands-on workshop introduces artists to the nuanced world of watercolor pigments and granulation chemistry. We will cover paper preparation, water-to-pigment ratios, dry brush textures, and color value hierarchies.
                         </p>
                     </div>
 
                     <!-- What You'll Learn -->
-                    <div class="details-card">
-                        <div class="details-card-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"></path></svg>
-                            <h3 class="details-card-title">What You'll Learn</h3>
+                    <div class="hub-content-card">
+                        <div class="card-title-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="card-heading">What You Will Learn</h3>
                         </div>
-                        <ul class="details-bullet-list" id="learnBulletList">
-                            <li>Introduction to watercolor materials</li>
-                            <li>Color mixing and blending techniques</li>
-                            <li>Brush control and texture creation</li>
-                            <li>Step-by-step guided painting</li>
-                            <li>Tips and tricks from an experienced artist</li>
+                        <ul class="event-check-list" id="learnBulletList">
+                            <li>Introduction to professional cold-pressed and rough 300gsm watercolor sheets.</li>
+                            <li>Wet-on-wet glazing techniques and controlled edge softening.</li>
+                            <li>Mixing chromatic blacks and rich luminous shadows without muddiness.</li>
+                            <li>Creating expressive textured landscapes with salt, dry brush, and masking fluid.</li>
+                        </ul>
+                    </div>
+
+                    <!-- What to Bring -->
+                    <div class="hub-content-card">
+                        <div class="card-title-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="card-heading">What to Bring / Materials</h3>
+                        </div>
+                        <ul class="event-check-list" id="bringBulletList">
+                            <li>A basic set of artist-grade watercolor tubes or half-pans.</li>
+                            <li>Round watercolor brushes (sizes 4, 8, and 12 recommended).</li>
+                            <li>Studio sketchpad for quick thumbnail studies.</li>
+                            <li>All paper stretching boards, water jars, and palettes will be provided on site.</li>
                         </ul>
                     </div>
 
                     <!-- Who Can Join -->
-                    <div class="details-card">
-                        <div class="details-card-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                            <h3 class="details-card-title">Who Can Join?</h3>
+                    <div class="hub-content-card">
+                        <div class="card-title-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="card-heading">Who Can Join</h3>
                         </div>
-                        <p class="details-card-text" id="whoCanJoinText">
-                            Open to all art lovers, especially beginners! No prior experience is required.
+                        <p class="event-body-text" id="whoCanJoinText">
+                            Open to all skill levels! Whether you picked up a paintbrush yesterday or have years of sketchbook experience, this masterclass is structured to give every creator practical tools and community critique.
                         </p>
                     </div>
 
-                    <!-- Things to Bring -->
-                    <div class="details-card">
-                        <div class="details-card-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                            <h3 class="details-card-title">Things to Bring</h3>
+                    <!-- Session Guidelines -->
+                    <div class="hub-content-card">
+                        <div class="card-title-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="card-heading">Studio Guidelines &amp; Etiquette</h3>
                         </div>
-                        <ul class="details-bullet-list" id="bringBulletList">
-                            <li>A positive attitude!</li>
-                            <li>(Materials will be provided, but you can also bring your own)</li>
+                        <ul class="event-check-list" id="guidelinesBulletList">
+                            <li>Please arrive 10 minutes before the scheduled start time for setup.</li>
+                            <li>Respect peer artwork during group critique and review.</li>
+                            <li>Clean your brushes and workstation after the session concludes.</li>
+                            <li>Take photos freely, but ask permission before photographing works in progress.</li>
                         </ul>
                     </div>
                 </div>
 
-                <!-- Right Column -->
-                <div class="details-right-column">
-                    <!-- Event Venue (NO MAP - Plain text address) -->
-                    <div class="details-card venue-card">
-                        <div class="details-card-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            <h3 class="details-card-title">Event Venue</h3>
+                <!-- Right 4 Columns -->
+                <div class="col-4 col-md-8 col-sm-4 event-col-right">
+                    <!-- Host Organizer Card -->
+                    <div class="hub-content-card organizer-host-card">
+                        <div class="card-title-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="card-heading">Host Collective</h3>
                         </div>
-                        <div class="venue-address-block">
-                            <strong class="venue-name" id="venueNameText">Art Studio</strong>
-                            <p class="venue-address-line" id="venueAddressText">
-                                123 Creative Street, Bandra West, Mumbai, Maharashtra 400050
+                        <a href="/pages/community-details.html?id=401" class="organizer-box-link" id="organizerCardLink">
+                            <img id="orgAvatar" src="/images/comm_creative_souls_avatar.png" alt="Organizer Emblem" class="org-box-avatar" onerror="this.src='/images/artist_profile_avatar.png'">
+                            <div class="org-box-meta">
+                                <span class="org-box-role">ORGANIZED BY</span>
+                                <h4 class="org-box-name" id="orgNameText">Creative Souls Network</h4>
+                                <p class="org-box-tagline" id="orgTaglineText">A multidisciplinary community of 1,250+ artists.</p>
+                            </div>
+                        </a>
+                        <a href="/pages/community-details.html?id=401" class="btn-pill-subtle view-guild-btn">
+                            <span>Visit Guild Hub</span>
+                            <span>&rarr;</span>
+                        </a>
+                    </div>
+
+                    <!-- Venue Location Card -->
+                    <div class="hub-content-card venue-location-card">
+                        <div class="card-title-header">
+                            <span class="card-motif">✦</span>
+                            <h3 class="card-heading">Venue &amp; Location</h3>
+                        </div>
+                        <div class="venue-detail-block">
+                            <strong class="venue-name" id="venueNameText">The Bandra Art Loft</strong>
+                            <p class="venue-address" id="venueAddressText">
+                                4th Floor, Pali Hill Studios, Bandra West, Mumbai, Maharashtra 400050
                             </p>
+                            <span class="venue-badge">In-Person Studio</span>
                         </div>
                     </div>
 
-                    <!-- Attendees -->
-                    <div class="details-card attendees-card">
-                        <div class="details-card-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                            <h3 class="details-card-title" id="attendeesCardHeading">Attendees (32)</h3>
+                    <!-- Confirmed Attendees Card -->
+                    <div class="hub-content-card attendees-card">
+                        <div class="card-title-header space-between">
+                            <div class="header-left-title">
+                                <span class="card-motif">✦</span>
+                                <h3 class="card-heading" id="attendeesCardHeading">Confirmed Artists</h3>
+                            </div>
+                            <span class="pill-tag accent-yellow">34 RSVP</span>
                         </div>
-                        <div class="attendees-avatars-row" id="attendeesAvatarsRow">
+                        <div class="attendees-thumbs-row" id="attendeesAvatarsRow">
+                            <img src="/images/user_avatar_nav.png" alt="Attendee" class="attendee-avatar">
+                            <img src="/images/highlight_charcoal_portrait.png" alt="Attendee" class="attendee-avatar">
+                            <img src="/images/opp_lens_and_life.png" alt="Attendee" class="attendee-avatar">
                             <img src="/images/artist_profile_avatar.png" alt="Attendee" class="attendee-avatar">
-                            <img src="/images/artist_rohan_avatar.png" alt="Attendee" class="attendee-avatar">
-                            <img src="/images/avatar_riya.png" alt="Attendee" class="attendee-avatar">
-                            <img src="/images/artist_kavya_avatar.png" alt="Attendee" class="attendee-avatar">
-                            <span class="attendee-more-badge">+28</span>
+                            <img src="/images/category_crafts.png" alt="Attendee" class="attendee-avatar">
+                            <div class="attendee-more-badge">+29</div>
                         </div>
                     </div>
 
-                    <!-- Event Guidelines -->
-                    <div class="details-card">
-                        <div class="details-card-header">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                            <h3 class="details-card-title">Event Guidelines</h3>
-                        </div>
-                        <ul class="details-bullet-list" id="guidelinesBulletList">
-                            <li>Be respectful and supportive</li>
-                            <li>Follow the venue rules</li>
-                            <li>No plagiarism or misuse of content</li>
-                            <li>Keep the space clean</li>
-                            <li>Have fun and be creative!</li>
-                        </ul>
-                    </div>
-
-                    <!-- Quote Card -->
-                    <div class="event-quote-card">
-                        <span class="quote-mark">&ldquo;</span>
-                        <p class="quote-text" id="quoteText">Art is better when shared.</p>
-                        <div class="quote-footer">
-                            <svg class="quote-heart" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                        </div>
+                    <!-- Studio Quote Box -->
+                    <div class="card-cream studio-quote-card">
+                        <span class="quote-symbol">“</span>
+                        <p class="quote-text" id="quoteText">Art is better when shared, practiced, and explored in community.</p>
+                        <span class="quote-sub">&mdash; Creative Souls Guild Manifesto</span>
                     </div>
                 </div>
             </div>
         </main>
 
-        <!-- In-App Registration Confirmation Popup Modal (page_33.jpg reference) -->
-        <div class="registration-modal-backdrop" id="registrationModal" style="display: none;">
-            <div class="registration-popup-card">
-                <button class="popup-close-btn" id="closeRegistrationModal" aria-label="Close dialog">&times;</button>
-                <div class="popup-icon-container">
-                    <img src="/images/event_registered_modal_icon.png" alt="Registered Celebration" class="popup-celebration-img" onerror="this.src='/images/event_watercolor_thumb.png'">
+        <!-- Registration Confirmation Modal -->
+        <div class="modal-backdrop" id="registrationModal" style="display: none;">
+            <div class="modal-card reg-success-card">
+                <button class="modal-close-cross" id="closeRegistrationModal">&times;</button>
+                <div class="reg-success-icon-box">
+                    <span>✦</span>
                 </div>
-                <h2 class="popup-title">You're Registered!</h2>
-                <p class="popup-message" id="popupEventTitleMsg">
-                    Hooray! You're all set for the <strong id="popupEventName">Watercolor Basics Workshop</strong>.
+                <h3 class="reg-modal-title">RSVP Confirmed!</h3>
+                <p class="reg-modal-subtitle" id="popupEventName">Watercolor Basics &amp; Granulation Masterclass</p>
+                <p class="reg-modal-desc">
+                    You are registered! A confirmation has been added to your profile alerts. Studio directions and materials checklist have been saved.
                 </p>
-                <p class="popup-subtext">
-                    We're excited to see you there!<br>Get ready to create, learn and have fun!
-                </p>
-                <button class="btn-popup-great" id="btnPopupGreat">Great!</button>
-            </div>
-        </div>
-
-        <!-- Toast Notifications -->
-        <div class="toast-container" id="toastContainer"></div>
-
-        <!-- Central + Creation Popup Modal -->
-        <div class="plus-menu-backdrop" id="plusMenuBackdrop" style="display: none;">
-            <div class="plus-menu-card">
-                <div class="plus-menu-header">
-                    <span class="plus-menu-title">Create on ArtSphere</span>
-                    <button class="btn-close-plus-menu" id="btnClosePlusMenu">&times;</button>
-                </div>
-                <div class="plus-menu-grid">
-                    <a href="/pages/create-post.html" class="plus-menu-item">
-                        <div class="plus-menu-icon-circle icon-post">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                        </div>
-                        <span class="plus-menu-label">Share Art / Post</span>
-                    </a>
-                    <a href="/pages/create-collaboration.html" class="plus-menu-item">
-                        <div class="plus-menu-icon-circle icon-collab">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                        </div>
-                        <span class="plus-menu-label">Collaboration</span>
-                    </a>
-                    <a href="/pages/communities.html" class="plus-menu-item">
-                        <div class="plus-menu-icon-circle icon-community">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a4.5 4.5 0 0 0 0 9 4.5 4.5 0 0 1 0 9 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9z"></path></svg>
-                        </div>
-                        <span class="plus-menu-label">Communities</span>
-                    </a>
+                <div class="modal-btn-row">
+                    <button class="btn-pill-primary" id="btnPopupGreat">Awesome &rarr;</button>
                 </div>
             </div>
         </div>
 
-        <!-- Sticky Bottom Navigation Bar -->
-        <nav class="bottom-nav-bar" id="bottomNavBar">
-            <a href="/pages/home.html" class="nav-item" aria-label="Home">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-                <span class="nav-label">Home</span>
-            </a>
+        <!-- Universal Editorial Footer -->
+        <footer class="editorial-footer">
+            <div class="grid-12 footer-grid">
+                <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
+                    <a href="/pages/home.html" class="footer-logo">
+                        <span class="brand-motif">✦</span>
+                        <span>ArtSphere</span>
+                    </a>
+                    <p class="footer-bio">
+                        The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
+                    </p>
+                    <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
+                </div>
 
-            <a href="/pages/discover.html" class="nav-item" aria-label="Discover">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                </svg>
-                <span class="nav-label">Discover</span>
-            </a>
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">DIRECTORY</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/discover.html">Discover Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
+                        <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
+                        <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
+                    </ul>
+                </div>
 
-            <button class="nav-fab-btn" id="centralPlusBtn" aria-label="Create New">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
-            </button>
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">PLATFORM</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/home.html">Studio Feed</a></li>
+                        <li><a href="/pages/communities.html">Communities</a></li>
+                        <li><a href="/pages/events.html">Events &amp; Jams</a></li>
+                        <li><a href="/pages/collaborators.html">Collaborations</a></li>
+                        <li><a href="/pages/opportunities.html">Open Calls</a></li>
+                    </ul>
+                </div>
 
-            <a href="/pages/events.html" class="nav-item active" aria-label="Events">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2.2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2.2"></line>
-                    <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2.2"></line>
-                    <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2.2"></line>
-                </svg>
-                <span class="nav-label">Events</span>
-            </a>
-
-            <a href="/pages/artist-profile.html?id=101" class="nav-item" aria-label="Profile">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                <span class="nav-label">Profile</span>
-            </a>
-        </nav>
+                <div class="col-3 col-md-4 col-sm-4 footer-col-links">
+                    <div class="footer-heading">ACCOUNT</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
+                        <li><a href="/pages/my-applications.html">My Applications</a></li>
+                        <li><a href="/pages/settings.html">Account Settings</a></li>
+                        <li><a href="/pages/help-support.html">Help &amp; Guidelines</a></li>
+                    </ul>
+                    <div class="footer-badge-box">
+                        <span class="pill-tag accent-yellow">NO ADS. PURE ART.</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer"></div>
 
     <!-- Scripts -->
     <script src="/js/api.js"></script>

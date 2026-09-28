@@ -3,206 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help & Support – ArtSphere</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <title>Help &amp; Community Support — ArtSphere</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/help-support.css">
 </head>
 <body>
-    <div class="app-layout">
-        <div class="support-screen">
-
-            <!-- 1. Top App Header -->
-            <header class="app-top-header">
-                <div class="header-left">
-                    <button class="btn-icon-nav" id="btnHeaderBack" aria-label="Go Back">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-                    <a href="/pages/home.html" class="header-logo-wrap" aria-label="ArtSphere Home">
-                        <img src="/images/logo_header.png" alt="ArtSphere" class="header-logo-img">
-                    </a>
-                </div>
-                <div class="header-right">
-                    <a href="/pages/notifications.html" class="btn-icon-nav" aria-label="Notifications" title="Notifications">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                        </svg>
-                        <span class="header-notification-badge"></span>
-                    </a>
-                    <a href="/pages/artist-profile.html?id=101" class="header-avatar-link" aria-label="View Profile">
-                        <img src="/images/user_avatar_nav.png" alt="User Profile" class="header-avatar-img" id="userHeaderAvatar">
-                    </a>
-                </div>
-            </header>
-
-            <!-- 2. Support Hero Section with Online Pill -->
-            <section class="support-hero">
-                <div class="support-hero-left">
-                    <button class="btn-circle-back" id="btnPageBack" aria-label="Back to Settings">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="19" y1="12" x2="5" y2="12"></line>
-                            <polyline points="12 19 5 12 12 5"></polyline>
-                        </svg>
-                    </button>
-                    <div class="support-hero-texts">
-                        <h1 class="page-title">Help & Support</h1>
-                        <p class="page-subtitle">Chat with our support team. We're here to help!</p>
-                    </div>
-                </div>
-                <div class="support-status-pill" aria-label="Support Status: Online">
-                    <span class="online-indicator"></span>
-                    <span class="status-text">Online</span>
-                </div>
-            </section>
-
-            <!-- 3. Chat Messages Container -->
-            <main class="chat-area" id="chatArea" role="log" aria-live="polite">
-                <!-- Day Divider -->
-                <div class="chat-date-divider">
-                    <span class="date-badge">Today</span>
-                </div>
-
-                <!-- Messages Stream -->
-                <div class="messages-list" id="messagesList">
-
-                    <!-- Message 1: Initial Greeting -->
-                    <div class="msg-row bot-msg">
-                        <div class="bot-avatar">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                            </svg>
-                        </div>
-                        <div class="msg-body">
-                            <div class="msg-bubble bot-bubble">
-                                <p class="bubble-p">Hi! 👋</p>
-                                <p class="bubble-p">Welcome to ArtSphere Support!</p>
-                                <p class="bubble-p">How can we help you today?</p>
-                            </div>
-                            <span class="msg-time">9:41 AM</span>
-                        </div>
-                    </div>
-
-                    <!-- Message 2: Initial Quick Question Chips -->
-                    <div class="msg-row bot-msg">
-                        <div class="bot-avatar">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
-                            </svg>
-                        </div>
-                        <div class="msg-body">
-                            <div class="msg-bubble bot-bubble">
-                                <p class="bubble-p">Here are some common topics creators ask about:</p>
-                            </div>
-                            <div class="quick-questions-container" id="quickQuestionsContainer">
-                                <button type="button" class="btn-question-chip" data-question="How do I create a post?">
-                                    <span>How do I create a post?</span>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="9 18 15 12 9 6"></polyline>
-                                    </svg>
-                                </button>
-                                <button type="button" class="btn-question-chip" data-question="What types of posts are allowed?">
-                                    <span>What types of posts are allowed?</span>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="9 18 15 12 9 6"></polyline>
-                                    </svg>
-                                </button>
-                                <button type="button" class="btn-question-chip" data-question="Can I edit or delete my post?">
-                                    <span>Can I edit or delete my post?</span>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="9 18 15 12 9 6"></polyline>
-                                    </svg>
-                                </button>
-                                <button type="button" class="btn-question-chip" data-question="Why is my post not visible?">
-                                    <span>Why is my post not visible?</span>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="9 18 15 12 9 6"></polyline>
-                                    </svg>
-                                </button>
-                                <button type="button" class="btn-question-chip" data-question="I need help with something else">
-                                    <span>I need help with something else</span>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="9 18 15 12 9 6"></polyline>
-                                    </svg>
-                                </button>
-                            </div>
-                            <span class="msg-time">9:42 AM</span>
-                        </div>
-                    </div>
-
-                </div>
-            </main>
-
-            <!-- 4. Bottom Message Input Bar -->
-            <div class="chat-input-bar">
-                <button type="button" class="btn-attachment" id="btnAttachment" aria-label="Attach File">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
-                    </svg>
-                </button>
-                <input type="file" id="fileAttachInput" style="display:none;">
-
-                <input type="text" id="chatMessageInput" class="chat-input-field" placeholder="Type your message..." autocomplete="off">
-
-                <button type="button" class="btn-send-message" id="btnSendMessage" aria-label="Send Message">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                </button>
+    <!-- Universal Floating Capsule Navigation -->
+    <header class="capsule-nav-wrapper" id="navWrapper">
+        <nav class="capsule-nav">
+            <a href="/pages/home.html" class="nav-brand">
+                <span class="brand-motif">✦</span>
+                <span>ArtSphere</span>
+            </a>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="/pages/home.html" class="nav-link">Home</a>
+                <a href="/pages/discover.html" class="nav-link">Discover</a>
+                <a href="/pages/communities.html" class="nav-link">Communities</a>
+                <a href="/pages/events.html" class="nav-link">Events</a>
+                <a href="/pages/collaborators.html" class="nav-link">Collaborate</a>
+                <a href="/pages/opportunities.html" class="nav-link">Opportunities</a>
             </div>
 
-            <!-- 5. Bottom Navigation Bar -->
-            <nav class="bottom-nav" aria-label="Main Navigation">
-                <a href="/pages/home.html" class="bottom-nav-item" aria-label="Home">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            <div class="nav-actions">
+                                <!-- Search Button -->
+                <a href="/pages/discover.html" class="nav-icon-btn" aria-label="Search Creators & Art">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <span class="nav-text">Home</span>
                 </a>
-
-                <a href="/pages/discover.html" class="bottom-nav-item" aria-label="Discover">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                    </svg>
-                    <span class="nav-text">Discover</span>
-                </a>
-
-                <div class="bottom-nav-center">
-                    <a href="/pages/create-post.html" class="fab-center-btn" aria-label="Create Post">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                    </a>
-                </div>
-
-                <a href="/pages/notifications.html" class="bottom-nav-item" aria-label="Activity">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Notification Bell -->
+                <a href="/pages/notifications.html" class="nav-icon-btn notification-nav-wrapper" aria-label="Notifications">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                         <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                     </svg>
-                    <span class="nav-text">Activity</span>
+                    <span class="notification-dot"></span>
                 </a>
 
-                <a href="/pages/settings.html" class="bottom-nav-item active" aria-label="Profile" aria-current="page">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span class="nav-text">Profile</span>
-                </a>
-            </nav>
+                <!-- Creator Avatar & Dropdown -->
+                <div class="user-menu-wrapper">
+                    <button class="user-avatar-trigger" id="userAvatarBtn" aria-label="User Account Menu">
+                        <img src="/images/user_avatar_nav.png" alt="Creator Profile" class="user-nav-avatar" id="headerUserAvatar">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="chevron-arrow">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    
+                    <div class="user-dropdown-panel" id="userDropdownPanel">
+                        <div class="dropdown-user-info">
+                            <strong id="dropdownUserName">Aanya Deshmukh</strong>
+                            <span id="dropdownUserBio">Visual &amp; Digital Artist</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>My Artist Profile</span>
+                        </a>
+                        <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            <span>My Portfolio</span>
+                        </a>
+                        <a href="/pages/create-post.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Post to Studio Feed</span>
+                        </a>
+                        <a href="/pages/create-collaboration.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Post Collab Request</span>
+                        </a>
+                        <a href="/pages/collaboration-requests.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                            <span>Manage Inquiries</span>
+                        </a>
+                        <a href="/pages/my-applications.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            <span>My Applications</span>
+                        </a>
+                        <a href="/pages/settings.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item-link text-danger" id="logoutBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                            <span>Log Out</span>
+                        </button>
+                    </div>
+                </div>
 
-        </div>
+                <!-- Mobile Toggle -->
+                <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-wrapper">
+        <main>
+            <!-- Top Breadcrumb -->
+            <div class="support-top-breadcrumb">
+                <a href="/pages/home.html" class="breadcrumb-back-link">
+                    <span class="back-arrow">&larr;</span>
+                    <span>Back to Dashboard</span>
+                </a>
+            </div>
+
+            <!-- Hero Section -->
+            <section class="support-hero-banner">
+                <div class="support-hero-left">
+                    <div class="hero-badge-row">
+                        <span class="pill-tag accent-yellow">COMMUNITY STEWARDS</span>
+                        <span class="support-online-pill">
+                            <span class="online-indicator"></span>
+                            <span>Stewards Active</span>
+                        </span>
+                    </div>
+                    <h1 class="text-display support-title">Help &amp; Support</h1>
+                    <p class="support-subtext">
+                        Direct assistance with collaborations, applications, portfolio curation, and community standards.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 12-Column Layout -->
+            <div class="grid-12 support-layout-grid">
+                
+                <!-- Left 8 Columns: Live Chat -->
+                <div class="col-8 col-md-8 col-sm-4 support-chat-col">
+                    <div class="chat-card-container">
+                        
+                        <!-- Quick Query Chips Bar -->
+                        <div class="chat-chips-bar">
+                            <span class="chips-label">Popular Topics:</span>
+                            <button type="button" class="faq-chip" data-query="How do I pitch a collaboration?">Pitch Collab</button>
+                            <button type="button" class="faq-chip" data-query="Portfolio showcase standards">Portfolio Standards</button>
+                            <button type="button" class="faq-chip" data-query="Submitting open calls">Open Call Deadlines</button>
+                            <button type="button" class="faq-chip" data-query="Joining fellowship guilds">Guild Invitations</button>
+                        </div>
+
+                        <!-- Chat Messages Viewport -->
+                        <div class="chat-viewport" id="chatArea">
+                            <div class="messages-list" id="messagesList">
+                                
+                                <!-- Bot Greeting Message -->
+                                <div class="msg-row bot-msg">
+                                    <div class="bot-avatar">✦</div>
+                                    <div class="msg-body">
+                                        <div class="msg-bubble bot-bubble">
+                                            <p class="bubble-p">
+                                                Greetings from the ArtSphere Steward desk! Whether you need technical assistance with your showreel, advice on pitching a cross-discipline collaborator, or guidance on copyright protections, we're here to help.
+                                            </p>
+                                        </div>
+                                        <span class="msg-time">Today &bull; Online</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chat Input Action Row -->
+                        <form id="chatForm" class="chat-input-form" onsubmit="return false;">
+                            <input
+                                type="text"
+                                id="chatMessageInput"
+                                class="neo-input chat-input-field"
+                                placeholder="Ask a question or describe what you need assistance with..."
+                                autocomplete="off"
+                            >
+                            <button type="button" class="btn-pill-primary btn-send-msg" id="btnSendMessage">
+                                <span>Send</span>
+                                <span>&rarr;</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Right 4 Columns: Stewards & Etiquette -->
+                <div class="col-4 col-md-8 col-sm-4 support-sidebar-col">
+                    
+                    <!-- Direct Contacts Card -->
+                    <div class="sidebar-info-card">
+                        <div class="card-heading-row">
+                            <h3 class="card-heading-title">
+                                <span>✦</span>
+                                <span>Direct Channels</span>
+                            </h3>
+                        </div>
+                        <div class="contact-details-list">
+                            <div class="contact-item">
+                                <span class="contact-label">Community Email</span>
+                                <strong class="contact-value">stewards@artsphere.com</strong>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">Average Response Time</span>
+                                <strong class="contact-value">&lt; 15 minutes</strong>
+                            </div>
+                            <div class="contact-item">
+                                <span class="contact-label">Studio Base</span>
+                                <strong class="contact-value">Bandra West, Mumbai &bull; Global IRC</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fellowship Principles Card -->
+                    <div class="sidebar-info-card highlight-card">
+                        <div class="card-heading-row">
+                            <h3 class="card-heading-title">
+                                <span>✦</span>
+                                <span>Fellowship Etiquette</span>
+                            </h3>
+                        </div>
+                        <ul class="principles-bullet-list">
+                            <li><strong>Constructive Critique:</strong> Critique works with empathy and technical precision.</li>
+                            <li><strong>Credit Co-Creators:</strong> Always attribute sound artists, dancers, and writers in joint works.</li>
+                            <li><strong>Safe Creative Sanctuary:</strong> Hate speech or copyright infringement results in immediate revocation of studio membership.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Universal Editorial Footer -->
+        <footer class="editorial-footer">
+            <div class="grid-12 footer-grid">
+                <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
+                    <a href="/pages/home.html" class="footer-logo">
+                        <span class="brand-motif">✦</span>
+                        <span>ArtSphere</span>
+                    </a>
+                    <p class="footer-bio">
+                        The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
+                    </p>
+                    <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
+                </div>
+
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">DIRECTORY</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/discover.html">Discover Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
+                        <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
+                        <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">PLATFORM</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/home.html">Studio Feed</a></li>
+                        <li><a href="/pages/communities.html">Communities</a></li>
+                        <li><a href="/pages/events.html">Events &amp; Jams</a></li>
+                        <li><a href="/pages/collaborators.html">Collaborations</a></li>
+                        <li><a href="/pages/opportunities.html">Open Calls</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-3 col-md-4 col-sm-4 footer-col-links">
+                    <div class="footer-heading">ACCOUNT</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
+                        <li><a href="/pages/my-applications.html">My Applications</a></li>
+                        <li><a href="/pages/settings.html">Account Settings</a></li>
+                        <li><a href="/pages/help-support.html">Help &amp; Guidelines</a></li>
+                    </ul>
+                    <div class="footer-badge-box">
+                        <span class="pill-tag accent-yellow">NO ADS. PURE ART.</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <!-- Scripts -->

@@ -3,321 +3,354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profile – ArtSphere</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <title>Edit Creator Profile — ArtSphere</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/settings-details.css">
 </head>
 <body>
-    <div class="app-layout">
-        <div class="edit-profile-screen">
-
-            <!-- 1. Top App Header -->
-            <header class="app-top-header">
-                <div class="header-left">
-                    <button class="btn-icon-nav" id="btnHeaderBack" aria-label="Go Back">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-                    <a href="/pages/home.html" class="header-logo-wrap" aria-label="ArtSphere Home">
-                        <img src="/images/logo_header.png" alt="ArtSphere" class="header-logo-img">
-                    </a>
-                </div>
-                <div class="header-right">
-                    <a href="/pages/notifications.html" class="btn-icon-nav" aria-label="Notifications" title="Notifications">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                        </svg>
-                        <span class="header-notification-badge"></span>
-                    </a>
-                    <a href="/pages/artist-profile.html?id=101" class="header-avatar-link" aria-label="View Profile">
-                        <img src="/images/user_avatar_nav.png" alt="User Profile" class="header-avatar-img" id="userHeaderAvatar">
-                    </a>
-                </div>
-            </header>
-
-            <!-- 2. Hero / Header Title Section -->
-            <section class="edit-profile-hero">
-                <div class="hero-title-row">
-                    <button class="btn-circle-back" id="btnPageBack" aria-label="Back to Settings">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="19" y1="12" x2="5" y2="12"></line>
-                            <polyline points="12 19 5 12 12 5"></polyline>
-                        </svg>
-                    </button>
-                    <div class="hero-texts">
-                        <h1 class="page-title">Edit Profile</h1>
-                        <p class="page-subtitle">Keep your profile updated and let your creativity shine!</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 3. Form Content -->
-            <main class="edit-profile-main">
-                <form id="editProfileForm" autocomplete="off" onsubmit="return false;">
-
-                    <!-- Card 1: Profile Photo -->
-                    <section class="form-card profile-photo-card">
-                        <div class="card-header">
-                            <div class="card-icon-box">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-header-texts">
-                                <h2 class="card-title">Profile Photo</h2>
-                                <p class="card-desc">Choose a photo that represents you</p>
-                            </div>
-                        </div>
-
-                        <div class="photo-uploader-row">
-                            <div class="avatar-preview-wrap">
-                                <img src="/images/user_avatar_nav.png" alt="Profile Preview" id="avatarPreview" class="avatar-preview-img">
-                                <button type="button" class="avatar-camera-btn" id="btnCameraBadge" aria-label="Upload Photo">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                                        <circle cx="12" cy="13" r="4"></circle>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="photo-actions">
-                                <button type="button" class="btn-change-photo" id="btnChangePhoto">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                                        <circle cx="12" cy="13" r="4"></circle>
-                                    </svg>
-                                    <span>Change Photo</span>
-                                </button>
-                                <input type="file" id="fileAvatarInput" accept="image/*" style="display:none;">
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Card 2: Basic Information -->
-                    <section class="form-card">
-                        <div class="card-header">
-                            <div class="card-icon-box">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="12" cy="7" r="4"></circle>
-                                </svg>
-                            </div>
-                            <div class="card-header-texts">
-                                <h2 class="card-title">Basic Information</h2>
-                            </div>
-                        </div>
-
-                        <div class="card-fields">
-                            <div class="form-group">
-                                <label for="inputFullName" class="form-label">Name</label>
-                                <input type="text" id="inputFullName" class="form-control" placeholder="Mrunali Shinde" required>
-                            </div>
-
-                            <div class="form-row-2">
-                                <div class="form-group">
-                                    <label for="inputUsername" class="form-label">Username</label>
-                                    <input type="text" id="inputUsername" class="form-control" placeholder="mrunali_art">
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail" class="form-label">Email</label>
-                                    <input type="email" id="inputEmail" class="form-control form-control-disabled" placeholder="mrunali.shinde@example.com" disabled readonly>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputBio" class="form-label">Bio</label>
-                                <div class="textarea-wrapper">
-                                    <textarea id="inputBio" class="form-control form-textarea" rows="3" maxlength="150" placeholder="Art enthusiast | Sketching my way through life ✨"></textarea>
-                                    <span class="char-count" id="bioCounter">0/150</span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Card 3: Creative Information -->
-                    <section class="form-card">
-                        <div class="card-header">
-                            <div class="card-icon-box icon-palette">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
-                                    <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
-                                    <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
-                                    <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
-                                    <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
-                                </svg>
-                            </div>
-                            <div class="card-header-texts">
-                                <h2 class="card-title">Creative Information</h2>
-                            </div>
-                        </div>
-
-                        <div class="card-fields">
-                            <div class="form-row-2">
-                                <div class="form-group">
-                                    <label for="selectArtistType" class="form-label">Artist Type</label>
-                                    <div class="select-wrapper">
-                                        <select id="selectArtistType" class="form-control form-select">
-                                            <option value="Illustrator">Illustrator</option>
-                                            <option value="Visual Artist">Visual Artist</option>
-                                            <option value="Digital Artist">Digital Artist</option>
-                                            <option value="Painter">Painter</option>
-                                            <option value="Photographer">Photographer</option>
-                                            <option value="Concept Artist">Concept Artist</option>
-                                            <option value="3D Artist">3D Artist</option>
-                                            <option value="Sculptor">Sculptor</option>
-                                            <option value="Calligrapher">Calligrapher</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputSkills" class="form-label">Skills / Medium</label>
-                                    <input type="text" id="inputSkills" class="form-control" placeholder="Digital Art, Sketching, Painting">
-                                </div>
-                            </div>
-
-                            <div class="form-row-2">
-                                <div class="form-group">
-                                    <label for="inputLocation" class="form-label">Location</label>
-                                    <div class="input-icon-wrap">
-                                        <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                            <circle cx="12" cy="10" r="3"></circle>
-                                        </svg>
-                                        <input type="text" id="inputLocation" class="form-control with-icon" placeholder="Pune, India">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputPortfolioLink" class="form-label">Portfolio Link (Optional)</label>
-                                    <div class="input-icon-wrap">
-                                        <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                                        </svg>
-                                        <input type="url" id="inputPortfolioLink" class="form-control with-icon" placeholder="https://mrunaliart.carrd.co">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Card 4: Social Links (Optional) -->
-                    <section class="form-card">
-                        <div class="card-header">
-                            <div class="card-icon-box icon-social">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="18" cy="5" r="3"></circle>
-                                    <circle cx="6" cy="12" r="3"></circle>
-                                    <circle cx="18" cy="19" r="3"></circle>
-                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                                </svg>
-                            </div>
-                            <div class="card-header-texts">
-                                <h2 class="card-title">Social Links (Optional)</h2>
-                            </div>
-                        </div>
-
-                        <div class="form-row-3">
-                            <div class="form-group">
-                                <label for="inputInstagram" class="form-label">Instagram</label>
-                                <div class="input-icon-wrap">
-                                    <svg class="field-icon social-icon-ig" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                    </svg>
-                                    <input type="text" id="inputInstagram" class="form-control with-icon" placeholder="@mrunali_art">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputBehance" class="form-label">Behance</label>
-                                <div class="input-icon-wrap">
-                                    <span class="field-icon behance-icon">Bē</span>
-                                    <input type="text" id="inputBehance" class="form-control with-icon" placeholder="Add your Behance">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="inputYoutube" class="form-label">YouTube</label>
-                                <div class="input-icon-wrap">
-                                    <svg class="field-icon social-icon-yt" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                                    </svg>
-                                    <input type="text" id="inputYoutube" class="form-control with-icon" placeholder="Add your YouTube">
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Save Changes Button -->
-                    <div class="submit-action-wrap">
-                        <button type="submit" class="btn-save-changes" id="btnSaveChanges">
-                            <span class="btn-save-text">Save Changes</span>
-                            <span class="btn-save-spinner" style="display:none;"></span>
-                        </button>
-                    </div>
-
-                </form>
-            </main>
-
-            <!-- 4. Toast Notification -->
-            <div class="toast-message" id="toastMessage" role="status" aria-live="polite">
-                <span class="toast-icon">✓</span>
-                <span class="toast-text" id="toastText">Profile updated successfully!</span>
+    <!-- Universal Floating Capsule Navigation -->
+    <header class="capsule-nav-wrapper" id="navWrapper">
+        <nav class="capsule-nav">
+            <a href="/pages/home.html" class="nav-brand">
+                <span class="brand-motif">✦</span>
+                <span>ArtSphere</span>
+            </a>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="/pages/home.html" class="nav-link">Home</a>
+                <a href="/pages/discover.html" class="nav-link">Discover</a>
+                <a href="/pages/communities.html" class="nav-link">Communities</a>
+                <a href="/pages/events.html" class="nav-link">Events</a>
+                <a href="/pages/collaborators.html" class="nav-link">Collaborate</a>
+                <a href="/pages/opportunities.html" class="nav-link">Opportunities</a>
             </div>
 
-            <!-- 5. Bottom Navigation Bar -->
-            <nav class="bottom-nav" aria-label="Main Navigation">
-                <a href="/pages/home.html" class="bottom-nav-item" aria-label="Home">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            <div class="nav-actions">
+                                <!-- Search Button -->
+                <a href="/pages/discover.html" class="nav-icon-btn" aria-label="Search Creators & Art">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
-                    <span class="nav-text">Home</span>
                 </a>
-
-                <a href="/pages/discover.html" class="bottom-nav-item" aria-label="Discover">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                    </svg>
-                    <span class="nav-text">Discover</span>
-                </a>
-
-                <div class="bottom-nav-center">
-                    <a href="/pages/create-post.html" class="fab-center-btn" aria-label="Create Post">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                    </a>
-                </div>
-
-                <a href="/pages/notifications.html" class="bottom-nav-item" aria-label="Activity">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Notification Bell -->
+                <a href="/pages/notifications.html" class="nav-icon-btn notification-nav-wrapper" aria-label="Notifications">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                         <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                     </svg>
-                    <span class="nav-text">Activity</span>
+                    <span class="notification-dot"></span>
                 </a>
 
-                <a href="/pages/settings.html" class="bottom-nav-item active" aria-label="Profile" aria-current="page">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span class="nav-text">Profile</span>
-                </a>
-            </nav>
+                <!-- Creator Avatar & Dropdown -->
+                <div class="user-menu-wrapper">
+                    <button class="user-avatar-trigger" id="userAvatarBtn" aria-label="User Account Menu">
+                        <img src="/images/user_avatar_nav.png" alt="Creator Profile" class="user-nav-avatar" id="headerUserAvatar">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="chevron-arrow">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    
+                    <div class="user-dropdown-panel" id="userDropdownPanel">
+                        <div class="dropdown-user-info">
+                            <strong id="dropdownUserName">Aanya Deshmukh</strong>
+                            <span id="dropdownUserBio">Visual &amp; Digital Artist</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <span>My Artist Profile</span>
+                        </a>
+                        <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                            <span>My Portfolio</span>
+                        </a>
+                        <a href="/pages/create-post.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Post to Studio Feed</span>
+                        </a>
+                        <a href="/pages/create-collaboration.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <span>Post Collab Request</span>
+                        </a>
+                        <a href="/pages/collaboration-requests.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                            <span>Manage Inquiries</span>
+                        </a>
+                        <a href="/pages/my-applications.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                            <span>My Applications</span>
+                        </a>
+                        <a href="/pages/settings.html" class="dropdown-item-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button class="dropdown-item-link text-danger" id="logoutBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                            <span>Log Out</span>
+                        </button>
+                    </div>
+                </div>
 
-        </div>
+                <!-- Mobile Toggle -->
+                <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-wrapper">
+        <main>
+            <!-- Top Breadcrumb -->
+            <div class="edit-profile-breadcrumb">
+                <a href="/pages/settings.html" class="breadcrumb-back-link">
+                    <span class="back-arrow">&larr;</span>
+                    <span>Back to Settings</span>
+                </a>
+            </div>
+
+            <!-- Hero Section -->
+            <section class="edit-profile-hero">
+                <div class="hero-badge-row">
+                    <span class="pill-tag accent-yellow">CREATIVE PROFILE</span>
+                    <span class="pill-tag">PUBLIC IDENTITY</span>
+                </div>
+                <h1 class="text-display edit-profile-title">Edit Creator Profile</h1>
+                <p class="edit-profile-subtext">
+                    Fine-tune your public statement, disciplines, skills, location, and web links to stand out in the multidisciplinary directory.
+                </p>
+            </section>
+
+            <!-- 12-Column Grid Layout -->
+            <div class="grid-12 edit-profile-layout">
+                
+                <!-- Left 8 Columns Form -->
+                <div class="col-8 col-md-8 col-sm-4 edit-form-col">
+                    <form id="editProfileForm" class="editorial-settings-form" autocomplete="off" onsubmit="return false;">
+                        
+                        <!-- Card 1: Avatar Showcase -->
+                        <div class="form-block-card">
+                            <div class="block-card-header">
+                                <span class="card-motif">✦</span>
+                                <h3 class="block-card-title">Profile Avatar &amp; Photograph</h3>
+                            </div>
+                            
+                            <div class="avatar-edit-row">
+                                <div class="avatar-preview-box">
+                                    <img src="/images/user_avatar_nav.png" alt="Avatar Preview" id="avatarPreview" class="avatar-img">
+                                </div>
+                                <div class="avatar-inputs-box">
+                                    <label class="form-field-label">Avatar Image URL</label>
+                                    <input type="url" id="inputAvatarUrl" class="neo-input" placeholder="Paste high-res image link">
+                                    <div class="sample-picks-row" style="margin-top: 8px;">
+                                        <span class="sample-label">Sample presets:</span>
+                                        <button type="button" class="sample-chip" data-avatar="/images/artist_profile_avatar.png">Aanya</button>
+                                        <button type="button" class="sample-chip" data-avatar="/images/artist_rohan_avatar.png">Rohan</button>
+                                        <button type="button" class="sample-chip" data-avatar="/images/artist_kavya_avatar.png">Kavya</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Core Identity Details -->
+                        <div class="form-block-card">
+                            <div class="block-card-header">
+                                <span class="card-motif">✦</span>
+                                <h3 class="block-card-title">Identity &amp; Creative Bio</h3>
+                            </div>
+
+                            <div class="form-row-2col">
+                                <div class="form-group-block">
+                                    <label class="form-field-label" for="inputFullName">
+                                        <span>Full Name</span>
+                                        <span class="required-star">*</span>
+                                    </label>
+                                    <input type="text" id="inputFullName" class="neo-input" placeholder="e.g. Aanya Deshmukh" required>
+                                </div>
+
+                                <div class="form-group-block">
+                                    <label class="form-field-label" for="inputUsername">Username Handle</label>
+                                    <input type="text" id="inputUsername" class="neo-input" placeholder="e.g. aanya">
+                                </div>
+                            </div>
+
+                            <div class="form-row-2col" style="margin-top: 16px;">
+                                <div class="form-group-block">
+                                    <label class="form-field-label" for="selectArtistType">Primary Discipline</label>
+                                    <select id="selectArtistType" class="neo-input">
+                                        <option value="Visual Artist">Visual Arts &amp; Painting</option>
+                                        <option value="Digital Artist">Digital Art &amp; Animation</option>
+                                        <option value="Musician">Music &amp; Sound Production</option>
+                                        <option value="Dancer">Dance &amp; Physical Choreography</option>
+                                        <option value="Photographer">Photography &amp; Visual Media</option>
+                                        <option value="Writer">Writing, Poetry &amp; Prose</option>
+                                        <option value="Crafts">Crafts, Ceramics &amp; 3D</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group-block">
+                                    <label class="form-field-label" for="inputLocation">Base Location</label>
+                                    <input type="text" id="inputLocation" class="neo-input" placeholder="e.g. Mumbai, MH">
+                                </div>
+                            </div>
+
+                            <!-- Bio Textarea -->
+                            <div class="form-group-block" style="margin-top: 16px;">
+                                <div class="label-row">
+                                    <label class="form-field-label" for="inputBio">Artistic Statement &amp; Bio</label>
+                                    <span class="char-counter" id="bioCounter">0 / 300</span>
+                                </div>
+                                <textarea id="inputBio" class="neo-textarea" rows="4" maxlength="300" placeholder="Summarize your creative philosophy, themes, materials, or recurring inspirations..."></textarea>
+                            </div>
+
+                            <!-- Skills -->
+                            <div class="form-group-block" style="margin-top: 16px;">
+                                <label class="form-field-label" for="inputSkills">Creative Skills &amp; Mediums</label>
+                                <input type="text" id="inputSkills" class="neo-input" placeholder="e.g. Gouache, Procreate, Concept Art, Printmaking">
+                            </div>
+                        </div>
+
+                        <!-- Card 3: External Portfolio & Web Presence -->
+                        <div class="form-block-card">
+                            <div class="block-card-header">
+                                <span class="card-motif">✦</span>
+                                <h3 class="block-card-title">External Links &amp; Showcase</h3>
+                            </div>
+
+                            <div class="form-row-2col">
+                                <div class="form-group-block">
+                                    <label class="form-field-label" for="inputPortfolioLink">Personal Website / Carrd</label>
+                                    <input type="url" id="inputPortfolioLink" class="neo-input" placeholder="https://aanya.carrd.co">
+                                </div>
+
+                                <div class="form-group-block">
+                                    <label class="form-field-label" for="inputInstagram">Instagram Handle</label>
+                                    <input type="text" id="inputInstagram" class="neo-input" placeholder="@aanya_art">
+                                </div>
+                            </div>
+
+                            <div class="form-row-2col" style="margin-top: 16px;">
+                                <div class="form-group-block">
+                                    <label class="form-field-label" for="inputBehance">Behance / Dribbble</label>
+                                    <input type="text" id="inputBehance" class="neo-input" placeholder="aanya_design">
+                                </div>
+
+                                <div class="form-group-block">
+                                    <label class="form-field-label" for="inputYoutube">YouTube / Vimeo</label>
+                                    <input type="text" id="inputYoutube" class="neo-input" placeholder="https://youtube.com/@...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Bar -->
+                        <div class="form-actions-bar">
+                            <a href="/pages/settings.html" class="btn-pill-secondary">Discard Changes</a>
+                            <button type="submit" class="btn-pill-primary" id="btnSaveChanges">
+                                <span class="btn-save-text">Save Changes</span>
+                                <span class="btn-save-spinner" style="display: none;">✦</span>
+                                <span>&rarr;</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right 4 Columns Sidebar -->
+                <div class="col-4 col-md-8 col-sm-4 edit-sidebar-col">
+                    
+                    <!-- Profile Completeness Card -->
+                    <div class="sidebar-info-card">
+                        <div class="card-heading-row">
+                            <h3 class="card-heading-title">
+                                <span>✦</span>
+                                <span>Profile Strength</span>
+                            </h3>
+                            <span class="pill-tag accent-yellow">90%</span>
+                        </div>
+                        <div class="strength-meter-bar">
+                            <div class="strength-fill" style="width: 90%;"></div>
+                        </div>
+                        <ul class="strength-checklist">
+                            <li class="checked"><span>✓</span> Profile Photo Uploaded</li>
+                            <li class="checked"><span>✓</span> Statement &amp; Bio Added</li>
+                            <li class="checked"><span>✓</span> Primary Discipline Selected</li>
+                            <li class="checked"><span>✓</span> Skills &amp; Mediums Listed</li>
+                            <li><span>○</span> Connect 3 Fellowship Guilds</li>
+                        </ul>
+                    </div>
+
+                    <!-- Directory Visibility Guidance -->
+                    <div class="sidebar-info-card highlight-card">
+                        <div class="card-heading-row">
+                            <h3 class="card-heading-title">
+                                <span>✦</span>
+                                <span>Discover Directory Tips</span>
+                            </h3>
+                        </div>
+                        <p class="pledge-lead">
+                            Artists with explicit skill tags (e.g. <em>#gouache</em>, <em>#fingerstyle</em>) receive 3.4x more collaboration invitations from fellow creators.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Universal Editorial Footer -->
+        <footer class="editorial-footer">
+            <div class="grid-12 footer-grid">
+                <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
+                    <a href="/pages/home.html" class="footer-logo">
+                        <span class="brand-motif">✦</span>
+                        <span>ArtSphere</span>
+                    </a>
+                    <p class="footer-bio">
+                        The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
+                    </p>
+                    <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
+                </div>
+
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">DIRECTORY</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/discover.html">Discover Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
+                        <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
+                        <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
+                        <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">PLATFORM</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/home.html">Studio Feed</a></li>
+                        <li><a href="/pages/communities.html">Communities</a></li>
+                        <li><a href="/pages/events.html">Events &amp; Jams</a></li>
+                        <li><a href="/pages/collaborators.html">Collaborations</a></li>
+                        <li><a href="/pages/opportunities.html">Open Calls</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-3 col-md-4 col-sm-4 footer-col-links">
+                    <div class="footer-heading">ACCOUNT</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
+                        <li><a href="/pages/my-applications.html">My Applications</a></li>
+                        <li><a href="/pages/settings.html">Account Settings</a></li>
+                        <li><a href="/pages/help-support.html">Help &amp; Guidelines</a></li>
+                    </ul>
+                    <div class="footer-badge-box">
+                        <span class="pill-tag accent-yellow">NO ADS. PURE ART.</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer"></div>
 
     <!-- Scripts -->
     <script src="/js/api.js"></script>
