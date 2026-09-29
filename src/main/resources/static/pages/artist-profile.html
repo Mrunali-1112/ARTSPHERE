@@ -4,322 +4,811 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArtSphere — Artist Profile &amp; Studio</title>
-    <link rel="stylesheet" href="/css/common.css">
+    <link rel="icon" type="image/png" href="/images/logo_nav.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/artist-profile.css">
 </head>
-<body>
-    <!-- Universal Floating Capsule Navigation -->
-    <header class="capsule-nav-wrapper" id="navWrapper">
-        <nav class="capsule-nav">
-            <a href="/pages/home.html" class="nav-brand">
-                <span class="brand-motif">✦</span>
-                <span>ArtSphere</span>
-            </a>
-            
-            <div class="nav-links" id="navLinks">
-                <a href="/pages/home.html" class="nav-link">Home</a>
-                <a href="/pages/discover.html" class="nav-link">Discover</a>
-                <a href="/pages/communities.html" class="nav-link">Communities</a>
-                <a href="/pages/events.html" class="nav-link">Events</a>
-                <a href="/pages/collaborators.html" class="nav-link">Collaborate</a>
-                <a href="/pages/opportunities.html" class="nav-link">Opportunities</a>
-            </div>
+<body class="dashboard-body">
 
-            <div class="nav-actions">
-                                <!-- Search Button -->
-                <a href="/pages/discover.html" class="nav-icon-btn" aria-label="Search Creators & Art">
-                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </a>
-                <!-- Notification Bell -->
-                <a href="/pages/notifications.html" class="nav-icon-btn notification-nav-wrapper" aria-label="Notifications">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
-                    <span class="notification-dot"></span>
-                </a>
+    <!-- Mobile Drawer Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-                <!-- Creator Avatar & Dropdown -->
-                <div class="user-menu-wrapper">
-                    <button class="user-avatar-trigger" id="userAvatarBtn" aria-label="User Account Menu">
-                        <img src="/images/user_avatar_nav.png" alt="Creator Profile" class="user-nav-avatar" id="headerUserAvatar">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="chevron-arrow">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    
-                    <div class="user-dropdown-panel" id="userDropdownPanel">
-                        <div class="dropdown-user-info">
-                            <strong id="dropdownUserName">Aanya Deshmukh</strong>
-                            <span id="dropdownUserBio">Visual &amp; Digital Artist</span>
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <span>My Artist Profile</span>
-                        </a>
-                        <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                            <span>My Portfolio</span>
-                        </a>
-                        <a href="/pages/create-collaboration.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>Post Collab Request</span>
-                        </a>
-                        <a href="/pages/collaboration-requests.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
-                            <span>Manage Inquiries</span>
-                        </a>
-                        <a href="/pages/my-applications.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                            <span>My Applications</span>
-                        </a>
-                        <a href="/pages/settings.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                            <span>Settings</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item-link text-danger" id="logoutBtn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                            <span>Log Out</span>
-                        </button>
+    <div class="dashboard-container">
+        <!-- ============================================================
+             LEFT APPLICATION SIDEBAR (~236px, soft lavender background)
+             ============================================================ -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <!-- Brand Header -->
+            <div class="sidebar-brand-wrapper">
+                <a href="/pages/home.html" class="sidebar-brand-link">
+                    <div class="brand-sparkle-icon">✦</div>
+                    <div class="brand-text-block">
+                        <span class="brand-title">ArtSphere</span>
+                        <span class="brand-tagline">The Artist Community</span>
                     </div>
-                </div>
-
-                <!-- Mobile Toggle -->
-                <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle navigation">
-                    <span></span>
-                    <span></span>
+                </a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close navigation">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
                 </button>
             </div>
-        </nav>
-    </header>
 
-    <div class="page-wrapper">
-        <main>
-            <!-- Top Breadcrumbs -->
-            <div class="profile-top-breadcrumb">
-                <a href="/pages/discover.html" class="breadcrumb-back-link">
-                    <span class="back-arrow">&larr;</span>
-                    <span>Discover Artists Directory</span>
+            <!-- Primary Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Main Navigation">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/home.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/discover.html" class="sidebar-nav-item active">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Discover</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/communities.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Communities</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/events.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Events</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/collaborators.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path>
+                                    <path d="M18 8l4 4-4 4"></path>
+                                    <path d="M8 12h14"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Collaborate</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/opportunities.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Opportunities</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- Communication Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Communication">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/messages.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Messages</span>
+                            <span class="sidebar-count-badge" id="sidebarMsgBadge">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/notifications.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Notifications</span>
+                            <span class="sidebar-dot-badge" id="sidebarNotifDot" style="display:none;"></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Bottom Section: Current Logged-in User Profile & Utilities -->
+            <div class="sidebar-bottom-section">
+                <!-- User Profile Mini-Card -->
+                <a href="/pages/artist-profile.html" class="sidebar-profile-card" id="sidebarProfileCard" title="View Profile">
+                    <div class="sidebar-avatar-wrap">
+                        <img src="/images/user_avatar_nav.png" alt="Profile" class="sidebar-user-avatar" id="sidebarUserAvatar">
+                        <span class="sidebar-status-dot"></span>
+                    </div>
+                    <div class="sidebar-user-meta">
+                        <span class="sidebar-user-name" id="sidebarUserName">Mrunali S.</span>
+                        <span class="sidebar-view-profile" id="sidebarUserRole">Digital Artist</span>
+                    </div>
+                    <svg class="sidebar-card-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
                 </a>
-            </div>
 
-            <!-- Artist Dossier Hero Card -->
-            <section class="artist-dossier-card">
-                <!-- Cover Banner Frame -->
-                <div class="dossier-cover-frame">
-                    <img src="/images/artist_profile_cover.png" alt="Cover Banner" id="artistCoverImg" class="dossier-cover-img" onerror="this.src='/images/artist_profile_cover.png'">
+                <!-- Utility Navigation -->
+                <ul class="sidebar-utility-list">
+                    <li>
+                        <a href="/pages/settings.html" class="sidebar-utility-item">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </span>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/help-support.html" class="sidebar-utility-item">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </span>
+                            <span>Help &amp; Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <button class="sidebar-utility-item logout-action" id="sidebarLogoutBtn">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                            </span>
+                            <span>Logout</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- ============================================================
+             MAIN CONTENT WRAPPER
+             ============================================================ -->
+        <div class="dashboard-main-wrapper">
+            
+            <!-- Compact Top Search Header -->
+            <header class="dashboard-top-header">
+                <div class="header-left-cluster">
+                    <button class="mobile-menu-trigger" id="mobileMenuTrigger" aria-label="Open navigation menu">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <!-- Global Search Bar -->
+                    <div class="header-search-bar">
+                        <svg class="search-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="globalSearchInput" placeholder="Search artists, opportunities, events..." aria-label="Search artists, opportunities, events">
+                    </div>
                 </div>
 
-                <!-- Avatar & Identity Row -->
-                <div class="dossier-identity-row">
-                    <div class="dossier-avatar-wrap">
-                        <img src="/images/artist_profile_avatar.png" alt="Artist Avatar" id="artistAvatarImg" class="dossier-avatar-img" onerror="this.src='/images/user_avatar_nav.png'">
-                        <span class="active-status-badge" title="Active Creative"></span>
-                    </div>
+                <!-- Right Action Cluster -->
+                <div class="header-right-cluster">
+                    <!-- Notification Bell -->
+                    <a href="/pages/notifications.html" class="header-icon-btn notification-bell-wrap" aria-label="Notifications">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-indicator-dot active" id="headerNotifDot"></span>
+                    </a>
 
-                    <div class="dossier-identity-details">
-                        <div class="identity-badges-line">
-                            <span class="pill-tag accent-yellow" id="artistCraftBadge">VISUAL ARTIST</span>
-                            <span class="location-pill-tag" id="artistLocation">Mumbai, Maharashtra</span>
-                            <span class="verified-creator-tag">✦ VERIFIED CREATOR</span>
+                    <!-- User Avatar & Dropdown -->
+                    <div class="header-user-menu-wrap">
+                        <button class="header-avatar-trigger" id="userMenuTrigger" aria-label="Open user menu" aria-expanded="false">
+                            <img src="/images/user_avatar_nav.png" alt="Profile" class="header-avatar-img" id="headerUserAvatar">
+                            <svg class="header-avatar-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Panel -->
+                        <div class="header-dropdown-menu" id="userDropdownMenu">
+                            <div class="dropdown-user-header">
+                                <strong class="dropdown-user-name" id="dropdownUserName">Mrunali S.</strong>
+                                <span class="dropdown-user-role" id="dropdownUserBio">Digital Artist</span>
+                            </div>
+                            <div class="dropdown-separator"></div>
+                            <a href="/pages/artist-profile.html" class="dropdown-link-item" id="dropdownProfileLink">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <span>My Artist Profile</span>
+                            </a>
+                            <a href="/pages/portfolio.html" class="dropdown-link-item" id="dropdownPortfolioLink">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                <span>My Portfolio</span>
+                            </a>
+                            <a href="/pages/create-collaboration.html" class="dropdown-link-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                <span>Post Collab Request</span>
+                            </a>
+                            <a href="/pages/collaboration-requests.html" class="dropdown-link-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                                <span>Manage Inquiries</span>
+                            </a>
+                            <a href="/pages/my-applications.html" class="dropdown-link-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                <span>My Applications</span>
+                            </a>
+                            <a href="/pages/settings.html" class="dropdown-link-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                <span>Settings</span>
+                            </a>
+                            <div class="dropdown-separator"></div>
+                            <button class="dropdown-link-item logout-link" id="dropdownLogoutBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                <span>Log Out</span>
+                            </button>
                         </div>
-                        <h1 class="text-display artist-full-name" id="artistName">Aanya Kulkarni</h1>
-                        <span class="artist-discipline-tagline" id="artistCraft">Illustrator &amp; Narrative Digital Painter</span>
-                    </div>
-
-                    <div class="dossier-actions-col">
-                        <button class="btn-pill-primary" id="btnFollow">
-                            <span>Follow Creator</span>
-                            <span>&rarr;</span>
-                        </button>
-                        <a href="/pages/collaborators.html" class="btn-pill-secondary" id="btnMessage">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                            <span>Propose Collab</span>
-                        </a>
-                        <button class="btn-pill-subtle" id="btnShareProfile" aria-label="Share Profile">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                            <span>Share</span>
-                        </button>
                     </div>
                 </div>
+            </header>
 
-                <!-- Stats Ledger -->
-                <div class="dossier-stats-ledger">
-                    <div class="stat-cell">
-                        <span class="stat-number" id="artworksCount">18</span>
-                        <span class="stat-label">Artworks</span>
-                    </div>
-                    <div class="stat-cell">
-                        <span class="stat-number" id="postsCount">24</span>
-                        <span class="stat-label">Feed Posts</span>
-                    </div>
-                    <div class="stat-cell highlight-yellow">
-                        <span class="stat-number" id="followersCount">1.8K</span>
-                        <span class="stat-label">Followers</span>
-                    </div>
-                    <div class="stat-cell">
-                        <span class="stat-number" id="followingCount">356</span>
-                        <span class="stat-label">Following</span>
-                    </div>
-                </div>
-
-                <!-- Artist Bio & Narrative -->
-                <div class="dossier-bio-card">
-                    <p class="dossier-bio-text" id="artistBio">
-                        Illustrator and narrative visual artist exploring everyday architectural memories, monsoon light, and subtle human connections through textured digital painting and gouache sketchbooks.
-                    </p>
-                </div>
-
-                <!-- Skills & External Channels -->
-                <div class="dossier-skills-social-row">
-                    <div class="dossier-skills-block" id="artistSkillsContainer">
-                        <span class="skill-tag">Digital Art</span>
-                        <span class="skill-tag">Narrative Illustration</span>
-                        <span class="skill-tag">Background Design</span>
-                        <span class="skill-tag">Gouache</span>
-                        <span class="skill-tag">Concept Art</span>
-                    </div>
-
-                    <div class="dossier-social-block">
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-chip" id="socialInstagram">
-                            <span>Instagram</span>
-                            <span>&rarr;</span>
-                        </a>
-                        <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="social-chip" id="socialBehance">
-                            <span>Behance</span>
-                            <span>&rarr;</span>
-                        </a>
-                        <a href="https://artsphere.net" target="_blank" rel="noopener noreferrer" class="social-chip" id="socialWebsite">
-                            <span>Studio Web</span>
-                            <span>&rarr;</span>
+            <!-- Main Scrollable Workspace -->
+            <main class="dashboard-content-workspace">
+                <div class="profile-layout-container">
+                    
+                    <!-- 3. Back Navigation Bar -->
+                    <div class="profile-back-bar">
+                        <a href="/pages/discover.html" class="back-nav-link" id="backNavBtn">
+                            <span class="back-arrow">&larr;</span>
+                            <span>Discover Artists Directory</span>
                         </a>
                     </div>
-                </div>
-            </section>
 
-            <!-- Navigation Tabs Bar -->
-            <section class="profile-section-nav">
-                <div class="section-tabs-bar" role="tablist">
-                    <button class="profile-tab-btn active" data-tab="portfolio" role="tab">Featured Portfolio</button>
-                    <button class="profile-tab-btn" data-tab="collaborations" role="tab">Collaboration Pitches</button>
-                    <button class="profile-tab-btn" data-tab="statement" role="tab">Artistic Statement</button>
-                </div>
-            </section>
-
-            <!-- Portfolio Showcase Section -->
-            <section class="profile-portfolio-block" id="tabContentPortfolio">
-                <div class="block-header-row">
-                    <div class="block-title-wrap">
-                        <span class="card-motif">✦</span>
-                        <h2 class="block-heading">Curated Works</h2>
+                    <!-- 15. Loading State Skeleton (displayed until API data arrives) -->
+                    <div class="profile-loading-skeleton" id="profileLoadingState">
+                        <div class="skeleton-hero-card">
+                            <div class="skeleton-cover shimmer-effect"></div>
+                            <div class="skeleton-identity-row">
+                                <div class="skeleton-avatar shimmer-effect"></div>
+                                <div class="skeleton-meta">
+                                    <div class="skeleton-badge shimmer-effect"></div>
+                                    <div class="skeleton-title shimmer-effect"></div>
+                                    <div class="skeleton-sub shimmer-effect"></div>
+                                </div>
+                                <div class="skeleton-actions shimmer-effect"></div>
+                            </div>
+                            <div class="skeleton-stats-row">
+                                <div class="skeleton-stat-box shimmer-effect"></div>
+                                <div class="skeleton-stat-box shimmer-effect"></div>
+                                <div class="skeleton-stat-box shimmer-effect"></div>
+                                <div class="skeleton-stat-box shimmer-effect"></div>
+                            </div>
+                        </div>
                     </div>
-                    <a href="/pages/portfolio.html?id=101" class="btn-pill-subtle" id="linkSeeAllPortfolio">
-                        <span>Open Full Gallery Archive</span>
-                        <span>&rarr;</span>
-                    </a>
-                </div>
 
-                <!-- 12-Column Artworks Grid (3 cols per card) -->
-                <div class="grid-12 portfolio-preview-grid" id="profilePortfolioGrid">
-                    <div class="col-12 loading-state-card">
-                        <div class="spinner"></div>
-                        <p>Loading creator's portfolio...</p>
+                    <!-- 16 & 17. Error State / Invalid Artist (displayed if ID not found or API fails) -->
+                    <div class="profile-error-container" id="profileErrorState" style="display: none;">
+                        <div class="profile-error-card">
+                            <div class="error-motif-icon">✦</div>
+                            <h2 class="error-heading" id="errorTitle">Artist not found</h2>
+                            <p class="error-message" id="errorMessage">This artist profile is unavailable.</p>
+                            <div class="error-action-btns">
+                                <a href="/pages/discover.html" class="btn-plum-primary" id="btnBackToDiscover">
+                                    <span>&larr; Back to Discover</span>
+                                </a>
+                                <button class="btn-plum-outline" id="btnRetryLoad" style="display: none;">
+                                    <span>Try Again</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Loaded Profile Content (Main 2-Column Desktop Grid) -->
+                    <div class="profile-workspace-grid" id="profileLoadedContent" style="display: none;">
+                        
+                        <!-- MAIN PROFILE COLUMN (Left on desktop, full-width on mobile) -->
+                        <div class="profile-main-column">
+                            
+                            <!-- 4. PROFILE HERO CARD -->
+                            <section class="profile-hero-card">
+                                <!-- Cover Banner Frame -->
+                                <div class="hero-cover-frame">
+                                    <img src="/images/artist_profile_cover.png" alt="Cover Banner" id="artistCoverImg" class="hero-cover-img" onerror="this.src='/images/artist_profile_cover.png'">
+                                </div>
+
+                                <!-- Artist Avatar, Badges, Name, Location & Top Actions -->
+                                <div class="hero-identity-section">
+                                    <div class="hero-avatar-wrap">
+                                        <img src="/images/artist_profile_avatar.png" alt="Artist Avatar" id="artistAvatarImg" class="hero-avatar-img" onerror="this.src='/images/user_avatar_nav.png'">
+                                        <span class="active-status-dot" title="Active on ArtSphere"></span>
+                                    </div>
+
+                                    <div class="hero-identity-content">
+                                        <!-- Badges Row -->
+                                        <div class="hero-badges-row">
+                                            <span class="pill-badge-craft" id="artistCraftBadge">VISUAL ARTIST</span>
+                                            <span class="pill-badge-verified" id="artistVerifiedBadge">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                                </svg>
+                                                <span>Verified Creator</span>
+                                            </span>
+                                        </div>
+
+                                        <!-- Artist Name -->
+                                        <h1 class="hero-artist-name" id="artistName">Aanya Deshmukh</h1>
+
+                                        <!-- Location & Subtitle -->
+                                        <div class="hero-meta-row">
+                                            <span class="hero-location-text">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                                    <circle cx="12" cy="10" r="3"></circle>
+                                                </svg>
+                                                <span id="artistLocation">Mumbai, MH</span>
+                                            </span>
+                                            <span class="hero-meta-divider">•</span>
+                                            <span class="hero-craft-text" id="artistCraft">Visual Artist</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Buttons Group -->
+                                    <div class="hero-actions-cluster">
+                                        <!-- Follow Creator Button -->
+                                        <button class="btn-plum-primary btn-follow-creator" id="btnFollow" aria-label="Follow Creator">
+                                            <span id="followBtnText">Follow Creator</span>
+                                            <span id="followBtnIcon">&rarr;</span>
+                                        </button>
+                                        
+                                        <!-- Propose Collab Button -->
+                                        <a href="/pages/create-collaboration.html" class="btn-plum-outline btn-propose-collab" id="btnProposeCollab">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                                            </svg>
+                                            <span>Propose Collab</span>
+                                        </a>
+
+                                        <!-- Share Button -->
+                                        <button class="btn-circle-action" id="btnShareProfile" aria-label="Share Profile" title="Share Profile">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="18" cy="5" r="3"></circle>
+                                                <circle cx="6" cy="12" r="3"></circle>
+                                                <circle cx="18" cy="19" r="3"></circle>
+                                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- 5. PROFILE STATS (4 Clean Stat Cards) -->
+                                <div class="hero-stats-deck">
+                                    <!-- Artworks -->
+                                    <div class="stat-card-cell">
+                                        <div class="stat-icon-wrap">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                                <polyline points="21 15 16 10 5 21"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="stat-value-block">
+                                            <span class="stat-number" id="artworksCount">9</span>
+                                            <span class="stat-label">ARTWORKS</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Feed Posts -->
+                                    <div class="stat-card-cell">
+                                        <div class="stat-icon-wrap">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                <polyline points="14 2 14 8 20 8"></polyline>
+                                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                                <polyline points="10 9 9 9 8 9"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="stat-value-block">
+                                            <span class="stat-number" id="postsCount">9</span>
+                                            <span class="stat-label">FEED POSTS</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Followers -->
+                                    <div class="stat-card-cell highlight-cell">
+                                        <div class="stat-icon-wrap">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="9" cy="7" r="4"></circle>
+                                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="stat-value-block">
+                                            <span class="stat-number" id="followersCount">1.8K</span>
+                                            <span class="stat-label">FOLLOWERS</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Following -->
+                                    <div class="stat-card-cell">
+                                        <div class="stat-icon-wrap">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="10" cy="7" r="4"></circle>
+                                                <polyline points="17 11 19 13 23 9"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="stat-value-block">
+                                            <span class="stat-number" id="followingCount">356</span>
+                                            <span class="stat-label">FOLLOWING</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 6. BIO CARD -->
+                                <div class="hero-bio-container">
+                                    <div class="bio-icon-col">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        </svg>
+                                    </div>
+                                    <p class="bio-body-text" id="artistBio">
+                                        Illustrator and digital artist exploring everyday moments through art. I create atmospheric illustrations, portraits, and visual stories inspired by nature, cities, and human emotions.
+                                    </p>
+                                </div>
+                            </section>
+
+                            <!-- 7. PROFILE TABS -->
+                            <section class="profile-tabs-section">
+                                <div class="profile-tabs-cluster" role="tablist">
+                                    <button class="profile-pill-tab active" data-tab="curated" id="tabCuratedWorks" role="tab" aria-selected="true">
+                                        <span>Curated Works</span>
+                                    </button>
+                                    <button class="profile-pill-tab" data-tab="collabs" id="tabCollabs" role="tab" aria-selected="false">
+                                        <span>Collaboration Pitches</span>
+                                    </button>
+                                    <button class="profile-pill-tab" data-tab="statement" id="tabStatement" role="tab" aria-selected="false">
+                                        <span>Artistic Statement</span>
+                                    </button>
+                                </div>
+                            </section>
+
+                            <!-- TAB CONTENT 1: CURATED WORKS & FILTERS -->
+                            <section class="tab-pane active" id="paneCuratedWorks">
+                                
+                                <!-- 8. ARTWORK FILTERS -->
+                                <div class="artwork-filters-deck" id="artworkFiltersDeck">
+                                    <button class="filter-pill-btn active" data-category="all">All Works</button>
+                                    <button class="filter-pill-btn" data-category="Digital Art">Digital Art</button>
+                                    <button class="filter-pill-btn" data-category="Illustration">Illustration</button>
+                                    <button class="filter-pill-btn" data-category="Portraits">Portraits</button>
+                                    <button class="filter-pill-btn" data-category="Concept Art">Concept Art</button>
+                                    <button class="filter-pill-btn" data-category="Nature Art">Nature Art</button>
+                                </div>
+
+                                <!-- 9. CURATED WORKS GRID SECTION -->
+                                <div class="curated-works-wrapper">
+                                    <!-- Section Header -->
+                                    <div class="works-header-row">
+                                        <div class="works-title-cluster">
+                                            <svg class="works-heading-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                                <polyline points="21 15 16 10 5 21"></polyline>
+                                            </svg>
+                                            <h2 class="works-heading">Curated Works</h2>
+                                        </div>
+                                        <a href="/pages/portfolio.html" class="archive-link" id="linkFullArchive">
+                                            <span>Open Full Gallery Archive</span>
+                                            <span class="archive-arrow">&rarr;</span>
+                                        </a>
+                                    </div>
+
+                                    <!-- 2-Column Artwork Card Grid -->
+                                    <div class="curated-artwork-grid" id="profilePortfolioGrid">
+                                        <!-- Loaded dynamically via JavaScript -->
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- TAB CONTENT 2: COLLABORATION PITCHES -->
+                            <section class="tab-pane" id="paneCollaborations" style="display: none;">
+                                <div class="collabs-tab-wrapper">
+                                    <div class="works-header-row">
+                                        <div class="works-title-cluster">
+                                            <svg class="works-heading-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path>
+                                                <path d="M18 8l4 4-4 4"></path>
+                                                <path d="M8 12h14"></path>
+                                            </svg>
+                                            <h2 class="works-heading">Collaboration Pitches &amp; Calls</h2>
+                                        </div>
+                                        <a href="/pages/collaborators.html" class="archive-link">
+                                            <span>Browse All Collaborations</span>
+                                            <span class="archive-arrow">&rarr;</span>
+                                        </a>
+                                    </div>
+
+                                    <div class="pitches-deck-grid" id="profileCollabsGrid">
+                                        <!-- Loaded dynamically -->
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- TAB CONTENT 3: ARTISTIC STATEMENT -->
+                            <section class="tab-pane" id="paneArtisticStatement" style="display: none;">
+                                <div class="statement-card">
+                                    <div class="statement-header-row">
+                                        <span class="statement-sparkle">✦</span>
+                                        <h3 class="statement-heading">Artistic Inquiry &amp; Methodology</h3>
+                                    </div>
+                                    <div class="statement-body-wrap">
+                                        <p class="statement-paragraph" id="artistStatementText">
+                                            &ldquo;My practice centers on exploring atmospheric stillness within urban and domestic environments. By combining loose digital brushwork with textured, tactile sensibilities, I explore themes of memory, transience, and the poetic geometry of everyday spaces. I am constantly open to cross-disciplinary projects with musicians, animators, sound designers, and poets.&rdquo;
+                                        </p>
+                                    </div>
+                                    <div class="statement-skills-deck" id="statementSkillsContainer">
+                                        <!-- Skills pills -->
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- 10. RIGHT INFORMATION SIDEBAR (~320px) -->
+                        <aside class="profile-info-sidebar">
+                            
+                            <!-- CARD 1: CONNECT & COLLABORATE -->
+                            <div class="info-card info-card-collab">
+                                <div class="info-card-header">
+                                    <div class="info-card-icon-wrap icon-purple">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="info-card-title">Connect &amp; Collaborate</h3>
+                                </div>
+                                <p class="info-card-desc">
+                                    Interested in working together? Send a collaboration proposal or follow the artist to stay updated on their work.
+                                </p>
+                                <a href="/pages/create-collaboration.html" class="btn-plum-primary full-width-action" id="btnRightProposeCollab">
+                                    <span>Propose Collaboration</span>
+                                    <span>&rarr;</span>
+                                </a>
+                            </div>
+
+                            <!-- CARD 2: LINKS & PROFILES -->
+                            <div class="info-card info-card-links">
+                                <div class="info-card-header">
+                                    <div class="info-card-icon-wrap icon-plum">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="info-card-title">Links &amp; Profiles</h3>
+                                </div>
+                                <div class="external-links-list" id="artistExternalLinksList">
+                                    <!-- Dynamic or static graceful links -->
+                                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="link-tile-item" id="linkTileInstagram">
+                                        <div class="link-tile-left">
+                                            <span class="link-tile-icon-box">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                                </svg>
+                                            </span>
+                                            <span class="link-tile-label">Instagram</span>
+                                        </div>
+                                        <span class="link-tile-arrow">&nearr;</span>
+                                    </a>
+
+                                    <a href="https://behance.net" target="_blank" rel="noopener noreferrer" class="link-tile-item" id="linkTileBehance">
+                                        <div class="link-tile-left">
+                                            <span class="link-tile-icon-box font-be">Be</span>
+                                            <span class="link-tile-label">Behance</span>
+                                        </div>
+                                        <span class="link-tile-arrow">&nearr;</span>
+                                    </a>
+
+                                    <a href="https://artsphere.com" target="_blank" rel="noopener noreferrer" class="link-tile-item" id="linkTileWebsite">
+                                        <div class="link-tile-left">
+                                            <span class="link-tile-icon-box">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                                </svg>
+                                            </span>
+                                            <span class="link-tile-label">Studio Web</span>
+                                        </div>
+                                        <span class="link-tile-arrow">&nearr;</span>
+                                    </a>
+                                </div>
+                                <div class="empty-links-hint" id="noLinksHint" style="display: none;">
+                                    No external profiles added yet.
+                                </div>
+                            </div>
+
+                            <!-- CARD 3: ABOUT THE ARTIST -->
+                            <div class="info-card info-card-about">
+                                <div class="info-card-header">
+                                    <div class="info-card-icon-wrap icon-purple">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        </svg>
+                                    </div>
+                                    <h3 class="info-card-title">About the Artist</h3>
+                                </div>
+                                <p class="about-card-text" id="aboutArtistSummary">
+                                    Indie digital artist with a love for light, texture, and storytelling. I work across illustration, concept art, and visual development, often drawing inspiration from nature and urban life.
+                                </p>
+                            </div>
+
+                            <!-- CARD 4: LOOKING TO COLLABORATE? -->
+                            <div class="info-card info-card-looking">
+                                <div class="info-card-header">
+                                    <div class="info-card-icon-wrap icon-sparkle">
+                                        <span class="sparkle-symbol">✦</span>
+                                    </div>
+                                    <h3 class="info-card-title">Looking to Collaborate?</h3>
+                                </div>
+                                <p class="info-card-desc">
+                                    This artist is open to new collaborations, creative projects, and multidisciplinary work. Share your idea and explore possibilities together.
+                                </p>
+                            </div>
+
+                            <!-- CARD 5: RELATED ARTISTS -->
+                            <div class="info-card info-card-related">
+                                <div class="info-card-header space-between-header">
+                                    <div class="header-inline-cluster">
+                                        <div class="info-card-icon-wrap icon-plum">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="9" cy="7" r="4"></circle>
+                                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 class="info-card-title">Related Artists</h3>
+                                    </div>
+                                    <a href="/pages/discover.html" class="related-view-all">View All &rarr;</a>
+                                </div>
+                                
+                                <div class="related-artists-list" id="relatedArtistsList">
+                                    <!-- Populated dynamically via JS from /api/artists -->
+                                    <div class="related-artist-row">
+                                        <img src="/images/artist_rohan_avatar.png" alt="Rohan Mehta" class="related-artist-avatar">
+                                        <div class="related-artist-meta">
+                                            <span class="related-artist-name">Rohan Mehta</span>
+                                            <span class="related-artist-craft">Photographer</span>
+                                        </div>
+                                        <a href="/pages/artist-profile.html?id=102" class="btn-circle-mini" aria-label="View Rohan's Profile">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        </a>
+                                    </div>
+                                    <div class="related-artist-row">
+                                        <img src="/images/artist_kavya_avatar.png" alt="Kavita Rao" class="related-artist-avatar">
+                                        <div class="related-artist-meta">
+                                            <span class="related-artist-name">Kavita Rao</span>
+                                            <span class="related-artist-craft">Illustrator</span>
+                                        </div>
+                                        <a href="/pages/artist-profile.html?id=103" class="btn-circle-mini" aria-label="View Kavita's Profile">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        </a>
+                                    </div>
+                                    <div class="related-artist-row">
+                                        <img src="/images/artist_arjun_thumb.png" alt="Arjun Iyer" class="related-artist-avatar">
+                                        <div class="related-artist-meta">
+                                            <span class="related-artist-name">Arjun Iyer</span>
+                                            <span class="related-artist-craft">Visual Artist</span>
+                                        </div>
+                                        <a href="/pages/artist-profile.html?id=104" class="btn-circle-mini" aria-label="View Arjun's Profile">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+
                     </div>
                 </div>
-            </section>
-
-            <!-- Collaboration Pitches Section -->
-            <section class="profile-collabs-block" id="tabContentCollaborations" style="display: none;">
-                <div class="block-header-row">
-                    <div class="block-title-wrap">
-                        <span class="card-motif">✦</span>
-                        <h2 class="block-heading">Active Collaboration Pitches</h2>
-                    </div>
-                    <a href="/pages/collaborators.html" class="btn-pill-subtle">
-                        <span>Browse All Calls</span>
-                        <span>&rarr;</span>
-                    </a>
-                </div>
-                <div class="grid-12 profile-collabs-grid" id="profileCollabsGrid">
-                    <!-- Loaded dynamically -->
-                </div>
-            </section>
-
-            <!-- Artistic Statement Section -->
-            <section class="profile-statement-block" id="tabContentStatement" style="display: none;">
-                <div class="hub-content-card">
-                    <div class="card-title-header">
-                        <span class="card-motif">✦</span>
-                        <h3 class="card-heading">Artistic Inquiry &amp; Methodology</h3>
-                    </div>
-                    <p class="dossier-body-text">
-                        "My practice centers on capturing atmospheric stillness within urban environments. By combining loose digital brushwork with analog print textures, I explore themes of memory, transience, and the poetic geometry of South Asian cities. I am constantly open to cross-disciplinary projects with sound designers, animators, and poets."
-                    </p>
-                </div>
-            </section>
-        </main>
-
-        <!-- Universal Editorial Footer -->
-        <footer class="editorial-footer">
-            <div class="grid-12 footer-grid">
-                <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
-                    <a href="/pages/home.html" class="footer-logo">
-                        <span class="brand-motif">✦</span>
-                        <span>ArtSphere</span>
-                    </a>
-                    <p class="footer-bio">
-                        The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
-                    </p>
-                    <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
-                </div>
-
-                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
-                    <div class="footer-heading">DIRECTORY</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/discover.html">Discover Artists</a></li>
-                        <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
-                        <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
-                        <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
-                        <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
-                    <div class="footer-heading">PLATFORM</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/home.html">Studio Feed</a></li>
-                        <li><a href="/pages/communities.html">Communities</a></li>
-                        <li><a href="/pages/events.html">Events &amp; Jams</a></li>
-                        <li><a href="/pages/collaborators.html">Collaborations</a></li>
-                        <li><a href="/pages/opportunities.html">Open Calls</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-3 col-md-4 col-sm-4 footer-col-links">
-                    <div class="footer-heading">ACCOUNT</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
-                        <li><a href="/pages/my-applications.html">My Applications</a></li>
-                        <li><a href="/pages/settings.html">Account Settings</a></li>
-                        <li><a href="/pages/help-support.html">Help &amp; Guidelines</a></li>
-                    </ul>
-                    <div class="footer-badge-box">
-                        <span class="pill-tag accent-yellow">NO ADS. PURE ART.</span>
-                    </div>
-                </div>
-            </div>
-        </footer>
+            </main>
+        </div>
     </div>
 
-    <!-- Toast Notification Container -->
-    <div id="toastContainer"></div>
+    <!-- ============================================================
+         21. MOBILE NAVIGATION BAR (Fixed at bottom on <= 768px)
+         Home | Discover | + | Messages | Profile
+         ============================================================ -->
+    <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+        <a href="/pages/home.html" class="mobile-nav-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="/pages/discover.html" class="mobile-nav-btn active">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>Discover</span>
+        </a>
+        <a href="/pages/create-collaboration.html" class="mobile-nav-btn mobile-nav-btn-create" aria-label="Post Collaboration">
+            <div class="mobile-create-plus-icon">+</div>
+        </a>
+        <a href="/pages/messages.html" class="mobile-nav-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>Messages</span>
+        </a>
+        <a href="/pages/artist-profile.html" class="mobile-nav-btn" id="mobileProfileNavBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>Profile</span>
+        </a>
+    </nav>
 
-    <!-- Scripts -->
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-portal-container"></div>
+
+    <!-- Application Scripts -->
     <script src="/js/api.js"></script>
     <script src="/js/artist-profile.js"></script>
 </body>

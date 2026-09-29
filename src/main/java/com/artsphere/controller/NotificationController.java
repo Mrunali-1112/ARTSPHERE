@@ -45,4 +45,23 @@ public class NotificationController {
                 "allRead", marked
         )));
     }
+
+    @PostMapping
+    public ResponseEntity<ApiResponse<Map<String, Object>>> createNotification(
+            @RequestBody Map<String, Object> body,
+            @RequestParam(value = "userId", required = false) Long userId) {
+        Long targetUserId = userId != null ? userId : (body.get("userId") != null ? Long.valueOf(body.get("userId").toString()) : 101L);
+        String type = (String) body.getOrDefault("type", "SYSTEM");
+        String title = (String) body.getOrDefault("title", "New Notification");
+        String message = (String) body.getOrDefault("message", "");
+        Long senderId = body.get("senderId") != null ? Long.valueOf(body.get("senderId").toString()) : null;
+        String senderName = (String) body.get("senderName");
+        String senderAvatar = (String) body.get("senderAvatar");
+        String entityType = (String) body.get("entityType");
+        Long entityId = body.get("entityId") != null ? Long.valueOf(body.get("entityId").toString()) : null;
+        String actionUrl = (String) body.get("actionUrl");
+
+        notificationService.createNotification(targetUserId, type, title, message, senderId, senderName, senderAvatar, entityType, entityId, actionUrl);
+        return ResponseEntity.ok(ApiResponse.success("Notification created successfully", Map.of("created", true)));
+    }
 }

@@ -1,280 +1,633 @@
 /**
- * ArtSphere – My Applications Tracker Logic
- * Editorial Neo-brutalism • Dual-Level Filtering & Unified Applicant Tracker
+ * ArtSphere — My Applications & Submissions Dashboard
+ * Pastel Purple / Lavender Visual Language & Live Applicant Tracker
+ * Directly binds to GET /api/my-applications?userId=...
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const currentUserId = 101; // Demo User (Mrunali / Aanya)
+    // State
+    let currentUserId = 101; // Default demo user
+    let applicationsData = [];
+    let summaryData = null;
+
     let currentCategory = 'ALL';
     let currentStatus = 'ALL';
+    let searchQuery = '';
+    let sortOrder = 'newest';
+    let dateFilter = 'all';
 
-    // Navigation & Dropdown
-    initNavigation();
+    // DOM Elements
+    const applicationsContainer = document.getElementById('applicationsFeedContainer');
+    const totalSubmissionsBadge = document.getElementById('totalSubmissionsBadge');
 
-    // Elements
-    const categoryTabs = document.getElementById('categoryTabs');
-    const statusPillsGroup = document.getElementById('statusPillsGroup');
-    const applicationsContainer = document.getElementById('applicationsContainer');
-
-    const totalAppsPill = document.getElementById('totalAppsPill');
-    const statTotal = document.getElementById('statTotal');
+    const statTotalApplied = document.getElementById('statTotalApplied');
     const statPending = document.getElementById('statPending');
     const statAccepted = document.getElementById('statAccepted');
     const statDeclined = document.getElementById('statDeclined');
 
-    // Category Tabs Events
-    if (categoryTabs) {
-        categoryTabs.addEventListener('click', (e) => {
-            const btn = e.target.closest('.category-tab-btn');
-            if (!btn) return;
+    const badgeCountAll = document.getElementById('badgeCountAll');
+    const badgeCountPending = document.getElementById('badgeCountPending');
+    const badgeCountAccepted = document.getElementById('badgeCountAccepted');
+    const badgeCountDeclined = document.getElementById('badgeCountDeclined');
 
-            categoryTabs.querySelectorAll('.category-tab-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+    const categoryTabsBar = document.getElementById('categoryTabsBar');
+    const filterTypeSelect = document.getElementById('filterTypeSelect');
+    const statusCheckboxGroup = document.getElementById('statusCheckboxGroup');
+    const filterDateSelect = document.getElementById('filterDateSelect');
 
-            currentCategory = btn.getAttribute('data-category') || 'ALL';
-            loadApplications();
-        });
-    }
+    const subSearchInput = document.getElementById('subSearchInput');
+    const subSortSelect = document.getElementById('subSortSelect');
+    const topSearchInput = document.getElementById('topSearchInput');
 
-    // Status Pills Events
-    if (statusPillsGroup) {
-        statusPillsGroup.addEventListener('click', (e) => {
-            const chip = e.target.closest('.status-chip');
-            if (!chip) return;
+    // Initialize Page
+    initNavigationAndUI();
+    initCurrentUserAndLoad();
 
-            statusPillsGroup.querySelectorAll('.status-chip').forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
+    /**
+     * Resolve the logged-in user and initiate data fetching
+     */
+    async function initCurrentUserAndLoad() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryUserId = urlParams.get('userId');
 
-            currentStatus = chip.getAttribute('data-status') || 'ALL';
-            loadApplications();
-        });
-    }
-
-    // Initial Load
-    loadSummaryStats();
-    loadApplications();
-
-    async function loadSummaryStats() {
-        try {
-            if (window.ArtSphereAPI && typeof window.ArtSphereAPI.getMyApplicationsSummary === 'function') {
-                const summary = await window.ArtSphereAPI.getMyApplicationsSummary(currentUserId);
-                if (summary) {
-                    if (statTotal) statTotal.textContent = summary.totalCount || 4;
-                    if (statPending) statPending.textContent = summary.pendingCount || 2;
-                    if (statAccepted) statAccepted.textContent = summary.acceptedCount || 2;
-                    if (statDeclined) statDeclined.textContent = summary.rejectedCount || 0;
-                    if (totalAppsPill) totalAppsPill.textContent = `${summary.totalCount || 4} Total Submissions`;
-                    return;
+        if (queryUserId && !isNaN(parseInt(queryUserId, 10))) {
+            currentUserId = parseInt(queryUserId, 10);
+        } else {
+            try {
+                const stored = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (parsed && parsed.id) {
+                        currentUserId = parsed.id;
+                        updateUserIdentity(parsed);
+                    }
                 }
+            } catch (e) {
+                console.warn('Could not parse stored user:', e);
             }
-        } catch (e) {
-            console.warn('API error when loading summary stats:', e);
+
+            // Try backend session identity
+            try {
+                const res = await fetch('/api/auth/me');
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json.data && json.data.id) {
+                        currentUserId = json.data.id;
+                        updateUserIdentity(json.data);
+                    }
+                }
+            } catch (e) {
+                // Keep default 101
+            }
         }
 
-        // Fallback Stats
-        if (statTotal) statTotal.textContent = '4';
-        if (statPending) statPending.textContent = '2';
-        if (statAccepted) statAccepted.textContent = '2';
-        if (statDeclined) statDeclined.textContent = '0';
-        if (totalAppsPill) totalAppsPill.textContent = '4 Total Submissions';
+        // Fetch Real Applications & Summary from Backend
+        await fetchApplications();
     }
 
-    async function loadApplications() {
+    /**
+     * Update user profile displays in sidebar, top nav, and footer
+     */
+    function updateUserIdentity(user) {
+        if (!user) return;
+        const name = user.fullName || user.username || user.name || 'Mrunali';
+        const role = user.artistType || user.bio || 'Visual Artist';
+        const avatar = user.profilePicture || user.avatarUrl || '/images/user_avatar_nav.png';
+        const profileUrl = `/pages/artist-profile.html?id=${user.id || 101}`;
+
+        const sidebarUserName = document.getElementById('sidebarUserName');
+        const sidebarUserRole = document.getElementById('sidebarUserRole');
+        const sidebarUserAvatar = document.getElementById('sidebarUserAvatar');
+        const sidebarProfileCard = document.getElementById('sidebarProfileCard');
+
+        if (sidebarUserName) sidebarUserName.textContent = name;
+        if (sidebarUserRole) sidebarUserRole.textContent = role;
+        if (sidebarUserAvatar) sidebarUserAvatar.src = avatar;
+        if (sidebarProfileCard) sidebarProfileCard.href = profileUrl;
+
+        const headerUserAvatar = document.getElementById('headerUserAvatar');
+        const dropdownUserName = document.getElementById('dropdownUserName');
+        const dropdownUserBio = document.getElementById('dropdownUserBio');
+        const dropdownProfileLink = document.getElementById('dropdownProfileLink');
+        const footerProfileLink = document.getElementById('footerProfileLink');
+
+        if (headerUserAvatar) headerUserAvatar.src = avatar;
+        if (dropdownUserName) dropdownUserName.textContent = name;
+        if (dropdownUserBio) dropdownUserBio.textContent = role;
+        if (dropdownProfileLink) dropdownProfileLink.href = profileUrl;
+        if (footerProfileLink) footerProfileLink.href = profileUrl;
+    }
+
+    /**
+     * Fetch submissions and stats from Spring Boot API
+     */
+    async function fetchApplications() {
+        showLoadingState();
+
+        try {
+            let apiData = null;
+
+            if (window.ArtSphereAPI && typeof window.ArtSphereAPI.getMyApplications === 'function') {
+                apiData = await window.ArtSphereAPI.getMyApplications(currentUserId);
+            } else {
+                const response = await fetch(`/api/my-applications?userId=${currentUserId}`);
+                if (response.ok) {
+                    const result = await response.json();
+                    apiData = result.data;
+                }
+            }
+
+            if (apiData) {
+                // API contract returns { summary: {...}, applications: [...] }
+                summaryData = apiData.summary || null;
+                applicationsData = Array.isArray(apiData.applications)
+                    ? apiData.applications
+                    : (Array.isArray(apiData) ? apiData : []);
+            } else {
+                applicationsData = [];
+            }
+
+            // Bind real counts to header & statistics cards
+            updateSummaryMetrics();
+
+            // Render current view with filters applied
+            applyFiltersAndRender();
+
+        } catch (error) {
+            console.error('Error fetching applications from backend:', error);
+            // Fallback gracefully without breaking UI
+            applicationsData = [];
+            updateSummaryMetrics();
+            applyFiltersAndRender();
+        }
+    }
+
+    /**
+     * Update the real numeric counts in badges, stats cards, and filter checkboxes
+     */
+    function updateSummaryMetrics() {
+        const total = summaryData ? summaryData.totalCount : applicationsData.length;
+        const pending = summaryData ? summaryData.pendingCount : applicationsData.filter(a => isPending(a)).length;
+        const accepted = summaryData ? summaryData.acceptedCount : applicationsData.filter(a => isAccepted(a)).length;
+        const declined = summaryData ? summaryData.rejectedCount : applicationsData.filter(a => isDeclined(a)).length;
+
+        // Header total badge
+        if (totalSubmissionsBadge) {
+            totalSubmissionsBadge.textContent = `${total} TOTAL SUBMISSIONS`;
+        }
+
+        // 4 Pastel Stat Cards
+        if (statTotalApplied) statTotalApplied.textContent = total;
+        if (statPending) statPending.textContent = pending;
+        if (statAccepted) statAccepted.textContent = accepted;
+        if (statDeclined) statDeclined.textContent = declined;
+
+        // Filter Sidebar Status Badges
+        if (badgeCountAll) badgeCountAll.textContent = total;
+        if (badgeCountPending) badgeCountPending.textContent = pending;
+        if (badgeCountAccepted) badgeCountAccepted.textContent = accepted;
+        if (badgeCountDeclined) badgeCountDeclined.textContent = declined;
+    }
+
+    /**
+     * Status classification helpers matching backend model
+     */
+    function isPending(item) {
+        const grp = (item.statusGroup || '').toUpperCase();
+        const stat = (item.status || '').toUpperCase();
+        return grp === 'PENDING' || stat.includes('PENDING') || stat.includes('REVIEW');
+    }
+
+    function isAccepted(item) {
+        const grp = (item.statusGroup || '').toUpperCase();
+        const stat = (item.status || '').toUpperCase();
+        return grp === 'ACCEPTED' || stat.includes('ACCEPTED') || stat.includes('SHORTLISTED');
+    }
+
+    function isDeclined(item) {
+        const grp = (item.statusGroup || '').toUpperCase();
+        const stat = (item.status || '').toUpperCase();
+        return grp === 'REJECTED' || stat.includes('REJECT') || stat.includes('DECLIN');
+    }
+
+    /**
+     * Filter & Sort current application dataset
+     */
+    function applyFiltersAndRender() {
         if (!applicationsContainer) return;
 
-        applicationsContainer.innerHTML = `
-            <div class="loading-state-card">
-                <div class="spinner"></div>
-                <p>Loading your applications...</p>
-            </div>
-        `;
+        let filtered = [...applicationsData];
 
-        try {
-            let items = null;
-            if (window.ArtSphereAPI && typeof window.ArtSphereAPI.getMyApplications === 'function') {
-                const results = await window.ArtSphereAPI.getMyApplications(currentUserId, currentCategory, currentStatus);
-                if (Array.isArray(results) && results.length > 0) {
-                    items = results;
-                }
-            }
-
-            if (!items || items.length === 0) {
-                items = getFallbackApplications(currentCategory, currentStatus);
-            }
-
-            renderApplications(items);
-
-        } catch (err) {
-            console.warn('API error loading applications, using fallback dataset:', err);
-            const fallback = getFallbackApplications(currentCategory, currentStatus);
-            renderApplications(fallback);
+        // 1. Category Filter
+        if (currentCategory && currentCategory !== 'ALL') {
+            const catUpper = currentCategory.toUpperCase();
+            filtered = filtered.filter(item => {
+                const itemType = (item.type || '').toUpperCase();
+                if (catUpper.startsWith('EVENT')) return itemType === 'EVENT';
+                if (catUpper.startsWith('COLLAB')) return itemType === 'COLLABORATION';
+                if (catUpper.startsWith('OPP')) return itemType === 'OPPORTUNITY';
+                return true;
+            });
         }
+
+        // 2. Status Filter
+        if (currentStatus && currentStatus !== 'ALL') {
+            const statusUpper = currentStatus.toUpperCase();
+            if (statusUpper === 'PENDING') {
+                filtered = filtered.filter(item => isPending(item));
+            } else if (statusUpper === 'ACCEPTED') {
+                filtered = filtered.filter(item => isAccepted(item));
+            } else if (statusUpper === 'REJECTED' || statusUpper === 'DECLINED') {
+                filtered = filtered.filter(item => isDeclined(item));
+            }
+        }
+
+        // 3. Search Query
+        if (searchQuery.trim()) {
+            const query = searchQuery.trim().toLowerCase();
+            filtered = filtered.filter(item => {
+                const title = (item.title || '').toLowerCase();
+                const org = (item.organizer || item.host || '').toLowerCase();
+                const loc = (item.location || '').toLowerCase();
+                const tag = (item.tag || '').toLowerCase();
+                const notes = (item.notes || '').toLowerCase();
+                return title.includes(query) || org.includes(query) || loc.includes(query) || tag.includes(query) || notes.includes(query);
+            });
+        }
+
+        // 4. Date Range Filter
+        if (dateFilter && dateFilter !== 'all') {
+            const now = new Date();
+            filtered = filtered.filter(item => {
+                const dateStr = item.appliedAt || item.date;
+                if (!dateStr) return true;
+                const itemDate = new Date(dateStr);
+                if (isNaN(itemDate.getTime())) return true; // Keep if unparseable relative date
+
+                const diffDays = (now - itemDate) / (1000 * 60 * 60 * 24);
+                if (dateFilter === '7d') return diffDays <= 7;
+                if (dateFilter === '30d') return diffDays <= 30;
+                if (dateFilter === 'year') return itemDate.getFullYear() === now.getFullYear();
+                return true;
+            });
+        }
+
+        // 5. Sort Order
+        filtered.sort((a, b) => {
+            if (sortOrder === 'az') {
+                return (a.title || '').localeCompare(b.title || '');
+            } else if (sortOrder === 'oldest') {
+                return (a.id || 0) - (b.id || 0);
+            } else {
+                // newest first
+                return (b.id || 0) - (a.id || 0);
+            }
+        });
+
+        // Render Cards
+        renderCards(filtered);
     }
 
-    function renderApplications(items) {
+    /**
+     * Render the cards into the feed container
+     */
+    function renderCards(items) {
+        if (!applicationsContainer) return;
+
         if (!items || items.length === 0) {
             applicationsContainer.innerHTML = `
                 <div class="empty-state-card">
                     <div class="empty-state-motif">✦</div>
-                    <h3 class="empty-state-heading">No Applications Found</h3>
-                    <p class="empty-state-desc">You do not have any applications matching the selected category and status filters.</p>
+                    <h3 class="empty-state-heading">No applications yet</h3>
+                    <p class="empty-state-desc">
+                        Start exploring opportunities, events, and collaborations to submit your first application.
+                    </p>
+                    <a href="/pages/opportunities.html" class="btn-empty-action">
+                        <span>Explore Opportunities</span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </a>
                 </div>
             `;
             return;
         }
 
         applicationsContainer.innerHTML = items.map(item => {
+            // Category Type Badge
             let typeBadgeClass = 'type-opp';
             let typeBadgeText = 'GRANT APPLICATION';
-            let targetUrl = `/pages/opportunity-details.html?id=${item.referenceId || 1}`;
+            let defaultThumb = '/images/opp_content_writer.png';
+            let targetDetailUrl = `/pages/opportunity-details.html?id=${item.referenceId || item.id || 1}`;
 
-            if (item.type === 'EVENT') {
+            const itemType = (item.type || '').toUpperCase();
+            if (itemType === 'EVENT') {
                 typeBadgeClass = 'type-event';
                 typeBadgeText = 'WORKSHOP / EVENT PASS';
-                targetUrl = `/pages/event-details.html?id=${item.referenceId || 1}`;
-            } else if (item.type === 'COLLABORATION') {
+                defaultThumb = '/images/comm_event_exhibition.png';
+                targetDetailUrl = `/pages/event-details.html?id=${item.referenceId || item.id || 1}`;
+            } else if (itemType === 'COLLABORATION') {
                 typeBadgeClass = 'type-collab';
                 typeBadgeText = 'CO-CREATION PITCH';
-                targetUrl = `/pages/collaboration-details.html?id=${item.referenceId || 1}`;
+                defaultThumb = '/images/artist_rohan_avatar.png';
+                targetDetailUrl = `/pages/collaboration-details.html?id=${item.referenceId || item.id || 1}`;
             }
 
-            let statusClass = 'status-pending';
-            let statusLabel = 'PENDING REVIEW';
-            if (item.status === 'ACCEPTED' || item.status === 'APPROVED' || item.status === 'CONFIRMED') {
-                statusClass = 'status-accepted';
-                statusLabel = '✓ ACCEPTED &amp; CONFIRMED';
-            } else if (item.status === 'REJECTED' || item.status === 'DECLINED') {
-                statusClass = 'status-rejected';
-                statusLabel = 'DECLINED';
+            // If backend already provided detailUrl, use it
+            if (item.detailUrl && item.detailUrl.trim()) {
+                targetDetailUrl = item.detailUrl;
             }
+
+            // Thumbnail Image
+            const thumbUrl = item.imageUrl || defaultThumb;
+
+            // Status Badge
+            let statusBadgeHtml = '';
+            if (isAccepted(item) || itemType === 'EVENT') {
+                statusBadgeHtml = `
+                    <span class="app-status-pill status-accepted">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>ACCEPTED &amp; CONFIRMED</span>
+                    </span>
+                `;
+            } else if (isDeclined(item)) {
+                statusBadgeHtml = `
+                    <span class="app-status-pill status-rejected">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <span>DECLINED</span>
+                    </span>
+                `;
+            } else {
+                // Pending Review
+                statusBadgeHtml = `
+                    <span class="app-status-pill status-pending">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span>PENDING REVIEW</span>
+                    </span>
+                `;
+            }
+
+            // Relative or Display Date
+            const dateDisplay = formatRelativeTime(item.appliedAt || item.date);
+
+            // Host and Location
+            const hostDisplay = item.organizer || item.host || 'ArtSphere Host';
+            const locationDisplay = item.location ? ` • ${item.location}` : '';
+
+            // Statement / Notes Box
+            const noteText = item.notes && item.notes.trim()
+                ? item.notes.trim()
+                : 'Direct application submitted via ArtSphere Applicant Hub.';
 
             return `
-                <article class="app-tracker-card">
-                    <div class="app-header-row">
-                        <span class="app-type-badge ${typeBadgeClass}">${typeBadgeText}</span>
-                        <span class="app-status-badge ${statusClass}">${statusLabel}</span>
+                <article class="app-card-item" data-app-id="${item.id}">
+                    <div class="app-card-thumb-wrap">
+                        <img src="${escapeHtml(thumbUrl)}" 
+                             alt="${escapeHtml(item.title || 'Application Thumbnail')}" 
+                             class="app-card-thumbnail"
+                             loading="lazy"
+                             onerror="this.onerror=null; this.src='${defaultThumb}';">
                     </div>
 
-                    <div>
-                        <h3 class="app-main-title">
-                            <a href="${targetUrl}">${escapeHtml(item.title || 'Untitled Application')}</a>
+                    <div class="app-card-body">
+                        <div class="app-card-meta-top">
+                            <span class="app-type-pill ${typeBadgeClass}">${typeBadgeText}</span>
+                            ${statusBadgeHtml}
+                        </div>
+
+                        <h3 class="app-card-title">
+                            <a href="${escapeHtml(targetDetailUrl)}" title="${escapeHtml(item.title)}">
+                                ${escapeHtml(item.title || 'Untitled Application')}
+                            </a>
                         </h3>
-                        <div class="app-meta-line">
-                            ${escapeHtml(item.organization || item.host || 'ArtSphere Host')} • ${escapeHtml(item.location || 'India')}
-                        </div>
-                    </div>
 
-                    ${item.notes ? `
-                        <div class="app-notes-box">
-                            <span class="app-notes-label">Your Submitted Note / Statement:</span>
-                            ${escapeHtml(item.notes)}
+                        <div class="app-card-meta-line">
+                            <span>${escapeHtml(hostDisplay)}${escapeHtml(locationDisplay)}</span>
                         </div>
-                    ` : ''}
 
-                    <div class="app-actions-row">
-                        <span class="app-date-stamp">Submitted ${escapeHtml(item.appliedDate || item.timeAgo || 'Recently')}</span>
-                        <a href="${targetUrl}" class="app-target-link">View Original Listing &rarr;</a>
+                        <div class="app-card-date-line">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <span>Submitted ${escapeHtml(dateDisplay)}</span>
+                        </div>
+
+                        <div class="app-statement-box">
+                            <div class="app-statement-content">
+                                <span class="statement-tagline">YOUR SUBMITTED NOTE / STATEMENT:</span>
+                                <p class="statement-text">${escapeHtml(noteText)}</p>
+                            </div>
+                            <a href="${escapeHtml(targetDetailUrl)}" class="btn-view-details" aria-label="View original listing for ${escapeHtml(item.title)}">
+                                <span>View Original Listing &rarr;</span>
+                            </a>
+                        </div>
                     </div>
                 </article>
             `;
         }).join('');
     }
 
-    function getFallbackApplications(category, status) {
-        const dataset = [
-            {
-                id: 901,
-                referenceId: 1,
-                type: 'OPPORTUNITY',
-                title: 'Serendipity Arts Residency 2026',
-                organization: 'Serendipity Arts Foundation',
-                location: 'Panaji, Goa',
-                status: 'PENDING',
-                appliedDate: 'Yesterday',
-                notes: 'Submitted proposal for a 6-week site-specific nocturnal projection installation exploring coastal mythology.'
-            },
-            {
-                id: 902,
-                referenceId: 1,
-                type: 'EVENT',
-                title: 'Modular Synthesis & Analog Signal Flow Workshop',
-                organization: 'Kala Ghoda Media Lab',
-                location: 'Mumbai, Maharashtra',
-                status: 'ACCEPTED',
-                appliedDate: '3 days ago',
-                notes: 'Registered for Seat #14. Confirmed workshop attendee.'
-            },
-            {
-                id: 903,
-                referenceId: 2,
-                type: 'COLLABORATION',
-                title: 'Seeking Tabla & Sarangi Player for Ambient Fusion EP',
-                organization: 'Devansh Roy',
-                location: 'Bengaluru / Remote',
-                status: 'PENDING',
-                appliedDate: '4 days ago',
-                notes: "Pitched to provide harmonium and resonant modular drone tracks for tracks 2 and 3."
-            },
-            {
-                id: 904,
-                referenceId: 3,
-                type: 'COLLABORATION',
-                title: 'Contemporary Dancer needed for Site-Specific Architectural Film',
-                organization: 'Maya Sen',
-                location: 'Ahmedabad, Gujarat',
-                status: 'ACCEPTED',
-                appliedDate: '1 week ago',
-                notes: 'Production kickoff scheduled for November 12th in Ahmedabad.'
-            }
-        ];
-
-        let filtered = dataset;
-        if (category && category !== 'ALL') {
-            filtered = filtered.filter(a => a.type === category);
-        }
-        if (status && status !== 'ALL') {
-            filtered = filtered.filter(a => a.status === status);
+    /**
+     * Format date nicely as "yesterday", "N days ago", or "29 Sep 2026"
+     */
+    function formatRelativeTime(dateString) {
+        if (!dateString) return 'recently';
+        const str = dateString.trim().toLowerCase();
+        if (str.includes('yesterday') || str.includes('ago') || str.includes('today')) {
+            return dateString;
         }
 
-        return filtered;
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return dateString;
+
+        const now = new Date();
+        const diffMs = now - date;
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+        if (diffDays === 0) return 'today';
+        if (diffDays === 1) return 'yesterday';
+        if (diffDays > 1 && diffDays < 7) return `${diffDays} days ago`;
+        if (diffDays >= 7 && diffDays < 14) return '1 week ago';
+        if (diffDays >= 14 && diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+
+        return dateString;
     }
 
-    function initNavigation() {
-        const userAvatarBtn = document.getElementById('userAvatarBtn');
-        const userDropdownPanel = document.getElementById('userDropdownPanel');
-        const navMobileToggle = document.getElementById('navMobileToggle');
-        const navLinks = document.getElementById('navLinks');
-        const logoutBtn = document.getElementById('logoutBtn');
+    /**
+     * Show loading spinner
+     */
+    function showLoadingState() {
+        if (!applicationsContainer) return;
+        applicationsContainer.innerHTML = `
+            <div class="loading-state-card">
+                <div class="dashboard-spinner"></div>
+                <p>Loading your applications &amp; submissions...</p>
+            </div>
+        `;
+    }
 
-        if (userAvatarBtn && userDropdownPanel) {
-            userAvatarBtn.addEventListener('click', (e) => {
+    /**
+     * Initialize navigation events and filter listeners
+     */
+    function initNavigationAndUI() {
+        // 1. Category Tabs Bar
+        if (categoryTabsBar) {
+            categoryTabsBar.addEventListener('click', (e) => {
+                const btn = e.target.closest('.tab-pill-btn');
+                if (!btn) return;
+
+                categoryTabsBar.querySelectorAll('.tab-pill-btn').forEach(b => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-selected', 'false');
+                });
+                btn.classList.add('active');
+                btn.setAttribute('aria-selected', 'true');
+
+                currentCategory = btn.getAttribute('data-category') || 'ALL';
+
+                // Synchronize right filter panel dropdown
+                if (filterTypeSelect) {
+                    filterTypeSelect.value = currentCategory;
+                }
+
+                applyFiltersAndRender();
+            });
+        }
+
+        // 2. Submission Type Dropdown Sync
+        if (filterTypeSelect) {
+            filterTypeSelect.addEventListener('change', () => {
+                currentCategory = filterTypeSelect.value;
+
+                if (categoryTabsBar) {
+                    categoryTabsBar.querySelectorAll('.tab-pill-btn').forEach(btn => {
+                        const match = btn.getAttribute('data-category') === currentCategory;
+                        btn.classList.toggle('active', match);
+                        btn.setAttribute('aria-selected', match ? 'true' : 'false');
+                    });
+                }
+
+                applyFiltersAndRender();
+            });
+        }
+
+        // 3. Status Radio List
+        if (statusCheckboxGroup) {
+            statusCheckboxGroup.addEventListener('change', (e) => {
+                const radio = e.target.closest('input[name="statusFilter"]');
+                if (!radio) return;
+                currentStatus = radio.value;
+                applyFiltersAndRender();
+            });
+        }
+
+        // 4. Date Range Filter
+        if (filterDateSelect) {
+            filterDateSelect.addEventListener('change', () => {
+                dateFilter = filterDateSelect.value;
+                applyFiltersAndRender();
+            });
+        }
+
+        // 5. Search Input Filter
+        if (subSearchInput) {
+            subSearchInput.addEventListener('input', () => {
+                searchQuery = subSearchInput.value;
+                applyFiltersAndRender();
+            });
+        }
+
+        // 6. Sort Select Filter
+        if (subSortSelect) {
+            subSortSelect.addEventListener('change', () => {
+                sortOrder = subSortSelect.value;
+                applyFiltersAndRender();
+            });
+        }
+
+        // 7. Top Search Bar: Search redirect or local filter
+        if (topSearchInput) {
+            topSearchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const q = topSearchInput.value.trim();
+                    if (q) {
+                        window.location.href = `/pages/discover.html?q=${encodeURIComponent(q)}`;
+                    }
+                }
+            });
+        }
+
+        // 8. User Dropdown in Top Bar
+        const topAvatarBtn = document.getElementById('topAvatarBtn');
+        const userDropdownPanel = document.getElementById('userDropdownPanel');
+        if (topAvatarBtn && userDropdownPanel) {
+            topAvatarBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                userDropdownPanel.classList.toggle('active');
+                userDropdownPanel.classList.toggle('show');
             });
 
             document.addEventListener('click', (e) => {
-                if (!userDropdownPanel.contains(e.target) && !userAvatarBtn.contains(e.target)) {
-                    userDropdownPanel.classList.remove('active');
+                if (!userDropdownPanel.contains(e.target) && !topAvatarBtn.contains(e.target)) {
+                    userDropdownPanel.classList.remove('show');
                 }
             });
         }
 
-        if (navMobileToggle && navLinks) {
-            navMobileToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('nav-links-mobile-open');
-                navMobileToggle.classList.toggle('active');
-            });
+        // 9. Mobile Sidebar Drawer
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const dashboardSidebar = document.getElementById('dashboardSidebar');
+        const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+        function toggleSidebar(open) {
+            if (!dashboardSidebar) return;
+            if (open) {
+                dashboardSidebar.classList.add('drawer-open');
+                if (sidebarBackdrop) sidebarBackdrop.classList.add('show');
+            } else {
+                dashboardSidebar.classList.remove('drawer-open');
+                if (sidebarBackdrop) sidebarBackdrop.classList.remove('show');
+            }
         }
 
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', () => {
-                if (confirm('Are you sure you want to log out of ArtSphere?')) {
-                    window.location.href = '/pages/login.html';
-                }
-            });
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => toggleSidebar(true));
         }
+        if (sidebarCloseBtn) {
+            sidebarCloseBtn.addEventListener('click', () => toggleSidebar(false));
+        }
+        if (sidebarBackdrop) {
+            sidebarBackdrop.addEventListener('click', () => toggleSidebar(false));
+        }
+
+        // 10. Logout Action Handlers
+        const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
+        const dropdownLogoutBtn = document.getElementById('dropdownLogoutBtn');
+
+        function handleLogout() {
+            if (confirm('Are you sure you want to log out of ArtSphere?')) {
+                localStorage.removeItem('currentUser');
+                sessionStorage.removeItem('currentUser');
+                window.location.href = '/pages/login.html';
+            }
+        }
+
+        if (sidebarLogoutBtn) sidebarLogoutBtn.addEventListener('click', handleLogout);
+        if (dropdownLogoutBtn) dropdownLogoutBtn.addEventListener('click', handleLogout);
     }
 
+    /**
+     * Escape HTML string for safe rendering
+     */
     function escapeHtml(str) {
         if (!str) return '';
         const div = document.createElement('div');

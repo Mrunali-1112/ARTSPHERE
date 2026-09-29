@@ -13,4 +13,6 @@ public interface NotificationRepository {
     boolean markAsRead(Long id, Long userId);
 
     boolean markAllAsRead(Long userId);
+
+    void createNotification(Long userId, String type, String title, String message, Long senderId, String senderName, String senderAvatar, String entityType, Long entityId, String actionUrl);
 }

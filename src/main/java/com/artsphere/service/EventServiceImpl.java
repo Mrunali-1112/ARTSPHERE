@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
 @Service
 public class EventServiceImpl implements EventService {
 
-    private final EventRepository eventRepository;
-
     private static final List<String> DEFAULT_AVATARS = Arrays.asList(
             "/images/artist_profile_avatar.png",
             "/images/artist_rohan_avatar.png",
@@ -24,8 +22,12 @@ public class EventServiceImpl implements EventService {
             "/images/avatar_sneha.png"
     );
 
-    public EventServiceImpl(EventRepository eventRepository) {
+    private final EventRepository eventRepository;
+    private final NotificationService notificationService;
+
+    public EventServiceImpl(EventRepository eventRepository, NotificationService notificationService) {
         this.eventRepository = eventRepository;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -80,6 +82,20 @@ public class EventServiceImpl implements EventService {
         }
 
         eventRepository.registerUser(id, userId);
+        if (notificationService != null) {
+            notificationService.createNotification(
+                    userId,
+                    "EVENT",
+                    "Event registration confirmed: " + event.getTitle(),
+                    "You're all set for " + event.getTitle() + " on " + (event.getEventDate() != null ? event.getEventDate() : "upcoming date") + ".",
+                    null,
+                    event.getOrganizer() != null ? event.getOrganizer() : "ArtSphere Events",
+                    event.getOrganizerAvatar() != null ? event.getOrganizerAvatar() : "/images/comm_event_watercolor.png",
+                    "EVENT",
+                    event.getId(),
+                    "/pages/event-details.html?id=" + event.getId()
+            );
+        }
         int updatedCount = (event.getAttendeesCount() != null ? event.getAttendeesCount() : 24) + 1;
 
         resp.put("registered", true);

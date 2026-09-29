@@ -4,310 +4,743 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ArtSphere — Publish a Collaboration Pitch</title>
-    <link rel="stylesheet" href="/css/common.css">
+    <link rel="icon" type="image/png" href="/images/logo_nav.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/create-collaboration.css">
 </head>
-<body>
-    <!-- Universal Floating Capsule Navigation -->
-    <header class="capsule-nav-wrapper" id="navWrapper">
-        <nav class="capsule-nav">
-            <a href="/pages/home.html" class="nav-brand">
-                <span class="brand-motif">✦</span>
-                <span>ArtSphere</span>
-            </a>
-            
-            <div class="nav-links" id="navLinks">
-                <a href="/pages/home.html" class="nav-link">Home</a>
-                <a href="/pages/discover.html" class="nav-link">Discover</a>
-                <a href="/pages/communities.html" class="nav-link">Communities</a>
-                <a href="/pages/events.html" class="nav-link">Events</a>
-                <a href="/pages/collaborators.html" class="nav-link active">Collaborate</a>
-                <a href="/pages/opportunities.html" class="nav-link">Opportunities</a>
-            </div>
+<body class="dashboard-body">
 
-            <div class="nav-actions">
-                                <!-- Search Button -->
-                <a href="/pages/discover.html" class="nav-icon-btn" aria-label="Search Creators & Art">
-                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </a>
-                <!-- Notification Bell -->
-                <a href="/pages/notifications.html" class="nav-icon-btn notification-nav-wrapper" aria-label="Notifications">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
-                    <span class="notification-dot"></span>
-                </a>
+    <!-- Mobile Navigation Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-                <!-- Creator Avatar & Dropdown -->
-                <div class="user-menu-wrapper">
-                    <button class="user-avatar-trigger" id="userAvatarBtn" aria-label="User Account Menu">
-                        <img src="/images/user_avatar_nav.png" alt="Creator Profile" class="user-nav-avatar" id="headerUserAvatar">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="chevron-arrow">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    
-                    <div class="user-dropdown-panel" id="userDropdownPanel">
-                        <div class="dropdown-user-info">
-                            <strong id="dropdownUserName">Aanya Deshmukh</strong>
-                            <span id="dropdownUserBio">Visual &amp; Digital Artist</span>
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <span>My Artist Profile</span>
-                        </a>
-                        <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                            <span>My Portfolio</span>
-                        </a>
-                        <a href="/pages/create-collaboration.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>Post Collab Request</span>
-                        </a>
-                        <a href="/pages/collaboration-requests.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
-                            <span>Manage Inquiries</span>
-                        </a>
-                        <a href="/pages/my-applications.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                            <span>My Applications</span>
-                        </a>
-                        <a href="/pages/settings.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                            <span>Settings</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item-link text-danger" id="logoutBtn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                            <span>Log Out</span>
-                        </button>
+    <div class="dashboard-container">
+        <!-- ============================================================
+             LEFT SIDEBAR (~220-240px wide, soft lavender background)
+             ============================================================ -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <!-- Brand Header -->
+            <div class="sidebar-brand-wrapper">
+                <a href="/pages/home.html" class="sidebar-brand-link">
+                    <div class="brand-sparkle-icon">✦</div>
+                    <div class="brand-text-block">
+                        <span class="brand-title">ArtSphere</span>
+                        <span class="brand-tagline">The Artist Community</span>
                     </div>
-                </div>
-
-                <!-- Mobile Toggle -->
-                <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle navigation">
-                    <span></span>
-                    <span></span>
+                </a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close navigation">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
                 </button>
             </div>
-        </nav>
-    </header>
 
-    <div class="page-wrapper">
-        <main>
-            <!-- Breadcrumbs -->
-            <div class="create-top-breadcrumb">
-                <a href="/pages/collaborators.html" class="breadcrumb-back-link">
-                    <span class="back-arrow">&larr;</span>
-                    <span>All Collaborations &amp; Open Calls</span>
+            <!-- Primary Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Main Navigation">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/home.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/discover.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Discover</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/communities.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Communities</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/events.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Events</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/collaborators.html" class="sidebar-nav-item active">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path>
+                                    <path d="M18 8l4 4-4 4"></path>
+                                    <path d="M8 12h14"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Collaborate</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/opportunities.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Opportunities</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- Communication Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Communication">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/messages.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Messages</span>
+                            <span class="sidebar-count-badge" id="sidebarMsgBadge">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/notifications.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Notifications</span>
+                            <span class="sidebar-dot-badge" id="sidebarNotifDot" style="display:none;"></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Bottom Section: User Profile Mini-Card & Utility Actions -->
+            <div class="sidebar-bottom-section">
+                <!-- User Profile Mini-Card -->
+                <a href="/pages/artist-profile.html" class="sidebar-profile-card" id="sidebarProfileCard" title="View Profile">
+                    <img src="/images/user_avatar_nav.png" alt="Profile" class="sidebar-user-avatar" id="sidebarUserAvatar">
+                    <div class="sidebar-user-meta">
+                        <span class="sidebar-user-name" id="sidebarUserName">Mrunali S.</span>
+                        <span class="sidebar-view-profile" id="sidebarUserRole">Digital Artist</span>
+                    </div>
+                    <svg class="sidebar-card-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
                 </a>
+
+                <!-- Utility Navigation -->
+                <ul class="sidebar-utility-list">
+                    <li>
+                        <a href="/pages/settings.html" class="sidebar-utility-item">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </span>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/help-support.html" class="sidebar-utility-item">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </span>
+                            <span>Help &amp; Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <button class="sidebar-utility-item logout-action" id="sidebarLogoutBtn">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                            </span>
+                            <span>Logout</span>
+                        </button>
+                    </li>
+                </ul>
             </div>
+        </aside>
 
-            <!-- Hero Section -->
-            <section class="create-hero-banner">
-                <div class="hero-badge-row">
-                    <span class="pill-tag accent-yellow">OPEN CO-CREATION CALL</span>
-                    <span class="step-indicator-pill">Step 1 of 1 • Public Pitch</span>
+        <!-- ============================================================
+             MAIN CONTENT WRAPPER
+             ============================================================ -->
+        <div class="dashboard-main-wrapper">
+            
+            <!-- Compact Top Header -->
+            <header class="dashboard-top-header">
+                <div class="header-left-cluster">
+                    <button class="mobile-menu-trigger" id="mobileMenuTrigger" aria-label="Open navigation menu">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <!-- Global Search Bar -->
+                    <div class="header-search-bar">
+                        <svg class="search-lens-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="globalSearchInput" class="header-search-input" placeholder="Search artists, opportunities, events..." autocomplete="off">
+                    </div>
                 </div>
-                <h1 class="text-display create-title">Publish a Collaboration Pitch</h1>
-                <p class="create-subtext">
-                    Assemble your multidisciplinary crew. Post an open artistic pitch for visual artists, musicians, writers, choreographers, or performers.
-                </p>
-            </section>
 
-            <!-- 12-Column Layout (8 cols form, 4 cols sidebar) -->
-            <div class="grid-12 create-grid-layout">
-                <!-- Left 8 Columns Form -->
-                <div class="col-8 col-md-8 col-sm-4 create-form-col">
-                    <form id="createCollabForm" class="editorial-collab-form">
-                        
-                        <!-- Title Field -->
-                        <div class="form-group-block">
-                            <label for="collabTitle" class="form-field-label">
-                                <span>Collaboration Title</span>
-                                <span class="required-star">*</span>
-                            </label>
-                            <input type="text" id="collabTitle" class="neo-input" required placeholder="e.g. Looking for a 2D Animator for a Poetic Short Film">
-                            <span class="form-field-hint">A concise, hook-driven headline summarizing your artistic project.</span>
-                        </div>
+                <div class="header-right-cluster">
+                    <!-- Notification Bell -->
+                    <a href="/pages/notifications.html" class="header-icon-action" aria-label="Notifications" title="Notifications">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-indicator-dot" id="headerNotifDot"></span>
+                    </a>
 
-                        <!-- Purpose Chips -->
-                        <div class="form-group-block">
-                            <label class="form-field-label">
-                                <span>Collaboration Purpose</span>
-                                <span class="required-star">*</span>
-                            </label>
-                            <div class="purpose-chips-row" id="purposeChipsGroup">
-                                <button type="button" class="purpose-chip active" data-purpose="Work on a Project">Work on a Project</button>
-                                <button type="button" class="purpose-chip" data-purpose="Create Content">Create Content</button>
-                                <button type="button" class="purpose-chip" data-purpose="Learn &amp; Jam">Learn &amp; Jam</button>
-                                <button type="button" class="purpose-chip" data-purpose="Organize an Event">Organize an Event</button>
-                                <button type="button" class="purpose-chip" data-purpose="Form a Band / Ensemble">Form Ensemble</button>
-                                <button type="button" class="purpose-chip" data-purpose="Other">Other</button>
+                    <!-- Creator Avatar & Dropdown -->
+                    <div class="user-menu-container">
+                        <button class="header-avatar-btn" id="userAvatarBtn" aria-label="User account menu" aria-haspopup="true">
+                            <img src="/images/user_avatar_nav.png" alt="Creator Profile" class="header-user-avatar" id="headerUserAvatar">
+                            <svg class="header-avatar-chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+
+                        <div class="user-dropdown-panel" id="userDropdownPanel">
+                            <div class="dropdown-user-header">
+                                <strong id="dropdownUserName">Mrunali S.</strong>
+                                <span id="dropdownUserBio">Digital Artist</span>
                             </div>
-                            <input type="hidden" id="selectedPurpose" value="Work on a Project">
-                        </div>
-
-                        <!-- Skills Looking For -->
-                        <div class="form-group-block">
-                            <label for="collabSkills" class="form-field-label">
-                                <span>Skills / Disciplines Looking For</span>
-                                <span class="required-star">*</span>
-                            </label>
-                            <input type="text" id="collabSkills" class="neo-input" required placeholder="e.g. Character Design, Background Painting, Storyboarding">
-                            <span class="form-field-hint">Separate multiple disciplines with commas.</span>
-                        </div>
-
-                        <!-- 2-Column Row: Type & Timeline -->
-                        <div class="form-row-2col">
-                            <div class="form-group-block">
-                                <label for="collabType" class="form-field-label">Collaboration Medium / Format</label>
-                                <input type="text" id="collabType" class="neo-input" placeholder="e.g. Short Film, Music EP, Art Zine">
-                            </div>
-                            <div class="form-group-block">
-                                <label for="collabAvailability" class="form-field-label">Availability / Timeline</label>
-                                <input type="text" id="collabAvailability" class="neo-input" placeholder="e.g. Flexible, Weekends, 2 Months">
-                            </div>
-                        </div>
-
-                        <!-- 2-Column Row: Team Needed & Location -->
-                        <div class="form-row-2col">
-                            <div class="form-group-block">
-                                <label for="collabPeopleNeeded" class="form-field-label">People Needed</label>
-                                <input type="text" id="collabPeopleNeeded" class="neo-input" placeholder="e.g. 1-2 Animators, Solo Cellist">
-                            </div>
-                            <div class="form-group-block">
-                                <label for="collabLocation" class="form-field-label">Location / Mode</label>
-                                <input type="text" id="collabLocation" class="neo-input" placeholder="e.g. Mumbai, MH or Remote">
-                            </div>
-                        </div>
-
-                        <!-- Detailed Description -->
-                        <div class="form-group-block">
-                            <label for="collabDescription" class="form-field-label">
-                                <span>Project Vision &amp; Narrative</span>
-                                <span class="required-star">*</span>
-                            </label>
-                            <textarea id="collabDescription" class="neo-textarea" rows="6" required placeholder="Detail the story, visual direction, deliverables, and why other creatives will love working with you on this..."></textarea>
-                        </div>
-
-                        <!-- Moodboard / Reference Link -->
-                        <div class="form-group-block">
-                            <label for="collabRefUrl" class="form-field-label">Reference Moodboard or Pitch Deck Link (Optional)</label>
-                            <input type="url" id="collabRefUrl" class="neo-input" placeholder="https://drive.google.com/... or Figma / Notion link">
-                        </div>
-
-                        <!-- Tags -->
-                        <div class="form-group-block">
-                            <label for="collabTags" class="form-field-label">Discoverability Tags</label>
-                            <input type="text" id="collabTags" class="neo-input" placeholder="#digitalart, #conceptart, #animation, #shortfilm">
-                        </div>
-
-                        <!-- Submit Buttons -->
-                        <div class="form-actions-row">
-                            <a href="/pages/collaborators.html" class="btn-pill-secondary">Cancel</a>
-                            <button type="submit" class="btn-pill-primary" id="submitCollabBtn">
-                                <span>Publish Collaboration Call</span>
-                                <span>&rarr;</span>
+                            <div class="dropdown-divider"></div>
+                            <a href="/pages/artist-profile.html" class="dropdown-link-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <span>My Artist Profile</span>
+                            </a>
+                            <a href="/pages/portfolio.html" class="dropdown-link-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                <span>My Portfolio</span>
+                            </a>
+                            <a href="/pages/create-collaboration.html" class="dropdown-link-item active-link">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                <span>Post Collab Pitch</span>
+                            </a>
+                            <a href="/pages/collaboration-requests.html" class="dropdown-link-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                                <span>Manage Inquiries</span>
+                            </a>
+                            <a href="/pages/my-applications.html" class="dropdown-link-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                <span>My Applications</span>
+                            </a>
+                            <a href="/pages/settings.html" class="dropdown-link-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                <span>Settings</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-link-item logout-link" id="dropdownLogoutBtn">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                <span>Log Out</span>
                             </button>
                         </div>
-                    </form>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Workspace Content -->
+            <main class="create-content-area">
+                <!-- Back Navigation -->
+                <div class="back-nav-container">
+                    <a href="/pages/collaborators.html" class="back-nav-link" id="backToCollaborateBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        <span>All Collaborations &amp; Open Calls</span>
+                    </a>
                 </div>
 
-                <!-- Right 4 Columns Sidebar -->
-                <div class="col-4 col-md-8 col-sm-4 create-sidebar-col">
-                    <!-- Creator Ethics & IP Guidelines -->
-                    <div class="sidebar-guide-card">
-                        <div class="guide-header">
-                            <span class="card-motif">✦</span>
-                            <h3 class="guide-title">Co-Creation Guidelines</h3>
+                <!-- Page Header Banner -->
+                <section class="create-hero-banner">
+                    <div class="hero-left-content">
+                        <div class="hero-badges-row">
+                            <span class="hero-badge badge-plum">OPEN CO-CREATION CALL</span>
+                            <span class="hero-badge badge-lilac">STEP 1 OF 1 • PUBLIC PITCH</span>
                         </div>
-                        <ul class="guide-bullet-list">
-                            <li>
-                                <strong>Shared Artistic Attribution:</strong> All collaborators must receive clear, uncompromised credit in final releases.
-                            </li>
-                            <li>
-                                <strong>Transparent Expectations:</strong> State your timeline, milestones, and whether compensation/stipend is offered.
-                            </li>
-                            <li>
-                                <strong>Independent &amp; Respectful:</strong> ArtSphere is a space for mutual artistic growth without corporate gatekeeping.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Tips for Great Pitches -->
-                    <div class="sidebar-guide-card highlight-card">
-                        <div class="guide-header">
-                            <span class="card-motif">✦</span>
-                            <h3 class="guide-title">How to Attract Great Partners</h3>
-                        </div>
-                        <p class="guide-lead-text">
-                            Creators receive 3x more relevant responses when they attach a moodboard link and clearly define their artistic role versus what they need help with.
+                        <h1 class="hero-main-title">Publish a Collaboration Pitch</h1>
+                        <p class="hero-subtext">
+                            Assemble your multidisciplinary crew. Post an open artistic pitch for visual artists, musicians, writers, choreographers, or performers.
                         </p>
                     </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Universal Editorial Footer -->
-        <footer class="editorial-footer">
-            <div class="grid-12 footer-grid">
-                <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
-                    <a href="/pages/home.html" class="footer-logo">
-                        <span class="brand-motif">✦</span>
-                        <span>ArtSphere</span>
-                    </a>
-                    <p class="footer-bio">
-                        The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
-                    </p>
-                    <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
-                </div>
-
-                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
-                    <div class="footer-heading">DIRECTORY</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/discover.html">Discover Artists</a></li>
-                        <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
-                        <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
-                        <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
-                        <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
-                    <div class="footer-heading">PLATFORM</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/home.html">Studio Feed</a></li>
-                        <li><a href="/pages/communities.html">Communities</a></li>
-                        <li><a href="/pages/events.html">Events &amp; Jams</a></li>
-                        <li><a href="/pages/collaborators.html">Collaborations</a></li>
-                        <li><a href="/pages/opportunities.html">Open Calls</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-3 col-md-4 col-sm-4 footer-col-links">
-                    <div class="footer-heading">ACCOUNT</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
-                        <li><a href="/pages/my-applications.html">My Applications</a></li>
-                        <li><a href="/pages/settings.html">Account Settings</a></li>
-                        <li><a href="/pages/help-support.html">Help &amp; Guidelines</a></li>
-                    </ul>
-                    <div class="footer-badge-box">
-                        <span class="pill-tag accent-yellow">NO ADS. PURE ART.</span>
+                    <div class="hero-right-visual">
+                        <img src="/images/collab_publish_easel.jpg" alt="Artistic Easel Painting Studio" class="hero-visual-image">
                     </div>
+                </section>
+
+                <!-- 2-Column Main Layout: Form (Left) + Guidance Sidebar (Right) -->
+                <div class="create-collab-grid">
+                    
+                    <!-- LEFT: Form Workspace -->
+                    <div class="create-form-workspace">
+                        <div class="form-main-card">
+                            <form id="createCollabForm" novalidate>
+                                
+                                <!-- 1. Collaboration Title -->
+                                <div class="form-field-group">
+                                    <label for="collabTitle" class="form-label">
+                                        Collaboration Title <span class="required-star">*</span>
+                                    </label>
+                                    <div class="input-with-icon">
+                                        <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M12 20h9"></path>
+                                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                                        </svg>
+                                        <input type="text" id="collabTitle" class="form-input" placeholder="e.g. Looking for a 2D Animator for a Poetic Short Film" maxlength="200" required>
+                                    </div>
+                                    <span class="form-field-helper">A concise, hook-driven headline summarizing your artistic project.</span>
+                                    <span class="field-error-msg" id="titleError"></span>
+                                </div>
+
+                                <!-- 2. Collaboration Purpose -->
+                                <div class="form-field-group">
+                                    <label class="form-label">
+                                        Collaboration Purpose <span class="required-star">*</span>
+                                    </label>
+                                    <div class="purpose-cards-grid" id="purposeCardsGrid">
+                                        <button type="button" class="purpose-card active" data-purpose="Work on a Project">
+                                            <div class="purpose-card-icon">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                                </svg>
+                                            </div>
+                                            <span class="purpose-card-label">Work on a Project</span>
+                                        </button>
+
+                                        <button type="button" class="purpose-card" data-purpose="Create Content">
+                                            <div class="purpose-card-icon">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                                </svg>
+                                            </div>
+                                            <span class="purpose-card-label">Create Content</span>
+                                        </button>
+
+                                        <button type="button" class="purpose-card" data-purpose="Learn & Jam">
+                                            <div class="purpose-card-icon">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M9 18V5l12-2v13"></path>
+                                                    <circle cx="6" cy="18" r="3"></circle>
+                                                    <circle cx="18" cy="16" r="3"></circle>
+                                                </svg>
+                                            </div>
+                                            <span class="purpose-card-label">Learn &amp; Jam</span>
+                                        </button>
+
+                                        <button type="button" class="purpose-card" data-purpose="Organize an Event">
+                                            <div class="purpose-card-icon">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                                </svg>
+                                            </div>
+                                            <span class="purpose-card-label">Organize an Event</span>
+                                        </button>
+
+                                        <button type="button" class="purpose-card" data-purpose="Form Ensemble">
+                                            <div class="purpose-card-icon">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                    <circle cx="9" cy="7" r="4"></circle>
+                                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                                </svg>
+                                            </div>
+                                            <span class="purpose-card-label">Form Ensemble</span>
+                                        </button>
+
+                                        <button type="button" class="purpose-card" data-purpose="Other">
+                                            <div class="purpose-card-icon">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <circle cx="12" cy="12" r="1"></circle>
+                                                    <circle cx="19" cy="12" r="1"></circle>
+                                                    <circle cx="5" cy="12" r="1"></circle>
+                                                </svg>
+                                            </div>
+                                            <span class="purpose-card-label">Other</span>
+                                        </button>
+                                    </div>
+                                    <input type="hidden" id="selectedPurpose" name="purpose" value="Work on a Project">
+                                    <span class="field-error-msg" id="purposeError"></span>
+                                </div>
+
+                                <!-- 3. Skills / Disciplines Looking For -->
+                                <div class="form-field-group">
+                                    <label for="collabSkills" class="form-label">
+                                        Skills / Disciplines Looking For <span class="required-star">*</span>
+                                    </label>
+                                    <div class="input-with-icon">
+                                        <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="11" cy="11" r="8"></circle>
+                                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                        </svg>
+                                        <input type="text" id="collabSkills" class="form-input" placeholder="e.g. Character Design, Background Painting, Storyboarding" required>
+                                    </div>
+                                    <span class="form-field-helper">Separate multiple disciplines with commas.</span>
+                                    <span class="field-error-msg" id="skillsError"></span>
+                                </div>
+
+                                <!-- 4. Two-Column Row: Format & Timeline -->
+                                <div class="form-row-2col">
+                                    <div class="form-field-group">
+                                        <label for="collabType" class="form-label">Collaboration Medium / Format</label>
+                                        <div class="input-with-icon">
+                                            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                                <polyline points="2 17 12 22 22 17"></polyline>
+                                                <polyline points="2 12 12 17 22 12"></polyline>
+                                            </svg>
+                                            <input type="text" id="collabType" class="form-input" placeholder="e.g. Short Film, Music EP, Art Zine">
+                                        </div>
+                                    </div>
+                                    <div class="form-field-group">
+                                        <label for="collabAvailability" class="form-label">Availability / Timeline</label>
+                                        <div class="input-with-icon">
+                                            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                                            </svg>
+                                            <input type="text" id="collabAvailability" class="form-input" placeholder="e.g. Flexible, Weekends, 2 Months">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 5. Two-Column Row: People Needed & Location -->
+                                <div class="form-row-2col">
+                                    <div class="form-field-group">
+                                        <label for="collabPeopleNeeded" class="form-label">People Needed</label>
+                                        <div class="input-with-icon">
+                                            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="8.5" cy="7" r="4"></circle>
+                                                <line x1="20" y1="8" x2="20" y2="14"></line>
+                                                <line x1="23" y1="11" x2="17" y2="11"></line>
+                                            </svg>
+                                            <input type="text" id="collabPeopleNeeded" class="form-input" placeholder="e.g. 1–2 Animators, Solo Cellist">
+                                        </div>
+                                    </div>
+                                    <div class="form-field-group">
+                                        <label for="collabLocation" class="form-label">Location / Mode</label>
+                                        <div class="input-with-icon">
+                                            <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                                <circle cx="12" cy="10" r="3"></circle>
+                                            </svg>
+                                            <input type="text" id="collabLocation" class="form-input" placeholder="e.g. Mumbai, MH or Remote">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 6. Project Vision & Narrative -->
+                                <div class="form-field-group">
+                                    <label for="collabDescription" class="form-label">
+                                        Project Vision &amp; Narrative <span class="required-star">*</span>
+                                    </label>
+                                    <div class="textarea-container">
+                                        <svg class="textarea-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        </svg>
+                                        <textarea id="collabDescription" class="form-textarea" rows="6" placeholder="Detail the story, visual direction, deliverables, and why other creatives will love working with you on this..." maxlength="2000" required></textarea>
+                                        <div class="textarea-footer">
+                                            <span class="char-count" id="descCharCount">0/2000</span>
+                                        </div>
+                                    </div>
+                                    <span class="field-error-msg" id="descError"></span>
+                                </div>
+
+                                <!-- 7. Reference Moodboard or Pitch Deck Link -->
+                                <div class="form-field-group">
+                                    <label for="collabRefUrl" class="form-label">Reference Moodboard or Pitch Deck Link (Optional)</label>
+                                    <div class="input-with-icon">
+                                        <svg class="field-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                        </svg>
+                                        <input type="url" id="collabRefUrl" class="form-input" placeholder="https://drive.google.com/... or Figma / Notion link">
+                                    </div>
+                                    <span class="field-error-msg" id="urlError"></span>
+                                </div>
+
+                                <!-- 8. Discoverability Tags -->
+                                <div class="form-field-group">
+                                    <label for="collabTags" class="form-label">Discoverability Tags</label>
+                                    <div class="input-with-icon">
+                                        <span class="hash-tag-icon">#</span>
+                                        <input type="text" id="collabTags" class="form-input" placeholder="#digitalart, #conceptart, #animation, #shortfilm">
+                                    </div>
+                                    <span class="form-field-helper">Add relevant tags to help the right collaborators find your pitch.</span>
+                                </div>
+
+                                <!-- 9. Form Actions -->
+                                <div class="form-actions-row">
+                                    <a href="/pages/collaborators.html" class="btn-cancel" id="cancelBtn">Cancel</a>
+                                    <button type="submit" class="btn-publish" id="submitCollabBtn">
+                                        <span class="btn-text">Publish Collaboration Call</span>
+                                        <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: Guidance Sidebar -->
+                    <aside class="create-guidance-sidebar">
+                        
+                        <!-- Guidance Card 1: Co-Creation Guidelines -->
+                        <div class="guide-card">
+                            <div class="guide-card-header">
+                                <svg class="guide-header-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                </svg>
+                                <h3 class="guide-title">Co-Creation Guidelines</h3>
+                            </div>
+                            
+                            <ul class="guide-list">
+                                <li class="guide-list-item">
+                                    <div class="item-icon-wrapper">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="item-text">
+                                        <strong class="item-heading">Shared Artistic Attribution</strong>
+                                        <p class="item-desc">All collaborators must receive clear, uncompromised credit in final releases.</p>
+                                    </div>
+                                </li>
+
+                                <li class="guide-list-item">
+                                    <div class="item-icon-wrapper">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                            <polyline points="9 12 11 14 15 10"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="item-text">
+                                        <strong class="item-heading">Transparent Expectations</strong>
+                                        <p class="item-desc">State your timeline, milestones, and whether compensation/stipend is offered.</p>
+                                    </div>
+                                </li>
+
+                                <li class="guide-list-item">
+                                    <div class="item-icon-wrapper">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="item-text">
+                                        <strong class="item-heading">Independent &amp; Respectful</strong>
+                                        <p class="item-desc">ArtSphere is a space for mutual artistic growth without corporate gatekeeping.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Guidance Card 2: How to Attract Great Partners -->
+                        <div class="guide-card">
+                            <div class="guide-card-header">
+                                <svg class="guide-header-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="9" y1="18" x2="15" y2="18"></line>
+                                    <line x1="10" y1="22" x2="14" y2="22"></line>
+                                    <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+                                </svg>
+                                <h3 class="guide-title">How to Attract Great Partners</h3>
+                            </div>
+                            <p class="guide-lead-text">
+                                Creators receive 3x more relevant responses when they attach a moodboard link and clearly define their artistic role versus what they need help with.
+                            </p>
+                            
+                            <div class="guide-partner-media">
+                                <img src="/images/collab_partner_desk.jpg" alt="Creative Partner Studio Workspace" class="guide-media-img">
+                            </div>
+
+                            <ul class="guide-checklist">
+                                <li class="check-item">
+                                    <span class="check-bullet">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </span>
+                                    <span>Be specific about your vision</span>
+                                </li>
+                                <li class="check-item">
+                                    <span class="check-bullet">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </span>
+                                    <span>Share visual references</span>
+                                </li>
+                                <li class="check-item">
+                                    <span class="check-bullet">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </span>
+                                    <span>Mention skills and roles clearly</span>
+                                </li>
+                                <li class="check-item">
+                                    <span class="check-bullet">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </span>
+                                    <span>Set a realistic timeline</span>
+                                </li>
+                                <li class="check-item">
+                                    <span class="check-bullet">
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                    </span>
+                                    <span>Be open and collaborative</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Guidance Card 3: Tips for a Strong Pitch -->
+                        <div class="guide-card">
+                            <div class="guide-card-header">
+                                <svg class="guide-header-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <circle cx="12" cy="12" r="6"></circle>
+                                    <circle cx="12" cy="12" r="2"></circle>
+                                </svg>
+                                <h3 class="guide-title">Tips for a Strong Pitch</h3>
+                            </div>
+                            
+                            <ol class="tips-numbered-list">
+                                <li class="tip-numbered-item">
+                                    <span class="tip-number-badge">1</span>
+                                    <span class="tip-text">Write a clear and concise headline that grabs attention.</span>
+                                </li>
+                                <li class="tip-numbered-item">
+                                    <span class="tip-number-badge">2</span>
+                                    <span class="tip-text">Include a moodboard or reference link if possible.</span>
+                                </li>
+                                <li class="tip-numbered-item">
+                                    <span class="tip-number-badge">3</span>
+                                    <span class="tip-text">Be transparent about your needs, timeline, and compensation.</span>
+                                </li>
+                                <li class="tip-numbered-item">
+                                    <span class="tip-number-badge">4</span>
+                                    <span class="tip-text">Show what makes your project unique and meaningful.</span>
+                                </li>
+                            </ol>
+                        </div>
+
+                    </aside>
                 </div>
-            </div>
-        </footer>
+            </main>
+        </div>
     </div>
 
-    <!-- Toast Notifications Container -->
-    <div id="toastContainer"></div>
+    <!-- Mobile Bottom Navigation Bar (Fixed 390px Viewport) -->
+    <nav class="dashboard-mobile-bottom-nav" aria-label="Mobile Navigation">
+        <a href="/pages/home.html" class="mobile-nav-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="/pages/discover.html" class="mobile-nav-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>Discover</span>
+        </a>
+        <a href="/pages/create-collaboration.html" class="mobile-nav-btn mobile-nav-btn-create active" aria-label="Create Pitch">
+            <div class="mobile-create-plus-icon">+</div>
+        </a>
+        <a href="/pages/messages.html" class="mobile-nav-btn">
+            <div class="mobile-nav-icon-wrapper">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <span class="mobile-nav-badge">3</span>
+            </div>
+            <span>Messages</span>
+        </a>
+        <a href="/pages/artist-profile.html" class="mobile-nav-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- Floating Toast Notification System -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
 
     <!-- Scripts -->
     <script src="/js/api.js"></script>

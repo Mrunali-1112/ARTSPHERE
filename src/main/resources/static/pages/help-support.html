@@ -4,281 +4,718 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Help &amp; Community Support — ArtSphere</title>
-    <link rel="stylesheet" href="/css/common.css">
+    <link rel="icon" type="image/png" href="/images/logo_nav.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/help-support.css">
 </head>
-<body>
-    <!-- Universal Floating Capsule Navigation -->
-    <header class="capsule-nav-wrapper" id="navWrapper">
-        <nav class="capsule-nav">
-            <a href="/pages/home.html" class="nav-brand">
-                <span class="brand-motif">✦</span>
-                <span>ArtSphere</span>
-            </a>
-            
-            <div class="nav-links" id="navLinks">
-                <a href="/pages/home.html" class="nav-link">Home</a>
-                <a href="/pages/discover.html" class="nav-link">Discover</a>
-                <a href="/pages/communities.html" class="nav-link">Communities</a>
-                <a href="/pages/events.html" class="nav-link">Events</a>
-                <a href="/pages/collaborators.html" class="nav-link">Collaborate</a>
-                <a href="/pages/opportunities.html" class="nav-link">Opportunities</a>
-            </div>
+<body class="dashboard-body">
 
-            <div class="nav-actions">
-                                <!-- Search Button -->
-                <a href="/pages/discover.html" class="nav-icon-btn" aria-label="Search Creators & Art">
-                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </a>
-                <!-- Notification Bell -->
-                <a href="/pages/notifications.html" class="nav-icon-btn notification-nav-wrapper" aria-label="Notifications">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
-                    <span class="notification-dot"></span>
-                </a>
+    <!-- Mobile Drawer Overlay Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-                <!-- Creator Avatar & Dropdown -->
-                <div class="user-menu-wrapper">
-                    <button class="user-avatar-trigger" id="userAvatarBtn" aria-label="User Account Menu">
-                        <img src="/images/user_avatar_nav.png" alt="Creator Profile" class="user-nav-avatar" id="headerUserAvatar">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="chevron-arrow">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    
-                    <div class="user-dropdown-panel" id="userDropdownPanel">
-                        <div class="dropdown-user-info">
-                            <strong id="dropdownUserName">Aanya Deshmukh</strong>
-                            <span id="dropdownUserBio">Visual &amp; Digital Artist</span>
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <span>My Artist Profile</span>
-                        </a>
-                        <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                            <span>My Portfolio</span>
-                        </a>
-                        <a href="/pages/create-post.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>Post to Studio Feed</span>
-                        </a>
-                        <a href="/pages/create-collaboration.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>Post Collab Request</span>
-                        </a>
-                        <a href="/pages/collaboration-requests.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
-                            <span>Manage Inquiries</span>
-                        </a>
-                        <a href="/pages/my-applications.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                            <span>My Applications</span>
-                        </a>
-                        <a href="/pages/settings.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                            <span>Settings</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item-link text-danger" id="logoutBtn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                            <span>Log Out</span>
-                        </button>
+    <div class="dashboard-container">
+        <!-- ============================================================
+             LEFT APPLICATION SIDEBAR (~236px, soft lavender background)
+             ============================================================ -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <!-- Brand Header -->
+            <div class="sidebar-brand-wrapper">
+                <a href="/pages/home.html" class="sidebar-brand-link">
+                    <div class="brand-sparkle-icon">✦</div>
+                    <div class="brand-text-block">
+                        <span class="brand-title">ArtSphere</span>
+                        <span class="brand-tagline">The Artist Community</span>
                     </div>
-                </div>
-
-                <!-- Mobile Toggle -->
-                <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle navigation">
-                    <span></span>
-                    <span></span>
+                </a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close navigation">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
                 </button>
             </div>
-        </nav>
-    </header>
 
-    <div class="page-wrapper">
-        <main>
-            <!-- Top Breadcrumb -->
-            <div class="support-top-breadcrumb">
-                <a href="/pages/home.html" class="breadcrumb-back-link">
-                    <span class="back-arrow">&larr;</span>
-                    <span>Back to Dashboard</span>
-                </a>
-            </div>
+            <!-- Primary Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Main Navigation">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/home.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/discover.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Discover</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/communities.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Communities</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/events.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Events</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/collaborators.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path>
+                                    <path d="M18 8l4 4-4 4"></path>
+                                    <path d="M8 12h14"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Collaborate</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/opportunities.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Opportunities</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
-            <!-- Hero Section -->
-            <section class="support-hero-banner">
-                <div class="support-hero-left">
-                    <div class="hero-badge-row">
-                        <span class="pill-tag accent-yellow">COMMUNITY STEWARDS</span>
-                        <span class="support-online-pill">
-                            <span class="online-indicator"></span>
-                            <span>Stewards Active</span>
-                        </span>
+            <div class="sidebar-divider"></div>
+
+            <!-- Communication Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Communication">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/messages.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Messages</span>
+                            <span class="sidebar-count-badge" id="sidebarMsgBadge">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/notifications.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Notifications</span>
+                            <span class="sidebar-dot-badge" id="sidebarNotifDot" style="display:none;"></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Bottom Section: User Profile Mini-Card & Utilities -->
+            <div class="sidebar-bottom-section">
+                <!-- User Profile Mini-Card -->
+                <a href="/pages/artist-profile.html" class="sidebar-profile-card" id="sidebarProfileCard" title="View Profile">
+                    <div class="sidebar-avatar-wrap">
+                        <img src="/images/user_avatar_nav.png" alt="Profile" class="sidebar-user-avatar" id="sidebarUserAvatar">
+                        <span class="sidebar-status-dot"></span>
                     </div>
-                    <h1 class="text-display support-title">Help &amp; Support</h1>
-                    <p class="support-subtext">
-                        Direct assistance with collaborations, applications, portfolio curation, and community standards.
-                    </p>
-                </div>
-            </section>
+                    <div class="sidebar-user-meta">
+                        <span class="sidebar-user-name" id="sidebarUserName">Mrunali S.</span>
+                        <span class="sidebar-view-profile" id="sidebarUserRole">Digital Artist</span>
+                    </div>
+                    <svg class="sidebar-card-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
 
-            <!-- 12-Column Layout -->
-            <div class="grid-12 support-layout-grid">
-                
-                <!-- Left 8 Columns: Live Chat -->
-                <div class="col-8 col-md-8 col-sm-4 support-chat-col">
-                    <div class="chat-card-container">
+                <!-- Utility Navigation -->
+                <ul class="sidebar-utility-list">
+                    <li>
+                        <a href="/pages/settings.html" class="sidebar-utility-item">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </span>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/help-support.html" class="sidebar-utility-item active">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </span>
+                            <span>Help &amp; Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <button class="sidebar-utility-item logout-action" id="sidebarLogoutBtn">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                            </span>
+                            <span>Logout</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- ============================================================
+             MAIN CONTENT WRAPPER
+             ============================================================ -->
+        <div class="dashboard-main-wrapper">
+            
+            <!-- Compact Top Search Header -->
+            <header class="dashboard-top-header">
+                <div class="header-left-cluster">
+                    <button class="mobile-menu-trigger" id="mobileMenuTrigger" aria-label="Open navigation menu">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <!-- Global Search Bar -->
+                    <div class="header-search-bar">
+                        <svg class="search-input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="globalSearchInput" placeholder="Search artists, opportunities, events..." aria-label="Search artists, opportunities, events">
+                    </div>
+                </div>
+
+                <!-- Right Action Cluster -->
+                <div class="header-right-cluster">
+                    <!-- Notification Bell -->
+                    <a href="/pages/notifications.html" class="header-icon-btn notification-bell-wrap" aria-label="Notifications">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-indicator-dot active" id="headerNotifDot"></span>
+                    </a>
+
+                    <!-- User Avatar & Dropdown -->
+                    <div class="header-user-menu-wrap">
+                        <button class="header-avatar-trigger" id="userMenuTrigger" aria-label="Open user menu" aria-expanded="false">
+                            <img src="/images/user_avatar_nav.png" alt="Profile" class="header-avatar-img" id="headerUserAvatar">
+                            <svg class="header-avatar-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
                         
-                        <!-- Quick Query Chips Bar -->
-                        <div class="chat-chips-bar">
-                            <span class="chips-label">Popular Topics:</span>
-                            <button type="button" class="faq-chip" data-query="How do I pitch a collaboration?">Pitch Collab</button>
-                            <button type="button" class="faq-chip" data-query="Portfolio showcase standards">Portfolio Standards</button>
-                            <button type="button" class="faq-chip" data-query="Submitting open calls">Open Call Deadlines</button>
-                            <button type="button" class="faq-chip" data-query="Joining fellowship guilds">Guild Invitations</button>
+                        <!-- Dropdown Panel -->
+                        <div class="header-dropdown-menu" id="userDropdownMenu">
+                            <div class="dropdown-user-header">
+                                <strong class="dropdown-user-name" id="dropdownUserName">Mrunali S.</strong>
+                                <span class="dropdown-user-role" id="dropdownUserBio">Digital Artist</span>
+                            </div>
+                            <div class="dropdown-separator"></div>
+                            <a href="/pages/artist-profile.html" class="dropdown-link-item" id="dropdownProfileLink">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <span>My Artist Profile</span>
+                            </a>
+                            <a href="/pages/portfolio.html" class="dropdown-link-item" id="dropdownPortfolioLink">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                <span>My Portfolio</span>
+                            </a>
+                            <a href="/pages/create-collaboration.html" class="dropdown-link-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                <span>Post Collab Request</span>
+                            </a>
+                            <a href="/pages/collaboration-requests.html" class="dropdown-link-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                                <span>Manage Inquiries</span>
+                            </a>
+                            <a href="/pages/my-applications.html" class="dropdown-link-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                <span>My Applications</span>
+                            </a>
+                            <a href="/pages/settings.html" class="dropdown-link-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                <span>Settings</span>
+                            </a>
+                            <div class="dropdown-separator"></div>
+                            <button class="dropdown-link-item logout-link" id="dropdownLogoutBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                <span>Log Out</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Scrollable Support Workspace -->
+            <main class="dashboard-content-workspace">
+                <div class="support-layout-container">
+                    
+                    <!-- 3. Back Button Bar -->
+                    <div class="support-back-bar">
+                        <a href="/pages/home.html" class="back-pill-btn" id="btnBackDashboard">
+                            <span class="back-arrow">&larr;</span>
+                            <span>Back to Dashboard</span>
+                        </a>
+                    </div>
+
+                    <!-- 4. Page Header Section -->
+                    <section class="support-page-header">
+                        <div class="header-badges-line">
+                            <span class="pill-badge-stewards">COMMUNITY STEWARDS</span>
+                            <span class="stewards-active-badge">
+                                <span class="active-pulse-dot"></span>
+                                <span>STEWARDS ACTIVE</span>
+                            </span>
+                        </div>
+                        <h1 class="support-main-heading">Help &amp; Support</h1>
+                        <p class="support-sub-heading">
+                            Direct assistance with collaborations, applications, portfolio curation, and community standards.
+                        </p>
+                    </section>
+
+                    <!-- Main Support Grid: 2 Columns on Desktop -->
+                    <div class="support-workspace-grid">
+                        
+                        <!-- LEFT MAIN COLUMN: Popular Topics + Support Conversation -->
+                        <div class="support-chat-column">
+                            
+                            <!-- 5. POPULAR TOPICS CARD -->
+                            <div class="popular-topics-card">
+                                <div class="topics-title-row">
+                                    <span class="topics-sparkle">✦</span>
+                                    <h3 class="topics-heading">Popular Topics</h3>
+                                </div>
+                                <div class="topics-buttons-row">
+                                    <button type="button" class="topic-pill-btn" data-query="How do I pitch a collaboration?">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
+                                        <span>Pitch Collab</span>
+                                    </button>
+                                    <button type="button" class="topic-pill-btn" data-query="Portfolio showcase standards">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        </svg>
+                                        <span>Portfolio Standards</span>
+                                    </button>
+                                    <button type="button" class="topic-pill-btn" data-query="Submitting open calls">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                                        </svg>
+                                        <span>Open Call Deadlines</span>
+                                    </button>
+                                    <button type="button" class="topic-pill-btn" data-query="Joining fellowship guilds">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
+                                        <span>Guild Invitations</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 6. MAIN SUPPORT CHAT CARD -->
+                            <div class="support-conversation-card">
+                                <!-- Card Header -->
+                                <div class="conversation-header-row">
+                                    <div class="steward-avatar-box">✦</div>
+                                    <div class="steward-identity-meta">
+                                        <h3 class="steward-name">ArtSphere Support</h3>
+                                        <span class="steward-status-tag">
+                                            <span class="status-online-dot"></span>
+                                            <span>Online &bull; Community Stewards</span>
+                                        </span>
+                                    </div>
+                                    <button type="button" class="btn-clear-chat" id="btnClearChat" title="Reset Conversation" aria-label="Reset Conversation">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="1 4 1 10 7 10"></polyline>
+                                            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                                        </svg>
+                                        <span>Restart</span>
+                                    </button>
+                                </div>
+
+                                <!-- Chat Viewport -->
+                                <div class="support-chat-viewport" id="chatArea">
+                                    <div class="messages-stream-list" id="messagesList">
+                                        <!-- Initial Bot Greeting Bubble -->
+                                        <div class="msg-bubble-row bot-bubble-row">
+                                            <div class="msg-bubble-wrapper">
+                                                <div class="msg-bubble-card bot-bubble-card">
+                                                    <p class="bubble-message-text">
+                                                        Greetings from the ArtSphere Steward desk! Whether you need technical assistance with your showreel, advice on pitching a cross-discipline collaborator, or guidance on copyright protections, we're here to help.
+                                                    </p>
+                                                </div>
+                                                <span class="msg-timestamp-meta">Today &bull; 10:24 AM</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 7. SUPPORT INPUT ACTION ROW -->
+                                <form id="chatForm" class="support-input-toolbar" onsubmit="return false;">
+                                    <button type="button" class="btn-input-attach" id="btnAttachment" title="Attach media or sketch" aria-label="Attach File">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+                                        </svg>
+                                    </button>
+                                    <input
+                                        type="file"
+                                        id="hiddenFileInput"
+                                        style="display: none;"
+                                        accept="image/*,.pdf,.doc,.docx"
+                                    >
+                                    <input
+                                        type="text"
+                                        id="chatMessageInput"
+                                        class="support-text-input"
+                                        placeholder="Ask a question or describe what you need assistance with..."
+                                        autocomplete="off"
+                                        aria-label="Ask a question or describe what you need assistance with"
+                                    >
+                                    <button type="button" class="btn-plum-send" id="btnSendMessage" aria-label="Send message">
+                                        <span>Send</span>
+                                        <span class="send-arrow">&rarr;</span>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
 
-                        <!-- Chat Messages Viewport -->
-                        <div class="chat-viewport" id="chatArea">
-                            <div class="messages-list" id="messagesList">
-                                
-                                <!-- Bot Greeting Message -->
-                                <div class="msg-row bot-msg">
-                                    <div class="bot-avatar">✦</div>
-                                    <div class="msg-body">
-                                        <div class="msg-bubble bot-bubble">
-                                            <p class="bubble-p">
-                                                Greetings from the ArtSphere Steward desk! Whether you need technical assistance with your showreel, advice on pitching a cross-discipline collaborator, or guidance on copyright protections, we're here to help.
-                                            </p>
+                        <!-- RIGHT INFORMATION COLUMN: Direct Channels + Etiquette + Resources -->
+                        <aside class="support-info-sidebar">
+                            
+                            <!-- 8. CARD 1: DIRECT CHANNELS -->
+                            <div class="sidebar-support-card">
+                                <div class="card-icon-header">
+                                    <div class="icon-bubble-wrap icon-purple">
+                                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                        </svg>
+                                    </div>
+                                    <h3 class="side-card-title">Direct Channels</h3>
+                                </div>
+                                <div class="side-details-stack">
+                                    <div class="side-detail-tile">
+                                        <div class="tile-icon-box">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                                <polyline points="22,6 12,13 2,6"></polyline>
+                                            </svg>
                                         </div>
-                                        <span class="msg-time">Today &bull; Online</span>
+                                        <div class="tile-meta-col">
+                                            <span class="tile-label">Community Email</span>
+                                            <a href="mailto:stewards@artsphere.com" class="tile-value-link">stewards@artsphere.com</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="side-detail-tile">
+                                        <div class="tile-icon-box">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <polyline points="12 6 12 12 16 14"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="tile-meta-col">
+                                            <span class="tile-label">Average Response Time</span>
+                                            <strong class="tile-value-strong">&lt; 15 minutes</strong>
+                                        </div>
+                                    </div>
+
+                                    <div class="side-detail-tile">
+                                        <div class="tile-icon-box">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                                <circle cx="12" cy="10" r="3"></circle>
+                                            </svg>
+                                        </div>
+                                        <div class="tile-meta-col">
+                                            <span class="tile-label">Studio Base</span>
+                                            <strong class="tile-value-strong">Bandra West, Mumbai &bull; Global IRC</strong>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Chat Input Action Row -->
-                        <form id="chatForm" class="chat-input-form" onsubmit="return false;">
-                            <input
-                                type="text"
-                                id="chatMessageInput"
-                                class="neo-input chat-input-field"
-                                placeholder="Ask a question or describe what you need assistance with..."
-                                autocomplete="off"
-                            >
-                            <button type="button" class="btn-pill-primary btn-send-msg" id="btnSendMessage">
-                                <span>Send</span>
-                                <span>&rarr;</span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
+                            <!-- 9. CARD 2: FELLOWSHIP ETIQUETTE -->
+                            <div class="sidebar-support-card">
+                                <div class="card-icon-header">
+                                    <div class="icon-bubble-wrap icon-purple">
+                                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="side-card-title">Fellowship Etiquette</h3>
+                                </div>
+                                <div class="etiquette-items-stack">
+                                    <div class="etiquette-row-item">
+                                        <div class="etiquette-icon-box">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="9" cy="7" r="4"></circle>
+                                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="etiquette-text-block">
+                                            <h4 class="etiquette-title">Constructive Critique</h4>
+                                            <p class="etiquette-desc">Critique works with empathy and technical precision.</p>
+                                        </div>
+                                    </div>
 
-                <!-- Right 4 Columns: Stewards & Etiquette -->
-                <div class="col-4 col-md-8 col-sm-4 support-sidebar-col">
-                    
-                    <!-- Direct Contacts Card -->
-                    <div class="sidebar-info-card">
-                        <div class="card-heading-row">
-                            <h3 class="card-heading-title">
-                                <span>✦</span>
-                                <span>Direct Channels</span>
-                            </h3>
-                        </div>
-                        <div class="contact-details-list">
-                            <div class="contact-item">
-                                <span class="contact-label">Community Email</span>
-                                <strong class="contact-value">stewards@artsphere.com</strong>
+                                    <div class="etiquette-row-item">
+                                        <div class="etiquette-icon-box">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="etiquette-text-block">
+                                            <h4 class="etiquette-title">Credit Co-Creators</h4>
+                                            <p class="etiquette-desc">Always attribute sound artists, dancers, and writers in joint works.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="etiquette-row-item">
+                                        <div class="etiquette-icon-box">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="etiquette-text-block">
+                                            <h4 class="etiquette-title">Safe Creative Sanctuary</h4>
+                                            <p class="etiquette-desc">Hate speech or copyright infringement results in immediate revocation of studio membership.</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="contact-item">
-                                <span class="contact-label">Average Response Time</span>
-                                <strong class="contact-value">&lt; 15 minutes</strong>
+
+                            <!-- 10. CARD 3: HELPFUL RESOURCES -->
+                            <div class="sidebar-support-card">
+                                <div class="card-icon-header space-between-header">
+                                    <div class="header-inline-cluster">
+                                        <div class="icon-bubble-wrap icon-purple">
+                                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 class="side-card-title">Helpful Resources</h3>
+                                    </div>
+                                    <a href="/pages/help-support.html" class="resources-view-all">View All &rarr;</a>
+                                </div>
+                                <div class="resources-links-stack">
+                                    <button type="button" class="resource-nav-tile" data-topic="Community Guidelines">
+                                        <div class="resource-tile-icon">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                <polyline points="14 2 14 8 20 8"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="resource-tile-meta">
+                                            <span class="resource-title">Community Guidelines</span>
+                                            <span class="resource-subtitle">Learn about our standards and best practices.</span>
+                                        </div>
+                                        <svg class="resource-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </button>
+
+                                    <button type="button" class="resource-nav-tile" data-topic="Collaboration FAQ">
+                                        <div class="resource-tile-icon">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10"></circle>
+                                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                            </svg>
+                                        </div>
+                                        <div class="resource-tile-meta">
+                                            <span class="resource-title">Collaboration FAQ</span>
+                                            <span class="resource-subtitle">Common questions about open calls and pitches.</span>
+                                        </div>
+                                        <svg class="resource-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </button>
+
+                                    <button type="button" class="resource-nav-tile" data-topic="Portfolio Tips">
+                                        <div class="resource-tile-icon">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                                <polyline points="21 15 16 10 5 21"></polyline>
+                                            </svg>
+                                        </div>
+                                        <div class="resource-tile-meta">
+                                            <span class="resource-title">Portfolio Tips</span>
+                                            <span class="resource-subtitle">Improve your profile and showcase your work.</span>
+                                        </div>
+                                        <svg class="resource-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </button>
+
+                                    <button type="button" class="resource-nav-tile" data-topic="Copyright & IP">
+                                        <div class="resource-tile-icon">
+                                            <span class="font-copyright">&copy;</span>
+                                        </div>
+                                        <div class="resource-tile-meta">
+                                            <span class="resource-title">Copyright &amp; IP</span>
+                                            <span class="resource-subtitle">Understand your rights as a creator.</span>
+                                        </div>
+                                        <svg class="resource-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="contact-item">
-                                <span class="contact-label">Studio Base</span>
-                                <strong class="contact-value">Bandra West, Mumbai &bull; Global IRC</strong>
+
+                        </aside>
+
+                    </div>
+                </div>
+
+                <!-- 11. UNIVERSAL EDITORIAL FOOTER -->
+                <footer class="editorial-footer">
+                    <div class="footer-grid-row">
+                        <div class="footer-brand-col">
+                            <a href="/pages/home.html" class="footer-logo">
+                                <span class="brand-motif">✦</span>
+                                <span>ArtSphere</span>
+                            </a>
+                            <p class="footer-bio">
+                                The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
+                            </p>
+                            <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
+                        </div>
+
+                        <div class="footer-links-col">
+                            <div class="footer-col-heading">DIRECTORY</div>
+                            <ul class="footer-links-list">
+                                <li><a href="/pages/discover.html">Discover Artists</a></li>
+                                <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
+                                <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
+                                <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
+                                <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="footer-links-col">
+                            <div class="footer-col-heading">PLATFORM</div>
+                            <ul class="footer-links-list">
+                                <li><a href="/pages/home.html">Studio Feed</a></li>
+                                <li><a href="/pages/communities.html">Communities</a></li>
+                                <li><a href="/pages/events.html">Events &amp; Jams</a></li>
+                                <li><a href="/pages/collaborators.html">Collaborations</a></li>
+                                <li><a href="/pages/opportunities.html">Open Calls</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="footer-links-col">
+                            <div class="footer-col-heading">ACCOUNT</div>
+                            <ul class="footer-links-list">
+                                <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
+                                <li><a href="/pages/my-applications.html">My Applications</a></li>
+                                <li><a href="/pages/settings.html">Account Settings</a></li>
+                                <li><a href="/pages/help-support.html">Help &amp; Guidelines</a></li>
+                            </ul>
+                            <div class="footer-badge-box">
+                                <span class="footer-pill-tag">NO ADS. PURE ART.</span>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Fellowship Principles Card -->
-                    <div class="sidebar-info-card highlight-card">
-                        <div class="card-heading-row">
-                            <h3 class="card-heading-title">
-                                <span>✦</span>
-                                <span>Fellowship Etiquette</span>
-                            </h3>
-                        </div>
-                        <ul class="principles-bullet-list">
-                            <li><strong>Constructive Critique:</strong> Critique works with empathy and technical precision.</li>
-                            <li><strong>Credit Co-Creators:</strong> Always attribute sound artists, dancers, and writers in joint works.</li>
-                            <li><strong>Safe Creative Sanctuary:</strong> Hate speech or copyright infringement results in immediate revocation of studio membership.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Universal Editorial Footer -->
-        <footer class="editorial-footer">
-            <div class="grid-12 footer-grid">
-                <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
-                    <a href="/pages/home.html" class="footer-logo">
-                        <span class="brand-motif">✦</span>
-                        <span>ArtSphere</span>
-                    </a>
-                    <p class="footer-bio">
-                        The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
-                    </p>
-                    <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
-                </div>
-
-                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
-                    <div class="footer-heading">DIRECTORY</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/discover.html">Discover Artists</a></li>
-                        <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
-                        <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
-                        <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
-                        <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
-                    <div class="footer-heading">PLATFORM</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/home.html">Studio Feed</a></li>
-                        <li><a href="/pages/communities.html">Communities</a></li>
-                        <li><a href="/pages/events.html">Events &amp; Jams</a></li>
-                        <li><a href="/pages/collaborators.html">Collaborations</a></li>
-                        <li><a href="/pages/opportunities.html">Open Calls</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-3 col-md-4 col-sm-4 footer-col-links">
-                    <div class="footer-heading">ACCOUNT</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
-                        <li><a href="/pages/my-applications.html">My Applications</a></li>
-                        <li><a href="/pages/settings.html">Account Settings</a></li>
-                        <li><a href="/pages/help-support.html">Help &amp; Guidelines</a></li>
-                    </ul>
-                    <div class="footer-badge-box">
-                        <span class="pill-tag accent-yellow">NO ADS. PURE ART.</span>
-                    </div>
-                </div>
-            </div>
-        </footer>
+                </footer>
+            </main>
+        </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- 18. MOBILE BOTTOM NAVIGATION (Fixed at bottom on <= 768px) -->
+    <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+        <a href="/pages/home.html" class="mobile-nav-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="/pages/discover.html" class="mobile-nav-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>Discover</span>
+        </a>
+        <a href="/pages/create-collaboration.html" class="mobile-nav-btn mobile-nav-btn-create" aria-label="Post Collaboration">
+            <div class="mobile-create-plus-icon">+</div>
+        </a>
+        <a href="/pages/messages.html" class="mobile-nav-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>Messages</span>
+        </a>
+        <a href="/pages/artist-profile.html" class="mobile-nav-btn" id="mobileProfileNavBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- Toast Notification Portal Container -->
+    <div id="toastContainer" class="toast-portal-container"></div>
+
+    <!-- Application Scripts -->
     <script src="/js/api.js"></script>
     <script src="/js/help-support.js"></script>
 </body>

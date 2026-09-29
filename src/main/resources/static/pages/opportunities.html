@@ -3,236 +3,657 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArtSphere — Artist Opportunities, Grants &amp; Auditions</title>
-    <link rel="stylesheet" href="/css/common.css">
+    <title>ArtSphere — Artist Opportunities &amp; Grants</title>
+    <link rel="icon" type="image/png" href="/images/logo_nav.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/opportunities.css">
 </head>
-<body>
-    <!-- Universal Floating Capsule Navigation -->
-    <header class="capsule-nav-wrapper" id="navWrapper">
-        <nav class="capsule-nav">
-            <a href="/pages/home.html" class="nav-brand">
-                <span class="brand-motif">✦</span>
-                <span>ArtSphere</span>
-            </a>
-            
-            <div class="nav-links" id="navLinks">
-                <a href="/pages/home.html" class="nav-link">Home</a>
-                <a href="/pages/discover.html" class="nav-link">Discover</a>
-                <a href="/pages/communities.html" class="nav-link">Communities</a>
-                <a href="/pages/events.html" class="nav-link">Events</a>
-                <a href="/pages/collaborators.html" class="nav-link">Collaborate</a>
-                <a href="/pages/opportunities.html" class="nav-link active">Opportunities</a>
-            </div>
+<body class="dashboard-body">
 
-            <div class="nav-actions">
-                                <!-- Search Button -->
-                <a href="/pages/discover.html" class="nav-icon-btn" aria-label="Search Creators & Art">
-                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </a>
-                <!-- Notification Bell -->
-                <a href="/pages/notifications.html" class="nav-icon-btn notification-nav-wrapper" aria-label="Notifications">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
-                    <span class="notification-dot"></span>
-                </a>
+    <!-- Mobile Drawer Overlay Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-                <!-- Creator Avatar & Dropdown -->
-                <div class="user-menu-wrapper">
-                    <button class="user-avatar-trigger" id="userAvatarBtn" aria-label="User Account Menu">
-                        <img src="/images/user_avatar_nav.png" alt="Creator Profile" class="user-nav-avatar" id="headerUserAvatar">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="chevron-arrow">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    
-                    <div class="user-dropdown-panel" id="userDropdownPanel">
-                        <div class="dropdown-user-info">
-                            <strong id="dropdownUserName">Aanya Deshmukh</strong>
-                            <span id="dropdownUserBio">Visual &amp; Digital Artist</span>
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <span>My Artist Profile</span>
-                        </a>
-                        <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                            <span>My Portfolio</span>
-                        </a>
-                        <a href="/pages/create-collaboration.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>Post Collab Request</span>
-                        </a>
-                        <a href="/pages/collaboration-requests.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
-                            <span>Manage Inquiries</span>
-                        </a>
-                        <a href="/pages/my-applications.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                            <span>My Applications</span>
-                        </a>
-                        <a href="/pages/settings.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                            <span>Settings</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item-link text-danger" id="logoutBtn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                            <span>Log Out</span>
-                        </button>
+    <div class="dashboard-container">
+        <!-- ============================================================
+             LEFT SIDEBAR (Sticky, ~240px wide)
+             ============================================================ -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <!-- Brand Header -->
+            <div class="sidebar-brand-wrapper">
+                <a href="/pages/home.html" class="sidebar-brand-link">
+                    <div class="brand-sparkle-icon">✦</div>
+                    <div class="brand-text-block">
+                        <span class="brand-title">ArtSphere</span>
+                        <span class="brand-tagline">The Artist Community</span>
                     </div>
-                </div>
-
-                <!-- Mobile Toggle -->
-                <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle navigation">
-                    <span></span>
-                    <span></span>
+                </a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close navigation">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
                 </button>
             </div>
-        </nav>
-    </header>
 
-    <div class="page-wrapper">
-        <main>
-            <!-- Hero Banner Section -->
-            <section class="opp-hero-card">
-                <div class="opp-hero-content">
-                    <div class="opp-hero-badge-row">
-                        <span class="pill-tag accent-yellow">OPEN CALLS &amp; COMMISSIONS</span>
-                        <span class="opp-count-pill" id="oppLiveCount">18 Open Grants &amp; Gigs</span>
+            <!-- Primary Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Main Navigation">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/home.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/discover.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Discover</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/communities.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Communities</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/events.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Events</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/collaborators.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path>
+                                    <path d="M18 8l4 4-4 4"></path>
+                                    <path d="M8 12h14"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Collaborate</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/opportunities.html" class="sidebar-nav-item active">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Opportunities</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- Secondary Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Communication">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/messages.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Messages</span>
+                            <span class="sidebar-count-badge" id="sidebarMsgBadge">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/notifications.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Notifications</span>
+                            <span class="sidebar-dot-badge" id="sidebarNotifDot" style="display:none;"></span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Bottom Section: Profile Mini-Card & System Actions -->
+            <div class="sidebar-bottom-section">
+                <!-- User Profile Mini-Card -->
+                <a href="/pages/artist-profile.html" class="sidebar-profile-card" id="sidebarProfileCard" title="View Profile">
+                    <img src="/images/user_avatar_nav.png" alt="Profile" class="sidebar-user-avatar" id="sidebarUserAvatar">
+                    <div class="sidebar-user-meta">
+                        <span class="sidebar-user-name" id="sidebarUserName">Mrunali S.</span>
+                        <span class="sidebar-view-profile" id="sidebarUserRole">Digital Artist &bull; View Profile &rarr;</span>
                     </div>
-                    <h1 class="text-display opp-hero-title">Artist Opportunities &amp; Grants</h1>
-                    <p class="opp-hero-desc">
-                        Discover verified open auditions, production grants, museum residencies, gallery open calls, and paid creative commissions. No speculative work, no fees.
-                    </p>
-                </div>
-                <div class="opp-hero-actions">
-                    <a href="/pages/my-applications.html" class="btn-pill-primary">
-                        <span>Track My Applications</span>
-                        <span>&rarr;</span>
-                    </a>
-                </div>
-            </section>
-
-            <!-- Search & Filter Controls -->
-            <section class="opp-controls-section">
-                <!-- Search Bar -->
-                <div class="opp-search-bar">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="search-motif">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <svg class="sidebar-card-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
-                    <input type="text" id="oppSearchInput" class="opp-search-field" placeholder="Search opportunities by title, discipline, or host organization..." autocomplete="off">
-                    <button class="search-clear-cross" id="searchClearBtn" style="display: none;" aria-label="Clear Search">&times;</button>
-                </div>
+                </a>
 
-                <!-- Category Pills Bar -->
-                <div class="opp-category-ledger" id="categoryLedger" role="tablist">
-                    <button class="category-pill-btn active" data-category="All" role="tab">All Opportunities</button>
-                    <button class="category-pill-btn" data-category="Auditions" role="tab">Auditions &amp; Castings</button>
-                    <button class="category-pill-btn" data-category="Residencies" role="tab">Residencies</button>
-                    <button class="category-pill-btn" data-category="Grants" role="tab">Grants &amp; Fellowships</button>
-                    <button class="category-pill-btn" data-category="Gigs" role="tab">Paid Gigs &amp; Commissions</button>
-                    <button class="category-pill-btn" data-category="Competitions" role="tab">Competitions</button>
-                </div>
-            </section>
-
-            <!-- Featured Opportunity Card -->
-            <section class="featured-opp-section" id="featuredSection">
-                <div class="featured-section-header">
-                    <span class="card-motif">✦</span>
-                    <h2 class="featured-heading">Spotlight Opportunity</h2>
-                </div>
-                <div id="featuredOppContainer" class="featured-card-slot">
-                    <div class="loading-state-card">
-                        <div class="spinner"></div>
-                        <p>Loading spotlight opportunity...</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Main Opportunities Grid Section -->
-            <section class="latest-opps-section" id="latestSection">
-                <div class="opps-section-header">
-                    <div class="header-title-block">
-                        <span class="card-motif">✦</span>
-                        <h2 class="opps-heading" id="oppsGridTitle">All Active Open Calls</h2>
-                    </div>
-                    <span class="opps-counter-tag" id="resultsCount">Loading calls...</span>
-                </div>
-
-                <!-- 12-Column Responsive Grid -->
-                <div class="grid-12 opps-grid-container" id="latestOppsContainer">
-                    <div class="col-12 loading-state-card">
-                        <div class="spinner"></div>
-                        <p>Loading opportunities directory...</p>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Universal Editorial Footer -->
-        <footer class="editorial-footer">
-            <div class="grid-12 footer-grid">
-                <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
-                    <a href="/pages/home.html" class="footer-logo">
-                        <span class="brand-motif">✦</span>
-                        <span>ArtSphere</span>
-                    </a>
-                    <p class="footer-bio">
-                        The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
-                    </p>
-                    <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
-                </div>
-
-                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
-                    <div class="footer-heading">DIRECTORY</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/discover.html">Discover Artists</a></li>
-                        <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
-                        <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
-                        <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
-                        <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
-                    <div class="footer-heading">PLATFORM</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/home.html">Studio Feed</a></li>
-                        <li><a href="/pages/communities.html">Communities</a></li>
-                        <li><a href="/pages/events.html">Events &amp; Jams</a></li>
-                        <li><a href="/pages/collaborators.html">Collaborations</a></li>
-                        <li><a href="/pages/opportunities.html">Open Calls</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-3 col-md-4 col-sm-4 footer-col-links">
-                    <div class="footer-heading">ACCOUNT</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
-                        <li><a href="/pages/my-applications.html">My Applications</a></li>
-                        <li><a href="/pages/settings.html">Account Settings</a></li>
-                        <li><a href="/pages/help-support.html">Help &amp; Guidelines</a></li>
-                    </ul>
-                    <div class="footer-badge-box">
-                        <span class="pill-tag accent-yellow">NO ADS. PURE ART.</span>
-                    </div>
-                </div>
+                <!-- Utility Navigation -->
+                <ul class="sidebar-utility-list">
+                    <li>
+                        <a href="/pages/settings.html" class="sidebar-utility-item">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </span>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/help-support.html" class="sidebar-utility-item">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </span>
+                            <span>Help &amp; Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <button class="sidebar-utility-item logout-action" id="sidebarLogoutBtn">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                            </span>
+                            <span>Logout</span>
+                        </button>
+                    </li>
+                </ul>
             </div>
-        </footer>
+        </aside>
+
+        <!-- ============================================================
+             MAIN CONTENT WRAPPER (Top Header + 2-Column Dashboard)
+             ============================================================ -->
+        <div class="dashboard-main-wrapper">
+            
+            <!-- Compact Top Header -->
+            <header class="dashboard-top-header">
+                <div class="header-left-cluster">
+                    <button class="mobile-menu-trigger" id="mobileMenuTrigger" aria-label="Open navigation menu">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <!-- Top Search Bar -->
+                    <div class="header-search-bar">
+                        <svg class="search-lens-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="headerSearchInput" class="header-search-input" placeholder="Search artists, opportunities, events..." autocomplete="off">
+                        <button id="headerClearSearchBtn" class="search-clear-btn" aria-label="Clear Search" style="display:none;">&times;</button>
+                    </div>
+                </div>
+
+                <div class="header-right-cluster">
+                    <!-- Notification Bell -->
+                    <a href="/pages/notifications.html" class="header-icon-action" aria-label="Notifications" title="Notifications">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-indicator-dot" id="headerNotifDot"></span>
+                    </a>
+
+                    <!-- Creator Avatar & Dropdown -->
+                    <div class="user-menu-container">
+                        <button class="header-avatar-button" id="userAvatarBtn" aria-label="Open User Menu" aria-expanded="false">
+                            <img src="/images/user_avatar_nav.png" alt="Profile" class="header-user-avatar" id="headerUserAvatar">
+                            <svg class="avatar-chevron-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+
+                        <!-- User Dropdown Menu -->
+                        <div class="header-dropdown-panel" id="userDropdownPanel">
+                            <div class="dropdown-header-info">
+                                <strong id="dropdownUserName">Mrunali S.</strong>
+                                <span id="dropdownUserBio">Digital Artist</span>
+                            </div>
+                            <div class="dropdown-separator"></div>
+                            <a href="/pages/artist-profile.html" class="dropdown-link-row">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <span>My Profile</span>
+                            </a>
+                            <a href="/pages/portfolio.html" class="dropdown-link-row">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                <span>My Portfolio</span>
+                            </a>
+                            <a href="/pages/my-applications.html" class="dropdown-link-row">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                <span>My Applications</span>
+                            </a>
+                            <a href="/pages/create-collaboration.html" class="dropdown-link-row">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                <span>Post Collaboration</span>
+                            </a>
+                            <a href="/pages/settings.html" class="dropdown-link-row">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                <span>Account Settings</span>
+                            </a>
+                            <div class="dropdown-separator"></div>
+                            <button class="dropdown-link-row danger-text" id="logoutBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                <span>Log Out</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Layout (Two-Column Workspace) -->
+            <div class="dashboard-content-body">
+                
+                <!-- ========================================================
+                     MAIN OPPORTUNITIES WORKSPACE (~68% width)
+                     ======================================================== -->
+                <main class="dashboard-workspace" id="mainWorkspace">
+                    
+                    <!-- 1. Opportunity Hero Card -->
+                    <section class="opp-hero-card" aria-label="Open Calls and Commissions">
+                        <div class="hero-text-block">
+                            <div class="hero-eyebrows-cluster">
+                                <span class="hero-eyebrow-pill primary">OPEN CALLS &amp; COMMISSIONS</span>
+                                <span class="hero-eyebrow-pill subtle" id="heroLiveCountBadge">8 OPEN GRANTS &amp; GIGS</span>
+                            </div>
+                            <h1 class="hero-headline">
+                                Artist Opportunities<br>
+                                <span class="hero-headline-accent">&amp; Grants</span>
+                            </h1>
+                            <p class="hero-subtext">
+                                Discover verified open auditions, production grants, museum residencies, gallery open calls, and paid creative commissions. No speculative work, no fees.
+                            </p>
+                            
+                            <!-- Primary CTA Button -->
+                            <div class="hero-actions-row">
+                                <a href="/pages/my-applications.html" class="btn-hero-primary" id="heroTrackAppsBtn">
+                                    <span>Track My Applications</span>
+                                    <span class="btn-arrow">&rarr;</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Hero Banner Right Visual Illustration -->
+                        <div class="hero-visual-frame">
+                            <img src="/images/home_hero_painter.png" alt="Artist working on easel in studio" class="hero-banner-image" onerror="this.src='/images/comm_featured_banner.png'">
+                        </div>
+                    </section>
+
+                    <!-- 2. Search & Category Filters (Below Hero) -->
+                    <section class="opp-filters-section" aria-label="Filter Opportunities">
+                        <!-- Search Bar -->
+                        <div class="opp-search-bar">
+                            <svg class="search-lens-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <input type="text" id="oppSearchInput" class="opp-search-input" placeholder="Search opportunities by title, discipline, or host organization..." autocomplete="off">
+                            <button id="clearOppSearchBtn" class="search-clear-btn" aria-label="Clear Search" style="display:none;">&times;</button>
+                        </div>
+
+                        <!-- Category Filter Pills matching Reference Image -->
+                        <div class="category-pills-row" id="categoryPillsRow" role="tablist">
+                            <button class="category-pill-btn active" data-category="All" role="tab" aria-selected="true">
+                                All Opportunities
+                            </button>
+                            <button class="category-pill-btn" data-category="Auditions" role="tab" aria-selected="false">
+                                Auditions &amp; Castings
+                            </button>
+                            <button class="category-pill-btn" data-category="Residencies" role="tab" aria-selected="false">
+                                Residencies
+                            </button>
+                            <button class="category-pill-btn" data-category="Grants" role="tab" aria-selected="false">
+                                Grants &amp; Fellowships
+                            </button>
+                            <button class="category-pill-btn" data-category="Gigs" role="tab" aria-selected="false">
+                                Paid Gigs &amp; Commissions
+                            </button>
+                            <button class="category-pill-btn" data-category="Competitions" role="tab" aria-selected="false">
+                                Competitions
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- 3. Spotlight Opportunity Card -->
+                    <section class="spotlight-section" id="spotlightSection" aria-label="Spotlight Opportunity">
+                        <div class="section-title-row">
+                            <h2 class="section-heading-with-icon">
+                                <span class="star-icon">★</span>
+                                <span>Spotlight Opportunity</span>
+                            </h2>
+                            <button class="btn-text-link" id="viewAllSpotlightBtn">View All &rarr;</button>
+                        </div>
+
+                        <div id="spotlightCardContainer">
+                            <!-- Populated dynamically via opportunities.js -->
+                        </div>
+                    </section>
+
+                    <!-- 4. All Active Open Calls (2 Cards per Row Grid) -->
+                    <section class="active-opps-section" aria-label="All Active Open Calls">
+                        <div class="section-title-row">
+                            <h2 class="section-heading-with-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="9" y1="3" x2="9" y2="21"></line>
+                                </svg>
+                                <span>All Active Open Calls</span>
+                            </h2>
+                            <div class="header-meta-group">
+                                <span class="results-count-label" id="resultsCountLabel">8 Opportunities Listed</span>
+                                <div class="sort-selector-wrapper">
+                                    <select class="sort-select" id="sortSelect" aria-label="Sort Opportunities">
+                                        <option value="default">Sort By ▼</option>
+                                        <option value="deadline">Deadline Soonest</option>
+                                        <option value="newest">Newest First</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2-Column Structured Grid -->
+                        <div class="opps-cards-grid" id="oppsCardsGrid">
+                            <!-- Populated dynamically via opportunities.js -->
+                        </div>
+                    </section>
+
+                </main>
+
+                <!-- ========================================================
+                     RIGHT DASHBOARD PANEL (~32% width)
+                     ======================================================== -->
+                <aside class="dashboard-right-sidebar" aria-label="Applications, Categories, and Deadlines">
+                    
+                    <!-- 1. My Applications Summary Card (Real Backend Data) -->
+                    <section class="right-panel-card" aria-label="My Applications Summary">
+                        <a href="/pages/my-applications.html" class="panel-header-inline link-styled">
+                            <div class="panel-header-left">
+                                <div class="panel-icon-badge">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                </div>
+                                <h3 class="panel-section-title">My Applications</h3>
+                            </div>
+                            <span class="arrow-symbol">&rarr;</span>
+                        </a>
+
+                        <div class="app-summary-stack">
+                            <a href="/pages/my-applications.html?status=all" class="app-summary-row" title="View Active Applications">
+                                <span class="summary-count-box" id="statActiveApps">3</span>
+                                <div class="summary-meta-col">
+                                    <strong class="summary-title">Active Applications</strong>
+                                    <span class="summary-subtext">Submitted &bull; In pipeline</span>
+                                </div>
+                                <span class="row-arrow">&rarr;</span>
+                            </a>
+
+                            <a href="/pages/my-applications.html?status=pending" class="app-summary-row" title="View Applications Under Review">
+                                <span class="summary-count-box" id="statUnderReview">1</span>
+                                <div class="summary-meta-col">
+                                    <strong class="summary-title">Under Review</strong>
+                                    <span class="summary-subtext">Pending decision</span>
+                                </div>
+                                <span class="row-arrow">&rarr;</span>
+                            </a>
+
+                            <a href="/pages/my-applications.html?status=accepted" class="app-summary-row" title="View Shortlisted Applications">
+                                <span class="summary-count-box" id="statShortlisted">2</span>
+                                <div class="summary-meta-col">
+                                    <strong class="summary-title">Shortlisted</strong>
+                                    <span class="summary-subtext">Accepted &bull; Next steps</span>
+                                </div>
+                                <span class="row-arrow">&rarr;</span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- 2. Don't Miss New Opportunities Alerts Card -->
+                    <section class="alerts-cta-card" aria-label="Opportunity Alerts">
+                        <div class="alerts-star-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </div>
+                        <h4 class="alerts-title">Don't miss new opportunities</h4>
+                        <p class="alerts-desc">Get notified about new calls matching your interests.</p>
+                        <button class="btn-enable-alerts" id="enableAlertsBtn">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                            <span>Enable Alerts</span>
+                        </button>
+                    </section>
+
+                    <!-- 3. Explore Categories (Interactive Filtering) -->
+                    <section class="right-panel-card" aria-label="Explore Categories">
+                        <h3 class="panel-section-title">Explore Categories</h3>
+                        <div class="compact-category-list">
+                            <button class="category-explore-row" data-cat="Auditions">
+                                <div class="explore-left">
+                                    <div class="explore-icon-box">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                                    </div>
+                                    <span class="explore-cat-name">Auditions &amp; Castings</span>
+                                </div>
+                                <div class="explore-right">
+                                    <span class="explore-count" id="countAuditions">12</span>
+                                    <span class="row-arrow">&rarr;</span>
+                                </div>
+                            </button>
+
+                            <button class="category-explore-row" data-cat="Residencies">
+                                <div class="explore-left">
+                                    <div class="explore-icon-box">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                    </div>
+                                    <span class="explore-cat-name">Residencies</span>
+                                </div>
+                                <div class="explore-right">
+                                    <span class="explore-count" id="countResidencies">8</span>
+                                    <span class="row-arrow">&rarr;</span>
+                                </div>
+                            </button>
+
+                            <button class="category-explore-row" data-cat="Grants">
+                                <div class="explore-left">
+                                    <div class="explore-icon-box">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                                    </div>
+                                    <span class="explore-cat-name">Grants &amp; Fellowships</span>
+                                </div>
+                                <div class="explore-right">
+                                    <span class="explore-count" id="countGrants">15</span>
+                                    <span class="row-arrow">&rarr;</span>
+                                </div>
+                            </button>
+
+                            <button class="category-explore-row" data-cat="Gigs">
+                                <div class="explore-left">
+                                    <div class="explore-icon-box">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                    </div>
+                                    <span class="explore-cat-name">Paid Gigs &amp; Commissions</span>
+                                </div>
+                                <div class="explore-right">
+                                    <span class="explore-count" id="countGigs">10</span>
+                                    <span class="row-arrow">&rarr;</span>
+                                </div>
+                            </button>
+
+                            <button class="category-explore-row" data-cat="Competitions">
+                                <div class="explore-left">
+                                    <div class="explore-icon-box">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-2.34"></path><path d="M18 17v-2.34"></path><path d="M14 14.66V17c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-2.34"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
+                                    </div>
+                                    <span class="explore-cat-name">Competitions</span>
+                                </div>
+                                <div class="explore-right">
+                                    <span class="explore-count" id="countCompetitions">6</span>
+                                    <span class="row-arrow">&rarr;</span>
+                                </div>
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- 4. Upcoming Deadlines (Real Opportunity Data) -->
+                    <section class="right-panel-card" aria-label="Upcoming Deadlines">
+                        <div class="panel-header-inline">
+                            <h3 class="panel-section-title">Upcoming Deadlines</h3>
+                            <button class="panel-header-link" id="viewAllDeadlinesBtn">
+                                <span>View All</span>
+                                <span class="arrow-symbol">&rarr;</span>
+                            </button>
+                        </div>
+
+                        <div class="compact-deadlines-list" id="upcomingDeadlinesContainer">
+                            <!-- Populated dynamically via opportunities.js -->
+                        </div>
+                    </section>
+
+                    <!-- 5. Resources Section -->
+                    <section class="right-panel-card" aria-label="Artist Resources">
+                        <h3 class="panel-section-title">Resources</h3>
+                        <div class="resources-stack">
+                            <a href="/pages/help-support.html" class="resource-link-row">
+                                <div class="resource-left">
+                                    <div class="resource-icon-box">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                    </div>
+                                    <span class="resource-label">Application Guide</span>
+                                </div>
+                                <span class="row-arrow">&rarr;</span>
+                            </a>
+
+                            <a href="/pages/portfolio.html" class="resource-link-row">
+                                <div class="resource-left">
+                                    <div class="resource-icon-box">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                    </div>
+                                    <span class="resource-label">Tips for a Strong Portfolio</span>
+                                </div>
+                                <span class="row-arrow">&rarr;</span>
+                            </a>
+
+                            <a href="/pages/discover.html" class="resource-link-row">
+                                <div class="resource-left">
+                                    <div class="resource-icon-box">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                                    </div>
+                                    <span class="resource-label">Previous Winners</span>
+                                </div>
+                                <span class="row-arrow">&rarr;</span>
+                            </a>
+
+                            <a href="/pages/help-support.html" class="resource-link-row">
+                                <div class="resource-left">
+                                    <div class="resource-icon-box">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                    </div>
+                                    <span class="resource-label">FAQ</span>
+                                </div>
+                                <span class="row-arrow">&rarr;</span>
+                            </a>
+                        </div>
+                    </section>
+
+                </aside>
+
+            </div>
+        </div>
     </div>
 
-    <!-- Toast Notification Container -->
-    <div id="toastContainer"></div>
+    <!-- ============================================================
+         MOBILE BOTTOM NAVIGATION (Fixed at bottom on narrow screens)
+         ============================================================ -->
+    <nav class="mobile-bottom-navbar" aria-label="Mobile Navigation">
+        <a href="/pages/home.html" class="mobile-nav-tab">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="/pages/discover.html" class="mobile-nav-tab">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>Discover</span>
+        </a>
+        <a href="/pages/create-collaboration.html" class="mobile-nav-tab plus-action-tab" aria-label="Post Collaboration">
+            <div class="mobile-plus-circle">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </div>
+            <span>+</span>
+        </a>
+        <a href="/pages/messages.html" class="mobile-nav-tab">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>Messages</span>
+        </a>
+        <a href="/pages/artist-profile.html" class="mobile-nav-tab" id="mobileProfileTab">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>Profile</span>
+        </a>
+    </nav>
 
-    <!-- Scripts -->
+    <!-- Toast Notification Banner -->
+    <div class="toast-notification-banner" id="toastNotification" style="display: none;">
+        <span class="toast-sparkle">✦</span>
+        <span class="toast-message" id="toastMessage">Success</span>
+    </div>
+
+    <!-- Essential Scripts -->
     <script src="/js/api.js"></script>
     <script src="/js/opportunities.js"></script>
 </body>

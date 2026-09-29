@@ -66,6 +66,45 @@ const api = {
         return result.data ? result.data.imageUrl : null;
     },
 
+    // --- Notifications ---
+    async getNotifications(userId, category) {
+        const params = new URLSearchParams();
+        if (userId) params.append('userId', userId);
+        if (category && category !== 'ALL') params.append('category', category);
+        const res = await fetch(`${API_BASE}/notifications?${params.toString()}`);
+        if (!res.ok) throw new Error('Failed to fetch notifications');
+        const json = await res.json();
+        return json.data;
+    },
+
+    async markNotificationRead(id, userId) {
+        const url = userId ? `${API_BASE}/notifications/${id}/read?userId=${userId}` : `${API_BASE}/notifications/${id}/read`;
+        const res = await fetch(url, { method: 'POST' });
+        if (!res.ok) throw new Error('Failed to mark notification read');
+        const json = await res.json();
+        return json.data;
+    },
+
+    async markAllNotificationsRead(userId) {
+        const url = userId ? `${API_BASE}/notifications/read-all?userId=${userId}` : `${API_BASE}/notifications/read-all`;
+        const res = await fetch(url, { method: 'POST' });
+        if (!res.ok) throw new Error('Failed to mark all notifications read');
+        const json = await res.json();
+        return json.data;
+    },
+
+    async createNotification(data, userId) {
+        const url = userId ? `${API_BASE}/notifications?userId=${userId}` : `${API_BASE}/notifications`;
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error('Failed to create notification');
+        const json = await res.json();
+        return json.data;
+    },
+
     // --- Module 2: Home APIs ---
     async getFeaturedArtists() {
         const response = await fetch(`${API_BASE}/home/featured-artists`);
@@ -190,6 +229,20 @@ const api = {
             throw new Error(result.message || 'Failed to delete portfolio item');
         }
         return result.data;
+    },
+
+    async uploadImage(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+        const response = await fetch(`${API_BASE}/artworks/upload`, {
+            method: 'POST',
+            body: formData
+        });
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to upload image');
+        }
+        return (result.data && result.data.imageUrl) ? result.data.imageUrl : (result.imageUrl || result.data);
     },
 
     async getOpportunities(category, location, q) {
@@ -714,10 +767,68 @@ const api = {
         });
         const result = await response.json();
         return result.data;
+    },
+
+    // --- Module 12: Messages & Conversations ---
+    async getConversations(userId) {
+        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
+        const response = await fetch(`${API_BASE}/messages/conversations${query}`);
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to fetch conversations');
+        }
+        return result.data || [];
+    },
+
+    async getConversationMessages(conversationId, userId) {
+        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
+        const response = await fetch(`${API_BASE}/messages/conversations/${conversationId}${query}`);
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to fetch messages');
+        }
+        return result.data || [];
+    },
+
+    async sendMessage(conversationId, messageText, userId) {
+        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
+        const response = await fetch(`${API_BASE}/messages/conversations/${conversationId}${query}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messageText })
+        });
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to send message');
+        }
+        return result.data;
+    },
+
+    async startConversation(recipientId, contextData = {}, userId) {
+        const query = userId ? `?userId=${encodeURIComponent(userId)}` : '';
+        const payload = {
+            recipientId: Number(recipientId),
+            contextType: contextData.contextType || 'DIRECT',
+            contextId: contextData.contextId || null,
+            contextTitle: contextData.contextTitle || null,
+            contextImage: contextData.contextImage || null,
+            contextUrl: contextData.contextUrl || null
+        };
+        const response = await fetch(`${API_BASE}/messages/conversations${query}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Failed to start conversation');
+        }
+        return result.data;
     }
 };
 
 window.ArtSphereAPI = api;
+window.api = api;
 
 // ==============================================================================
 // Universal Liquid Glass Navigation & User Dropdown Controller
@@ -843,6 +954,8 @@ function initUniversalNavigation() {
 }
 
 // Global export & auto-init on DOMContentLoaded
+window.api = api;
+window.ArtSphereAPI = api;
 window.initNavigation = initUniversalNavigation;
 window.initUniversalNavigation = initUniversalNavigation;
 

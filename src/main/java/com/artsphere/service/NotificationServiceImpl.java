@@ -35,4 +35,10 @@ public class NotificationServiceImpl implements NotificationService {
         Long targetUserId = (userId != null && userId > 0) ? userId : 101L;
         return notificationRepository.markAllAsRead(targetUserId);
     }
+
+    @Override
+    public void createNotification(Long userId, String type, String title, String message, Long senderId, String senderName, String senderAvatar, String entityType, Long entityId, String actionUrl) {
+        Long targetUserId = (userId != null && userId > 0) ? userId : 101L;
+        notificationRepository.createNotification(targetUserId, type, title, message, senderId, senderName, senderAvatar, entityType, entityId, actionUrl);
+    }
 }

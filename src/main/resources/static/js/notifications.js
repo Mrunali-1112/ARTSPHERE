@@ -1,21 +1,82 @@
 /**
- * ArtSphere — Notifications Script (Editorial Neo-Brutalist)
- * Handles activity stream loading, category filtering, unread status toggles, and nav dropdown
+   ArtSphere — Notifications Center Script
+   Pastel-Purple Creative Community Dashboard
+   Real Data, REST API synchronization, filtering, and interactive state
  */
+
+let currentUserId = 101;
+let currentCategory = 'ALL';
+let channelPreferences = {
+    collab: true,
+    opencall: true,
+    guild: true
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     initNotificationsPage();
 });
 
-let currentUserId = 101;
-let currentCategory = 'ALL';
-
 async function initNotificationsPage() {
-    // 1. Universal Nav Dropdown & Mobile Toggle
+    // 1. Resolve User ID from URL or Session
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramUserId = urlParams.get('userId');
+    if (paramUserId && !isNaN(paramUserId)) {
+        currentUserId = parseInt(paramUserId, 10);
+    } else {
+        try {
+            if (window.api && typeof window.api.getCurrentUser === 'function') {
+                const currentUser = await window.api.getCurrentUser();
+                if (currentUser && currentUser.id) {
+                    currentUserId = currentUser.id;
+                    updateUserUI(currentUser);
+                }
+            }
+        } catch (ignored) {}
+    }
+
+    // 2. Setup Navigation Controls
+    setupNavControls();
+
+    // 3. Setup Filter Tabs
+    setupFilterTabs();
+
+    // 4. Setup Channel Toggles
+    setupChannelToggles();
+
+    // 5. Setup Action Buttons (Mark all, Retry)
+    setupActionButtons();
+
+    // 6. Fetch & Load Live Notifications from Backend
+    await loadNotifications();
+}
+
+function updateUserUI(user) {
+    const avatarEls = [
+        document.getElementById('headerUserAvatar'),
+        document.getElementById('sidebarUserAvatar')
+    ];
+    const nameEls = [
+        document.getElementById('dropdownUserName'),
+        document.getElementById('sidebarUserName')
+    ];
+    const roleEls = [
+        document.getElementById('dropdownUserBio'),
+        document.getElementById('sidebarUserRole')
+    ];
+
+    const avatarUrl = user.profilePicture || user.avatarUrl || '/images/user_avatar_nav.png';
+    const name = user.fullName || user.username || 'Aanya Deshmukh';
+    const role = user.artistType || user.bio || 'Visual Artist';
+
+    avatarEls.forEach(el => { if (el) el.src = avatarUrl; });
+    nameEls.forEach(el => { if (el) el.textContent = name; });
+    roleEls.forEach(el => { if (el) el.textContent = role; });
+}
+
+function setupNavControls() {
+    // Profile Dropdown
     const userAvatarBtn = document.getElementById('userAvatarBtn');
     const userDropdownPanel = document.getElementById('userDropdownPanel');
-    const navMobileToggle = document.getElementById('navMobileToggle');
-    const navLinks = document.getElementById('navLinks');
 
     if (userAvatarBtn && userDropdownPanel) {
         userAvatarBtn.addEventListener('click', (e) => {
@@ -30,49 +91,48 @@ async function initNotificationsPage() {
         });
     }
 
-    if (navMobileToggle && navLinks) {
-        navMobileToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('nav-links-mobile-open');
+    // Mobile Sidebar Toggle
+    const mobileNavToggle = document.getElementById('mobileNavToggle');
+    const dashboardSidebar = document.getElementById('dashboardSidebar');
+    if (mobileNavToggle && dashboardSidebar) {
+        mobileNavToggle.addEventListener('click', () => {
+            dashboardSidebar.classList.toggle('mobile-open');
         });
     }
 
-    // 2. Resolve User ID
-    const urlParams = new URLSearchParams(window.location.search);
-    const paramUserId = urlParams.get('userId');
-    if (paramUserId && !isNaN(paramUserId)) {
-        currentUserId = parseInt(paramUserId, 10);
+    // Logout
+    const logoutBtn = document.getElementById('logoutBtn');
+    const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
+    const handleLogout = async () => {
+        try {
+            if (window.api && typeof window.api.logout === 'function') {
+                await window.api.logout();
+            } else {
+                await fetch('/api/auth/logout', { method: 'POST' });
+                window.location.href = '/pages/login.html';
+            }
+        } catch {
+            window.location.href = '/pages/login.html';
+        }
+    };
+    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+    if (sidebarLogoutBtn) sidebarLogoutBtn.addEventListener('click', handleLogout);
+
+    // Search bar filter in real time
+    const searchInput = document.getElementById('dashSearchInput');
+    if (searchInput) {
+        let debounceTimer;
+        searchInput.addEventListener('input', () => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                filterCurrentCards(searchInput.value.trim().toLowerCase());
+            }, 250);
+        });
     }
-
-    // 3. Bind Actions
-    bindEvents();
-
-    // 4. Load Notifications
-    await loadNotifications();
 }
 
-function bindEvents() {
-    // Mark All As Read
-    const btnMarkAll = document.getElementById('btnMarkAllRead');
-    if (btnMarkAll) {
-        btnMarkAll.addEventListener('click', async () => {
-            try {
-                const apiObj = window.api || window.ArtSphereAPI;
-                if (apiObj && typeof apiObj.markAllNotificationsRead === 'function') {
-                    await apiObj.markAllNotificationsRead(currentUserId);
-                } else {
-                    await fetch(`/api/notifications/read-all?userId=${currentUserId}`, { method: 'POST' });
-                }
-                showToast('All notifications marked as read');
-                await loadNotifications();
-            } catch (err) {
-                console.error('Failed to mark all as read:', err);
-                showToast('Could not mark all as read', 'error');
-            }
-        });
-    }
-
-    // Category Tabs
-    const tabs = document.querySelectorAll('.category-tab');
+function setupFilterTabs() {
+    const tabs = document.querySelectorAll('.notif-filter-pill');
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             tabs.forEach(t => {
@@ -88,78 +148,170 @@ function bindEvents() {
     });
 }
 
+function setupChannelToggles() {
+    const toggleCollab = document.getElementById('toggleCollabInquiries');
+    const toggleOpenCalls = document.getElementById('toggleOpenCalls');
+    const toggleGuild = document.getElementById('toggleGuildMessages');
+
+    const updateFilterFromToggles = () => {
+        channelPreferences.collab = toggleCollab ? toggleCollab.checked : true;
+        channelPreferences.opencall = toggleOpenCalls ? toggleOpenCalls.checked : true;
+        channelPreferences.guild = toggleGuild ? toggleGuild.checked : true;
+        applyChannelFilters();
+    };
+
+    if (toggleCollab) toggleCollab.addEventListener('change', updateFilterFromToggles);
+    if (toggleOpenCalls) toggleOpenCalls.addEventListener('change', updateFilterFromToggles);
+    if (toggleGuild) toggleGuild.addEventListener('change', updateFilterFromToggles);
+}
+
+function applyChannelFilters() {
+    const cards = document.querySelectorAll('.notif-card');
+    cards.forEach(card => {
+        const type = (card.getAttribute('data-type') || '').toUpperCase();
+        let visible = true;
+        if (!channelPreferences.collab && type === 'COLLABORATION') visible = false;
+        if (!channelPreferences.opencall && type === 'OPPORTUNITY') visible = false;
+        if (!channelPreferences.guild && (type === 'COMMUNITY' || type === 'EVENT')) visible = false;
+        card.style.display = visible ? 'flex' : 'none';
+    });
+
+    // Check if any cards visible in each group
+    const groups = document.querySelectorAll('.notif-time-group');
+    let totalVisible = 0;
+    groups.forEach(group => {
+        const groupCards = group.querySelectorAll('.notif-card');
+        let groupHasVisible = false;
+        groupCards.forEach(c => {
+            if (c.style.display !== 'none') {
+                groupHasVisible = true;
+                totalVisible++;
+            }
+        });
+        group.style.display = groupHasVisible ? 'flex' : 'none';
+    });
+
+    const emptyState = document.getElementById('notificationsEmptyState');
+    if (emptyState) {
+        emptyState.style.display = totalVisible === 0 ? 'flex' : 'none';
+    }
+}
+
+function filterCurrentCards(term) {
+    const cards = document.querySelectorAll('.notif-card');
+    if (!term) {
+        cards.forEach(c => c.style.display = 'flex');
+        applyChannelFilters();
+        return;
+    }
+
+    let visibleCount = 0;
+    cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        const matches = text.includes(term);
+        card.style.display = matches ? 'flex' : 'none';
+        if (matches) visibleCount++;
+    });
+
+    const emptyState = document.getElementById('notificationsEmptyState');
+    if (emptyState) {
+        emptyState.style.display = visibleCount === 0 ? 'flex' : 'none';
+    }
+}
+
+function setupActionButtons() {
+    // Mark All as Read
+    const btnMarkAll = document.getElementById('btnMarkAllRead');
+    if (btnMarkAll) {
+        btnMarkAll.addEventListener('click', async () => {
+            try {
+                if (window.api && typeof window.api.markAllNotificationsRead === 'function') {
+                    await window.api.markAllNotificationsRead(currentUserId);
+                } else {
+                    const res = await fetch(`/api/notifications/read-all?userId=${currentUserId}`, { method: 'POST' });
+                    if (!res.ok) throw new Error('API failed');
+                }
+
+                // Update UI immediately
+                document.querySelectorAll('.notif-card.unread').forEach(card => {
+                    card.classList.remove('unread');
+                });
+                updateUnreadIndicators(0);
+                showToast('All notifications marked as read');
+            } catch (err) {
+                console.error('Failed to mark all notifications read:', err);
+                showToast('Unable to mark all as read. Please try again.', 'error');
+            }
+        });
+    }
+
+    // Retry Button
+    const btnRetry = document.getElementById('btnRetryLoad');
+    if (btnRetry) {
+        btnRetry.addEventListener('click', () => {
+            loadNotifications();
+        });
+    }
+}
+
 async function loadNotifications() {
     const stream = document.getElementById('notificationsStream');
     const emptyState = document.getElementById('notificationsEmptyState');
-    const unreadPill = document.getElementById('unreadCountPill');
-    const bellDot = document.getElementById('headerBellDot');
+    const errorState = document.getElementById('notificationsErrorState');
+
+    if (errorState) errorState.style.display = 'none';
+    if (emptyState) emptyState.style.display = 'none';
 
     if (stream) {
         stream.innerHTML = `
-            <div class="notif-loading-box" style="text-align: center; padding: 40px; background: var(--color-surface); border: var(--border-width) solid var(--color-ink); border-radius: var(--radius-card);">
-                <div class="spinner"></div>
-                <p style="margin-top: 12px; color: var(--color-ink-muted);">Loading activity dispatches...</p>
+            <div class="notif-state-card" id="notifLoadingBox">
+                <div class="notif-spinner"></div>
+                <p class="notif-state-desc">Loading activity dispatches...</p>
             </div>
         `;
     }
 
     try {
         let resData = null;
-        const apiObj = window.api || window.ArtSphereAPI;
-        if (apiObj && typeof apiObj.getNotifications === 'function') {
-            resData = await apiObj.getNotifications(currentUserId, currentCategory);
+        if (window.api && typeof window.api.getNotifications === 'function') {
+            resData = await window.api.getNotifications(currentUserId, currentCategory);
         } else {
             const params = new URLSearchParams();
             if (currentUserId) params.append('userId', currentUserId);
             if (currentCategory && currentCategory !== 'ALL') params.append('category', currentCategory);
             const res = await fetch(`/api/notifications?${params.toString()}`);
+            if (!res.ok) throw new Error('Failed to load notifications from server');
             const json = await res.json();
             resData = json.data;
         }
 
-        let notifications = resData ? (resData.notifications || []) : [];
-        let unreadCount = resData ? (resData.unreadCount || 0) : 0;
+        const notifications = resData ? (resData.notifications || []) : [];
+        const unreadCount = resData ? (resData.unreadCount || 0) : 0;
 
-        // If backend has no notifications yet, provide rich initial studio notifications
-        if (notifications.length === 0 && currentCategory === 'ALL') {
-            notifications = getSampleNotifications();
-            unreadCount = notifications.filter(n => !n.read).length;
-        }
-
-        // Filter if category selected
-        if (currentCategory !== 'ALL') {
-            notifications = notifications.filter(n => n.type === currentCategory);
-            unreadCount = notifications.filter(n => !n.read).length;
-        }
-
-        // Update Unread Badges
-        if (unreadPill) {
-            if (unreadCount > 0) {
-                unreadPill.textContent = `${unreadCount} new`;
-                unreadPill.style.display = 'inline-block';
-            } else {
-                unreadPill.style.display = 'none';
-            }
-        }
-
-        if (bellDot) {
-            bellDot.style.display = unreadCount > 0 ? 'block' : 'none';
-        }
+        // Update Unread indicator badge & header dot
+        updateUnreadIndicators(unreadCount);
 
         if (!notifications || notifications.length === 0) {
             if (stream) stream.innerHTML = '';
-            if (emptyState) emptyState.style.display = 'block';
+            if (emptyState) emptyState.style.display = 'flex';
             return;
         }
 
-        if (emptyState) emptyState.style.display = 'none';
         renderNotificationGroups(notifications);
+        applyChannelFilters();
 
     } catch (err) {
-        console.error('Failed to load notifications:', err);
-        // Fallback to sample data
-        const notifications = getSampleNotifications();
-        renderNotificationGroups(notifications);
+        console.error('Failed to load notifications from API:', err);
+        if (stream) stream.innerHTML = '';
+        if (emptyState) emptyState.style.display = 'none';
+        if (errorState) errorState.style.display = 'flex';
+    }
+}
+
+function updateUnreadIndicators(unreadCount) {
+    const bellDot = document.getElementById('headerBellDot');
+    if (bellDot) {
+        bellDot.style.display = unreadCount > 0 ? 'block' : 'none';
     }
 }
 
@@ -167,7 +319,7 @@ function renderNotificationGroups(notifications) {
     const stream = document.getElementById('notificationsStream');
     if (!stream) return;
 
-    // Group notifications into Today, This Week, Earlier
+    // Group items into Today, This Week, Earlier
     const groups = {
         'Today': [],
         'This Week': [],
@@ -189,20 +341,21 @@ function renderNotificationGroups(notifications) {
         const items = groups[groupName];
         if (items && items.length > 0) {
             html += `
-                <div class="notif-group-section">
-                    <div class="notif-group-header">
-                        <span>✦ ${groupName}</span>
+                <section class="notif-time-group" data-group-name="${groupName}">
+                    <div class="notif-group-heading">
+                        <span class="heading-bullet">•</span>
+                        <span>${groupName}</span>
                     </div>
-                    <div class="notif-group-list" style="display: flex; flex-direction: column; gap: 14px;">
+                    <div class="notif-cards-list">
                         ${items.map(item => createNotificationCardHtml(item)).join('')}
                     </div>
-                </div>
+                </section>
             `;
         }
     });
 
     stream.innerHTML = html;
-    bindCardActions();
+    bindCardInteractions();
 }
 
 function createNotificationCardHtml(n) {
@@ -210,152 +363,142 @@ function createNotificationCardHtml(n) {
     const title = escapeHtml(n.title || '');
     const message = escapeHtml(n.message || '');
     const timeAgo = escapeHtml(n.timeAgo || 'Recently');
-    const isCollabReq = (n.type === 'COLLABORATION' && (n.entityType === 'COLLABORATION_REQUEST' || title.toLowerCase().includes('request') || title.toLowerCase().includes('pitch')));
+    const type = (n.type || 'STUDIO').toUpperCase();
+    const badgeClass = getBadgeClass(type);
+
+    const isCollabPending = (type === 'COLLABORATION' && (n.entityType === 'COLLABORATION_REQUEST' || title.toLowerCase().includes('request')));
 
     const avatarHtml = n.senderAvatar ? `
         <img src="${escapeHtml(n.senderAvatar)}" alt="${escapeHtml(n.senderName || 'Artist')}" class="notif-avatar" onerror="this.src='/images/artist_profile_avatar.png'">
     ` : `
-        <div class="notif-icon-fallback">
-            ${getCategoryIconText(n.type)}
-        </div>
+        <div class="notif-avatar-fallback">${getInitialLetter(n.senderName || n.type)}</div>
     `;
 
     return `
-        <div class="notif-card-item ${isUnread ? 'unread' : ''}"
-             data-id="${n.id}"
-             data-action-url="${escapeHtml(n.actionUrl || '')}"
-             data-type="${escapeHtml(n.type || '')}">
+        <article class="notif-card ${isUnread ? 'unread' : ''}"
+                 data-id="${n.id}"
+                 data-action-url="${escapeHtml(n.actionUrl || '')}"
+                 data-type="${escapeHtml(type)}">
             
-            <div class="notif-item-left">
+            <div class="notif-card-main">
                 ${avatarHtml}
                 <div class="notif-texts">
-                    <div class="notif-title-line">
-                        <strong class="notif-author-title">${title}</strong>
-                        <span class="notif-category-badge">${escapeHtml(n.type || 'STUDIO')}</span>
+                    <div class="notif-title-row">
+                        <h4 class="notif-title-text">${title}</h4>
+                        <span class="notif-badge ${badgeClass}">${escapeHtml(type)}</span>
                     </div>
-                    ${message ? `<p class="notif-message-text">${message}</p>` : ''}
+                    ${message ? `<p class="notif-message-preview">${message}</p>` : ''}
                     <span class="notif-time-text">${timeAgo}</span>
                 </div>
             </div>
 
-            <div class="notif-item-right">
-                ${isCollabReq ? `
-                    <button class="btn-notif-action" data-btn-action="accept" data-notif-id="${n.id}">Accept</button>
-                    <button class="btn-notif-action" style="background: var(--color-paper);" data-btn-action="reject" data-notif-id="${n.id}">Decline</button>
+            <div class="notif-card-actions">
+                ${isCollabPending ? `
+                    <button type="button" class="btn-card-action btn-card-accept" data-btn-action="accept" data-notif-id="${n.id}" data-entity-id="${n.entityId || ''}">Accept</button>
+                    <button type="button" class="btn-card-action btn-card-decline" data-btn-action="decline" data-notif-id="${n.id}" data-entity-id="${n.entityId || ''}">Decline</button>
                 ` : `
-                    <a href="${escapeHtml(n.actionUrl || '/pages/feed.html')}" class="btn-notif-action">View &rarr;</a>
+                    <a href="${escapeHtml(n.actionUrl || '/pages/home.html')}" class="btn-card-action btn-card-view">View &rarr;</a>
                 `}
+                <button type="button" class="btn-card-dots" aria-label="Notification options" title="More options">⋮</button>
             </div>
-        </div>
+        </article>
     `;
 }
 
-function getCategoryIconText(type) {
-    const upper = (type || '').toUpperCase();
-    if (upper === 'EVENT') return '📅';
-    if (upper === 'OPPORTUNITY') return '💼';
-    if (upper === 'COLLABORATION') return '🤝';
-    return '✦';
+function getBadgeClass(type) {
+    switch (type) {
+        case 'COLLABORATION': return 'badge-collaboration';
+        case 'PORTFOLIO': return 'badge-portfolio';
+        case 'ARTWORK': return 'badge-artwork';
+        case 'EVENT': return 'badge-event';
+        case 'OPPORTUNITY': return 'badge-opportunity';
+        case 'COMMUNITY': return 'badge-community';
+        case 'MESSAGE': return 'badge-message';
+        case 'SOCIAL': return 'badge-social';
+        default: return 'badge-collaboration';
+    }
 }
 
-function bindCardActions() {
-    const cards = document.querySelectorAll('.notif-card-item');
+function getInitialLetter(name) {
+    if (!name) return '✦';
+    return name.trim().charAt(0).toUpperCase();
+}
+
+function bindCardInteractions() {
+    const cards = document.querySelectorAll('.notif-card');
+
     cards.forEach(card => {
         card.addEventListener('click', async (e) => {
-            // Ignore if action button was clicked
-            if (e.target.closest('[data-btn-action]') || e.target.closest('a')) return;
+            // Ignore if Accept/Decline action button or dots menu was clicked
+            if (e.target.closest('[data-btn-action]') || e.target.closest('.btn-card-dots')) {
+                return;
+            }
 
             const id = parseInt(card.getAttribute('data-id'), 10);
             const actionUrl = card.getAttribute('data-action-url');
 
-            // Mark as read
+            // Optimistically update card read state in UI
+            card.classList.remove('unread');
+
+            // Call backend mark read
             try {
-                const apiObj = window.api || window.ArtSphereAPI;
-                if (apiObj && typeof apiObj.markNotificationRead === 'function') {
-                    await apiObj.markNotificationRead(id, currentUserId);
+                if (window.api && typeof window.api.markNotificationRead === 'function') {
+                    await window.api.markNotificationRead(id, currentUserId);
                 } else {
                     await fetch(`/api/notifications/${id}/read?userId=${currentUserId}`, { method: 'POST' });
                 }
             } catch (err) {
-                console.warn('Failed to mark read:', err);
+                console.warn('Failed to mark notification as read:', err);
             }
 
+            // Navigate to action URL
             if (actionUrl && actionUrl.trim() !== '') {
                 window.location.href = actionUrl;
             }
         });
     });
 
-    // Accept / Reject buttons
+    // Accept / Decline Buttons on Collaboration Requests
     const actionBtns = document.querySelectorAll('[data-btn-action]');
     actionBtns.forEach(btn => {
         btn.addEventListener('click', async (e) => {
             e.stopPropagation();
             const action = btn.getAttribute('data-btn-action');
             const notifId = parseInt(btn.getAttribute('data-notif-id'), 10);
+            const entityId = btn.getAttribute('data-entity-id');
 
+            // Mark notification read
             try {
-                const apiObj = window.api || window.ArtSphereAPI;
-                if (apiObj && typeof apiObj.markNotificationRead === 'function') {
-                    await apiObj.markNotificationRead(notifId, currentUserId);
+                if (window.api && typeof window.api.markNotificationRead === 'function') {
+                    await window.api.markNotificationRead(notifId, currentUserId);
                 }
             } catch {}
 
+            // If entityId refers to a collaboration request, respond on the backend
+            if (entityId && !isNaN(entityId)) {
+                try {
+                    const status = action === 'accept' ? 'APPROVED' : 'REJECTED';
+                    await fetch(`/api/collaborations/requests/${entityId}/respond?status=${status}&userId=${currentUserId}`, { method: 'POST' });
+                } catch (ignored) {}
+            }
+
             showToast(action === 'accept' ? 'Collaboration accepted! Connecting in studio...' : 'Collaboration declined.');
-            setTimeout(() => {
-                window.location.href = '/pages/collaboration-requests.html';
-            }, 800);
+            
+            // Remove buttons and replace with status tag or navigate
+            const actionsContainer = btn.closest('.notif-card-actions');
+            if (actionsContainer) {
+                actionsContainer.innerHTML = `
+                    <span style="font-size: 0.8rem; font-weight: 700; color: ${action === 'accept' ? '#178358' : '#877E9C'};">
+                        ${action === 'accept' ? 'Accepted' : 'Declined'}
+                    </span>
+                    <a href="/pages/collaborators.html" class="btn-card-action btn-card-view">View &rarr;</a>
+                `;
+            }
+
+            const card = btn.closest('.notif-card');
+            if (card) card.classList.remove('unread');
         });
     });
-}
-
-function getSampleNotifications() {
-    return [
-        {
-            id: 901,
-            type: 'COLLABORATION',
-            title: 'Rohan Mehta sent a collaboration pitch',
-            message: 'Invited you to co-create guitar soundscapes for "A Brighter Day" visual animation.',
-            timeAgo: '15 mins ago',
-            timeGroup: 'Today',
-            read: false,
-            senderName: 'Rohan Mehta',
-            senderAvatar: '/images/artist_rohan_avatar.png',
-            actionUrl: '/pages/collaboration-requests.html'
-        },
-        {
-            id: 902,
-            type: 'OPPORTUNITY',
-            title: 'Kala Ghoda Open Call Deadline',
-            message: 'Application closing in 48 hours for the Digital Art Pavilion 2026.',
-            timeAgo: '2 hours ago',
-            timeGroup: 'Today',
-            read: false,
-            actionUrl: '/pages/opportunity-details.html?id=501'
-        },
-        {
-            id: 903,
-            type: 'EVENT',
-            title: 'Watercolor & Live Jazz Workshop',
-            message: 'Your registration is confirmed. ArtStudio Bandra, tomorrow at 10:00 AM.',
-            timeAgo: 'Yesterday',
-            timeGroup: 'This Week',
-            read: true,
-            actionUrl: '/pages/event-details.html?id=301'
-        },
-        {
-            id: 904,
-            type: 'COLLABORATION',
-            title: 'Kavya Iyer accepted your dance inquiry',
-            message: 'Shared rehearsal footage for the upcoming Contemporary Dusk study.',
-            timeAgo: '3 days ago',
-            timeGroup: 'This Week',
-            read: true,
-            senderName: 'Kavya Iyer',
-            senderAvatar: '/images/artist_kavya_avatar.png',
-            actionUrl: '/pages/collaborators.html'
-        }
-    ];
 }
 
 function escapeHtml(str) {
@@ -373,16 +516,30 @@ function showToast(message, type = 'success') {
     if (!container) {
         container = document.createElement('div');
         container.id = 'toastContainer';
+        container.style.cssText = 'position: fixed; bottom: 28px; right: 28px; display: flex; flex-direction: column; gap: 8px; z-index: 9999;';
         document.body.appendChild(container);
     }
 
     const toast = document.createElement('div');
-    toast.className = `toast-pill ${type}`;
-    toast.innerHTML = `<span>✦</span><span>${message}</span>`;
+    toast.style.cssText = `
+        background: ${type === 'error' ? '#D32F2F' : '#341D6F'};
+        color: #FFFFFF;
+        padding: 10px 20px;
+        border-radius: 9999px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        font-size: 0.88rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    `;
+    toast.innerHTML = `<span>✦</span><span>${escapeHtml(message)}</span>`;
     container.appendChild(toast);
 
     setTimeout(() => {
-        toast.classList.add('fade-out');
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(6px)';
         setTimeout(() => toast.remove(), 300);
-    }, 2600);
+    }, 2800);
 }

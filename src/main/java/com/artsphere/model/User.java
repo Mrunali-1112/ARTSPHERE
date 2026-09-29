@@ -98,6 +98,10 @@ public class User {
         return profilePicture;
     }
 
+    public String getAvatarUrl() {
+        return profilePicture;
+    }
+
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
     }

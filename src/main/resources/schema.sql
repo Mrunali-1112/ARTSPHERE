@@ -269,7 +269,7 @@ CREATE TABLE opportunities (
 );
 
 -- 14. Applications Table
-CREATE TABLE applications (
+CREATE TABLE IF NOT EXISTS applications (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     opportunity_id BIGINT NOT NULL,
@@ -280,3 +280,42 @@ CREATE TABLE applications (
     CONSTRAINT fk_app_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     CONSTRAINT fk_app_opportunity FOREIGN KEY (opportunity_id) REFERENCES opportunities(id) ON DELETE CASCADE
 );
+
+-- 15. Conversations Table
+CREATE TABLE IF NOT EXISTS conversations (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) DEFAULT NULL,
+    context_type VARCHAR(50) DEFAULT NULL,
+    context_id BIGINT DEFAULT NULL,
+    context_title VARCHAR(255) DEFAULT NULL,
+    context_image VARCHAR(255) DEFAULT NULL,
+    context_url VARCHAR(255) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- 16. Conversation Members Table
+CREATE TABLE IF NOT EXISTS conversation_members (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    conversation_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_read_at TIMESTAMP NULL DEFAULT NULL,
+    UNIQUE KEY uq_conv_member (conversation_id, user_id),
+    CONSTRAINT fk_cm_conversation FOREIGN KEY (conversation_id) REFERENCES conversations(id) ON DELETE CASCADE,
+    CONSTRAINT fk_cm_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- 17. Messages Table
+CREATE TABLE IF NOT EXISTS messages (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    conversation_id BIGINT DEFAULT NULL,
+    sender_id BIGINT NOT NULL,
+    receiver_id BIGINT DEFAULT NULL,
+    message_text TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_msg_conversation FOREIGN KEY (conversation_id) REFERENCES conversations(id) ON DELETE CASCADE,
+    CONSTRAINT fk_msg_sender FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE
+);
+

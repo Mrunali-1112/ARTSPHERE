@@ -3,387 +3,666 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArtSphere — Creator Studio Dashboard</title>
-    <link rel="stylesheet" href="/css/common.css">
+    <title>ArtSphere — Studio Dashboard</title>
+    <link rel="icon" type="image/png" href="/images/logo_nav.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/home.css">
 </head>
-<body>
-    <!-- Universal Floating Capsule Navigation -->
-    <header class="capsule-nav-wrapper" id="navWrapper">
-        <nav class="capsule-nav">
-            <a href="/pages/home.html" class="nav-brand">
-                <span class="brand-motif">✦</span>
-                <span>ArtSphere</span>
-            </a>
-            
-            <div class="nav-links" id="navLinks">
-                <a href="/pages/home.html" class="nav-link active">Home</a>
-                <a href="/pages/discover.html" class="nav-link">Discover</a>
-                <a href="/pages/communities.html" class="nav-link">Communities</a>
-                <a href="/pages/events.html" class="nav-link">Events</a>
-                <a href="/pages/collaborators.html" class="nav-link">Collaborate</a>
-                <a href="/pages/opportunities.html" class="nav-link">Opportunities</a>
-            </div>
+<body class="dashboard-body">
 
-            <div class="nav-actions">
-                <!-- Search Button -->
-                <a href="/pages/discover.html" class="nav-icon-btn" aria-label="Search Creators & Art">
-                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </a>
+    <!-- Mobile Drawer Overlay Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-                <!-- Notification Bell -->
-                <a href="/pages/notifications.html" class="nav-icon-btn notification-nav-wrapper" aria-label="Notifications">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
-                    <span class="notification-dot" id="navNotificationDot"></span>
-                </a>
-
-                <!-- Creator Avatar & Dropdown -->
-                <div class="user-menu-wrapper">
-                    <button class="user-avatar-trigger" id="userAvatarBtn" aria-label="User Account Menu">
-                        <img src="/images/user_avatar_nav.png" alt="Creator Profile" class="user-nav-avatar" id="headerUserAvatar">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="chevron-arrow">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-                    
-                    <div class="user-dropdown-panel" id="userDropdownPanel">
-                        <div class="dropdown-user-info">
-                            <strong id="dropdownUserName">Aanya Deshmukh</strong>
-                            <span id="dropdownUserBio">Visual & Digital Artist</span>
-                        </div>
-                        <div class="dropdown-divider"></div>
-                        <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            <span>My Artist Profile</span>
-                        </a>
-                        <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                            <span>My Portfolio</span>
-                        </a>
-                        <a href="/pages/create-post.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                            <span>Share New Work</span>
-                        </a>
-                        <a href="/pages/feed.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                            <span>Community Feed</span>
-                        </a>
-                        <a href="/pages/collaborators.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                            <span>Collaborations</span>
-                        </a>
-                        <a href="/pages/my-applications.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                            <span>My Applications</span>
-                        </a>
-                        <a href="/pages/settings.html" class="dropdown-item-link">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                            <span>Settings</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <button class="dropdown-item-link text-danger" id="logoutBtn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                            <span>Log Out</span>
-                        </button>
+    <div class="dashboard-container">
+        <!-- ============================================================
+             LEFT SIDEBAR (Sticky, ~240px wide)
+             ============================================================ -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <!-- Brand Header -->
+            <div class="sidebar-brand-wrapper">
+                <a href="/pages/home.html" class="sidebar-brand-link">
+                    <div class="brand-sparkle-icon">✦</div>
+                    <div class="brand-text-block">
+                        <span class="brand-title">ArtSphere</span>
+                        <span class="brand-tagline">The Artist Community</span>
                     </div>
-                </div>
-
-                <!-- Mobile Toggle -->
-                <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle navigation">
-                    <span></span>
-                    <span></span>
+                </a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close navigation">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
                 </button>
             </div>
-        </nav>
-    </header>
 
-    <div class="page-wrapper">
-        <main>
-            <!-- 1. Studio Header & Pulse (Asymmetric 8 + 4 Grid) -->
-            <section class="dashboard-hero-section">
-                <div class="grid-12">
-                    <div class="col-8 col-md-8 col-sm-4 dashboard-hero-left">
-                        <div class="pill-tag accent-yellow">
-                            <span>✦</span>
-                            <span>CREATIVE STUDIO</span>
-                        </div>
-                        <h1 class="text-display dashboard-title">
-                            Welcome back,<br>
-                            <span class="hero-title-accent">Creator.</span>
-                        </h1>
-                        <p class="dashboard-lead-text">
-                            Discover new works from creators across disciplines, respond to active collaboration calls, and track upcoming studio sessions.
-                        </p>
-                        <div class="dashboard-actions-row">
-                            <a href="/pages/create-post.html" class="btn-pill-primary">
-                                <span>Share New Work</span>
-                                <span>+</span>
-                            </a>
-                            <a href="/pages/collaborators.html" class="btn-pill-secondary">
-                                <span>Browse Open Collabs</span>
-                                <span>&rarr;</span>
-                            </a>
-                        </div>
+            <!-- Primary Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Main Navigation">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/home.html" class="sidebar-nav-item active">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/discover.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Discover</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/communities.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Communities</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/events.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Events</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/collaborators.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path>
+                                    <path d="M18 8l4 4-4 4"></path>
+                                    <path d="M8 12h14"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Collaborate</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/opportunities.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Opportunities</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- Secondary Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Communication">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/messages.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Messages</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/notifications.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Notifications</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Bottom Section: Profile Mini-Card & System Actions -->
+            <div class="sidebar-bottom-section">
+                <!-- User Profile Mini-Card -->
+                <a href="/pages/artist-profile.html" class="sidebar-profile-card" id="sidebarProfileCard" title="View Profile">
+                    <img src="/images/user_avatar_nav.png" alt="Profile" class="sidebar-user-avatar" id="sidebarUserAvatar">
+                    <div class="sidebar-user-meta">
+                        <span class="sidebar-user-name" id="sidebarUserName">Mrunali</span>
+                        <span class="sidebar-view-profile">View Profile</span>
                     </div>
+                    <svg class="sidebar-card-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </a>
 
-                    <div class="col-4 col-md-8 col-sm-4 dashboard-hero-right">
-                        <!-- Studio Status Ledger -->
-                        <div class="card-cream studio-ledger-card">
-                            <div class="ledger-header">
-                                <span class="pill-tag">STUDIO ACTIVITY</span>
-                                <span class="ledger-live-pulse">● LIVE</span>
-                            </div>
-                            <div class="ledger-items">
-                                <a href="/pages/collaborators.html" class="ledger-item">
-                                    <div class="ledger-item-left">
-                                        <span class="ledger-item-num">3</span>
-                                        <span class="ledger-item-title">Active Projects</span>
-                                    </div>
-                                    <span class="ledger-arrow">&rarr;</span>
-                                </a>
-                                <a href="/pages/collaboration-requests.html" class="ledger-item">
-                                    <div class="ledger-item-left">
-                                        <span class="ledger-item-num accent-tag">2</span>
-                                        <span class="ledger-item-title">Collab Inquiries</span>
-                                    </div>
-                                    <span class="ledger-arrow">&rarr;</span>
-                                </a>
-                                <a href="/pages/my-applications.html" class="ledger-item">
-                                    <div class="ledger-item-left">
-                                        <span class="ledger-item-num">4</span>
-                                        <span class="ledger-item-title">Event RSVPs</span>
-                                    </div>
-                                    <span class="ledger-arrow">&rarr;</span>
-                                </a>
-                            </div>
-                            <a href="/pages/my-applications.html" class="btn-pill-secondary ledger-cta">
-                                <span>View All Applications</span>
-                                <span>&rarr;</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 2. Art Forms Quick Filter Bar -->
-            <section class="section-discipline-bar">
-                <div class="discipline-bar-header">
-                    <span class="eyebrow">EXPLORE BY MEDIUM</span>
-                    <a href="/pages/discover.html" class="link-editorial-arrow">Directory &rarr;</a>
-                </div>
-                <div class="discipline-pill-scroll">
-                    <a href="/pages/discover.html" class="discipline-pill active">All Disciplines</a>
-                    <a href="/pages/discover.html?category=Music" class="discipline-pill">Musicians & Bands</a>
-                    <a href="/pages/discover.html?category=Dance" class="discipline-pill">Dancers & Choreographers</a>
-                    <a href="/pages/discover.html?category=Visual+Arts" class="discipline-pill">Visual Artists & Illustrators</a>
-                    <a href="/pages/discover.html?category=Photography" class="discipline-pill">Photographers</a>
-                    <a href="/pages/discover.html?category=Writing" class="discipline-pill">Writers & Lyricists</a>
-                </div>
-            </section>
-
-            <!-- 3. Featured Artists Showcase (Modular Bento Grid) -->
-            <section class="section-featured-artists">
-                <div class="section-header-row">
-                    <div>
-                        <div class="eyebrow">CURATED DISCOVERY</div>
-                        <h2 class="text-h1">Featured Creators</h2>
-                    </div>
-                    <a href="/pages/discover.html" class="link-editorial-arrow">
-                        <span>View All Artists</span>
-                        <span>&rarr;</span>
-                    </a>
-                </div>
-
-                <!-- Populated dynamically via GET /api/home/featured-artists with fallback seed -->
-                <div class="grid-12 featured-artists-bento-grid" id="featuredArtistsContainer">
-                    <!-- Aanya Deshmukh (4 cols) -->
-                    <div class="col-4 col-md-4 col-sm-4 card-base artist-bento-card">
-                        <div class="artist-cover-box">
-                            <img src="/images/artist_profile_cover.png" alt="Aanya Deshmukh Artwork" class="artist-cover-img">
-                            <span class="artist-cat-tag">Visual Artist</span>
-                        </div>
-                        <div class="artist-card-body">
-                            <div class="artist-header-row">
-                                <img src="/images/artist_profile_avatar.png" alt="Aanya Deshmukh" class="artist-avatar-sm">
-                                <div>
-                                    <h3 class="artist-card-name">Aanya Deshmukh</h3>
-                                    <span class="artist-card-loc">Mumbai, MH</span>
-                                </div>
-                            </div>
-                            <p class="artist-card-bio">Illustrator exploring everyday moments, warm light, and character art.</p>
-                            <div class="artist-card-footer">
-                                <span class="artist-stat-snippet">1.8K Followers</span>
-                                <a href="/pages/artist-profile.html?id=101" class="btn-pill-secondary btn-sm-card">View Profile &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Rohan Mehta (4 cols) -->
-                    <div class="col-4 col-md-4 col-sm-4 card-cream artist-bento-card">
-                        <div class="artist-cover-box">
-                            <img src="/images/artist_rohan_cover.png" alt="Rohan Mehta Recording" class="artist-cover-img">
-                            <span class="artist-cat-tag">Musician</span>
-                        </div>
-                        <div class="artist-card-body">
-                            <div class="artist-header-row">
-                                <img src="/images/artist_rohan_avatar.png" alt="Rohan Mehta" class="artist-avatar-sm">
-                                <div>
-                                    <h3 class="artist-card-name">Rohan Mehta</h3>
-                                    <span class="artist-card-loc">Pune, MH</span>
-                                </div>
-                            </div>
-                            <p class="artist-card-bio">Acoustic fingerstyle guitarist & indie composer creating raw, soulful singles.</p>
-                            <div class="artist-card-footer">
-                                <span class="artist-stat-snippet">2.1K Followers</span>
-                                <a href="/pages/artist-profile.html?id=102" class="btn-pill-secondary btn-sm-card">View Profile &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Kavya Iyer (4 cols) -->
-                    <div class="col-4 col-md-8 col-sm-4 card-base artist-bento-card">
-                        <div class="artist-cover-box">
-                            <img src="/images/artist_kavya_cover.png" alt="Kavya Iyer Performance" class="artist-cover-img">
-                            <span class="artist-cat-tag">Dancer</span>
-                        </div>
-                        <div class="artist-card-body">
-                            <div class="artist-header-row">
-                                <img src="/images/artist_kavya_avatar.png" alt="Kavya Iyer" class="artist-avatar-sm">
-                                <div>
-                                    <h3 class="artist-card-name">Kavya Iyer</h3>
-                                    <span class="artist-card-loc">Bengaluru, KA</span>
-                                </div>
-                            </div>
-                            <p class="artist-card-bio">Contemporary fusion dancer and stage choreographer exploring rhythmic movement.</p>
-                            <div class="artist-card-footer">
-                                <span class="artist-stat-snippet">1.4K Followers</span>
-                                <a href="/pages/artist-profile.html?id=103" class="btn-pill-secondary btn-sm-card">View Profile &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 4. Upcoming Events & Community Guild (Asymmetric 7 + 5 Split) -->
-            <section class="section-events-community">
-                <div class="grid-12">
-                    <!-- Events List (7 cols) -->
-                    <div class="col-7 col-md-8 col-sm-4 events-column">
-                        <div class="section-header-row" style="margin-bottom:24px;">
-                            <div>
-                                <div class="eyebrow">LIVE SESSIONS</div>
-                                <h2 class="text-h2">Upcoming Jams & Workshops</h2>
-                            </div>
-                            <a href="/pages/events.html" class="link-editorial-arrow">All Events &rarr;</a>
-                        </div>
-
-                        <!-- Populated dynamically via GET /api/home/upcoming-events -->
-                        <div class="events-stack" id="upcomingEventsContainer">
-                            <div class="card-base event-neo-card">
-                                <div class="event-date-stamp">
-                                    <span class="stamp-day">25</span>
-                                    <span class="stamp-month">SEP</span>
-                                </div>
-                                <div class="event-thumb-frame">
-                                    <img src="/images/event_watercolor_thumb.png" alt="Watercolor Workshop" class="event-thumb">
-                                </div>
-                                <div class="event-text-block">
-                                    <span class="pill-tag" style="margin-bottom:6px;">WORKSHOP</span>
-                                    <h3 class="event-heading">Watercolor Techniques Masterclass</h3>
-                                    <p class="event-loc-line">ArtHouse Studio, Mumbai &bull; 10:00 AM &ndash; 1:00 PM</p>
-                                </div>
-                                <div class="event-btn-cell">
-                                    <a href="/pages/event-details.html?id=301" class="btn-pill-secondary">Details &rarr;</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Community Guild (5 cols) -->
-                    <div class="col-5 col-md-8 col-sm-4 community-column">
-                        <div class="section-header-row" style="margin-bottom:24px;">
-                            <div>
-                                <div class="eyebrow">CREATIVE GUILDS</div>
-                                <h2 class="text-h2">Find Your Circle</h2>
-                            </div>
-                            <a href="/pages/communities.html" class="link-editorial-arrow">All Guilds &rarr;</a>
-                        </div>
-
-                        <div class="card-yellow community-spotlight-card">
-                            <div class="community-card-top">
-                                <span class="pill-tag" style="background:#0A0A0A; color:#FFFFFF;">FEATURED GUILD</span>
-                                <span class="community-members-badge">1,250+ Members</span>
-                            </div>
-                            <h3 class="text-h1 community-guild-title">Let's Create Together</h3>
-                            <p class="community-guild-desc">
-                                A cross-medium collective in Mumbai and Pune. Join open studio paint jams, acoustic writing sessions, and collaborative short film crews.
-                            </p>
-                            <div class="community-action-box">
-                                <a href="/pages/community-details.html?id=401" class="btn-pill-primary" style="width:100%;">Enter Community Guild &rarr;</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Universal Editorial Footer -->
-        <footer class="editorial-footer">
-            <div class="grid-12 footer-grid">
-                <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
-                    <a href="/pages/home.html" class="footer-logo">
-                        <span class="brand-motif">✦</span>
-                        <span>ArtSphere</span>
-                    </a>
-                    <p class="footer-bio">
-                        The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
-                    </p>
-                    <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
-                </div>
-
-                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
-                    <div class="footer-heading">DIRECTORY</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/discover.html">Discover Artists</a></li>
-                        <li><a href="/pages/discover.html?artForm=Musicians">Musicians</a></li>
-                        <li><a href="/pages/discover.html?artForm=Visual+Artists">Visual Artists</a></li>
-                        <li><a href="/pages/discover.html?artForm=Dancers">Dancers</a></li>
-                        <li><a href="/pages/discover.html?artForm=Photographers">Photographers</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
-                    <div class="footer-heading">PLATFORM</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/home.html">Studio Feed</a></li>
-                        <li><a href="/pages/communities.html">Communities</a></li>
-                        <li><a href="/pages/events.html">Events & Jams</a></li>
-                        <li><a href="/pages/collaborators.html">Collaborations</a></li>
-                        <li><a href="/pages/opportunities.html">Open Calls</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-3 col-md-4 col-sm-4 footer-col-links">
-                    <div class="footer-heading">ACCOUNT</div>
-                    <ul class="footer-list">
-                        <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
-                        <li><a href="/pages/my-applications.html">My Applications</a></li>
-                        <li><a href="/pages/settings.html">Account Settings</a></li>
-                        <li><a href="/pages/help-support.html">Help & Guidelines</a></li>
-                    </ul>
-                    <div class="footer-badge-box">
-                        <span class="pill-tag accent-yellow">NO ADS. PURE ART.</span>
-                    </div>
-                </div>
+                <!-- Utility Navigation -->
+                <ul class="sidebar-utility-list">
+                    <li>
+                        <a href="/pages/settings.html" class="sidebar-utility-item">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </span>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/help-support.html" class="sidebar-utility-item">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </span>
+                            <span>Help & Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <button class="sidebar-utility-item logout-action" id="sidebarLogoutBtn">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                            </span>
+                            <span>Logout</span>
+                        </button>
+                    </li>
+                </ul>
             </div>
-        </footer>
+        </aside>
+
+        <!-- ============================================================
+             MAIN CONTENT WRAPPER (Top Header + 2-Column Dashboard)
+             ============================================================ -->
+        <div class="dashboard-main-wrapper">
+            
+            <!-- Compact Top Header -->
+            <header class="dashboard-top-header">
+                <div class="header-left-cluster">
+                    <button class="mobile-menu-trigger" id="mobileMenuTrigger" aria-label="Open navigation menu">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <!-- Compact Top Search Bar -->
+                    <div class="header-search-bar">
+                        <svg class="search-lens-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="homeSearchInput" class="header-search-input" placeholder="Search artists, opportunities, events..." autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="header-right-cluster">
+                    <!-- Notification Bell -->
+                    <a href="/pages/notifications.html" class="header-icon-action" aria-label="Notifications" title="Notifications">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-indicator-dot"></span>
+                    </a>
+
+                    <!-- Creator Avatar & Dropdown -->
+                    <div class="user-menu-container">
+                        <button class="header-avatar-button" id="userAvatarBtn" aria-label="Open User Menu" aria-expanded="false">
+                            <img src="/images/user_avatar_nav.png" alt="Profile" class="header-user-avatar" id="headerUserAvatar">
+                            <svg class="avatar-chevron-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+
+                        <!-- User Dropdown Menu -->
+                        <div class="header-dropdown-panel" id="userDropdownPanel">
+                            <div class="dropdown-header-info">
+                                <strong id="dropdownUserName">Mrunali</strong>
+                                <span id="dropdownUserBio">Artist Member</span>
+                            </div>
+                            <div class="dropdown-separator"></div>
+                            <a href="/pages/artist-profile.html" class="dropdown-link-row">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <span>My Profile</span>
+                            </a>
+                            <a href="/pages/portfolio.html" class="dropdown-link-row">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                <span>My Portfolio</span>
+                            </a>
+                            <a href="/pages/my-applications.html" class="dropdown-link-row">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                <span>My Applications</span>
+                            </a>
+                            <a href="/pages/settings.html" class="dropdown-link-row">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                <span>Account Settings</span>
+                            </a>
+                            <div class="dropdown-separator"></div>
+                            <button class="dropdown-link-row danger-text" id="logoutBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                <span>Log Out</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Layout (Two-Column Workspace) -->
+            <div class="dashboard-content-body">
+                
+                <!-- ========================================================
+                     MAIN WORKSPACE (~68% width)
+                     ======================================================== -->
+                <main class="dashboard-workspace" id="mainWorkspace">
+                    
+                    <!-- 1. Hero Card: Welcome back, Creator -->
+                    <section class="home-hero-card" aria-label="Creator Studio">
+                        <div class="hero-text-block">
+                            <div class="hero-eyebrow-pill">
+                                <span>✦</span>
+                                <span>CREATIVE STUDIO</span>
+                            </div>
+                            <h1 class="hero-headline">
+                                Welcome back,<br>
+                                Creator.
+                            </h1>
+                            <p class="hero-subtext">
+                                Discover new works from creators across disciplines, respond to active collaboration calls, and track upcoming studio sessions.
+                            </p>
+                            <div class="hero-actions-row">
+                                <a href="/pages/create-post.html" class="btn-hero-primary" id="btnShareWork">
+                                    <span>Share New Work</span>
+                                    <span class="arrow-symbol">→</span>
+                                </a>
+                                <a href="/pages/collaborators.html" class="btn-hero-secondary" id="btnBrowseCollabs">
+                                    <span>Browse Open Collabs</span>
+                                    <span class="arrow-symbol">→</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="hero-visual-frame">
+                            <img src="/images/home_hero_painter.png" alt="Artist painting canvas in studio" class="hero-painter-image" onerror="this.src='/images/comm_event_watercolor.png'">
+                        </div>
+                    </section>
+
+                    <!-- 2. Explore by Medium Filter Card -->
+                    <section class="home-filter-card" aria-label="Explore by Medium">
+                        <div class="filter-card-header">
+                            <h2 class="filter-card-title">Explore by Medium</h2>
+                            <a href="/pages/discover.html" class="card-header-link">
+                                <span>View Directory</span>
+                                <span>→</span>
+                            </a>
+                        </div>
+                        <div class="medium-pills-row" id="mediumPillsRow">
+                            <button class="medium-pill-btn active" data-medium="All">All Disciplines</button>
+                            <button class="medium-pill-btn" data-medium="Music">Musicians &amp; Bands</button>
+                            <button class="medium-pill-btn" data-medium="Dance">Dancers &amp; Choreographers</button>
+                            <button class="medium-pill-btn" data-medium="Painting">Visual Artists &amp; Illustrators</button>
+                            <button class="medium-pill-btn" data-medium="Photography">Photographers</button>
+                            <button class="medium-pill-btn" data-medium="Writing">Writers &amp; Lyricists</button>
+                            <button class="medium-pill-btn" data-medium="Digital Art">Digital Art &amp; 3D</button>
+                        </div>
+                    </section>
+
+                    <!-- 3. Featured Creators (3 Cards Grid) -->
+                    <section class="creators-section" aria-label="Featured Creators">
+                        <div class="section-eyebrow">CURATED DISCOVERY</div>
+                        <div class="creators-header-row">
+                            <h2 class="creators-section-title">Featured Creators</h2>
+                            <a href="/pages/discover.html" class="view-all-link">
+                                <span>View All Artists</span>
+                                <span>→</span>
+                            </a>
+                        </div>
+
+                        <!-- 3 Cards Container populated via /api/home/featured-artists -->
+                        <div class="creators-cards-grid" id="featuredArtistsContainer">
+                            <!-- Rendered dynamically by home.js -->
+                        </div>
+                    </section>
+
+                    <!-- 4. Lower Two-Column Split: Upcoming Jams & Workshops + Find Your Circle -->
+                    <section class="home-bottom-split-section">
+                        
+                        <!-- Left: Upcoming Jams & Workshops (~58%) -->
+                        <div class="upcoming-jams-column">
+                            <div class="split-col-header">
+                                <h2 class="split-col-title">Upcoming Jams &amp; Workshops</h2>
+                                <a href="/pages/events.html" class="view-all-link">
+                                    <span>All Events</span>
+                                    <span>→</span>
+                                </a>
+                            </div>
+
+                            <!-- Horizontal Events List Container via /api/home/upcoming-events -->
+                            <div class="upcoming-events-stack" id="upcomingEventsContainer">
+                                <!-- Rendered dynamically by home.js -->
+                            </div>
+                        </div>
+
+                        <!-- Right: Find Your Circle (~42%) -->
+                        <div class="find-circle-column">
+                            <div class="split-col-header">
+                                <h2 class="split-col-title">Find Your Circle</h2>
+                                <a href="/pages/communities.html" class="view-all-link">
+                                    <span>All Guilds</span>
+                                    <span>→</span>
+                                </a>
+                            </div>
+
+                            <!-- Featured Guild Card -->
+                            <div class="guild-spotlight-card" id="guildSpotlightCard">
+                                <div class="guild-badge-row">
+                                    <span class="guild-featured-pill">FEATURED GUILD</span>
+                                    <span class="guild-members-badge">1,250+ Members</span>
+                                </div>
+                                <div class="guild-image-frame">
+                                    <img src="/images/comm_create_craft.png" alt="Creative guild gathering" class="guild-cover-img" onerror="this.src='/images/comm_creative_souls_cover.png'">
+                                </div>
+                                <h3 class="guild-spotlight-name" id="guildTitle">Let's Create Together</h3>
+                                <p class="guild-spotlight-desc" id="guildDesc">
+                                    A cross-medium collective in Mumbai and Pune. Join open studio paint jams, acoustic writing sessions, and collaborative short film crews.
+                                </p>
+                                <a href="/pages/community-details.html?id=401" class="btn-guild-cta" id="guildCtaBtn">
+                                    <span>Enter Community Guild</span>
+                                    <span>→</span>
+                                </a>
+                            </div>
+                        </div>
+
+                    </section>
+                </main>
+
+                <!-- ========================================================
+                     RIGHT SIDEBAR PANEL (~32% width)
+                     ======================================================== -->
+                <aside class="dashboard-right-panel" id="rightInfoPanel">
+                    
+                    <!-- Section 1: Studio Activity -->
+                    <section class="panel-section-box panel-activity-box">
+                        <div class="panel-box-header">
+                            <h3 class="panel-box-title">STUDIO ACTIVITY</h3>
+                            <span class="activity-live-badge">● LIVE</span>
+                        </div>
+
+                        <div class="activity-card-wrapper">
+                            <div class="activity-rows-list">
+                                <a href="/pages/collaborators.html" class="activity-row-item">
+                                    <div class="activity-icon-wrap icon-purple">
+                                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        </svg>
+                                    </div>
+                                    <div class="activity-count-badge">3</div>
+                                    <span class="activity-label-text">Active Projects</span>
+                                    <span class="activity-arrow">›</span>
+                                </a>
+
+                                <a href="/pages/collaboration-requests.html" class="activity-row-item">
+                                    <div class="activity-icon-wrap icon-pink">
+                                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="activity-count-badge">2</div>
+                                    <span class="activity-label-text">Collab Inquiries</span>
+                                    <span class="activity-arrow">›</span>
+                                </a>
+
+                                <a href="/pages/my-applications.html?category=EVENTS" class="activity-row-item">
+                                    <div class="activity-icon-wrap icon-lavender">
+                                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                                        </svg>
+                                    </div>
+                                    <div class="activity-count-badge">4</div>
+                                    <span class="activity-label-text">Event RSVPs</span>
+                                    <span class="activity-arrow">›</span>
+                                </a>
+                            </div>
+
+                            <a href="/pages/my-applications.html" class="btn-all-applications">
+                                <span>View All Applications</span>
+                                <span>→</span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Section 2: My Schedule -->
+                    <section class="panel-section-box panel-schedule-box">
+                        <div class="panel-box-header">
+                            <h3 class="panel-box-title">My Schedule</h3>
+                            <a href="/pages/events.html" class="panel-header-link">
+                                <span>View Calendar</span>
+                                <span>→</span>
+                            </a>
+                        </div>
+
+                        <!-- Calendar Widget Card -->
+                        <div class="schedule-calendar-card">
+                            <!-- Month Bar with Nav -->
+                            <div class="calendar-month-bar">
+                                <button class="cal-nav-btn" id="calPrevBtn" aria-label="Previous Month">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                </button>
+                                <span class="calendar-month-label" id="calMonthYear">March 2024</span>
+                                <button class="cal-nav-btn" id="calNextBtn" aria-label="Next Month">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </button>
+                            </div>
+
+                            <!-- Weekday Headers -->
+                            <div class="calendar-weekdays-grid">
+                                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                            </div>
+
+                            <!-- Calendar Days Grid -->
+                            <div class="calendar-days-grid" id="calDaysGrid">
+                                <!-- Populated dynamically by home.js -->
+                            </div>
+
+                            <div class="schedule-card-divider"></div>
+
+                            <!-- Upcoming Registered Events Stack -->
+                            <div class="schedule-events-stack" id="scheduleEventsList">
+                                <a href="/pages/event-details.html?id=801" class="schedule-event-row">
+                                    <div class="schedule-date-pill">15<span class="pill-mon">MAR</span></div>
+                                    <div class="schedule-event-details">
+                                        <span class="schedule-event-title">Watercolor Basics Workshop</span>
+                                        <span class="schedule-event-time">4:00 PM - 6:00 PM</span>
+                                    </div>
+                                </a>
+                                <a href="/pages/event-details.html?id=802" class="schedule-event-row">
+                                    <div class="schedule-date-pill">22<span class="pill-mon">MAR</span></div>
+                                    <div class="schedule-event-details">
+                                        <span class="schedule-event-title">Local Artists Exhibition</span>
+                                        <span class="schedule-event-time">10:00 AM - 5:00 PM</span>
+                                    </div>
+                                </a>
+                                <a href="/pages/event-details.html?id=803" class="schedule-event-row">
+                                    <div class="schedule-date-pill">28<span class="pill-mon">SEP</span></div>
+                                    <div class="schedule-event-details">
+                                        <span class="schedule-event-title">Outdoor Sketching Meetup</span>
+                                        <span class="schedule-event-time">3:00 PM - 6:00 PM</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section 3: Quick Links -->
+                    <section class="panel-section-box panel-quicklinks-box">
+                        <div class="panel-box-header">
+                            <h3 class="panel-box-title">Quick Links</h3>
+                        </div>
+                        <div class="quick-links-grid">
+                            <a href="/pages/my-applications.html" class="quick-link-tile">
+                                <div class="quick-link-icon-wrap icon-purple">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    </svg>
+                                </div>
+                                <span class="quick-link-label">My Applications</span>
+                            </a>
+
+                            <a href="/pages/events.html" class="quick-link-tile">
+                                <div class="quick-link-icon-wrap icon-pink">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                    </svg>
+                                </div>
+                                <span class="quick-link-label">Saved Events</span>
+                            </a>
+
+                            <a href="/pages/events.html" class="quick-link-tile">
+                                <div class="quick-link-icon-wrap icon-lavender">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                </div>
+                                <span class="quick-link-label">Past Events</span>
+                            </a>
+
+                            <a href="/pages/create-post.html" class="quick-link-tile">
+                                <div class="quick-link-icon-wrap icon-rose">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </div>
+                                <span class="quick-link-label">+ Create Event</span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Section 4: Recommended for You -->
+                    <section class="panel-section-box panel-recommended-box">
+                        <div class="panel-box-header">
+                            <h3 class="panel-box-title">Recommended for You</h3>
+                            <a href="/pages/events.html" class="panel-header-link">
+                                <span>View All</span>
+                                <span>→</span>
+                            </a>
+                        </div>
+                        <div class="recommended-events-stack" id="recommendedList">
+                            <a href="/pages/event-details.html?id=801" class="recommended-card-item">
+                                <img src="/images/comm_event_watercolor.png" alt="Workshop" class="recommended-thumb-img" onerror="this.src='/images/comm_event_detail_cover.png'">
+                                <div class="recommended-info-block">
+                                    <span class="recommended-item-title">Acrylic Painting Masterclass</span>
+                                    <span class="recommended-item-sub">Sat, Apr 12 &bull; Mumbai</span>
+                                </div>
+                                <span class="recommended-chevron">›</span>
+                            </a>
+                            <a href="/pages/event-details.html?id=803" class="recommended-card-item">
+                                <img src="/images/comm_event_sketching.png" alt="Workshop" class="recommended-thumb-img" onerror="this.src='/images/comm_event_detail_cover.png'">
+                                <div class="recommended-info-block">
+                                    <span class="recommended-item-title">Portrait Sketching Workshop</span>
+                                    <span class="recommended-item-sub">Sun, Apr 20 &bull; Online</span>
+                                </div>
+                                <span class="recommended-chevron">›</span>
+                            </a>
+                            <a href="/pages/event-details.html?id=805" class="recommended-card-item">
+                                <img src="/images/comm_soundsphere.png" alt="Jam Session" class="recommended-thumb-img" onerror="this.src='/images/comm_post_sunset_painting.png'">
+                                <div class="recommended-info-block">
+                                    <span class="recommended-item-title">Indie Music Jam Session</span>
+                                    <span class="recommended-item-sub">Fri, Apr 26 &bull; Pune</span>
+                                </div>
+                                <span class="recommended-chevron">›</span>
+                            </a>
+                        </div>
+                    </section>
+
+                </aside>
+
+            </div>
+        </div>
     </div>
+
+    <!-- ============================================================
+         MOBILE BOTTOM NAVIGATION (Home | Discover | + | Messages | Profile)
+         ============================================================ -->
+    <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+        <a href="/pages/home.html" class="mobile-nav-btn active" aria-label="Home">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span class="mobile-nav-caption">Home</span>
+        </a>
+        <a href="/pages/discover.html" class="mobile-nav-btn" aria-label="Discover">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span class="mobile-nav-caption">Discover</span>
+        </a>
+        <a href="/pages/create-post.html" class="mobile-nav-btn mobile-create-action" aria-label="Create Post or Work">
+            <div class="mobile-create-pill">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </div>
+        </a>
+        <a href="/pages/messages.html" class="mobile-nav-btn" aria-label="Messages">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span class="mobile-nav-caption">Messages</span>
+        </a>
+        <a href="/pages/artist-profile.html" class="mobile-nav-btn" aria-label="Profile">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span class="mobile-nav-caption">Profile</span>
+        </a>
+    </nav>
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="dashboard-toast-container"></div>
 
     <!-- Scripts -->
     <script src="/js/api.js"></script>

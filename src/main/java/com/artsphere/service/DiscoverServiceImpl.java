@@ -21,11 +21,16 @@ public class DiscoverServiceImpl implements DiscoverService {
     private final DiscoverRepository discoverRepository;
     private final UserRepository userRepository;
     private final ArtworkRepository artworkRepository;
+    private final NotificationService notificationService;
 
-    public DiscoverServiceImpl(DiscoverRepository discoverRepository, UserRepository userRepository, ArtworkRepository artworkRepository) {
+    public DiscoverServiceImpl(DiscoverRepository discoverRepository,
+                               UserRepository userRepository,
+                               ArtworkRepository artworkRepository,
+                               NotificationService notificationService) {
         this.discoverRepository = discoverRepository;
         this.userRepository = userRepository;
         this.artworkRepository = artworkRepository;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -45,14 +50,41 @@ public class DiscoverServiceImpl implements DiscoverService {
 
     @Override
     public boolean toggleConnection(String currentUsername, Long artistId) {
-        Long userId = 101L; // Default user for unauthenticated or demo session
+        Long userId = null;
         if (currentUsername != null && !currentUsername.isBlank() && !currentUsername.equals("anonymousUser")) {
             Optional<User> userOpt = userRepository.findByUsername(currentUsername);
             if (userOpt.isPresent()) {
                 userId = userOpt.get().getId();
             }
         }
-        return discoverRepository.toggleConnection(userId, artistId);
+        if (userId == null) {
+            userId = userRepository.findByUsername("mrunali")
+                    .map(User::getId)
+                    .orElseGet(() -> userRepository.findAll().stream().findFirst().map(User::getId).orElse(1L));
+        }
+        boolean connected = discoverRepository.toggleConnection(userId, artistId);
+
+        if (connected && !userId.equals(artistId)) {
+            try {
+                var senderOpt = userRepository.findById(userId);
+                String senderName = senderOpt.map(u -> u.getFullName() != null ? u.getFullName() : u.getUsername()).orElse("An artist");
+                String senderAvatar = senderOpt.map(u -> u.getAvatarUrl() != null ? u.getAvatarUrl() : u.getProfilePicture()).orElse("/images/artist_profile_avatar.png");
+                notificationService.createNotification(
+                        artistId,
+                        "SOCIAL",
+                        senderName + " started following you",
+                        senderName + " is now following your portfolio and updates.",
+                        userId,
+                        senderName,
+                        senderAvatar,
+                        "USER",
+                        userId,
+                        "/pages/profile.html?id=" + userId
+                );
+            } catch (Exception ignored) {}
+        }
+
+        return connected;
     }
 
     @Override
@@ -60,11 +92,14 @@ public class DiscoverServiceImpl implements DiscoverService {
         User artist = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Artist not found with id: " + id));
 
-        Long currentUserId = 101L;
+        Long currentUserId = null;
         if (currentUsername != null && !currentUsername.isBlank() && !currentUsername.equals("anonymousUser")) {
-            userRepository.findByUsername(currentUsername).ifPresent(u -> {
-                // current user id
-            });
+            currentUserId = userRepository.findByUsername(currentUsername).map(User::getId).orElse(null);
+        }
+        if (currentUserId == null) {
+            currentUserId = userRepository.findByUsername("mrunali")
+                    .map(User::getId)
+                    .orElseGet(() -> userRepository.findAll().stream().findFirst().map(User::getId).orElse(1L));
         }
         boolean isFollowing = discoverRepository.isConnected(currentUserId, id);
 

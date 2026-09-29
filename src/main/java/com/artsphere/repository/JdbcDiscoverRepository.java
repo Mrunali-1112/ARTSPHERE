@@ -86,8 +86,9 @@ public class JdbcDiscoverRepository implements DiscoverRepository {
         sql.append("ORDER BY u.id ASC");
 
         List<DiscoverArtistResponse> artists = jdbcTemplate.query(sql.toString(), artistRowMapper, params.toArray());
+        Long currentUserId = resolveCurrentUserId();
         for (DiscoverArtistResponse a : artists) {
-            a.setConnected(isConnected(101L, a.getId()));
+            a.setConnected(isConnected(currentUserId, a.getId()));
         }
         return artists;
     }
@@ -118,8 +119,9 @@ public class JdbcDiscoverRepository implements DiscoverRepository {
                 "ORDER BY u.id ASC";
 
         List<DiscoverArtistResponse> artists = jdbcTemplate.query(sql, artistRowMapper);
+        Long currentUserId = resolveCurrentUserId();
         for (DiscoverArtistResponse a : artists) {
-            a.setConnected(isConnected(101L, a.getId()));
+            a.setConnected(isConnected(currentUserId, a.getId()));
         }
         return artists;
     }
@@ -150,10 +152,33 @@ public class JdbcDiscoverRepository implements DiscoverRepository {
                 "ORDER BY u.id ASC";
 
         List<DiscoverArtistResponse> artists = jdbcTemplate.query(sql, artistRowMapper);
+        Long currentUserId = resolveCurrentUserId();
         for (DiscoverArtistResponse a : artists) {
-            a.setConnected(isConnected(101L, a.getId()));
+            a.setConnected(isConnected(currentUserId, a.getId()));
         }
         return artists;
+    }
+
+    private Long resolveCurrentUserId() {
+        try {
+            org.springframework.security.core.Authentication auth =
+                    org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+            if (auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {
+                List<Long> ids = jdbcTemplate.query("SELECT id FROM users WHERE username = ?", (rs, rowNum) -> rs.getLong("id"), auth.getName());
+                if (!ids.isEmpty()) {
+                    return ids.get(0);
+                }
+            }
+        } catch (Exception ignored) {
+        }
+        try {
+            List<Long> fallbackIds = jdbcTemplate.query("SELECT id FROM users ORDER BY id ASC LIMIT 1", (rs, rowNum) -> rs.getLong("id"));
+            if (!fallbackIds.isEmpty()) {
+                return fallbackIds.get(0);
+            }
+        } catch (Exception ignored) {
+        }
+        return 1L;
     }
 
     @Override
