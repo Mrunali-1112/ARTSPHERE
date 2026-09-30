@@ -3,17 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArtSphere — The Independent Artist Community</title>
+    <title>ArtSphere — The Artist Community</title>
+    <link rel="icon" type="image/png" href="/images/logo_nav.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/common.css">
-    <link rel="stylesheet" href="/css/landing.css">
+    <link rel="stylesheet" href="/css/landing.css?v=latest">
 </head>
 <body>
     <!-- Universal Floating Capsule Navigation -->
     <header class="capsule-nav-wrapper" id="navWrapper">
         <nav class="capsule-nav">
             <a href="/pages/landing.html" class="nav-brand">
-                <span class="brand-motif">✦</span>
-                <span>ArtSphere</span>
+                <img src="/images/logo_nav.png" alt="ArtSphere" class="nav-brand-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+                <span class="nav-brand-fallback" style="display:none; align-items:center; gap:8px;">
+                    <span class="brand-motif">✦</span>
+                    <span>ArtSphere</span>
+                </span>
             </a>
             <div class="nav-links" id="navLinks">
                 <a href="/pages/home.html" class="nav-link">Home</a>
@@ -40,7 +47,7 @@
             <section class="landing-hero-section">
                 <div class="grid-12">
                     <div class="col-7 col-md-8 col-sm-4 hero-left-content">
-                        <div class="pill-tag accent-yellow">
+                        <div class="pill-tag accent-lavender">
                             <span>✦</span>
                             <span>THE INDEPENDENT CREATIVE NETWORK</span>
                         </div>
@@ -92,7 +99,7 @@
                                 </div>
                             </div>
                             <div class="spotlight-art-preview">
-                                <img src="/images/artwork_sunlit.png" alt="Featured artwork Sunlit" class="spotlight-art-img">
+                                <img src="/images/artwork_sunlit.jpg" alt="Featured artwork Sunlit" class="spotlight-art-img" onerror="this.src='/images/artwork_still.png'">
                                 <div class="spotlight-art-caption">
                                     <span class="art-title">"Sunlit" (2024)</span>
                                     <span class="art-category-pill">Digital Oil</span>
@@ -174,7 +181,7 @@
                     <!-- Visual Artists (4 cols) -->
                     <a href="/pages/discover.html?artForm=Visual+Artists" class="col-4 col-md-8 col-sm-4 art-discipline-card card-yellow">
                         <div class="discipline-top">
-                            <span class="discipline-badge" style="background:#0A0A0A; color:#FFFFFF;">HOTLIST</span>
+                            <span class="discipline-badge badge-hotlist">HOTLIST</span>
                             <span class="discipline-arrow">&nearr;</span>
                         </div>
                         <div class="discipline-icon-box">
@@ -303,7 +310,7 @@
 
                     <!-- Feature 4 (7 cols) -->
                     <div class="col-7 col-md-8 col-sm-4 card-yellow manifesto-card">
-                        <div class="pill-tag" style="background:#0A0A0A; color:#FFFFFF;">04 / INTEGRITY</div>
+                        <div class="pill-tag">04 / INTEGRITY</div>
                         <h3 class="text-h2 manifesto-card-title">High-Fidelity Portfolio Ownership</h3>
                         <p class="manifesto-card-copy">
                             Full-resolution artwork presentation, lossless audio streaming, customizable bio sections, and verified direct contact channels. Your craft is showcased in editorial clarity.
@@ -317,7 +324,7 @@
             <section class="section-bottom-cta">
                 <div class="cta-banner-card">
                     <div class="cta-content">
-                        <div class="pill-tag accent-orange">START CREATING</div>
+                        <div class="pill-tag accent-lavender">START CREATING</div>
                         <h2 class="text-display cta-headline">Ready to find your next collaborator?</h2>
                         <p class="cta-subtitle">Join thousands of artists across India and the globe building extraordinary creative work together.</p>
                         <div class="cta-action-row">
@@ -334,8 +341,11 @@
             <div class="grid-12 footer-grid">
                 <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
                     <a href="/pages/landing.html" class="footer-logo">
-                        <span class="brand-motif">✦</span>
-                        <span>ArtSphere</span>
+                        <img src="/images/logo_nav.png" alt="ArtSphere" class="footer-brand-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';">
+                        <span class="footer-brand-fallback" style="display:none; align-items:center; gap:8px;">
+                            <span class="brand-motif">✦</span>
+                            <span>ArtSphere</span>
+                        </span>
                     </a>
                     <p class="footer-bio">
                         The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.

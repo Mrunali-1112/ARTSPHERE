@@ -1,0 +1,518 @@
+/* ==========================================================================
+   ArtSphere — Master Centralized Application Theme
+   Visual Language: Soft Pastel Lavender / Plum SaaS Creative Dashboard
+   Master Environment Reference: Home Dashboard System
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+/* --------------------------------------------------------------------------
+   1. Master Theme Tokens
+   -------------------------------------------------------------------------- */
+:root {
+    --theme-bg: #F7F5FA;
+    --theme-bg-subtle: #F2ECF7;
+    --theme-card: #FFFFFF;
+    --theme-card-subtle: #FAF7FC;
+    --theme-card-tint: #F5EDF9;
+    --theme-sidebar: #FFFFFF;
+
+    /* Primary Purple / Plum Hierarchy */
+    --theme-primary: #633F7C;
+    --theme-primary-hover: #523168;
+    --theme-primary-light: #F1E5F5;
+    --theme-primary-tint: #FAF2FC;
+    --theme-primary-glow: rgba(99, 63, 124, 0.18);
+
+    /* Text Hierarchy */
+    --theme-text-heading: #231A2B;
+    --theme-text-body: #4D4455;
+    --theme-text-muted: #7E7588;
+    --theme-text-light: #9F97A9;
+
+    /* Borders & Accents */
+    --theme-border: #EDE7F3;
+    --theme-border-medium: #E2D3EB;
+    --theme-border-focus: #633F7C;
+
+    /* Shadows */
+    --theme-shadow-sm: 0 2px 8px rgba(78, 42, 107, 0.03);
+    --theme-shadow-md: 0 4px 18px rgba(78, 42, 107, 0.05);
+    --theme-shadow-lg: 0 12px 30px rgba(78, 42, 107, 0.08);
+    --theme-shadow-primary: 0 4px 14px rgba(99, 63, 124, 0.25);
+    --theme-shadow-primary-hover: 0 6px 20px rgba(99, 63, 124, 0.35);
+
+    /* Radii */
+    --theme-radius-sm: 8px;
+    --theme-radius-md: 12px;
+    --theme-radius-card: 18px;
+    --theme-radius-lg: 24px;
+    --theme-radius-pill: 999px;
+
+    /* Typography */
+    --theme-font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --theme-font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   2. Global Shell & Body (Scoped to body.artsphere-theme)
+   -------------------------------------------------------------------------- */
+body.artsphere-theme {
+    background-color: var(--theme-bg) !important;
+    color: var(--theme-text-body) !important;
+    font-family: var(--theme-font-heading) !important;
+    min-height: 100vh;
+}
+
+body.artsphere-theme h1,
+body.artsphere-theme h2,
+body.artsphere-theme h3,
+body.artsphere-theme h4,
+body.artsphere-theme h5,
+body.artsphere-theme h6 {
+    color: var(--theme-text-heading) !important;
+    font-family: var(--theme-font-heading) !important;
+}
+
+body.artsphere-theme p,
+body.artsphere-theme span,
+body.artsphere-theme div {
+    font-family: inherit;
+}
+
+/* Page Containers */
+body.artsphere-theme .page-wrapper,
+body.artsphere-theme .dashboard-container,
+body.artsphere-theme .main-content-layout,
+body.artsphere-theme .mobile-frame-container,
+body.artsphere-theme .screen-container {
+    background-color: var(--theme-bg) !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. Unified Master Sidebar (#dashboardSidebar)
+   -------------------------------------------------------------------------- */
+body.artsphere-theme .dashboard-sidebar {
+    background-color: var(--theme-sidebar) !important;
+    border-right: 1px solid var(--theme-border) !important;
+    box-shadow: 2px 0 16px rgba(78, 42, 107, 0.02) !important;
+}
+
+body.artsphere-theme .sidebar-brand-wrapper {
+    border-bottom: 1px solid var(--theme-border) !important;
+}
+
+body.artsphere-theme .brand-title {
+    color: var(--theme-text-heading) !important;
+}
+
+body.artsphere-theme .brand-sparkle-icon {
+    color: var(--theme-primary) !important;
+}
+
+body.artsphere-theme .brand-tagline {
+    color: var(--theme-text-muted) !important;
+}
+
+body.artsphere-theme .sidebar-nav-item {
+    color: var(--theme-text-body) !important;
+    border-radius: var(--theme-radius-pill) !important;
+    transition: all 0.18s ease !important;
+}
+
+body.artsphere-theme .sidebar-nav-item:hover {
+    color: var(--theme-primary) !important;
+    background-color: var(--theme-primary-tint) !important;
+}
+
+body.artsphere-theme .sidebar-nav-item.active {
+    background-color: var(--theme-primary) !important;
+    color: #FFFFFF !important;
+    box-shadow: var(--theme-shadow-primary) !important;
+}
+
+body.artsphere-theme .sidebar-nav-item.active svg,
+body.artsphere-theme .sidebar-nav-item.active svg path,
+body.artsphere-theme .sidebar-nav-item.active svg circle,
+body.artsphere-theme .sidebar-nav-item.active svg polyline,
+body.artsphere-theme .sidebar-nav-item.active svg line {
+    stroke: #FFFFFF !important;
+}
+
+body.artsphere-theme .sidebar-user-block,
+body.artsphere-theme .sidebar-user-card,
+body.artsphere-theme .sidebar-footer {
+    background-color: var(--theme-card-subtle) !important;
+    border: 1px solid var(--theme-border) !important;
+    border-radius: 14px !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. Top Header & Rounded Search Fields
+   -------------------------------------------------------------------------- */
+body.artsphere-theme .dashboard-header,
+body.artsphere-theme .top-header,
+body.artsphere-theme .search-container {
+    background: transparent !important;
+}
+
+body.artsphere-theme .header-search-input,
+body.artsphere-theme .search-input,
+body.artsphere-theme .global-search-input,
+body.artsphere-theme input[type="search"] {
+    background-color: #FFFFFF !important;
+    border: 1px solid var(--theme-border) !important;
+    border-radius: 999px !important;
+    color: var(--theme-text-heading) !important;
+    box-shadow: var(--theme-shadow-sm) !important;
+    padding-left: 42px;
+}
+
+body.artsphere-theme .header-search-input:focus,
+body.artsphere-theme .search-input:focus,
+body.artsphere-theme input[type="search"]:focus {
+    border-color: var(--theme-primary) !important;
+    box-shadow: 0 0 0 3px var(--theme-primary-glow) !important;
+    outline: none !important;
+}
+
+body.artsphere-theme .header-icon-btn,
+body.artsphere-theme .header-notif-btn,
+body.artsphere-theme .notif-bell-btn {
+    background-color: #FFFFFF !important;
+    border: 1px solid var(--theme-border) !important;
+    color: var(--theme-text-heading) !important;
+    border-radius: 999px !important;
+    transition: all 0.18s ease !important;
+}
+
+body.artsphere-theme .header-icon-btn:hover,
+body.artsphere-theme .header-notif-btn:hover,
+body.artsphere-theme .notif-bell-btn:hover {
+    background-color: var(--theme-primary-tint) !important;
+    color: var(--theme-primary) !important;
+    border-color: var(--theme-border-medium) !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. Master Cards & Surfaces
+   -------------------------------------------------------------------------- */
+body.artsphere-theme .card-base,
+body.artsphere-theme .card-cream,
+body.artsphere-theme .card-yellow,
+body.artsphere-theme .studio-card,
+body.artsphere-theme .dash-card,
+body.artsphere-theme .content-card,
+body.artsphere-theme .panel-card,
+body.artsphere-theme .event-card,
+body.artsphere-theme .collab-card,
+body.artsphere-theme .opp-card,
+body.artsphere-theme .community-card,
+body.artsphere-theme .feed-post-card,
+body.artsphere-theme .profile-card,
+body.artsphere-theme .portfolio-card,
+body.artsphere-theme .stat-card,
+body.artsphere-theme .metric-card {
+    background-color: #FFFFFF !important;
+    border: 1px solid var(--theme-border) !important;
+    border-radius: var(--theme-radius-card) !important;
+    box-shadow: var(--theme-shadow-md) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
+}
+
+body.artsphere-theme .card-base:hover,
+body.artsphere-theme .card-cream:hover,
+body.artsphere-theme .card-yellow:hover,
+body.artsphere-theme .studio-card:hover,
+body.artsphere-theme .event-card:hover,
+body.artsphere-theme .collab-card:hover,
+body.artsphere-theme .opp-card:hover,
+body.artsphere-theme .community-card:hover,
+body.artsphere-theme .portfolio-card:hover {
+    box-shadow: var(--theme-shadow-lg) !important;
+    border-color: var(--theme-border-medium) !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. Primary & Secondary Buttons
+   -------------------------------------------------------------------------- */
+body.artsphere-theme .btn-pill-primary,
+body.artsphere-theme .btn-primary,
+body.artsphere-theme .primary-btn,
+body.artsphere-theme .btn-action-primary,
+body.artsphere-theme button.btn-primary,
+body.artsphere-theme .auth-submit-btn,
+body.artsphere-theme .btn-auth-submit,
+body.artsphere-theme .btn-setup-next,
+body.artsphere-theme .btn-setup-finish {
+    background-color: var(--theme-primary) !important;
+    color: #FFFFFF !important;
+    border: 1px solid var(--theme-primary) !important;
+    border-radius: var(--theme-radius-pill) !important;
+    font-weight: 700 !important;
+    box-shadow: var(--theme-shadow-primary) !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer;
+}
+
+body.artsphere-theme .btn-pill-primary:hover,
+body.artsphere-theme .btn-primary:hover,
+body.artsphere-theme .primary-btn:hover,
+body.artsphere-theme .btn-action-primary:hover,
+body.artsphere-theme button.btn-primary:hover,
+body.artsphere-theme .auth-submit-btn:hover,
+body.artsphere-theme .btn-auth-submit:hover,
+body.artsphere-theme .btn-setup-next:hover,
+body.artsphere-theme .btn-setup-finish:hover {
+    background-color: var(--theme-primary-hover) !important;
+    border-color: var(--theme-primary-hover) !important;
+    box-shadow: var(--theme-shadow-primary-hover) !important;
+    transform: translateY(-2px) !important;
+}
+
+body.artsphere-theme .btn-pill-secondary,
+body.artsphere-theme .btn-secondary,
+body.artsphere-theme .secondary-btn,
+body.artsphere-theme .btn-action-secondary,
+body.artsphere-theme .btn-setup-prev {
+    background-color: #FFFFFF !important;
+    color: var(--theme-primary) !important;
+    border: 1.5px solid var(--theme-border-medium) !important;
+    border-radius: var(--theme-radius-pill) !important;
+    font-weight: 700 !important;
+    box-shadow: var(--theme-shadow-sm) !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer;
+}
+
+body.artsphere-theme .btn-pill-secondary:hover,
+body.artsphere-theme .btn-secondary:hover,
+body.artsphere-theme .secondary-btn:hover,
+body.artsphere-theme .btn-action-secondary:hover,
+body.artsphere-theme .btn-setup-prev:hover {
+    background-color: var(--theme-primary-tint) !important;
+    border-color: var(--theme-primary) !important;
+    color: var(--theme-primary-hover) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* --------------------------------------------------------------------------
+   7. Filter Chips, Pills & Tags
+   -------------------------------------------------------------------------- */
+body.artsphere-theme .pill-tag,
+body.artsphere-theme .filter-chip,
+body.artsphere-theme .category-pill,
+body.artsphere-theme .discipline-badge,
+body.artsphere-theme .tag-pill,
+body.artsphere-theme .discipline-chip {
+    background-color: var(--theme-primary-light) !important;
+    color: var(--theme-primary) !important;
+    border: 1px solid var(--theme-border-medium) !important;
+    border-radius: var(--theme-radius-pill) !important;
+    font-weight: 700 !important;
+    transition: all 0.18s ease !important;
+}
+
+body.artsphere-theme .filter-chip.active,
+body.artsphere-theme .filter-chip:hover,
+body.artsphere-theme .discipline-chip.active,
+body.artsphere-theme .discipline-chip:hover,
+body.artsphere-theme .tab-pill.active {
+    background-color: var(--theme-primary) !important;
+    color: #FFFFFF !important;
+    border-color: var(--theme-primary) !important;
+}
+
+/* --------------------------------------------------------------------------
+   8. Capsule Navigation for Sub-View Pages
+   -------------------------------------------------------------------------- */
+body.artsphere-theme .capsule-nav-wrapper {
+    background: transparent !important;
+}
+
+body.artsphere-theme .capsule-nav {
+    background: #FFFFFF !important;
+    border: 1px solid var(--theme-border) !important;
+    border-radius: var(--theme-radius-pill) !important;
+    box-shadow: 0 4px 20px rgba(78, 42, 107, 0.06) !important;
+    backdrop-filter: none !important;
+}
+
+body.artsphere-theme .capsule-nav::before {
+    display: none !important;
+}
+
+body.artsphere-theme .capsule-nav-wrapper.scrolled .capsule-nav {
+    background: rgba(255, 255, 255, 0.96) !important;
+    border-color: var(--theme-border-medium) !important;
+    box-shadow: 0 8px 30px rgba(78, 42, 107, 0.1) !important;
+}
+
+body.artsphere-theme .nav-link {
+    color: var(--theme-text-body) !important;
+}
+
+body.artsphere-theme .nav-link:hover {
+    color: var(--theme-primary) !important;
+    background-color: var(--theme-primary-tint) !important;
+}
+
+body.artsphere-theme .nav-link.active {
+    background-color: var(--theme-primary) !important;
+    color: #FFFFFF !important;
+}
+
+body.artsphere-theme .user-dropdown-panel {
+    background: #FFFFFF !important;
+    border: 1px solid var(--theme-border) !important;
+    border-radius: 16px !important;
+    box-shadow: var(--theme-shadow-lg) !important;
+}
+
+body.artsphere-theme .dropdown-item-link:hover {
+    background-color: var(--theme-primary-tint) !important;
+    color: var(--theme-primary) !important;
+}
+
+/* --------------------------------------------------------------------------
+   9. Sub-View Breadcrumbs, Hero Cards & Hubs
+   -------------------------------------------------------------------------- */
+body.artsphere-theme .breadcrumb-back-link,
+body.artsphere-theme .comm-back-link,
+body.artsphere-theme .back-link,
+body.artsphere-theme .back-home-link {
+    background: #FFFFFF !important;
+    border: 1px solid var(--theme-border) !important;
+    border-radius: var(--theme-radius-pill) !important;
+    color: var(--theme-primary) !important;
+    box-shadow: var(--theme-shadow-sm) !important;
+    font-weight: 700 !important;
+    transition: all 0.18s ease !important;
+}
+
+body.artsphere-theme .breadcrumb-back-link:hover,
+body.artsphere-theme .comm-back-link:hover,
+body.artsphere-theme .back-link:hover,
+body.artsphere-theme .back-home-link:hover {
+    background: var(--theme-primary-tint) !important;
+    border-color: var(--theme-primary) !important;
+    transform: translateX(-3px) !important;
+}
+
+body.artsphere-theme .guild-header-card,
+body.artsphere-theme .requests-hero-banner,
+body.artsphere-theme .edit-profile-hero,
+body.artsphere-theme .hero-panel-card {
+    background: #FFFFFF !important;
+    border: 1px solid var(--theme-border) !important;
+    border-radius: 20px !important;
+    box-shadow: var(--theme-shadow-md) !important;
+}
+
+body.artsphere-theme .guild-cover-frame {
+    border: 1px solid var(--theme-border) !important;
+    border-radius: 18px !important;
+    box-shadow: var(--theme-shadow-md) !important;
+    background: var(--theme-card-subtle) !important;
+}
+
+body.artsphere-theme .guild-avatar-box {
+    border: 2px solid var(--theme-border-medium) !important;
+}
+
+body.artsphere-theme .guild-tab-btn,
+body.artsphere-theme .requests-tab-btn,
+body.artsphere-theme .subview-tab-btn {
+    color: var(--theme-text-body) !important;
+    border-radius: var(--theme-radius-pill) !important;
+    transition: all 0.18s ease !important;
+}
+
+body.artsphere-theme .guild-tab-btn.active,
+body.artsphere-theme .requests-tab-btn.active,
+body.artsphere-theme .subview-tab-btn.active {
+    background-color: var(--theme-primary) !important;
+    color: #FFFFFF !important;
+    box-shadow: var(--theme-shadow-primary) !important;
+}
+
+/* --------------------------------------------------------------------------
+   10. Form Controls & Inputs
+   -------------------------------------------------------------------------- */
+body.artsphere-theme input,
+body.artsphere-theme select,
+body.artsphere-theme textarea,
+body.artsphere-theme .neo-input,
+body.artsphere-theme .field-control-input {
+    background-color: #FFFFFF !important;
+    border: 1px solid var(--theme-border) !important;
+    color: var(--theme-text-heading) !important;
+    border-radius: 12px;
+}
+
+body.artsphere-theme input:focus,
+body.artsphere-theme select:focus,
+body.artsphere-theme textarea:focus,
+body.artsphere-theme .neo-input:focus,
+body.artsphere-theme .field-control-input:focus {
+    border-color: var(--theme-primary) !important;
+    box-shadow: 0 0 0 3px var(--theme-primary-glow) !important;
+    outline: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   11. Modals & Overlays
+   -------------------------------------------------------------------------- */
+body.artsphere-theme .modal-container,
+body.artsphere-theme .modal-card,
+body.artsphere-theme .event-registration-modal-content,
+body.artsphere-theme .modal-box {
+    background-color: #FFFFFF !important;
+    border: 1px solid var(--theme-border) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 50px rgba(78, 42, 107, 0.16) !important;
+}
+
+/* --------------------------------------------------------------------------
+   12. Authentication Pages Theme Support (Signup Alignment with Login)
+   -------------------------------------------------------------------------- */
+body.artsphere-theme.auth-page-body,
+body.artsphere-theme .auth-viewport-wrapper {
+    background-color: #F7F5FA !important;
+}
+
+body.artsphere-theme .auth-editorial-pillar {
+    background: #FAF8FC !important;
+    border: 1px solid var(--theme-border) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 16px 48px rgba(78, 42, 107, 0.06) !important;
+}
+
+body.artsphere-theme .auth-card-box,
+body.artsphere-theme .auth-form-card,
+body.artsphere-theme .auth-form-container {
+    background: #FFFFFF !important;
+    border: 1px solid var(--theme-border) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 16px 48px rgba(78, 42, 107, 0.06) !important;
+}
+
+body.artsphere-theme .network-stats-strip {
+    background: #FFFFFF !important;
+    border: 1px solid var(--theme-border) !important;
+    border-radius: 14px !important;
+    box-shadow: var(--theme-shadow-sm) !important;
+}
+
+body.artsphere-theme .stat-number {
+    color: var(--theme-primary) !important;
+}
+
+/* --------------------------------------------------------------------------
+   13. Responsive Adaptations
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+    body.artsphere-theme .dashboard-sidebar {
+        background-color: #FFFFFF !important;
+    }
+}

@@ -1,9 +1,325 @@
 /* ==========================================================================
-   ArtSphere - Editorial Neo-Brutalist Landing Page Styles
-   Strict adherence to Docs/design.md
+   ArtSphere — Master Public Landing Page Stylesheet
+   Soft Pastel Lavender / Plum SaaS Creative Community Visual System
+   Design System Reference: Plum / Lavender Theme (Docs & Approved UI)
    ========================================================================== */
 
-/* Hero Section */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+/* --------------------------------------------------------------------------
+   1. Theme Variables & Scoped Tokens
+   -------------------------------------------------------------------------- */
+:root {
+    /* Palette Tokens */
+    --lp-bg: #F7F5FA;
+    --lp-bg-subtle: #F3EEF8;
+    --lp-card-white: #FFFFFF;
+    --lp-card-subtle: #FAF7FC;
+    --lp-card-tint: #F5EDF9;
+
+    /* Plum / Purple Brand System */
+    --lp-primary: #633F7C;
+    --lp-primary-hover: #523168;
+    --lp-primary-light: #F1E5F5;
+    --lp-primary-tint: #FAF2FC;
+    --lp-primary-glow: rgba(99, 63, 124, 0.16);
+
+    /* Text System */
+    --lp-text-heading: #231A2B;
+    --lp-text-body: #4D4455;
+    --lp-text-muted: #7E7588;
+    --lp-text-light: #9F97A9;
+
+    /* Borders & Dividers */
+    --lp-border-subtle: #EDE7F3;
+    --lp-border-medium: #E2D3EB;
+    --lp-border-focus: #633F7C;
+
+    /* Shadows */
+    --lp-shadow-sm: 0 2px 10px rgba(78, 42, 107, 0.03);
+    --lp-shadow-card: 0 4px 18px rgba(78, 42, 107, 0.05);
+    --lp-shadow-hover: 0 12px 30px rgba(78, 42, 107, 0.09);
+    --lp-shadow-btn: 0 4px 16px rgba(99, 63, 124, 0.25);
+    --lp-shadow-btn-hover: 0 6px 22px rgba(99, 63, 124, 0.35);
+
+    /* Radii */
+    --lp-radius-sm: 8px;
+    --lp-radius-md: 12px;
+    --lp-radius-card: 18px;
+    --lp-radius-lg: 24px;
+    --lp-radius-pill: 999px;
+
+    /* Fonts */
+    --lp-font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --lp-font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset Global Body & Overrides for Public Landing Page
+   -------------------------------------------------------------------------- */
+body {
+    background-color: var(--lp-bg) !important;
+    color: var(--lp-text-heading) !important;
+    font-family: var(--lp-font-heading) !important;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+.page-wrapper {
+    background-color: var(--lp-bg);
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* --------------------------------------------------------------------------
+   3. Top Public Navigation (White Rounded Capsule Nav)
+   -------------------------------------------------------------------------- */
+.capsule-nav-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    padding: 16px 6vw 10px;
+    background: transparent;
+    pointer-events: none;
+    transition: all 0.25s ease;
+}
+
+.capsule-nav-wrapper.scrolled {
+    padding: 10px 6vw 8px;
+}
+
+.capsule-nav {
+    pointer-events: auto;
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    height: 64px;
+    background: #FFFFFF !important;
+    border: 1px solid var(--lp-border-subtle) !important;
+    border-radius: var(--lp-radius-pill) !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px 8px 24px;
+    position: relative;
+    box-shadow: 0 4px 24px rgba(78, 42, 107, 0.06) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transition: all 0.25s ease;
+}
+
+.capsule-nav::before {
+    display: none !important;
+}
+
+.capsule-nav-wrapper.scrolled .capsule-nav {
+    background: rgba(255, 255, 255, 0.96) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    backdrop-filter: blur(16px) !important;
+    border-color: var(--lp-border-medium) !important;
+    box-shadow: 0 10px 32px rgba(78, 42, 107, 0.1) !important;
+}
+
+/* Nav Brand Logo */
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.nav-brand-logo {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.nav-brand-fallback {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--lp-text-heading);
+    letter-spacing: -0.02em;
+}
+
+.brand-motif {
+    color: var(--lp-primary);
+    font-size: 18px;
+    line-height: 1;
+}
+
+/* Nav Links */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nav-link {
+    padding: 8px 16px;
+    border-radius: var(--lp-radius-pill);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lp-text-body);
+    text-decoration: none;
+    transition: all 0.18s ease;
+}
+
+.nav-link:hover {
+    color: var(--lp-primary);
+    background-color: var(--lp-primary-tint);
+}
+
+.nav-link.active {
+    background-color: var(--lp-primary);
+    color: #FFFFFF;
+}
+
+/* Nav Actions */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* Nav Mobile Toggle */
+.nav-mobile-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--lp-radius-sm);
+    background: var(--lp-card-subtle);
+    border: 1px solid var(--lp-border-subtle);
+    cursor: pointer;
+    gap: 5px;
+    padding: 0;
+}
+
+.nav-mobile-toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: var(--lp-primary);
+    border-radius: 2px;
+    transition: all 0.2s ease;
+}
+
+/* --------------------------------------------------------------------------
+   4. Global Button & Pill Tag Styles for Landing Page
+   -------------------------------------------------------------------------- */
+.btn-pill-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 48px;
+    padding: 0 26px;
+    border-radius: var(--lp-radius-pill) !important;
+    background-color: var(--lp-primary) !important;
+    color: #FFFFFF !important;
+    border: 1px solid var(--lp-primary) !important;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: var(--lp-shadow-btn) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-pill-primary:hover {
+    background-color: var(--lp-primary-hover) !important;
+    border-color: var(--lp-primary-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: var(--lp-shadow-btn-hover) !important;
+}
+
+.btn-pill-primary:active {
+    transform: translateY(0);
+}
+
+.btn-pill-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 48px;
+    padding: 0 24px;
+    border-radius: var(--lp-radius-pill) !important;
+    background-color: #FFFFFF !important;
+    color: var(--lp-primary) !important;
+    border: 1.5px solid var(--lp-border-medium) !important;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: var(--lp-shadow-sm) !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-pill-secondary:hover {
+    background-color: var(--lp-primary-tint) !important;
+    border-color: var(--lp-primary) !important;
+    color: var(--lp-primary-hover) !important;
+    transform: translateY(-2px);
+}
+
+.btn-pill-secondary:active {
+    transform: translateY(0);
+}
+
+/* Pill Tags */
+.pill-tag,
+.pill-tag.accent-yellow,
+.pill-tag.accent-orange,
+.pill-tag.accent-lavender {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: var(--lp-radius-pill) !important;
+    border: 1px solid var(--lp-border-medium) !important;
+    background-color: var(--lp-primary-light) !important;
+    color: var(--lp-primary) !important;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    width: fit-content;
+}
+
+/* Shared Card Overrides */
+.card-base,
+.card-cream,
+.card-yellow {
+    background-color: #FFFFFF !important;
+    border: 1px solid var(--lp-border-subtle) !important;
+    border-radius: var(--lp-radius-card) !important;
+    box-shadow: var(--lp-shadow-card) !important;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card-base:hover,
+.card-cream:hover,
+.card-yellow:hover {
+    box-shadow: var(--lp-shadow-hover) !important;
+    border-color: var(--lp-border-medium) !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. Hero Section (7 + 5 Grid)
+   -------------------------------------------------------------------------- */
 .landing-hero-section {
     padding: 40px 0 60px;
 }
@@ -12,25 +328,31 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-right: 24px;
+    padding-right: 28px;
 }
 
 .hero-title {
     margin: 20px 0 24px;
+    font-size: clamp(44px, 5.5vw, 68px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--lp-text-heading);
 }
 
 .hero-title-accent {
-    color: var(--color-ink);
-    text-decoration: underline;
-    text-decoration-color: var(--color-orange);
-    text-underline-offset: 8px;
-    text-decoration-thickness: 4px;
+    color: var(--lp-primary) !important;
+    text-decoration: none !important;
+    background: linear-gradient(135deg, #633F7C 0%, #8E5CA7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .hero-lead-text {
-    font-size: 19px;
-    line-height: 1.5;
-    color: var(--color-ink);
+    font-family: var(--lp-font-body);
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--lp-text-body);
     max-width: 540px;
     margin-bottom: 36px;
     font-weight: 500;
@@ -63,7 +385,7 @@
     flex-wrap: wrap;
     font-size: 13px;
     font-weight: 700;
-    color: var(--color-mid-grey);
+    color: var(--lp-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.04em;
 }
@@ -75,15 +397,22 @@
 }
 
 .proof-motif {
-    color: var(--color-ink);
+    color: var(--lp-primary);
     font-size: 14px;
 }
 
-/* Spotlight Card (Hero Right) */
+/* --------------------------------------------------------------------------
+   6. Creator Spotlight Card (Hero Right)
+   -------------------------------------------------------------------------- */
 .spotlight-card {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
+    background: #FFFFFF !important;
+    border: 1px solid var(--lp-border-subtle) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 32px rgba(78, 42, 107, 0.06) !important;
+    padding: 24px !important;
 }
 
 .spotlight-card-header {
@@ -95,7 +424,7 @@
 .spotlight-location {
     font-size: 13px;
     font-weight: 700;
-    color: var(--color-mid-grey);
+    color: var(--lp-text-muted);
 }
 
 .spotlight-creator-row {
@@ -107,29 +436,36 @@
 .spotlight-avatar {
     width: 56px;
     height: 56px;
-    border-radius: var(--radius-pill);
-    border: var(--border-standard);
+    border-radius: var(--lp-radius-pill);
+    border: 2px solid var(--lp-border-medium) !important;
     object-fit: cover;
 }
 
+.spotlight-creator-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
 .spotlight-name {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: 800;
+    color: var(--lp-text-heading);
     line-height: 1.1;
 }
 
 .spotlight-role {
     font-size: 13px;
-    color: var(--color-mid-grey);
+    color: var(--lp-text-muted);
     font-weight: 600;
 }
 
 .spotlight-art-preview {
     position: relative;
-    border: var(--border-standard);
-    border-radius: var(--radius-md);
+    border: 1px solid var(--lp-border-subtle) !important;
+    border-radius: 14px !important;
     overflow: hidden;
-    background-color: var(--color-paper);
+    background-color: var(--lp-card-subtle);
 }
 
 .spotlight-art-img {
@@ -144,22 +480,24 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--color-white);
-    border-top: var(--border-thin);
+    background-color: var(--lp-card-subtle);
+    border-top: 1px solid var(--lp-border-subtle);
 }
 
 .art-title {
     font-size: 13px;
     font-weight: 700;
+    color: var(--lp-text-heading);
 }
 
 .art-category-pill {
     font-size: 11px;
     font-weight: 700;
     padding: 3px 8px;
-    border-radius: var(--radius-pill);
-    background-color: var(--color-cream);
-    border: var(--border-thin);
+    border-radius: var(--lp-radius-pill);
+    background-color: var(--lp-primary-light);
+    color: var(--lp-primary);
+    border: 1px solid var(--lp-border-medium);
 }
 
 .spotlight-stats-row {
@@ -167,9 +505,9 @@
     align-items: center;
     justify-content: space-between;
     padding: 12px 16px;
-    background-color: var(--color-white);
-    border: var(--border-thin);
-    border-radius: var(--radius-md);
+    background-color: var(--lp-card-subtle);
+    border: 1px solid var(--lp-border-subtle);
+    border-radius: var(--lp-radius-md);
 }
 
 .spotlight-stat {
@@ -180,12 +518,13 @@
 .stat-val {
     font-size: 16px;
     font-weight: 800;
+    color: var(--lp-text-heading);
     line-height: 1;
 }
 
 .stat-lbl {
     font-size: 11px;
-    color: var(--color-mid-grey);
+    color: var(--lp-text-muted);
     font-weight: 600;
     text-transform: uppercase;
     margin-top: 3px;
@@ -194,21 +533,32 @@
 .stat-badge-avail {
     font-size: 11px;
     font-weight: 700;
-    color: #0A0A0A;
-    background-color: var(--color-yellow);
+    color: #1E663B;
+    background-color: #E8F5E9;
     padding: 4px 10px;
-    border-radius: var(--radius-pill);
-    border: var(--border-thin);
+    border-radius: var(--lp-radius-pill);
+    border: 1px solid #C8E6C9;
 }
 
 .spotlight-cta {
     width: 100%;
+    background-color: var(--lp-primary-tint) !important;
+    color: var(--lp-primary) !important;
+    border: 1.5px solid var(--lp-border-medium) !important;
 }
 
-/* Taxonomy Section */
+.spotlight-cta:hover {
+    background-color: var(--lp-primary) !important;
+    color: #FFFFFF !important;
+    border-color: var(--lp-primary) !important;
+}
+
+/* --------------------------------------------------------------------------
+   7. Explore Across Art Forms (Taxonomy Section)
+   -------------------------------------------------------------------------- */
 .section-taxonomy {
     padding: 60px 0 70px;
-    border-top: var(--border-standard);
+    border-top: 1px solid var(--lp-border-subtle);
 }
 
 .taxonomy-header-row {
@@ -220,18 +570,29 @@
     gap: 16px;
 }
 
+.eyebrow {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--lp-primary) !important;
+    margin-bottom: 6px;
+}
+
 .link-editorial-arrow {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     font-size: 15px;
     font-weight: 700;
+    color: var(--lp-primary);
     text-decoration: underline;
     text-underline-offset: 4px;
-    transition: transform var(--transition-fast);
+    transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .link-editorial-arrow:hover {
+    color: var(--lp-primary-hover);
     transform: translateX(4px);
 }
 
@@ -244,12 +605,19 @@
     flex-direction: column;
     justify-content: space-between;
     min-height: 280px;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    background: #FFFFFF !important;
+    border: 1px solid var(--lp-border-subtle) !important;
+    border-radius: 18px !important;
+    padding: 28px !important;
+    box-shadow: var(--lp-shadow-card) !important;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .art-discipline-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(10, 10, 10, 0.08);
+    box-shadow: var(--lp-shadow-hover) !important;
+    border-color: var(--lp-border-medium) !important;
 }
 
 .discipline-top {
@@ -265,29 +633,46 @@
     text-transform: uppercase;
     letter-spacing: 0.06em;
     padding: 4px 10px;
-    border-radius: var(--radius-pill);
-    border: var(--border-thin);
-    background-color: var(--color-white);
+    border-radius: var(--lp-radius-pill);
+    border: 1px solid var(--lp-border-medium);
+    background-color: var(--lp-primary-light);
+    color: var(--lp-primary);
+}
+
+.discipline-badge.badge-hotlist {
+    background-color: var(--lp-primary) !important;
+    color: #FFFFFF !important;
+    border-color: var(--lp-primary) !important;
 }
 
 .discipline-arrow {
     font-size: 18px;
     font-weight: 800;
+    color: var(--lp-primary);
+    transition: transform 0.2s ease;
+}
+
+.art-discipline-card:hover .discipline-arrow {
+    transform: translate(2px, -2px);
 }
 
 .discipline-icon-box {
     margin-bottom: 16px;
-    color: var(--color-ink);
+    color: var(--lp-primary);
 }
 
 .discipline-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--lp-text-heading);
     margin-bottom: 8px;
 }
 
 .discipline-copy {
+    font-family: var(--lp-font-body);
     font-size: 14px;
-    line-height: 1.45;
-    color: var(--color-mid-grey);
+    line-height: 1.5;
+    color: var(--lp-text-body);
     margin-bottom: 20px;
     flex-grow: 1;
 }
@@ -295,9 +680,9 @@
 .discipline-bottom-tag {
     font-size: 12px;
     font-weight: 700;
-    color: var(--color-ink);
+    color: var(--lp-primary);
     padding-top: 12px;
-    border-top: var(--border-thin);
+    border-top: 1px solid var(--lp-border-subtle);
 }
 
 .discipline-horizontal-body {
@@ -307,29 +692,32 @@
     flex-grow: 1;
 }
 
-/* Metrics Modular Strip (Shared Borders) */
+/* --------------------------------------------------------------------------
+   8. Platform Statistics Strip
+   -------------------------------------------------------------------------- */
 .section-metrics {
-    padding: 40px 0 80px;
+    padding: 30px 0 70px;
 }
 
 .metrics-modular-strip {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    border: var(--border-strong);
-    border-radius: var(--radius-card);
-    background-color: var(--color-white);
+    border: 1px solid var(--lp-border-subtle) !important;
+    border-radius: 20px !important;
+    background-color: #FFFFFF !important;
+    box-shadow: 0 6px 24px rgba(78, 42, 107, 0.05) !important;
     overflow: hidden;
 }
 
 .metric-cell {
-    padding: 40px 32px;
-    border-right: var(--border-standard);
+    padding: 36px 30px;
+    border-right: 1px solid var(--lp-border-subtle);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 170px;
-    background-color: var(--color-white);
-    transition: background-color var(--transition-fast);
+    min-height: 160px;
+    background-color: #FFFFFF;
+    transition: background-color 0.2s ease;
 }
 
 .metric-cell:last-child {
@@ -337,18 +725,19 @@
 }
 
 .metric-cell:hover {
-    background-color: var(--color-cream);
+    background-color: var(--lp-card-subtle);
 }
 
 .metric-motif {
     font-size: 16px;
-    color: var(--color-ink);
+    color: var(--lp-primary);
     margin-bottom: 12px;
 }
 
 .metric-num {
-    font-size: clamp(36px, 4vw, 52px);
+    font-size: clamp(34px, 3.8vw, 48px);
     font-weight: 800;
+    color: var(--lp-primary);
     line-height: 0.95;
     letter-spacing: -0.03em;
     margin-bottom: 8px;
@@ -357,7 +746,7 @@
 .metric-label {
     font-size: 13px;
     font-weight: 700;
-    color: var(--color-mid-grey);
+    color: var(--lp-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
@@ -371,7 +760,7 @@
     }
     .metric-cell:nth-child(1),
     .metric-cell:nth-child(2) {
-        border-bottom: var(--border-standard);
+        border-bottom: 1px solid var(--lp-border-subtle);
     }
 }
 
@@ -381,17 +770,19 @@
     }
     .metric-cell {
         border-right: none !important;
-        border-bottom: var(--border-standard);
+        border-bottom: 1px solid var(--lp-border-subtle);
     }
     .metric-cell:last-child {
         border-bottom: none;
     }
 }
 
-/* Manifesto Section */
+/* --------------------------------------------------------------------------
+   9. Manifesto / "Built for Genuine Creative Partnership"
+   -------------------------------------------------------------------------- */
 .section-manifesto {
     padding: 60px 0 80px;
-    border-top: var(--border-standard);
+    border-top: 1px solid var(--lp-border-subtle);
 }
 
 .manifesto-header {
@@ -399,10 +790,19 @@
     max-width: 760px;
 }
 
+.text-h1 {
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 800;
+    color: var(--lp-text-heading);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+}
+
 .manifesto-sub {
-    font-size: 18px;
-    line-height: 1.5;
-    color: var(--color-mid-grey);
+    font-family: var(--lp-font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--lp-text-body);
     margin-top: 14px;
 }
 
@@ -411,16 +811,30 @@
     flex-direction: column;
     justify-content: space-between;
     min-height: 260px;
+    background: #FFFFFF !important;
+    border: 1px solid var(--lp-border-subtle) !important;
+    border-radius: 18px !important;
+    padding: 32px !important;
+    box-shadow: var(--lp-shadow-card) !important;
+}
+
+.manifesto-card:hover {
+    box-shadow: var(--lp-shadow-hover) !important;
+    border-color: var(--lp-border-medium) !important;
 }
 
 .manifesto-card-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--lp-text-heading);
     margin: 18px 0 12px;
 }
 
 .manifesto-card-copy {
+    font-family: var(--lp-font-body);
     font-size: 15px;
-    line-height: 1.5;
-    color: var(--color-mid-grey);
+    line-height: 1.55;
+    color: var(--lp-text-body);
     flex-grow: 1;
 }
 
@@ -434,10 +848,11 @@
 .tag-example {
     font-size: 12px;
     font-weight: 700;
-    padding: 6px 12px;
-    border-radius: var(--radius-pill);
-    background-color: var(--color-paper);
-    border: var(--border-thin);
+    padding: 6px 14px;
+    border-radius: var(--lp-radius-pill);
+    background-color: var(--lp-primary-tint);
+    color: var(--lp-primary);
+    border: 1px solid var(--lp-border-subtle);
 }
 
 .manifesto-card-link {
@@ -446,24 +861,34 @@
     gap: 6px;
     font-size: 14px;
     font-weight: 700;
+    color: var(--lp-primary);
     margin-top: 20px;
     text-decoration: underline;
     text-underline-offset: 4px;
+    transition: transform 0.2s ease, color 0.2s ease;
 }
 
-/* Bottom CTA Banner */
+.manifesto-card-link:hover {
+    color: var(--lp-primary-hover);
+    transform: translateX(3px);
+}
+
+/* --------------------------------------------------------------------------
+   10. Final Collaboration CTA Banner
+   -------------------------------------------------------------------------- */
 .section-bottom-cta {
     padding: 40px 0 80px;
 }
 
 .cta-banner-card {
-    background-color: var(--color-yellow);
-    border: var(--border-strong);
-    border-radius: var(--radius-lg);
-    padding: clamp(48px, 6vw, 84px) clamp(24px, 5vw, 64px);
+    background: linear-gradient(135deg, #F3EAF7 0%, #EDE0F4 50%, #F5ECF8 100%) !important;
+    border: 1px solid #E0D0EA !important;
+    border-radius: 24px !important;
+    padding: clamp(48px, 6vw, 80px) clamp(24px, 5vw, 64px);
     text-align: center;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 12px 36px rgba(99, 63, 124, 0.08) !important;
 }
 
 .cta-content {
@@ -475,13 +900,18 @@
 }
 
 .cta-headline {
+    font-size: clamp(34px, 4.5vw, 54px);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--lp-text-heading);
     margin: 20px 0 16px;
 }
 
 .cta-subtitle {
+    font-family: var(--lp-font-body);
     font-size: 18px;
-    line-height: 1.5;
-    color: var(--color-ink);
+    line-height: 1.55;
+    color: var(--lp-text-body);
     margin-bottom: 36px;
     max-width: 580px;
 }
@@ -496,13 +926,18 @@
 .cta-btn {
     height: 54px;
     font-size: 16px;
+    padding: 0 32px;
 }
 
-/* Editorial Footer */
+/* --------------------------------------------------------------------------
+   11. Editorial Footer
+   -------------------------------------------------------------------------- */
 .editorial-footer {
-    border-top: var(--border-strong);
+    background-color: #FFFFFF !important;
+    border-top: 1px solid var(--lp-border-subtle) !important;
     padding: 70px 0 50px;
     margin-top: 40px;
+    box-shadow: 0 -4px 20px rgba(78, 42, 107, 0.02);
 }
 
 .footer-grid {
@@ -510,26 +945,38 @@
 }
 
 .footer-logo {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    text-decoration: none;
     margin-bottom: 16px;
 }
 
+.footer-brand-logo {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.footer-brand-fallback {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--lp-text-heading);
+}
+
 .footer-bio {
+    font-family: var(--lp-font-body);
     font-size: 14px;
     line-height: 1.6;
-    color: var(--color-mid-grey);
+    color: var(--lp-text-muted);
     max-width: 320px;
     margin-bottom: 24px;
 }
 
 .footer-stamp {
     font-size: 12px;
-    color: var(--color-mid-grey);
+    color: var(--lp-text-light);
     font-weight: 600;
 }
 
@@ -538,6 +985,7 @@
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.08em;
+    color: var(--lp-text-heading);
     margin-bottom: 18px;
 }
 
@@ -546,17 +994,21 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    padding: 0;
+    margin: 0;
 }
 
 .footer-list a {
+    font-family: var(--lp-font-body);
     font-size: 14px;
     font-weight: 600;
-    color: var(--color-mid-grey);
-    transition: color var(--transition-fast);
+    color: var(--lp-text-body);
+    text-decoration: none;
+    transition: color 0.18s ease;
 }
 
 .footer-list a:hover {
-    color: var(--color-ink);
+    color: var(--lp-primary);
     text-decoration: underline;
 }
 
@@ -564,32 +1016,88 @@
     margin-top: 24px;
 }
 
-/* Mobile Media Queries */
-@media (max-width: 768px) {
-    .landing-hero-section {
-        padding: 24px 0 40px;
+/* --------------------------------------------------------------------------
+   12. Responsive Design & Mobile Drawer
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .hero-title {
+        font-size: clamp(38px, 4.5vw, 56px);
     }
-    
+}
+
+@media (max-width: 768px) {
+    .capsule-nav-wrapper {
+        padding: 12px 16px 8px;
+    }
+
+    .capsule-nav {
+        height: 56px;
+        padding: 6px 12px 6px 16px;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        right: 0;
+        background-color: #FFFFFF;
+        border: 1px solid var(--lp-border-subtle);
+        border-radius: var(--lp-radius-card);
+        padding: 16px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        box-shadow: 0 12px 36px rgba(78, 42, 107, 0.12);
+        z-index: 1001;
+    }
+
+    .capsule-nav-wrapper.menu-open .nav-links {
+        display: flex;
+    }
+
+    .nav-link {
+        padding: 12px 18px;
+        font-size: 15px;
+    }
+
+    .nav-mobile-toggle {
+        display: flex;
+    }
+
+    .nav-actions .btn-pill-secondary {
+        display: none;
+    }
+
+    .landing-hero-section {
+        padding: 20px 0 40px;
+    }
+
+    .hero-left-content {
+        padding-right: 0;
+        margin-bottom: 40px;
+    }
+
     .hero-actions-row {
         flex-direction: column;
         align-items: stretch;
     }
-    
+
     .hero-main-btn,
     .hero-sec-btn {
         width: 100%;
     }
-    
+
     .taxonomy-header-row {
         flex-direction: column;
         align-items: flex-start;
     }
-    
+
     .cta-action-row {
         flex-direction: column;
         width: 100%;
     }
-    
+
     .cta-btn {
         width: 100%;
     }
