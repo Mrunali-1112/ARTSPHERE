@@ -16,9 +16,11 @@ import java.util.stream.Collectors;
 public class OpportunityServiceImpl implements OpportunityService {
 
     private final OpportunityRepository opportunityRepository;
+    private final NotificationService notificationService;
 
-    public OpportunityServiceImpl(OpportunityRepository opportunityRepository) {
+    public OpportunityServiceImpl(OpportunityRepository opportunityRepository, NotificationService notificationService) {
         this.opportunityRepository = opportunityRepository;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -99,6 +101,20 @@ public class OpportunityServiceImpl implements OpportunityService {
         }
 
         int inserted = opportunityRepository.apply(userId, opportunityId, notes);
+        if (inserted > 0 && notificationService != null) {
+            notificationService.createNotification(
+                    userId,
+                    "OPPORTUNITY",
+                    "Application submitted: " + opp.getTitle(),
+                    "Your application has been received for " + opp.getTitle() + ".",
+                    null,
+                    opp.getOrganizer() != null ? opp.getOrganizer() : "ArtSphere Opportunities",
+                    opp.getOrganizerAvatar() != null ? opp.getOrganizerAvatar() : "/images/comm_creative_souls_avatar.png",
+                    "OPPORTUNITY",
+                    opp.getId(),
+                    "/pages/my-applications.html"
+            );
+        }
         return inserted > 0;
     }
 

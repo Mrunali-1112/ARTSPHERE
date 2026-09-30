@@ -20,10 +20,14 @@ public class CollaborationServiceImpl implements CollaborationService {
 
     private final CollaborationRepository collaborationRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
-    public CollaborationServiceImpl(CollaborationRepository collaborationRepository, UserRepository userRepository) {
+    public CollaborationServiceImpl(CollaborationRepository collaborationRepository,
+                                    UserRepository userRepository,
+                                    NotificationService notificationService) {
         this.collaborationRepository = collaborationRepository;
         this.userRepository = userRepository;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -113,6 +117,26 @@ public class CollaborationServiceImpl implements CollaborationService {
         req.setUpdatedAt(LocalDateTime.now());
 
         CollaborationRequest saved = collaborationRepository.saveRequest(req);
+
+        // Notify receiver
+        try {
+            var senderOpt = userRepository.findById(senderId);
+            String senderName = senderOpt.map(u -> u.getFullName() != null ? u.getFullName() : u.getUsername()).orElse("An artist");
+            String senderAvatar = senderOpt.map(u -> u.getAvatarUrl() != null ? u.getAvatarUrl() : u.getProfilePicture()).orElse("/images/artist_profile_avatar.png");
+            notificationService.createNotification(
+                    receiverId,
+                    "COLLABORATION",
+                    senderName + " sent you a collaboration request",
+                    req.getMessage() != null && !req.getMessage().isBlank() ? req.getMessage() : "Interested in collaborating on a creative project.",
+                    senderId,
+                    senderName,
+                    senderAvatar,
+                    "COLLABORATION_REQUEST",
+                    saved.getId(),
+                    "/pages/collaborators.html"
+            );
+        } catch (Exception ignored) {}
+
         return mapToItemResponse(saved);
     }
 
@@ -135,10 +159,41 @@ public class CollaborationServiceImpl implements CollaborationService {
 
     @Override
     public boolean respondToRequest(Long requestId, String status, Long currentUserId) {
-        collaborationRepository.findRequestById(requestId)
+        CollaborationRequest req = collaborationRepository.findRequestById(requestId)
                 .orElseThrow(() -> new ResourceNotFoundException("Request not found with id: " + requestId));
         String newStatus = "APPROVED".equalsIgnoreCase(status) ? "APPROVED" : "REJECTED";
-        return collaborationRepository.updateRequestStatus(requestId, newStatus);
+        boolean updated = collaborationRepository.updateRequestStatus(requestId, newStatus);
+
+        if (updated) {
+            try {
+                Long responderId = currentUserId != null ? currentUserId : req.getReceiverId();
+                var responderOpt = userRepository.findById(responderId);
+                String responderName = responderOpt.map(u -> u.getFullName() != null ? u.getFullName() : u.getUsername()).orElse("An artist");
+                String responderAvatar = responderOpt.map(u -> u.getAvatarUrl() != null ? u.getAvatarUrl() : u.getProfilePicture()).orElse("/images/artist_profile_avatar.png");
+
+                String title = "APPROVED".equalsIgnoreCase(newStatus)
+                        ? responderName + " approved your collaboration request"
+                        : responderName + " declined your collaboration request";
+                String message = "APPROVED".equalsIgnoreCase(newStatus)
+                        ? "Excited to collaborate! Check the collaborators page to begin syncing."
+                        : "Your collaboration request was declined.";
+
+                notificationService.createNotification(
+                        req.getSenderId(),
+                        "COLLABORATION",
+                        title,
+                        message,
+                        responderId,
+                        responderName,
+                        responderAvatar,
+                        "COLLABORATION_REQUEST",
+                        requestId,
+                        "/pages/collaborators.html"
+                );
+            } catch (Exception ignored) {}
+        }
+
+        return updated;
     }
 
     private CollaborationResponse mapToResponse(Collaboration c, Long currentUserId) {

@@ -3,267 +3,797 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Events | ArtSphere</title>
+    <title>ArtSphere — Events, Workshops & Gatherings</title>
+    <link rel="icon" type="image/png" href="/images/logo_nav.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/events.css">
+    <link rel="stylesheet" href="/css/event-registration-modal.css">
 </head>
-<body>
-    <div class="mobile-viewport">
-        <!-- Top App Bar Header -->
-        <header class="app-header">
-            <div class="header-left">
-                <a href="/pages/home.html" class="btn-icon" aria-label="Go Back">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
+<body class="dashboard-body">
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <div class="dashboard-container">
+        <!-- ============================================================
+             LEFT SIDEBAR (Sticky, ~240px wide)
+             ============================================================ -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <!-- Brand Header -->
+            <div class="sidebar-brand-wrapper">
+                <a href="/pages/home.html" class="sidebar-brand-link">
+                    <div class="brand-sparkle-icon">✦</div>
+                    <div class="brand-text-block">
+                        <span class="brand-title">ArtSphere</span>
+                        <span class="brand-tagline">The Artist Community</span>
+                    </div>
+                </a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close navigation">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Primary Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Main Navigation">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/home.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/discover.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Discover</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/communities.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Communities</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/events.html" class="sidebar-nav-item active">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Events</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/collaborators.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path>
+                                    <path d="M18 8l4 4-4 4"></path>
+                                    <path d="M8 12h14"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Collaborate</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/opportunities.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Opportunities</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- Secondary Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Communication">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/messages.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Messages</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/notifications.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Notifications</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Bottom Section: Profile Mini-Card & System Actions -->
+            <div class="sidebar-bottom-section">
+                <!-- User Profile Mini-Card -->
+                <a href="/pages/artist-profile.html" class="sidebar-profile-card" id="sidebarProfileCard" title="View Profile">
+                    <img src="/images/user_avatar_nav.png" alt="Profile" class="sidebar-user-avatar" id="sidebarUserAvatar">
+                    <div class="sidebar-user-meta">
+                        <span class="sidebar-user-name" id="sidebarUserName">Mrunali</span>
+                        <span class="sidebar-view-profile">View Profile</span>
+                    </div>
+                    <svg class="sidebar-card-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
                 </a>
-                <a href="/pages/home.html" class="logo-link">
-                    <img src="/images/logo_header.png" alt="ArtSphere Logo" class="header-logo-img">
-                </a>
-            </div>
-            <div class="header-right">
-                <a href="/pages/notifications.html" class="btn-icon header-notification-btn" aria-label="Notifications">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
-                    <span class="notification-badge-dot"></span>
-                </a>
-                <a href="/pages/artist-profile.html?id=101" class="header-avatar-link">
-                    <img src="/images/artist_profile_avatar.png" alt="User Profile" class="header-user-avatar">
-                </a>
-            </div>
-        </header>
 
-        <!-- Main Events Content -->
-        <main class="events-main-content">
-            <!-- Hero Title & Sticker Section -->
-            <section class="events-header-section">
-                <div class="title-row">
-                    <div class="title-text-col">
-                        <h1 class="page-title">Events</h1>
-                        <p class="page-subtitle">Workshops, exhibitions, meetups, and live sessions. &bull; <a href="/pages/my-applications.html?category=EVENTS" style="color: #6C5CE7; font-weight: 600; text-decoration: none;">My Registrations &rarr;</a></p>
-                    </div>
-                    <div class="sticker-col">
-                        <div class="quote-sticker">
-                            <span class="sticker-line1">Learn</span>
-                            <span class="sticker-line2">Connect</span>
-                            <span class="sticker-line3">Create</span>
-                            <span class="sticker-heart">&hearts;</span>
-                        </div>
-                    </div>
-                </div>
+                <!-- Utility Navigation -->
+                <ul class="sidebar-utility-list">
+                    <li>
+                        <a href="/pages/settings.html" class="sidebar-utility-item">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </span>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/help-support.html" class="sidebar-utility-item">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </span>
+                            <span>Help & Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <button class="sidebar-utility-item logout-action" id="sidebarLogoutBtn">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                            </span>
+                            <span>Logout</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </aside>
 
-                <!-- Search Input Bar -->
-                <div class="search-bar-wrapper">
-                    <div class="search-input-box">
-                        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C5CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- ============================================================
+             MAIN CONTENT WRAPPER (Top Header + 2-Column Dashboard)
+             ============================================================ -->
+        <div class="dashboard-main-wrapper">
+            
+            <!-- Compact Top Header -->
+            <header class="dashboard-top-header">
+                <div class="header-left-cluster">
+                    <button class="mobile-menu-trigger" id="mobileMenuTrigger" aria-label="Open navigation menu">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <!-- Compact Top Search Bar -->
+                    <div class="header-search-bar">
+                        <svg class="search-lens-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
-                        <input type="text" id="eventSearchInput" class="event-search-input" placeholder="Search events, workshops, exhibitions..." autocomplete="off">
-                        <button id="clearSearchBtn" class="clear-search-btn" style="display: none;" aria-label="Clear Search">&times;</button>
+                        <input type="text" id="topHeaderSearchInput" class="header-search-input" placeholder="Search artists, opportunities, events..." autocomplete="off">
                     </div>
                 </div>
 
-                <!-- Art Form Filter Pills -->
-                <div class="categories-section">
-                    <div class="category-header-row">
-                        <span class="category-section-title">Filter by Category</span>
-                        <a href="#" class="see-all-link" id="resetCategoryFilter">Reset</a>
-                    </div>
-                    <div class="categories-scroll-row" id="categoriesScrollRow">
-                        <button class="cat-pill active" data-category="All">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                            </div>
-                            <span class="cat-label">All</span>
-                        </button>
-                        <button class="cat-pill" data-category="Painting">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a4.5 4.5 0 0 0 0 9 4.5 4.5 0 0 1 0 9 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9z"></path></svg>
-                            </div>
-                            <span class="cat-label">Painting</span>
-                        </button>
-                        <button class="cat-pill" data-category="Music">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-                            </div>
-                            <span class="cat-label">Music</span>
-                        </button>
-                        <button class="cat-pill" data-category="Dance">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="5" r="3"></circle><path d="M6 22l6-9 4 4 4-8"></path><path d="M9 13l-3 4"></path></svg>
-                            </div>
-                            <span class="cat-label">Dance</span>
-                        </button>
-                        <button class="cat-pill" data-category="Photography">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                            </div>
-                            <span class="cat-label">Photography</span>
-                        </button>
-                        <button class="cat-pill" data-category="Writing">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                            </div>
-                            <span class="cat-label">Writing</span>
-                        </button>
-                        <button class="cat-pill" data-category="Digital Art">
-                            <div class="cat-icon-circle">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                            </div>
-                            <span class="cat-label">Digital Art</span>
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Featured Event Section -->
-            <section class="featured-event-section" id="featuredEventSection">
-                <div class="section-title-row">
-                    <h2 class="section-heading">Featured Event</h2>
-                    <span class="badge-featured">Spotlight</span>
-                </div>
-                <div class="featured-event-banner-card" id="featuredBannerCard">
-                    <div class="featured-event-cover-wrap">
-                        <img id="featuredCoverImg" src="/images/event_detail_banner_watercolor.png" alt="Featured Event" class="featured-cover-img" onerror="this.src='/images/comm_event_detail_cover.png'">
-                        <span class="event-type-badge" id="featuredTypeBadge">Workshop</span>
-                        <div class="featured-date-badge" id="featuredDateBadge">
-                            <span class="date-month">MAR</span>
-                            <span class="date-day">15</span>
-                        </div>
-                    </div>
-                    <div class="featured-event-body">
-                        <h3 class="featured-event-title" id="featuredTitle">Watercolor Basics Workshop</h3>
-                        <p class="featured-event-desc" id="featuredDesc">Learn the fundamentals of watercolor painting with easy techniques and step-by-step guidance. Perfect for beginners!</p>
-                        
-                        <div class="featured-meta-row">
-                            <div class="meta-item">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                <span id="featuredTime">4:00 PM - 6:00 PM (IST)</span>
-                            </div>
-                            <div class="meta-item">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                <span id="featuredVenue">Art Studio, Bandra West, Mumbai</span>
-                            </div>
-                        </div>
-
-                        <div class="featured-organizer-row">
-                            <div class="organizer-avatar-wrap">
-                                <img id="featuredOrgAvatar" src="/images/comm_creative_souls_avatar.png" alt="Organizer" class="organizer-avatar" onerror="this.src='/images/artist_profile_avatar.png'">
-                            </div>
-                            <div class="organizer-info">
-                                <span class="org-label">Organized by</span>
-                                <span class="org-name" id="featuredOrgName">Creative Souls</span>
-                            </div>
-                            <div class="attendees-indicator" id="featuredAttendees">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                <span>32 going</span>
-                            </div>
-                        </div>
-
-                        <div class="featured-action-row">
-                            <a href="/pages/event-details.html?id=801" class="btn-event-details-action" id="btnFeaturedDetails">View Details</a>
-                            <button class="btn-event-register-action" id="btnFeaturedRegister" data-id="801">Register Now</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Upcoming Events Section -->
-            <section class="upcoming-events-section">
-                <div class="section-title-row">
-                    <h2 class="section-heading" id="upcomingSectionHeading">Upcoming Events</h2>
-                    <span class="events-count-badge" id="eventsCountBadge">8 events</span>
-                </div>
-
-                <div class="events-grid" id="eventsGrid">
-                    <!-- Dynamically populated via events.js -->
-                </div>
-            </section>
-        </main>
-
-        <!-- Toast Notifications -->
-        <div class="toast-container" id="toastContainer"></div>
-
-        <!-- Central + Creation Popup Modal -->
-        <div class="plus-menu-backdrop" id="plusMenuBackdrop" style="display: none;">
-            <div class="plus-menu-card">
-                <div class="plus-menu-header">
-                    <span class="plus-menu-title">Create on ArtSphere</span>
-                    <button class="btn-close-plus-menu" id="btnClosePlusMenu">&times;</button>
-                </div>
-                <div class="plus-menu-grid">
-                    <a href="/pages/create-post.html" class="plus-menu-item">
-                        <div class="plus-menu-icon-circle icon-post">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                        </div>
-                        <span class="plus-menu-label">Share Art / Post</span>
+                <div class="header-right-cluster">
+                    <!-- Notification Bell -->
+                    <a href="/pages/notifications.html" class="header-icon-action" aria-label="Notifications" title="Notifications">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-indicator-dot"></span>
                     </a>
-                    <a href="/pages/create-collaboration.html" class="plus-menu-item">
-                        <div class="plus-menu-icon-circle icon-collab">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+
+                    <!-- Creator Avatar & Dropdown -->
+                    <div class="user-menu-container">
+                        <button class="header-avatar-button" id="userAvatarBtn" aria-label="Open User Menu" aria-expanded="false">
+                            <img src="/images/user_avatar_nav.png" alt="Profile" class="header-user-avatar" id="headerUserAvatar">
+                            <svg class="avatar-chevron-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+
+                        <!-- User Dropdown Menu -->
+                        <div class="header-dropdown-panel" id="userDropdownPanel">
+                            <div class="dropdown-header-info">
+                                <strong id="dropdownUserName">Mrunali</strong>
+                                <span id="dropdownUserBio">Artist Member</span>
+                            </div>
+                            <div class="dropdown-separator"></div>
+                            <a href="/pages/artist-profile.html" class="dropdown-link-row">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <span>My Profile</span>
+                            </a>
+                            <a href="/pages/my-applications.html?category=EVENTS" class="dropdown-link-row">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                <span>My Registrations</span>
+                            </a>
+                            <a href="/pages/settings.html" class="dropdown-link-row">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                <span>Account Settings</span>
+                            </a>
+                            <div class="dropdown-separator"></div>
+                            <button class="dropdown-link-row danger-text" id="logoutBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                <span>Log Out</span>
+                            </button>
                         </div>
-                        <span class="plus-menu-label">Collaboration</span>
-                    </a>
-                    <a href="/pages/communities.html" class="plus-menu-item">
-                        <div class="plus-menu-icon-circle icon-community">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a4.5 4.5 0 0 0 0 9 4.5 4.5 0 0 1 0 9 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9z"></path></svg>
-                        </div>
-                        <span class="plus-menu-label">Communities</span>
-                    </a>
+                    </div>
                 </div>
+            </header>
+
+            <!-- Dashboard Content Layout (Two-Column Workspace) -->
+            <div class="dashboard-content-body">
+                
+                <!-- ========================================================
+                     MAIN WORKSPACE (~68% width)
+                     ======================================================== -->
+                <main class="dashboard-workspace" id="mainWorkspace">
+                    
+                    <!-- 1. Hero Card: Master the Craft -->
+                    <section class="events-hero-card" aria-label="Hero Spotlight">
+                        <div class="hero-text-block">
+                            <h1 class="hero-headline">
+                                Master the Craft.<br>
+                                Live with Creators.
+                            </h1>
+                            <p class="hero-subtext">
+                                Hands-on workshops, exhibition vernissages, collaborative studio jams, and masterclasses hosted by independent guild leaders across the globe.
+                            </p>
+                            <a href="#gatheringsAnchor" class="btn-hero-explore" id="heroExploreBtn">
+                                <span>Explore Events</span>
+                                <span class="arrow-symbol">→</span>
+                            </a>
+                        </div>
+                        <div class="hero-visual-frame">
+                            <img src="/images/home_hero_painter.png" alt="Artist painting canvas in studio" class="hero-painter-image" onerror="this.src='/images/comm_event_watercolor.png'">
+                        </div>
+                    </section>
+
+                    <!-- 2. Search & Filter Bar Card -->
+                    <section class="events-filter-card" aria-label="Search and Filter">
+                        <!-- Top search & filters button row -->
+                        <div class="filter-search-row">
+                            <div class="filter-input-wrap">
+                                <svg class="filter-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input type="text" id="eventSearchInput" class="filter-search-input" placeholder="Search sessions by keyword, venue, or medium..." autocomplete="off">
+                                <button id="clearSearchBtn" class="filter-clear-btn" aria-label="Clear Search" style="display:none;">&times;</button>
+                            </div>
+                            <button class="btn-filter-settings" id="filterToggleBtn" title="Filter settings">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="4" y1="21" x2="4" y2="14"></line>
+                                    <line x1="4" y1="10" x2="4" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="12"></line>
+                                    <line x1="12" y1="8" x2="12" y2="3"></line>
+                                    <line x1="20" y1="21" x2="20" y2="16"></line>
+                                    <line x1="20" y1="12" x2="20" y2="3"></line>
+                                    <line x1="1" y1="14" x2="7" y2="14"></line>
+                                    <line x1="9" y1="8" x2="15" y2="8"></line>
+                                    <line x1="17" y1="16" x2="23" y2="16"></line>
+                                </svg>
+                                <span>Filters</span>
+                            </button>
+                        </div>
+
+                        <!-- Explore by Art Form Pills -->
+                        <div class="artform-filter-container">
+                            <span class="artform-filter-label">Explore by Art Form</span>
+                            <div class="artform-pills-row" id="categoriesScrollRow">
+                                <button class="artform-pill-btn active" data-category="All">All Formats</button>
+                                <button class="artform-pill-btn" data-category="Painting">Painting &amp; Fine Art</button>
+                                <button class="artform-pill-btn" data-category="Music">Music &amp; Sound</button>
+                                <button class="artform-pill-btn" data-category="Dance">Dance &amp; Motion</button>
+                                <button class="artform-pill-btn" data-category="Photography">Photography</button>
+                                <button class="artform-pill-btn" data-category="Writing">Writing &amp; Poetry</button>
+                                <button class="artform-pill-btn" data-category="Digital Art">Digital Art &amp; 3D</button>
+                            </div>
+                        </div>
+
+                        <!-- Search Meta line -->
+                        <div class="search-meta-row">
+                            <span id="eventsCountBadge" class="events-count-text">Showing all upcoming sessions</span>
+                        </div>
+                    </section>
+
+                    <!-- 3. Upcoming Gatherings 3-Column Grid -->
+                    <section class="gatherings-section" id="gatheringsAnchor" aria-label="Upcoming Gatherings">
+                        <div class="gatherings-header-row">
+                            <h2 class="gatherings-section-title" id="upcomingSectionHeading">Upcoming Gatherings</h2>
+                            <button class="view-all-link-btn" id="viewAllGatheringsLink">
+                                <span>View All</span>
+                                <span>→</span>
+                            </button>
+                        </div>
+
+                        <!-- Dynamic 3-Column Cards Grid -->
+                        <div class="gatherings-cards-grid" id="eventsGrid">
+                            <!-- Populated dynamically via events.js -->
+                        </div>
+                    </section>
+                </main>
+
+                <!-- ========================================================
+                     RIGHT SIDEBAR PANEL (~32% width)
+                     ======================================================== -->
+                <aside class="dashboard-right-panel" id="rightInfoPanel">
+                    
+                    <!-- Section 1: Featured Event -->
+                    <section class="panel-section-box panel-featured-box">
+                        <div class="panel-box-header">
+                            <h3 class="panel-box-title">Featured Event</h3>
+                            <div class="carousel-nav-arrows">
+                                <button class="carousel-nav-arrow" id="featuredPrevBtn" aria-label="Previous Featured Event">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                </button>
+                                <button class="carousel-nav-arrow" id="featuredNextBtn" aria-label="Next Featured Event">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Featured Event Card -->
+                        <div class="featured-card-wrapper" id="featuredBannerCard">
+                            <div class="featured-image-container">
+                                <img src="/images/comm_event_watercolor.png" alt="Featured Workshop" class="featured-cover-img" id="featuredCoverImg" onerror="this.src='/images/comm_event_detail_cover.png'">
+                                <div class="event-date-stamp-badge" id="featuredDateBadge">
+                                    <span class="stamp-month">MAR</span>
+                                    <span class="stamp-day">15</span>
+                                </div>
+                                <div class="event-type-pill-badge" id="featuredTypeBadge">WORKSHOP</div>
+                            </div>
+                            <div class="featured-card-body">
+                                <h4 class="featured-event-name" id="featuredTitle">Watercolor Basics Workshop</h4>
+                                <div class="featured-meta-lines">
+                                    <div class="featured-meta-row">
+                                        <svg class="meta-svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                        <span id="featuredVenue">Art Studio, Bandra West, Mumbai</span>
+                                    </div>
+                                    <div class="featured-meta-row">
+                                        <svg class="meta-svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                        <span id="featuredTime">4:00 PM - 6:00 PM (IST)</span>
+                                    </div>
+                                </div>
+                                <button class="btn-featured-register" id="btnFeaturedRegister" data-id="801">
+                                    <span>Register Now</span>
+                                    <span>→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section 2: My Schedule -->
+                    <section class="panel-section-box panel-schedule-box">
+                        <div class="panel-box-header">
+                            <h3 class="panel-box-title">My Schedule</h3>
+                            <a href="/pages/my-applications.html?category=EVENTS" class="panel-header-link" id="viewCalendarLink">
+                                <span>View Calendar</span>
+                                <span>→</span>
+                            </a>
+                        </div>
+
+                        <!-- Calendar Widget Card -->
+                        <div class="schedule-calendar-card">
+                            <!-- Month Bar with Nav -->
+                            <div class="calendar-month-bar">
+                                <button class="cal-nav-btn" id="calPrevBtn" aria-label="Previous Month">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                </button>
+                                <span class="calendar-month-label" id="calMonthYear">March 2024</span>
+                                <button class="cal-nav-btn" id="calNextBtn" aria-label="Next Month">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </button>
+                            </div>
+
+                            <!-- Weekday Headers -->
+                            <div class="calendar-weekdays-grid">
+                                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                            </div>
+
+                            <!-- Calendar Days Grid -->
+                            <div class="calendar-days-grid" id="calDaysGrid">
+                                <!-- Populated dynamically by events.js -->
+                            </div>
+
+                            <div class="schedule-card-divider"></div>
+
+                            <!-- Registered Events List Below Calendar -->
+                            <div class="schedule-events-stack" id="scheduleEventsList">
+                                <!-- Populated dynamically by events.js -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section 3: Quick Links -->
+                    <section class="panel-section-box panel-quicklinks-box">
+                        <div class="panel-box-header">
+                            <h3 class="panel-box-title">Quick Links</h3>
+                        </div>
+                        <div class="quick-links-grid">
+                            <a href="/pages/my-applications.html?category=EVENTS" class="quick-link-tile" id="quickLinkRegistrations">
+                                <div class="quick-link-icon-wrap icon-purple">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                </div>
+                                <span class="quick-link-label">My Registrations</span>
+                            </a>
+
+                            <button class="quick-link-tile" id="quickLinkSaved">
+                                <div class="quick-link-icon-wrap icon-pink">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                    </svg>
+                                </div>
+                                <span class="quick-link-label">Saved Events</span>
+                            </button>
+
+                            <button class="quick-link-tile" id="quickLinkPast">
+                                <div class="quick-link-icon-wrap icon-lavender">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                </div>
+                                <span class="quick-link-label">Past Events</span>
+                            </button>
+
+                            <a href="/pages/create-post.html" class="quick-link-tile" id="quickLinkCreate">
+                                <div class="quick-link-icon-wrap icon-rose">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </div>
+                                <span class="quick-link-label">Create Event</span>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Section 4: Recommended for You -->
+                    <section class="panel-section-box panel-recommended-box">
+                        <div class="panel-box-header">
+                            <h3 class="panel-box-title">Recommended for You</h3>
+                        </div>
+                        <div class="recommended-events-stack" id="recommendedList">
+                            <!-- Populated dynamically via events.js -->
+                        </div>
+                    </section>
+
+                </aside>
+
             </div>
         </div>
+    </div>
 
-        <!-- Sticky Bottom Navigation Bar -->
-        <nav class="bottom-nav-bar" id="bottomNavBar">
-            <a href="/pages/home.html" class="nav-item" aria-label="Home">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                </svg>
-                <span class="nav-label">Home</span>
-            </a>
-
-            <a href="/pages/discover.html" class="nav-item" aria-label="Discover">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                </svg>
-                <span class="nav-label">Discover</span>
-            </a>
-
-            <button class="nav-fab-btn" id="centralPlusBtn" aria-label="Create New">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- ============================================================
+         MOBILE BOTTOM NAVIGATION (Home | Discover | + | Messages | Profile)
+         ============================================================ -->
+    <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+        <a href="/pages/home.html" class="mobile-nav-btn" aria-label="Home">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span class="mobile-nav-caption">Home</span>
+        </a>
+        <a href="/pages/discover.html" class="mobile-nav-btn" aria-label="Discover">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span class="mobile-nav-caption">Discover</span>
+        </a>
+        <a href="/pages/create-post.html" class="mobile-nav-btn mobile-create-action" aria-label="Create Post or Event">
+            <div class="mobile-create-pill">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
-            </button>
+            </div>
+        </a>
+        <a href="/pages/messages.html" class="mobile-nav-btn" aria-label="Messages">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span class="mobile-nav-caption">Messages</span>
+        </a>
+        <a href="/pages/artist-profile.html" class="mobile-nav-btn" aria-label="Profile">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span class="mobile-nav-caption">Profile</span>
+        </a>
+    </nav>
 
-            <a href="/pages/events.html" class="nav-item active" aria-label="Events">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" fill="none" stroke="currentColor" stroke-width="2.2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2.2"></line>
-                    <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2.2"></line>
-                    <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2.2"></line>
-                </svg>
-                <span class="nav-label">Events</span>
-            </a>
+    <!-- Event Registration Form Modal -->
+    <div class="modal-backdrop event-reg-backdrop" id="eventRegModal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="eventRegModalTitle">
+        <div class="modal-card event-reg-modal-card">
+            <button type="button" class="modal-close-cross" id="closeEventRegModal" aria-label="Close dialog">&times;</button>
+            
+            <div class="reg-modal-header-block">
+                <span class="reg-modal-eyebrow">✦ RSVP &amp; ENTRY PASS</span>
+                <h3 class="reg-form-title" id="eventRegModalTitle">Register for Event</h3>
+                <p class="reg-form-subtitle">Complete your reservation to secure your place at this creative session.</p>
+            </div>
 
-            <a href="/pages/artist-profile.html?id=101" class="nav-item" aria-label="Profile">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-                <span class="nav-label">Profile</span>
-            </a>
-        </nav>
+            <!-- Compact Event Summary Card -->
+            <div class="reg-event-summary-card">
+                <div class="summary-field summary-field-full">
+                    <span class="summary-field-label">EVENT</span>
+                    <strong class="summary-field-value" id="regSummaryTitle">Watercolor Workshop</strong>
+                </div>
+                <div class="summary-field">
+                    <span class="summary-field-label">DATE</span>
+                    <span class="summary-field-value" id="regSummaryDate">25 SEP 2026</span>
+                </div>
+                <div class="summary-field">
+                    <span class="summary-field-label">TIME</span>
+                    <span class="summary-field-value" id="regSummaryTime">10:00 AM – 1:00 PM</span>
+                </div>
+                <div class="summary-field">
+                    <span class="summary-field-label">LOCATION</span>
+                    <span class="summary-field-value" id="regSummaryLocation">ArtHouse, Mumbai</span>
+                </div>
+                <div class="summary-field">
+                    <span class="summary-field-label">HOST</span>
+                    <span class="summary-field-value" id="regSummaryHost">Creative Souls</span>
+                </div>
+                <div class="summary-field summary-field-full">
+                    <span class="summary-field-label">TYPE</span>
+                    <span class="summary-field-value" id="regSummaryType">Workshop</span>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <form id="eventRegistrationForm" class="event-reg-form" novalidate>
+                <!-- 1. Full Name -->
+                <div class="reg-form-group">
+                    <label for="regFullNameInput" class="reg-form-label">
+                        <span>Full Name</span>
+                        <span class="req-star">*</span>
+                    </label>
+                    <input type="text" id="regFullNameInput" class="reg-form-input" placeholder="Your full artist name" required>
+                    <div class="reg-inline-error" id="regNameError">Please enter your name.</div>
+                </div>
+
+                <!-- 2. Email -->
+                <div class="reg-form-group">
+                    <label for="regEmailInput" class="reg-form-label">
+                        <span>Email</span>
+                        <span class="req-star">*</span>
+                    </label>
+                    <input type="email" id="regEmailInput" class="reg-form-input" placeholder="you@example.com" required>
+                    <div class="reg-inline-error" id="regEmailError">Please enter a valid email.</div>
+                </div>
+
+                <!-- 3. Artist / Creative Discipline -->
+                <div class="reg-form-group">
+                    <label for="regDisciplineSelect" class="reg-form-label">
+                        <span>Artist / Creative Discipline</span>
+                        <span class="req-star">*</span>
+                    </label>
+                    <select id="regDisciplineSelect" class="reg-form-select" required>
+                        <option value="">Select your discipline...</option>
+                        <option value="Visual Arts">Visual Arts</option>
+                        <option value="Painting">Painting</option>
+                        <option value="Music">Music</option>
+                        <option value="Dance">Dance</option>
+                        <option value="Photography">Photography</option>
+                        <option value="Digital Art">Digital Art</option>
+                        <option value="Film">Film</option>
+                        <option value="Writing">Writing</option>
+                        <option value="Illustration">Illustration</option>
+                        <option value="Design">Design</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div class="reg-inline-error" id="regDisciplineError">Please select your discipline.</div>
+                </div>
+
+                <!-- 4. Experience Level -->
+                <div class="reg-form-group">
+                    <label for="regExpLevelSelect" class="reg-form-label">
+                        <span>Experience Level</span>
+                        <span class="req-star">*</span>
+                    </label>
+                    <select id="regExpLevelSelect" class="reg-form-select" required>
+                        <option value="Beginner / Enthusiast">Beginner / Enthusiast</option>
+                        <option value="Emerging Artist (1-3 yrs)" selected>Emerging Artist (1-3 yrs)</option>
+                        <option value="Intermediate / Practicing (3-5 yrs)">Intermediate / Practicing (3-5 yrs)</option>
+                        <option value="Advanced / Professional (5+ yrs)">Advanced / Professional (5+ yrs)</option>
+                    </select>
+                </div>
+
+                <!-- 5. Why do you want to attend? -->
+                <div class="reg-form-group">
+                    <label for="regReasonInput" class="reg-form-label">
+                        <span>Why do you want to attend?</span>
+                        <span class="req-star">*</span>
+                    </label>
+                    <input type="text" id="regReasonInput" class="reg-form-input" placeholder="e.g. Master watercolor wash techniques & connect with local painters" required>
+                </div>
+
+                <!-- 6. Number of Attendees -->
+                <div class="reg-form-group">
+                    <label for="regAttendeesInput" class="reg-form-label">
+                        <span>Number of Attendees</span>
+                        <span class="req-star">*</span>
+                    </label>
+                    <div class="attendees-selector-wrap">
+                        <button type="button" class="btn-attendee-stepper" id="btnAttendeeMinus" aria-label="Decrease attendees">&minus;</button>
+                        <input type="number" id="regAttendeesInput" class="reg-form-input attendee-num-input" value="1" min="1" max="5" required>
+                        <button type="button" class="btn-attendee-stepper" id="btnAttendeePlus" aria-label="Increase attendees">&plus;</button>
+                        <span class="attendee-limit-hint">(Max 5 per reservation)</span>
+                    </div>
+                    <div class="reg-inline-error" id="regAttendeesError">Please enter a valid number of attendees (1-5).</div>
+                </div>
+
+                <!-- 7. Additional Note -->
+                <div class="reg-form-group">
+                    <label for="regNoteInput" class="reg-form-label">
+                        <span>Additional Note</span>
+                        <span class="opt-tag">(Optional)</span>
+                    </label>
+                    <textarea id="regNoteInput" class="reg-form-textarea" rows="2" maxlength="250" placeholder="Anything you'd like the host to know?"></textarea>
+                </div>
+
+                <!-- 8. Confirmation Checkbox -->
+                <div class="reg-terms-row">
+                    <input type="checkbox" id="regConfirmCheck" required>
+                    <label for="regConfirmCheck">
+                        <span>I confirm that I want to register for this event.</span>
+                        <span class="req-star">*</span>
+                    </label>
+                </div>
+                <div class="reg-inline-error" id="regConfirmError">Please confirm your registration.</div>
+
+                <!-- Action Buttons -->
+                <div class="reg-modal-actions">
+                    <button type="button" class="btn-reg-secondary" id="btnCancelReg">Cancel</button>
+                    <button type="submit" class="btn-reg-primary" id="btnConfirmReg">
+                        <span>Register for Event</span>
+                        <span>&rarr;</span>
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
+
+    <!-- Registration Success Modal -->
+    <div class="modal-backdrop event-reg-backdrop" id="eventSuccessModal" style="display: none;" role="dialog" aria-modal="true">
+        <div class="modal-card event-success-card">
+            <button type="button" class="modal-close-cross" id="closeEventSuccessModal" aria-label="Close dialog">&times;</button>
+            <div class="event-success-icon-box">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h3 class="event-success-title">You're Registered!</h3>
+            <p class="event-success-subtitle"><span id="successEventTitle">Watercolor Workshop</span> has been added to your registrations.</p>
+            
+            <div class="event-success-badge-row">
+                <span class="success-status-pill">✓ Registration confirmed</span>
+            </div>
+
+            <div class="event-success-ledger">
+                <div class="success-ledger-row">
+                    <span class="ledger-label">Event:</span>
+                    <strong class="ledger-value" id="successLedgerEvent">Watercolor Workshop</strong>
+                </div>
+                <div class="success-ledger-row">
+                    <span class="ledger-label">Date:</span>
+                    <span class="ledger-value" id="successLedgerDate">25 SEP</span>
+                </div>
+                <div class="success-ledger-row">
+                    <span class="ledger-label">Time:</span>
+                    <span class="ledger-value" id="successLedgerTime">10:00 AM – 1:00 PM</span>
+                </div>
+                <div class="success-ledger-row">
+                    <span class="ledger-label">Location:</span>
+                    <span class="ledger-value" id="successLedgerLocation">ArtHouse, Mumbai</span>
+                </div>
+            </div>
+
+            <div class="event-success-actions">
+                <a href="/pages/my-applications.html?category=EVENTS" class="btn-reg-primary">
+                    <span>View My Registrations</span>
+                    <span>&rarr;</span>
+                </a>
+                <button type="button" class="btn-reg-secondary" id="btnBackToEvents">Back to Events</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Already Registered / Duplicate Protection Modal -->
+    <div class="modal-backdrop event-reg-backdrop" id="eventAlreadyRegModal" style="display: none;" role="dialog" aria-modal="true">
+        <div class="modal-card event-success-card">
+            <button type="button" class="modal-close-cross" id="closeAlreadyRegModal" aria-label="Close dialog">&times;</button>
+            <div class="event-success-icon-box icon-already-registered">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <h3 class="event-success-title">You're already registered!</h3>
+            <p class="event-success-subtitle">You already hold a confirmed reservation for <strong id="alreadyRegEventTitle">Watercolor Workshop</strong>.</p>
+            
+            <div class="event-success-badge-row">
+                <span class="success-status-pill status-active">✓ Reservation Active</span>
+            </div>
+
+            <p class="event-already-desc">
+                You can view your confirmed passes, venue details, and studio guidelines anytime in your Registrations Tracker.
+            </p>
+
+            <div class="event-success-actions">
+                <a href="/pages/my-applications.html?category=EVENTS" class="btn-reg-primary">
+                    <span>View My Registrations</span>
+                    <span>&rarr;</span>
+                </a>
+                <button type="button" class="btn-reg-secondary" id="btnCloseAlreadyReg">Back to Events</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="dashboard-toast-container"></div>
 
     <!-- Scripts -->
     <script src="/js/api.js"></script>

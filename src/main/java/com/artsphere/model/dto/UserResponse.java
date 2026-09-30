@@ -13,6 +13,10 @@ public class UserResponse {
     private String bio;
     private String profilePicture;
     private String role;
+    private String location;
+    private String coverImage;
+    private String artistType;
+    private String skills;
     private LocalDateTime createdAt;
 
     public UserResponse() {
@@ -33,7 +37,7 @@ public class UserResponse {
         if (user == null) {
             return null;
         }
-        return new UserResponse(
+        UserResponse response = new UserResponse(
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
@@ -43,6 +47,11 @@ public class UserResponse {
                 user.getRole(),
                 user.getCreatedAt()
         );
+        response.setLocation(user.getLocation());
+        response.setCoverImage(user.getCoverImage());
+        response.setArtistType(user.getArtistType());
+        response.setSkills(user.getSkills());
+        return response;
     }
 
     public Long getId() {
@@ -99,6 +108,38 @@ public class UserResponse {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
+    }
+
+    public String getArtistType() {
+        return artistType;
+    }
+
+    public void setArtistType(String artistType) {
+        this.artistType = artistType;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
     }
 
     public LocalDateTime getCreatedAt() {

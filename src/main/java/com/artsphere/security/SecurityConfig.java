@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/",
                     "/index.html",
+                    "/favicon.ico",
                     "/css/**",
                     "/js/**",
                     "/images/**",
@@ -58,7 +59,8 @@ public class SecurityConfig {
                     "/api/communities/**",
                     "/api/events/**",
                     "/api/my-applications/**",
-                    "/api/notifications/**"
+                    "/api/notifications/**",
+                    "/api/messages/**"
                 ).permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/artworks/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/home/**").permitAll()

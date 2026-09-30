@@ -149,8 +149,10 @@ public class CommunityController {
         if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getName())) {
             return userRepository.findByUsername(authentication.getName())
                     .map(u -> u.getId())
-                    .orElse(101L);
+                    .orElseGet(() -> userRepository.findByUsername("mrunali").map(u -> u.getId()).orElse(101L));
         }
-        return 101L; // default demo user (Aanya)
+        return userRepository.findByUsername("mrunali")
+                .map(u -> u.getId())
+                .orElse(101L);
     }
 }

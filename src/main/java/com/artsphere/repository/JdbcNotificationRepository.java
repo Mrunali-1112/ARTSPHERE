@@ -119,4 +119,11 @@ public class JdbcNotificationRepository implements NotificationRepository {
         String sql = "UPDATE notifications SET is_read = TRUE WHERE user_id = ?";
         return jdbcTemplate.update(sql, userId) >= 0;
     }
+
+    @Override
+    public void createNotification(Long userId, String type, String title, String message, Long senderId, String senderName, String senderAvatar, String entityType, Long entityId, String actionUrl) {
+        String sql = "INSERT INTO notifications (user_id, type, title, message, sender_id, sender_name, sender_avatar, entity_type, entity_id, action_url, is_read, created_at) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, FALSE, NOW())";
+        jdbcTemplate.update(sql, userId, type, title, message, senderId, senderName, senderAvatar, entityType, entityId, actionUrl);
+    }
 }

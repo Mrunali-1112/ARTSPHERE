@@ -1,23 +1,43 @@
 /**
- * ArtSphere – Settings Details / Edit Profile Controller
- * Matches Approved Design Reference: page_24.jpg
+ * ArtSphere — Settings Details / Edit Profile Script (Editorial Neo-Brutalist)
+ * Handles artist profile editing, avatar updating, skills tagging, and live preview
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Elements
-    const btnHeaderBack = document.getElementById('btnHeaderBack');
-    const btnPageBack = document.getElementById('btnPageBack');
-    const userHeaderAvatar = document.getElementById('userHeaderAvatar');
+    // 1. Universal Nav Dropdown & Mobile Toggle
+    const userAvatarBtn = document.getElementById('userAvatarBtn');
+    const userDropdownPanel = document.getElementById('userDropdownPanel');
+    const navMobileToggle = document.getElementById('navMobileToggle');
+    const navLinks = document.getElementById('navLinks');
 
+    if (userAvatarBtn && userDropdownPanel) {
+        userAvatarBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            userDropdownPanel.classList.toggle('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!userDropdownPanel.contains(e.target) && !userAvatarBtn.contains(e.target)) {
+                userDropdownPanel.classList.remove('active');
+            }
+        });
+    }
+
+    if (navMobileToggle && navLinks) {
+        navMobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('nav-links-mobile-open');
+        });
+    }
+
+    // 2. Elements
     const avatarPreview = document.getElementById('avatarPreview');
-    const btnCameraBadge = document.getElementById('btnCameraBadge');
-    const btnChangePhoto = document.getElementById('btnChangePhoto');
-    const fileAvatarInput = document.getElementById('fileAvatarInput');
+    const inputAvatarUrl = document.getElementById('inputAvatarUrl');
+    const sampleChips = document.querySelectorAll('.sample-chip');
+    const headerUserAvatar = document.getElementById('headerUserAvatar');
 
     const editProfileForm = document.getElementById('editProfileForm');
     const inputFullName = document.getElementById('inputFullName');
     const inputUsername = document.getElementById('inputUsername');
-    const inputEmail = document.getElementById('inputEmail');
     const inputBio = document.getElementById('inputBio');
     const bioCounter = document.getElementById('bioCounter');
     const selectArtistType = document.getElementById('selectArtistType');
@@ -29,100 +49,69 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputYoutube = document.getElementById('inputYoutube');
 
     const btnSaveChanges = document.getElementById('btnSaveChanges');
-    const toastMessage = document.getElementById('toastMessage');
-    const toastText = document.getElementById('toastText');
-
     let currentUserId = 101;
-    let toastTimeout = null;
 
-    // 2. Navigation
-    const goBack = () => {
-        if (window.history.length > 1) {
-            window.history.back();
-        } else {
-            window.location.href = '/pages/settings.html';
-        }
-    };
-    if (btnHeaderBack) btnHeaderBack.addEventListener('click', goBack);
-    if (btnPageBack) btnPageBack.addEventListener('click', goBack);
+    // 3. Avatar URL & Sample Chips
+    if (inputAvatarUrl) {
+        inputAvatarUrl.addEventListener('input', (e) => {
+            const url = e.target.value.trim();
+            if (url && avatarPreview) {
+                avatarPreview.src = url;
+            }
+        });
+    }
 
-    // 3. Bio Character Counter
+    sampleChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            const avatarUrl = chip.dataset.avatar;
+            if (avatarUrl) {
+                if (avatarPreview) avatarPreview.src = avatarUrl;
+                if (inputAvatarUrl) inputAvatarUrl.value = avatarUrl;
+            }
+        });
+    });
+
+    // 4. Bio Character Counter
     const updateBioCounter = () => {
         if (!inputBio || !bioCounter) return;
         const len = inputBio.value.length;
-        bioCounter.textContent = `${len}/150`;
+        bioCounter.textContent = `${len} / 300`;
     };
     if (inputBio) {
         inputBio.addEventListener('input', updateBioCounter);
     }
 
-    // 4. Photo Picker Handlers
-    const triggerFilePicker = () => {
-        if (fileAvatarInput) fileAvatarInput.click();
-    };
-    if (btnChangePhoto) btnChangePhoto.addEventListener('click', triggerFilePicker);
-    if (btnCameraBadge) btnCameraBadge.addEventListener('click', triggerFilePicker);
-
-    if (fileAvatarInput) {
-        fileAvatarInput.addEventListener('change', (e) => {
-            const file = e.target.files && e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const result = event.target.result;
-                    if (avatarPreview) avatarPreview.src = result;
-                    if (userHeaderAvatar) userHeaderAvatar.src = result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-
     // 5. Toast Helper
-    const showToast = (message, isError = false) => {
-        if (!toastMessage) return;
-        if (toastTimeout) clearTimeout(toastTimeout);
+    function showToast(message, type = 'success') {
+        let container = document.getElementById('toastContainer');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toastContainer';
+            document.body.appendChild(container);
+        }
 
-        if (toastText) toastText.textContent = message;
-        toastMessage.classList.remove('toast-error');
-        if (isError) toastMessage.classList.add('toast-error');
+        const toast = document.createElement('div');
+        toast.className = `toast-pill ${type}`;
+        toast.innerHTML = `<span>✦</span><span>${message}</span>`;
+        container.appendChild(toast);
 
-        toastMessage.classList.add('show');
-        toastTimeout = setTimeout(() => {
-            toastMessage.classList.remove('show');
-        }, 3200);
-    };
+        setTimeout(() => {
+            toast.classList.add('fade-out');
+            setTimeout(() => toast.remove(), 300);
+        }, 2800);
+    }
 
     // 6. Load Initial Profile Data
     const loadProfileData = async () => {
         try {
-            // Check logged in user or query param
-            const urlParams = new URLSearchParams(window.location.search);
-            const paramId = urlParams.get('id') || urlParams.get('userId');
-            if (paramId) {
-                currentUserId = parseInt(paramId, 10);
-            } else {
-                const currentUser = (window.ArtSphereAPI && typeof window.ArtSphereAPI.getCurrentUser === 'function')
-                    ? window.ArtSphereAPI.getCurrentUser()
-                    : null;
-                if (currentUser && currentUser.id) {
-                    currentUserId = currentUser.id;
-                }
-            }
+            const apiObj = window.api || window.ArtSphereAPI;
+            if (!apiObj || typeof apiObj.getArtistProfile !== 'function') return;
 
-            if (!window.ArtSphereAPI || typeof window.ArtSphereAPI.getArtistProfile !== 'function') {
-                return;
-            }
-
-            const profile = await window.ArtSphereAPI.getArtistProfile(currentUserId);
+            const profile = await apiObj.getArtistProfile(currentUserId);
             if (!profile) return;
 
-            // Populate form fields
             if (inputFullName && profile.fullName) inputFullName.value = profile.fullName;
             if (inputUsername && profile.username) inputUsername.value = profile.username;
-            if (inputEmail) {
-                inputEmail.value = (profile.username ? `${profile.username.toLowerCase()}@example.com` : 'mrunali.shinde@example.com');
-            }
             if (inputBio && profile.bio) {
                 inputBio.value = profile.bio;
                 updateBioCounter();
@@ -130,20 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (selectArtistType && (profile.artForm || profile.artistType)) {
                 const typeVal = profile.artForm || profile.artistType;
-                let found = false;
                 for (let i = 0; i < selectArtistType.options.length; i++) {
                     if (selectArtistType.options[i].value.toLowerCase() === typeVal.toLowerCase()) {
                         selectArtistType.selectedIndex = i;
-                        found = true;
                         break;
                     }
-                }
-                if (!found && typeVal) {
-                    const opt = document.createElement('option');
-                    opt.value = typeVal;
-                    opt.textContent = typeVal;
-                    opt.selected = true;
-                    selectArtistType.appendChild(opt);
                 }
             }
 
@@ -160,24 +140,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (inputPortfolioLink) {
-                inputPortfolioLink.value = profile.portfolioUrl || (profile.username ? `https://${profile.username}.carrd.co` : 'https://mrunaliart.carrd.co');
+                inputPortfolioLink.value = profile.portfolioUrl || `https://${profile.username || 'aanya'}.carrd.co`;
             }
 
             if (inputInstagram) {
-                inputInstagram.value = profile.instagram || (profile.username ? `@${profile.username}` : '@mrunali_art');
-            }
-
-            if (inputBehance) {
-                inputBehance.value = profile.behance || (profile.username ? `${profile.username}_design` : '');
-            }
-
-            if (inputYoutube) {
-                inputYoutube.value = profile.youtube || '';
+                inputInstagram.value = profile.instagram || `@${profile.username || 'aanya'}_art`;
             }
 
             const photoUrl = profile.avatarUrl || profile.profilePicture || '/images/user_avatar_nav.png';
             if (avatarPreview) avatarPreview.src = photoUrl;
-            if (userHeaderAvatar) userHeaderAvatar.src = photoUrl;
+            if (inputAvatarUrl) inputAvatarUrl.value = photoUrl;
 
         } catch (err) {
             console.error('Failed to load profile details:', err);
@@ -190,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const fullName = inputFullName ? inputFullName.value.trim() : '';
         if (!fullName) {
-            showToast('Please enter your full name', true);
+            showToast('Please enter your full name', 'error');
             if (inputFullName) inputFullName.focus();
             return;
         }
@@ -208,24 +180,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 username: inputUsername ? inputUsername.value.trim() : undefined,
                 bio: inputBio ? inputBio.value.trim() : '',
                 location: inputLocation ? inputLocation.value.trim() : '',
-                artistType: selectArtistType ? selectArtistType.value : 'Illustrator',
+                artistType: selectArtistType ? selectArtistType.value : 'Visual Artist',
                 skills: inputSkills ? inputSkills.value.trim() : '',
                 profilePicture: avatarPreview ? avatarPreview.src : undefined
             };
 
-            if (window.ArtSphereAPI && typeof window.ArtSphereAPI.updateArtistProfile === 'function') {
-                const updated = await window.ArtSphereAPI.updateArtistProfile(currentUserId, payload);
-                showToast('Profile updated successfully!');
+            const apiObj = window.api || window.ArtSphereAPI;
+            if (apiObj && typeof apiObj.updateArtistProfile === 'function') {
+                const updated = await apiObj.updateArtistProfile(currentUserId, payload);
+                showToast('Creator profile updated successfully!');
 
-                if (userHeaderAvatar && updated && (updated.avatarUrl || updated.profilePicture)) {
-                    userHeaderAvatar.src = updated.avatarUrl || updated.profilePicture;
+                if (headerUserAvatar && updated && (updated.avatarUrl || updated.profilePicture)) {
+                    headerUserAvatar.src = updated.avatarUrl || updated.profilePicture;
                 }
             } else {
                 showToast('Profile updated locally!');
             }
         } catch (error) {
             console.error('Error saving profile changes:', error);
-            showToast(error.message || 'Failed to update profile. Please try again.', true);
+            showToast(error.message || 'Failed to update profile.', 'error');
         } finally {
             btnSaveChanges.disabled = false;
             if (btnText) btnText.textContent = 'Save Changes';
@@ -233,13 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    if (editProfileForm) {
-        editProfileForm.addEventListener('submit', handleSaveChanges);
-    }
-    if (btnSaveChanges) {
-        btnSaveChanges.addEventListener('click', handleSaveChanges);
-    }
+    if (editProfileForm) editProfileForm.addEventListener('submit', handleSaveChanges);
+    if (btnSaveChanges) btnSaveChanges.addEventListener('click', handleSaveChanges);
 
-    // Initialize
     loadProfileData();
 });

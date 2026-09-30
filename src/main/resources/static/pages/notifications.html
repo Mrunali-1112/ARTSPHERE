@@ -3,180 +3,506 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notifications – ArtSphere</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <title>Notifications Center — ArtSphere</title>
+    <meta name="description" content="Direct collaboration pitches, open call milestones, guild invites, and community reflections on ArtSphere.">
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/notifications.css">
 </head>
-<body>
-    <div class="app-layout">
-        <div class="notifications-screen">
+<body class="notif-dashboard-body">
 
-            <!-- 1. Top App Header -->
-            <header class="app-top-header">
-                <div class="header-left">
-                    <button class="btn-icon-nav" id="btnBack" aria-label="Go Back">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                    </button>
-                    <a href="/pages/home.html" class="header-logo-wrap" aria-label="ArtSphere Home">
-                        <img src="/images/logo_header.png" alt="ArtSphere" class="header-logo-img">
-                    </a>
+    <!-- Mobile Top Bar -->
+    <header class="mobile-nav-header">
+        <a href="/pages/home.html" class="sidebar-brand-box">
+            <span class="sidebar-brand-icon">✦</span>
+            <span class="sidebar-brand-title">ArtSphere</span>
+        </a>
+        <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle Navigation">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Main Shell: Left Sidebar + Main Content -->
+    <div class="dashboard-app-container">
+
+        <!-- 1. LEFT SIDEBAR -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <div class="sidebar-top-section">
+                <!-- ArtSphere Logo -->
+                <a href="/pages/home.html" class="sidebar-brand-box">
+                    <span class="sidebar-brand-icon">✦</span>
+                    <div class="sidebar-brand-text">
+                        <span class="sidebar-brand-title">ArtSphere</span>
+                        <span class="sidebar-brand-sub">The Artist Community</span>
+                    </div>
+                </a>
+
+                <!-- Primary Nav Items -->
+                <nav>
+                    <ul class="sidebar-nav-list">
+                        <li>
+                            <a href="/pages/home.html" class="sidebar-nav-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/pages/discover.html" class="sidebar-nav-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <span>Discover</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/pages/communities.html" class="sidebar-nav-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                                <span>Communities</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/pages/events.html" class="sidebar-nav-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                <span>Events</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/pages/collaborators.html" class="sidebar-nav-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                </svg>
+                                <span>Collaborate</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/pages/opportunities.html" class="sidebar-nav-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 11l3 3L22 4"></path>
+                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                                </svg>
+                                <span>Opportunities</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/pages/messages.html" class="sidebar-nav-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                                <span>Messages</span>
+                                <span class="nav-badge-pill" id="sidebarMsgBadge">3</span>
+                            </a>
+                        </li>
+                        <li>
+                            <!-- Notifications (Active Item) -->
+                            <a href="/pages/notifications.html" class="sidebar-nav-item active" aria-current="page">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                </svg>
+                                <span>Notifications</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Mini User Pill -->
+                <a href="/pages/artist-profile.html?id=101" class="sidebar-user-pill">
+                    <img src="/images/user_avatar_nav.png" alt="Aanya D." class="sidebar-user-avatar" id="sidebarUserAvatar">
+                    <div class="sidebar-user-meta">
+                        <span class="sidebar-user-name" id="sidebarUserName">Aanya D.</span>
+                        <span class="sidebar-user-role" id="sidebarUserRole">Visual Artist</span>
+                    </div>
+                    <span class="sidebar-user-arrow">&rsaquo;</span>
+                </a>
+            </div>
+
+            <!-- Sidebar Bottom: Settings, Help, Logout -->
+            <div class="sidebar-bottom-section">
+                <a href="/pages/settings.html" class="sidebar-nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+                <a href="/pages/help-support.html" class="sidebar-nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    <span>Help &amp; Support</span>
+                </a>
+                <button type="button" class="sidebar-nav-item sidebar-logout-btn" id="sidebarLogoutBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- 2. MAIN AREA -->
+        <main class="dashboard-main-area">
+
+            <!-- Top Header (Search, Bell, Profile) -->
+            <header class="dashboard-top-header">
+                <div class="dash-search-container">
+                    <svg class="dash-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" class="dash-search-input" id="dashSearchInput" placeholder="Search artists, opportunities, events..." aria-label="Search artists, opportunities, events">
                 </div>
-                <div class="header-right">
-                    <a href="/pages/notifications.html" class="btn-icon-nav header-bell-btn active" aria-label="Notifications" title="Notifications">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+
+                <div class="dash-header-actions">
+                    <!-- Bell Button with Dot -->
+                    <button class="dash-bell-btn" id="headerBellBtn" aria-label="Notifications" title="Notifications">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                             <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
                         </svg>
-                        <span class="notification-badge-dot" id="headerBellDot" style="display:none;"></span>
-                    </a>
-                    <a href="/pages/artist-profile.html?id=101" class="header-avatar-link" aria-label="View Profile">
-                        <img src="/images/user_avatar_nav.png" alt="User Profile" class="header-avatar-img" id="userHeaderAvatar">
-                    </a>
+                        <span class="dash-bell-dot" id="headerBellDot" style="display: none;"></span>
+                    </button>
+
+                    <!-- Profile Trigger & Dropdown -->
+                    <button class="dash-avatar-trigger" id="userAvatarBtn" aria-label="Creator Profile Menu">
+                        <img src="/images/user_avatar_nav.png" alt="Aanya Deshmukh" class="dash-header-avatar" id="headerUserAvatar">
+                        <svg class="dash-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+
+                    <!-- Profile Dropdown Menu -->
+                    <div class="user-dropdown-panel" id="userDropdownPanel">
+                        <div class="dropdown-user-info">
+                            <strong id="dropdownUserName">Aanya Deshmukh</strong>
+                            <span id="dropdownUserBio">Visual &amp; Digital Artist</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="/pages/artist-profile.html?id=101" class="dropdown-item-link">
+                            <span>My Artist Profile</span>
+                        </a>
+                        <a href="/pages/portfolio.html?id=101" class="dropdown-item-link">
+                            <span>My Portfolio</span>
+                        </a>
+                        <a href="/pages/create-post.html" class="dropdown-item-link">
+                            <span>Post to Studio Feed</span>
+                        </a>
+                        <a href="/pages/create-collaboration.html" class="dropdown-item-link">
+                            <span>Post Collab Request</span>
+                        </a>
+                        <a href="/pages/collaborators.html" class="dropdown-item-link">
+                            <span>Manage Inquiries</span>
+                        </a>
+                        <a href="/pages/my-applications.html" class="dropdown-item-link">
+                            <span>My Applications</span>
+                        </a>
+                        <a href="/pages/settings.html" class="dropdown-item-link">
+                            <span>Settings</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <button type="button" class="dropdown-item-link text-danger" id="logoutBtn">
+                            <span>Log Out</span>
+                        </button>
+                    </div>
                 </div>
             </header>
 
-            <!-- 2. Hero Section -->
-            <section class="notifications-hero">
-                <div class="hero-content-row">
-                    <div class="hero-text-col">
-                        <div class="title-with-badge">
-                            <h1 class="page-title">Notifications</h1>
-                            <span class="unread-count-pill" id="unreadCountPill" style="display:none;">0 new</span>
-                        </div>
-                        <p class="page-subtitle">Stay updated with what's happening in your creative world.</p>
-                    </div>
-                    <div class="hero-sticker-col">
-                        <div class="watercolor-quote-sticker">
-                            <div class="sticker-content">
-                                <span class="sticker-line">Create</span>
-                                <span class="sticker-line">Connect</span>
-                                <span class="sticker-line highlight">Belong</span>
-                                <span class="sticker-heart">&#9825;</span>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Back to Dashboard -->
+            <div class="notif-back-row">
+                <a href="/pages/home.html" class="btn-back-pill">
+                    <span>&larr;</span>
+                    <span>Back to Dashboard</span>
+                </a>
+            </div>
+
+            <!-- Hero Section (Notifications Center + Bell Illustration Card) -->
+            <section class="notif-hero-section">
+                <div class="notif-hero-left">
+                    <h1 class="notif-hero-title">Notifications Center</h1>
+                    <p class="notif-hero-subtitle">
+                        Direct collaboration pitches, open call milestones, guild invites, and community reflections.
+                    </p>
                 </div>
 
-                <!-- Action Bar (Mark all read) -->
-                <div class="notifications-actions-bar">
-                    <div class="category-tabs-container">
-                        <div class="segmented-category-bar" role="tablist" aria-label="Notification Categories">
-                            <button class="category-tab active" data-category="ALL" role="tab" aria-selected="true">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-                                <span>All</span>
-                            </button>
-                            <button class="category-tab" data-category="COLLABORATION" role="tab" aria-selected="false">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                <span>Collaborations</span>
-                            </button>
-                            <button class="category-tab" data-category="OPPORTUNITY" role="tab" aria-selected="false">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                                <span>Opportunities</span>
-                            </button>
-                            <button class="category-tab" data-category="EVENT" role="tab" aria-selected="false">
-                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                <span>Events</span>
-                            </button>
+                <div class="notif-hero-bell-card">
+                    <div class="bell-illustration-box">
+                        <span class="bell-soundwave">((</span>
+                        <div class="bell-icon-badge">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/>
+                            </svg>
                         </div>
+                        <span class="bell-soundwave">))</span>
                     </div>
-                    <button class="btn-mark-all-read" id="btnMarkAllRead" title="Mark all notifications as read">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <button type="button" class="btn-mark-all-read" id="btnMarkAllRead" title="Mark all notifications as read">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="20 6 9 17 4 12"></polyline>
                         </svg>
-                        <span>Mark all read</span>
+                        <span>Mark all as read</span>
                     </button>
                 </div>
             </section>
 
-            <!-- 3. Notifications Groups Container -->
-            <main class="notifications-feed-wrap">
-                <!-- Dynamic notification groups (Today, This Week, Earlier) injected by notifications.js -->
-                <div class="notifications-stream" id="notificationsStream">
-                    <!-- Loading skeleton -->
-                    <div class="notification-skeleton-card"></div>
-                    <div class="notification-skeleton-card"></div>
-                    <div class="notification-skeleton-card"></div>
-                </div>
-
-                <!-- Empty State -->
-                <div class="notifications-empty-state" id="notificationsEmptyState" style="display:none;">
-                    <div class="empty-icon-box">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#7C5DFA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                        </svg>
-                    </div>
-                    <h3>All caught up!</h3>
-                    <p>No new notifications right now. Keep exploring art, events, and collaborations.</p>
-                    <a href="/pages/discover.html" class="btn-discover-fallback">Discover ArtSphere</a>
-                </div>
-
-                <!-- 4. Inspiring Banner Quote (Matching page_36.jpg) -->
-                <div class="inspiring-banner-box">
-                    <div class="banner-flower-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C5DFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2a5 5 0 0 0-5 5c0 3 5 8 5 8s5-5 5-8a5 5 0 0 0-5-5z"></path>
-                            <circle cx="12" cy="7" r="1.5"></circle>
-                        </svg>
-                    </div>
-                    <div class="banner-text-wrap">
-                        <p class="banner-main-text">Small moments. Big opportunities.</p>
-                        <p class="banner-sub-text">STAY NOTICED. STAY INSPIRED.</p>
-                    </div>
-                </div>
-            </main>
-
-            <!-- 5. Bottom Navigation Bar -->
-            <nav class="bottom-nav" aria-label="Main Navigation">
-                <a href="/pages/home.html" class="bottom-nav-item" aria-label="Home">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                    <span class="nav-text">Home</span>
-                </a>
-
-                <a href="/pages/discover.html" class="bottom-nav-item" aria-label="Discover">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                    </svg>
-                    <span class="nav-text">Discover</span>
-                </a>
-
-                <div class="bottom-nav-center">
-                    <a href="/pages/create-post.html" class="fab-center-btn" aria-label="Create Post">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                    </a>
-                </div>
-
-                <a href="/pages/notifications.html" class="bottom-nav-item active" aria-label="Notifications" aria-current="page">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                    </svg>
-                    <span class="nav-text">Activity</span>
-                </a>
-
-                <a href="/pages/artist-profile.html?id=101" class="bottom-nav-item" aria-label="Profile">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span class="nav-text">Profile</span>
-                </a>
+            <!-- Category Filters Bar -->
+            <nav class="notif-filter-pills-row" role="tablist" aria-label="Notification Categories">
+                <button class="notif-filter-pill active" data-category="ALL" role="tab" aria-selected="true">
+                    All Dispatches
+                </button>
+                <button class="notif-filter-pill" data-category="COLLABORATION" role="tab" aria-selected="false">
+                    Collaborations
+                </button>
+                <button class="notif-filter-pill" data-category="OPPORTUNITY" role="tab" aria-selected="false">
+                    Opportunities
+                </button>
+                <button class="notif-filter-pill" data-category="EVENT" role="tab" aria-selected="false">
+                    Events &amp; Jams
+                </button>
             </nav>
 
-        </div>
+            <!-- 2-Column Content Grid: Main Stream + Right Sidebar Widgets -->
+            <div class="notif-content-grid">
+
+                <!-- Left Column: Notification Cards Stream -->
+                <div class="notif-stream-column" id="notificationsStream">
+                    <!-- Loading state placeholder -->
+                    <div class="notif-state-card" id="notifLoadingBox">
+                        <div class="notif-spinner"></div>
+                        <p class="notif-state-desc">Loading activity dispatches...</p>
+                    </div>
+                </div>
+
+                <!-- Empty State (Shown when no notifications match) -->
+                <div class="notif-state-card" id="notificationsEmptyState" style="display: none;">
+                    <div class="notif-state-icon">✦</div>
+                    <h3 class="notif-state-title">No new notifications</h3>
+                    <p class="notif-state-desc">Your collaboration requests, applications, events and community activity will appear here.</p>
+                </div>
+
+                <!-- Error State (Shown when API fails) -->
+                <div class="notif-state-card" id="notificationsErrorState" style="display: none;">
+                    <div class="notif-state-icon" style="color: #D32F2F; background: #FDE8E8;">!</div>
+                    <h3 class="notif-state-title">Unable to load notifications.</h3>
+                    <p class="notif-state-desc">We encountered an issue communicating with the notifications service.</p>
+                    <button type="button" class="btn-retry" id="btnRetryLoad">Try again</button>
+                </div>
+
+                <!-- Right Column: Sidebar Widgets -->
+                <aside class="notif-sidebar-column">
+
+                    <!-- Widget 1: Dispatch Channels -->
+                    <div class="widget-card">
+                        <h3 class="widget-header">
+                            <span class="widget-header-motif">✦</span>
+                            <span>Dispatch Channels</span>
+                        </h3>
+                        <div class="channels-toggle-list">
+                            <label class="channel-toggle-row">
+                                <div class="channel-info">
+                                    <div class="channel-icon-pill">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                        </svg>
+                                    </div>
+                                    <div class="channel-texts">
+                                        <span class="channel-name">Collab Inquiries</span>
+                                        <span class="channel-desc">Direct pitches from makers</span>
+                                    </div>
+                                </div>
+                                <input type="checkbox" class="purple-switch" id="toggleCollabInquiries" checked aria-label="Collab Inquiries">
+                            </label>
+
+                            <label class="channel-toggle-row">
+                                <div class="channel-info">
+                                    <div class="channel-icon-pill">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                                        </svg>
+                                    </div>
+                                    <div class="channel-texts">
+                                        <span class="channel-name">Open Call Deadlines</span>
+                                        <span class="channel-desc">48hr reminder on saved grants</span>
+                                    </div>
+                                </div>
+                                <input type="checkbox" class="purple-switch" id="toggleOpenCalls" checked aria-label="Open Call Deadlines">
+                            </label>
+
+                            <label class="channel-toggle-row">
+                                <div class="channel-info">
+                                    <div class="channel-icon-pill">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="channel-texts">
+                                        <span class="channel-name">Guild Messages</span>
+                                        <span class="channel-desc">Community announcements</span>
+                                    </div>
+                                </div>
+                                <input type="checkbox" class="purple-switch" id="toggleGuildMessages" checked aria-label="Guild Messages">
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Widget 2: Quick Studio Links -->
+                    <div class="widget-card">
+                        <h3 class="widget-header">
+                            <span class="widget-header-motif">🔗</span>
+                            <span>Quick Studio Links</span>
+                        </h3>
+                        <ul class="quick-links-list">
+                            <li>
+                                <a href="/pages/collaborators.html" class="quick-link-item">
+                                    <span>Review Collaboration Inquiries</span>
+                                    <span class="quick-link-arrow">&rsaquo;</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/pages/my-applications.html" class="quick-link-item">
+                                    <span>Check Open Call Submissions</span>
+                                    <span class="quick-link-arrow">&rsaquo;</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/pages/create-post.html" class="quick-link-item">
+                                    <span>Publish New Artwork</span>
+                                    <span class="quick-link-arrow">&rsaquo;</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/pages/settings.html" class="quick-link-item">
+                                    <span>Account &amp; Studio Settings</span>
+                                    <span class="quick-link-arrow">&rsaquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </aside>
+            </div>
+
+            <!-- 3. UNIVERSAL EDITORIAL FOOTER -->
+            <footer class="dashboard-editorial-footer">
+                <div class="footer-grid">
+                    <div>
+                        <a href="/pages/home.html" class="footer-brand-title">
+                            <span>✦</span>
+                            <span>ArtSphere</span>
+                        </a>
+                        <p class="footer-brand-bio">
+                            The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
+                        </p>
+                        <div class="footer-copyright">&copy; 2026 ArtSphere Network. All rights reserved.</div>
+                    </div>
+
+                    <div>
+                        <div class="footer-column-title">DIRECTORY</div>
+                        <ul class="footer-nav-list">
+                            <li><a href="/pages/discover.html">Discover Artists</a></li>
+                            <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
+                            <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
+                            <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
+                            <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <div class="footer-column-title">PLATFORM</div>
+                        <ul class="footer-nav-list">
+                            <li><a href="/pages/home.html">Studio Feed</a></li>
+                            <li><a href="/pages/communities.html">Communities</a></li>
+                            <li><a href="/pages/events.html">Events &amp; Jams</a></li>
+                            <li><a href="/pages/collaborators.html">Collaborations</a></li>
+                            <li><a href="/pages/opportunities.html">Open Calls</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <div class="footer-column-title">ACCOUNT</div>
+                        <ul class="footer-nav-list">
+                            <li><a href="/pages/artist-profile.html?id=101">Artist Profile</a></li>
+                            <li><a href="/pages/my-applications.html">My Applications</a></li>
+                            <li><a href="/pages/settings.html">Account Settings</a></li>
+                            <li><a href="/pages/help-support.html">Help &amp; Guidelines</a></li>
+                        </ul>
+                        <div class="footer-badge-pill">NO ADS. PURE ART.</div>
+                    </div>
+                </div>
+            </footer>
+
+        </main>
     </div>
+
+    <!-- Mobile Bottom Navigation (Home | Discover | + | Messages | Profile) -->
+    <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+        <a href="/pages/home.html" class="mobile-nav-btn" aria-label="Home">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span class="mobile-nav-caption">Home</span>
+        </a>
+        <a href="/pages/discover.html" class="mobile-nav-btn" aria-label="Discover">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span class="mobile-nav-caption">Discover</span>
+        </a>
+        <a href="/pages/create-post.html" class="mobile-nav-btn mobile-create-action" aria-label="Create Post or Work">
+            <div class="mobile-create-pill">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </div>
+        </a>
+        <a href="/pages/messages.html" class="mobile-nav-btn" aria-label="Messages">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span class="mobile-nav-caption">Messages</span>
+        </a>
+        <a href="/pages/artist-profile.html" class="mobile-nav-btn" aria-label="Profile">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span class="mobile-nav-caption">Profile</span>
+        </a>
+    </nav>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="dashboard-toast-container"></div>
 
     <!-- Scripts -->
     <script src="/js/api.js"></script>

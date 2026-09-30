@@ -1,394 +1,879 @@
 /**
- * ArtSphere – Opportunity Details Page Logic
- * Source of Truth: Approved page_14.jpg UI Reference
+ * ArtSphere – Opportunity Details JavaScript
+ * Editorial Neo-brutalism • In-Website Opportunity Application Flow
+ * Strictly in-platform: No external email, phone, or redirect.
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Get opportunity ID from URL (e.g. ?id=101)
+    let currentUserId = 101; // Default demo user
+    let currentUser = {
+        id: 101,
+        fullName: 'Aanya Deshmukh',
+        email: 'aanya.deshmukh@artsphere.com',
+        artistType: 'Visual Arts',
+        portfolioUrl: `${window.location.origin}/pages/artist-profile.html?id=101`
+    };
+
+    // Parse URL params (default to 101: Serendipity Arts Residency 2026)
     const urlParams = new URLSearchParams(window.location.search);
-    const oppId = urlParams.get('id') || '101';
+    let rawId = urlParams.get('id') ? parseInt(urlParams.get('id'), 10) : 101;
+    if (isNaN(rawId) || rawId === 1) {
+        rawId = 101;
+    }
+    const oppId = rawId;
 
-    // DOM Elements
-    const contentContainer = document.getElementById('detailsContentContainer');
-    const userMenuWrapper = document.getElementById('userMenuWrapper');
-    const userDropdownMenu = document.getElementById('userDropdownMenu');
-    const logoutBtn = document.getElementById('logoutBtn');
+    // Navigation & Dropdown
+    initNavigation();
 
-    // Modal elements
-    const applyModalBackdrop = document.getElementById('applyModalBackdrop');
-    const modalOrganizerName = document.getElementById('modalOrganizerName');
-    const modalOppTitle = document.getElementById('modalOppTitle');
-    const applyNotesInput = document.getElementById('applyNotesInput');
+    // DOM Elements - Main Page
+    const oppCategoryBadge = document.getElementById('oppCategoryBadge');
+    const oppStatusBadge = document.getElementById('oppStatusBadge');
+    const oppDeadlineTag = document.getElementById('oppDeadlineTag');
+    const oppTitle = document.getElementById('oppTitle');
+    const oppOrgName = document.getElementById('oppOrgName');
+    const oppLocationText = document.getElementById('oppLocationText');
+    const oppCompensation = document.getElementById('oppCompensation');
+    const oppDuration = document.getElementById('oppDuration');
+    const oppDiscipline = document.getElementById('oppDiscipline');
+    const oppCohort = document.getElementById('oppCohort');
+
+    const btnOpenApplyModal = document.getElementById('btnOpenApplyModal');
+    const btnShareOpp = document.getElementById('btnShareOpp');
+    const btnBookmarkOpp = document.getElementById('btnBookmarkOpp');
+    const bookmarkBtnText = document.getElementById('bookmarkBtnText');
+
+    const oppDescription = document.getElementById('oppDescription');
+    const oppDeliverablesList = document.getElementById('oppDeliverablesList');
+    const oppEligibilityText = document.getElementById('oppEligibilityText');
+    const sideOrgName = document.getElementById('sideOrgName');
+    const sideOrgBio = document.getElementById('sideOrgBio');
+    const timeCloseDate = document.getElementById('timeCloseDate');
+
+    // DOM Elements - Apply Modal
+    const applyModal = document.getElementById('applyModal');
+    const closeApplyModal = document.getElementById('closeApplyModal');
     const cancelApplyBtn = document.getElementById('cancelApplyBtn');
-    const closeApplyModalBtn = document.getElementById('closeApplyModalBtn');
-    const confirmApplyBtn = document.getElementById('confirmApplyBtn');
+    const modalHeading = document.getElementById('modalHeading');
+
+    // Modal Compact Summary Card Elements
+    const summaryOppTitle = document.getElementById('summaryOppTitle');
+    const summaryOppOrg = document.getElementById('summaryOppOrg');
+    const summaryOppLocation = document.getElementById('summaryOppLocation');
+    const summaryOppDuration = document.getElementById('summaryOppDuration');
+    const summaryOppDiscipline = document.getElementById('summaryOppDiscipline');
+
+    // Form Inputs & Validation Elements
+    const oppApplyForm = document.getElementById('oppApplyForm');
+    const appFullNameInput = document.getElementById('appFullNameInput');
+    const nameError = document.getElementById('nameError');
+    const appEmailInput = document.getElementById('appEmailInput');
+    const emailError = document.getElementById('emailError');
+    const appDisciplineSelect = document.getElementById('appDisciplineSelect');
+    const disciplineError = document.getElementById('disciplineError');
+    const appPortfolioInput = document.getElementById('appPortfolioInput');
+    const appStatementInput = document.getElementById('appStatementInput');
+    const statementCharCount = document.getElementById('statementCharCount');
+    const statementError = document.getElementById('statementError');
+    const appExperienceInput = document.getElementById('appExperienceInput');
+    const appEligibilityCheck = document.getElementById('appEligibilityCheck');
+    const confirmError = document.getElementById('confirmError');
+    const submitApplyBtn = document.getElementById('submitApplyBtn');
+
+    // Success Modal Elements
+    const applySuccessModal = document.getElementById('applySuccessModal');
+    const closeSuccessModal = document.getElementById('closeSuccessModal');
+    const successOppTitle = document.getElementById('successOppTitle');
+    const btnBackToOpp = document.getElementById('btnBackToOpp');
+
+    // Already Applied Modal Elements
+    const alreadyAppliedModal = document.getElementById('alreadyAppliedModal');
+    const closeAlreadyAppliedModal = document.getElementById('closeAlreadyAppliedModal');
+    const btnCloseAlreadyApplied = document.getElementById('btnCloseAlreadyApplied');
 
     let currentOpportunity = null;
-    let currentUser = null;
 
-    // Initialize user and menu
-    initUserMenu();
-
+    // 1. Fetch current authenticated user if available
     try {
-        currentUser = await ArtSphereAPI.getCurrentUser();
+        let authUser = null;
+        if (window.api && typeof window.api.getCurrentUser === 'function') {
+            authUser = await window.api.getCurrentUser();
+        }
+        if (!authUser) {
+            const stored = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser') || sessionStorage.getItem('artsphere_user');
+            if (stored) authUser = JSON.parse(stored);
+        }
+
+        if (authUser && authUser.id) {
+            currentUserId = authUser.id;
+            currentUser = {
+                id: authUser.id,
+                fullName: authUser.fullName || authUser.username || 'Mrunali',
+                email: authUser.email || 'mrunali@artsphere.com',
+                artistType: authUser.artistType || authUser.role || 'Visual Arts',
+                portfolioUrl: authUser.portfolioUrl || `${window.location.origin}/pages/artist-profile.html?id=${authUser.id}`,
+                profilePicture: authUser.profilePicture || '/images/avatar_creator_mrunali.png'
+            };
+
+            const name = currentUser.fullName;
+            const role = currentUser.artistType;
+            const avatar = currentUser.profilePicture;
+
+            const sidebarUserName = document.getElementById('sidebarUserName');
+            const sidebarUserAvatar = document.getElementById('sidebarUserAvatar');
+            const sidebarProfileCard = document.getElementById('sidebarProfileCard');
+            const dropdownUserName = document.getElementById('dropdownUserName');
+            const dropdownUserBio = document.getElementById('dropdownUserBio');
+            const headerUserAvatar = document.getElementById('headerUserAvatar');
+            const dropdownProfileLink = document.getElementById('dropdownProfileLink');
+            const footerProfileLink = document.getElementById('footerProfileLink');
+
+            if (sidebarUserName) sidebarUserName.textContent = name.split(' ')[0] || name;
+            if (sidebarUserAvatar) sidebarUserAvatar.src = avatar;
+            if (sidebarProfileCard) sidebarProfileCard.href = `/pages/artist-profile.html?id=${currentUserId}`;
+            if (dropdownUserName) dropdownUserName.textContent = name;
+            if (dropdownUserBio) dropdownUserBio.textContent = role;
+            if (headerUserAvatar) headerUserAvatar.src = avatar;
+            if (dropdownProfileLink) dropdownProfileLink.href = `/pages/artist-profile.html?id=${currentUserId}`;
+            if (footerProfileLink) footerProfileLink.href = `/pages/artist-profile.html?id=${currentUserId}`;
+        }
     } catch (e) {
-        currentUser = null;
+        console.info('Using default user context for application flow:', e);
     }
 
-    const currentUserId = currentUser ? currentUser.id : 101; // Fallback demo user ID
+    // 2. Load Opportunity Dossier
+    await loadOpportunityDossier();
 
-    // Load Opportunity Data
-    await loadOpportunityDetails(oppId, currentUserId);
-
-    // -------------------------------------------------------------
-    // Fetch and Render Opportunity Details
-    // -------------------------------------------------------------
-    async function loadOpportunityDetails(id, userId) {
-        try {
-            const opp = await ArtSphereAPI.getOpportunityDetails(id, userId);
-            currentOpportunity = opp;
-            renderDetails(opp);
-        } catch (error) {
-            console.error('Failed to load opportunity details:', error);
-            contentContainer.innerHTML = `
-                <div style="background: #FFFFFF; border-radius: 20px; padding: 40px 20px; text-align: center; border: 1px dashed var(--opp-border);">
-                    <h3 style="font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #1C102C; margin-bottom: 8px;">Opportunity Not Found</h3>
-                    <p style="color: #716B84; font-size: 0.92rem; margin-bottom: 20px;">The requested opportunity may have been removed or does not exist.</p>
-                    <a href="/pages/opportunities.html" style="display: inline-block; background: #6C47FF; color: #FFFFFF; padding: 10px 22px; border-radius: 20px; text-decoration: none; font-weight: 600; font-size: 0.88rem;">&larr; Back to Opportunities</a>
-                </div>
-            `;
-        }
-    }
-
-    function renderDetails(opp) {
-        const categoryBadge = (opp.category || 'EXHIBITION').toUpperCase();
-        const duration = opp.duration || '1 Day';
-        const typeLabel = opp.category || 'Exhibition';
-        const organizerType = opp.organizerType || 'Organization';
-        const organizerAvatar = opp.organizerAvatar || '/images/organizer_mgm.png';
-
-        // What you get cards
-        let whatYouGetHtml = '';
-        if (opp.whatYouGet && opp.whatYouGet.length > 0) {
-            whatYouGetHtml = opp.whatYouGet.map((item, idx) => {
-                let iconSvg = '';
-                if (idx === 0) {
-                    // Star icon
-                    iconSvg = `
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                    `;
-                } else if (idx === 1) {
-                    // Networking icon
-                    iconSvg = `
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                    `;
-                } else {
-                    // Certificate / ribbon icon
-                    iconSvg = `
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="8" r="7"></circle>
-                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                        </svg>
-                    `;
-                }
-                return `
-                    <div class="get-card-item">
-                        <span class="get-card-icon">${iconSvg}</span>
-                        <span>${escapeHtml(item)}</span>
-                    </div>
-                `;
-            }).join('');
+    // Check URL hash for direct apply link (#apply)
+    if (window.location.hash === '#apply' && currentOpportunity) {
+        if (currentOpportunity.hasApplied) {
+            openAlreadyAppliedModal();
         } else {
-            whatYouGetHtml = `
-                <div class="get-card-item">
-                    <span class="get-card-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                    </span>
-                    <span>Platform to showcase your work</span>
-                </div>
-            `;
+            openApplyModal();
         }
-
-        // Who can apply pills
-        let whoCanApplyHtml = '';
-        if (opp.whoCanApply && opp.whoCanApply.length > 0) {
-            whoCanApplyHtml = opp.whoCanApply.map(item => `
-                <span class="apply-tag-pill">${escapeHtml(item)}</span>
-            `).join('');
-        }
-
-        // Quote section
-        const quoteText = opp.quoteText || "Art connects people. Let's create a brighter campus together.";
-        const quoteAuthor = opp.quoteAuthor || (opp.organizer ? opp.organizer.toUpperCase() : "ARTSPHERE");
-
-        const isApplied = opp.hasApplied;
-
-        contentContainer.innerHTML = `
-            <!-- 1. Hero Banner Card -->
-            <div class="opp-banner-card">
-                <img src="${opp.imageUrl}" alt="${escapeHtml(opp.title)}" class="opp-banner-img" onerror="this.src='/images/opp_campus_art_exhibition.png'">
-                <span class="opp-banner-badge">${categoryBadge}</span>
-
-                <button class="opp-banner-bookmark-btn ${opp.bookmarked ? 'active' : ''}" id="bannerBookmarkBtn" aria-label="Bookmark Opportunity">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="${opp.bookmarked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                </button>
-
-                <div class="opp-banner-overlay">
-                    <h2 class="opp-banner-title">${escapeHtml(opp.title)}</h2>
-                    <p class="opp-banner-subtitle">${escapeHtml(opp.subtitle || '')}</p>
-                </div>
-            </div>
-
-            <!-- 2. Organizer & Apply Row -->
-            <div class="opp-organizer-row">
-                <div class="organizer-info-group">
-                    <img src="${organizerAvatar}" alt="${escapeHtml(opp.organizer)}" class="organizer-avatar-img" onerror="this.src='/images/organizer_mgm.png'">
-                    <div class="organizer-text-wrapper">
-                        <div class="organizer-title">${escapeHtml(opp.organizer)}</div>
-                        <div class="organizer-type-label">${escapeHtml(organizerType)}</div>
-                    </div>
-                </div>
-
-                <button class="btn-apply-now ${isApplied ? 'applied' : ''}" id="applyNowBtn" ${isApplied ? 'disabled' : ''}>
-                    <span>${isApplied ? 'Applied ✓' : 'Apply Now &rarr;'}</span>
-                </button>
-            </div>
-
-            <!-- 3. Key Details 4-Column Bar -->
-            <div class="opp-key-details-bar">
-                <div class="key-detail-col">
-                    <span class="detail-col-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6"></line>
-                            <line x1="8" y1="2" x2="8" y2="6"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"></line>
-                        </svg>
-                    </span>
-                    <div class="detail-col-text">
-                        <span class="detail-label">Deadline</span>
-                        <span class="detail-val">${escapeHtml(opp.deadline)}</span>
-                    </div>
-                </div>
-
-                <div class="key-detail-col">
-                    <span class="detail-col-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                    </span>
-                    <div class="detail-col-text">
-                        <span class="detail-label">Location</span>
-                        <span class="detail-val">${escapeHtml(opp.location)}</span>
-                    </div>
-                </div>
-
-                <div class="key-detail-col">
-                    <span class="detail-col-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                    </span>
-                    <div class="detail-col-text">
-                        <span class="detail-label">Type</span>
-                        <span class="detail-val">${escapeHtml(typeLabel)}</span>
-                    </div>
-                </div>
-
-                <div class="key-detail-col">
-                    <span class="detail-col-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                    </span>
-                    <div class="detail-col-text">
-                        <span class="detail-label">Duration</span>
-                        <span class="detail-val">${escapeHtml(duration)}</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. About the Opportunity -->
-            <div class="detail-section-block">
-                <h3 class="detail-section-heading">About the Opportunity</h3>
-                <p class="detail-paragraph">${escapeHtml(opp.description || '')}</p>
-            </div>
-
-            <!-- 5. Who Can Apply? -->
-            <div class="detail-section-block">
-                <h3 class="detail-section-heading">Who Can Apply?</h3>
-                <div class="who-can-apply-tags">
-                    ${whoCanApplyHtml}
-                </div>
-            </div>
-
-            <!-- 6. What You'll Get -->
-            <div class="detail-section-block">
-                <h3 class="detail-section-heading">What You’ll Get</h3>
-                <div class="what-you-get-grid">
-                    ${whatYouGetHtml}
-                </div>
-            </div>
-
-            <!-- 7. Quote / Vision Card -->
-            <div class="opp-quote-card">
-                <img src="/images/opp_quote_brush.png" alt="Artistic Brushstrokes" class="quote-brush-img" onerror="this.style.display='none'">
-                <div class="quote-text-container">
-                    <div class="quote-phrase">“${escapeHtml(quoteText)}”</div>
-                    <span class="quote-attribution">— ${escapeHtml(quoteAuthor)}</span>
-                </div>
-            </div>
-        `;
-
-        setupInteractions(opp, currentUserId);
     }
 
-    // -------------------------------------------------------------
-    // Setup Button Clicks and Apply Flow
-    // -------------------------------------------------------------
-    function setupInteractions(opp, userId) {
-        const applyBtn = document.getElementById('applyNowBtn');
-        const bookmarkBtn = document.getElementById('bannerBookmarkBtn');
-
-        if (bookmarkBtn) {
-            bookmarkBtn.addEventListener('click', () => {
-                bookmarkBtn.classList.toggle('active');
-                const svg = bookmarkBtn.querySelector('svg');
-                if (bookmarkBtn.classList.contains('active')) {
-                    svg.setAttribute('fill', '#FFD166');
-                    svg.setAttribute('stroke', '#FFD166');
-                } else {
-                    svg.setAttribute('fill', 'none');
-                    svg.setAttribute('stroke', 'currentColor');
+    async function loadOpportunityDossier() {
+        try {
+            if (window.api && typeof window.api.getOpportunityDetails === 'function') {
+                const data = await window.api.getOpportunityDetails(oppId, currentUserId);
+                if (data && data.title) {
+                    currentOpportunity = data;
+                    renderDossier(data);
+                    return;
                 }
-            });
+            }
+        } catch (err) {
+            console.warn('API error, falling back to curated dossier dataset:', err);
         }
 
-        if (applyBtn && !applyBtn.disabled) {
-            applyBtn.addEventListener('click', () => {
-                openApplyModal(opp);
-            });
-        }
+        currentOpportunity = getFallbackDossier(oppId);
+        renderDossier(currentOpportunity);
     }
 
-    // -------------------------------------------------------------
-    // Apply Modal Operations
-    // -------------------------------------------------------------
-    function openApplyModal(opp) {
+    function renderDossier(opp) {
         if (!opp) return;
-        modalOrganizerName.textContent = opp.organizer || 'Organization';
-        modalOppTitle.textContent = opp.title || 'Opportunity';
-        applyNotesInput.value = '';
-        applyModalBackdrop.classList.add('show');
-    }
 
-    function closeApplyModal() {
-        applyModalBackdrop.classList.remove('show');
-    }
+        const oppTitleStr = opp.title || 'Serendipity Arts Residency 2026';
+        const oppOrgStr = opp.organization || opp.organizer || 'Arts Foundation';
+        const oppLocStr = opp.location || 'Goa, India';
+        const oppDurStr = opp.duration || '6 Weeks';
+        const oppDiscStr = opp.discipline || opp.artCategory || 'Multidisciplinary';
 
-    if (cancelApplyBtn) cancelApplyBtn.addEventListener('click', closeApplyModal);
-    if (closeApplyModalBtn) closeApplyModalBtn.addEventListener('click', closeApplyModal);
-    applyModalBackdrop.addEventListener('click', (e) => {
-        if (e.target === applyModalBackdrop) closeApplyModal();
-    });
+        // Badges & Hero Info
+        if (oppCategoryBadge) oppCategoryBadge.textContent = (opp.category || 'RESIDENCY').toUpperCase();
+        if (oppDeadlineTag) oppDeadlineTag.textContent = `⏰ Deadline: ${opp.deadline || 'Oct 30, 2026'}`;
+        if (oppTitle) oppTitle.textContent = oppTitleStr;
+        if (oppOrgName) oppOrgName.textContent = oppOrgStr;
+        if (oppLocationText) oppLocationText.textContent = `${oppLocStr} • ${opp.mode || 'In-Person Studio'}`;
 
-    if (confirmApplyBtn) {
-        confirmApplyBtn.addEventListener('click', async () => {
-            if (!currentOpportunity) return;
+        if (oppCompensation) oppCompensation.textContent = opp.compensation || opp.stipend || 'Funded Production';
+        if (oppDuration) oppDuration.textContent = oppDurStr;
+        if (oppDiscipline) oppDiscipline.textContent = oppDiscStr;
+        if (oppCohort) oppCohort.textContent = opp.cohort || 'Selected Cohort';
 
-            const notes = applyNotesInput.value.trim();
-            confirmApplyBtn.disabled = true;
-            confirmApplyBtn.textContent = 'Submitting...';
+        if (oppDescription) oppDescription.textContent = opp.description || 'Full call description.';
+        if (sideOrgName) sideOrgName.textContent = oppOrgStr;
+        if (sideOrgBio) sideOrgBio.textContent = opp.organizationBio || 'Dedicated to supporting emerging and established artistic practices through production grants and residencies.';
+        if (timeCloseDate) timeCloseDate.textContent = opp.deadline || 'Oct 30, 2026';
 
-            try {
-                const response = await ArtSphereAPI.applyToOpportunity(currentOpportunity.id, currentUserId, notes);
-                closeApplyModal();
+        // Modal Header & Compact Summary Card
+        if (modalHeading) modalHeading.textContent = `Apply for ${oppTitleStr}`;
+        if (summaryOppTitle) summaryOppTitle.textContent = oppTitleStr;
+        if (summaryOppOrg) summaryOppOrg.textContent = oppOrgStr;
+        if (summaryOppLocation) summaryOppLocation.textContent = oppLocStr;
+        if (summaryOppDuration) summaryOppDuration.textContent = oppDurStr;
+        if (summaryOppDiscipline) summaryOppDiscipline.textContent = oppDiscStr;
 
-                // Update Apply Button state in UI
-                const applyBtn = document.getElementById('applyNowBtn');
-                if (applyBtn) {
-                    applyBtn.classList.add('applied');
-                    applyBtn.disabled = true;
-                    applyBtn.innerHTML = '<span>Applied ✓</span>';
+        // Success Modal Reference
+        if (successOppTitle) successOppTitle.textContent = oppTitleStr;
+
+        // Deliverables List
+        if (oppDeliverablesList) {
+            let items = opp.deliverables;
+            if (!items || items.length === 0) {
+                if (opp.whatYouGet && opp.whatYouGet.length > 0) {
+                    items = opp.whatYouGet.flatMap(g => g.split('\n'));
+                } else {
+                    items = [
+                        'Private 400 sq.ft individual studio workspace with high-speed internet and natural lighting.',
+                        '₹1,50,000 living stipend distributed across two milestones.',
+                        'Up to ₹75,000 material and fabrication budget reimbursed upon approved receipts.',
+                        'Featured showcase during the Serendipity Arts Festival open week.'
+                    ];
                 }
+            }
+            oppDeliverablesList.innerHTML = items.map(d => `<li>${escapeHtml(d.trim())}</li>`).join('');
+        }
 
-                currentOpportunity.hasApplied = true;
-                showToastNotification('Application submitted successfully!');
-            } catch (err) {
-                console.error('Application submission error:', err);
-                alert(err.message || 'Failed to submit application. Please try again.');
-            } finally {
-                confirmApplyBtn.disabled = false;
-                confirmApplyBtn.innerHTML = 'Submit Application &rarr;';
+        // Eligibility text
+        if (oppEligibilityText) {
+            if (opp.eligibility) {
+                oppEligibilityText.textContent = opp.eligibility;
+            } else if (opp.whoCanApply && opp.whoCanApply.length > 0) {
+                oppEligibilityText.textContent = opp.whoCanApply.join('. ');
+            } else {
+                oppEligibilityText.textContent = 'Open to practitioners of visual arts, animation, contemporary dance, sound design, and experimental writing with at least 2 years of active practice.';
+            }
+        }
+
+        // Bookmark State
+        updateBookmarkUI(opp.bookmarked);
+
+        // Apply Button state & Duplicate Application Protection
+        updateApplyButtonState(opp.hasApplied);
+    }
+
+    /**
+     * Updates primary action button state:
+     * - If already applied: displays "✓ Application Submitted (Pending Review)" and clicking opens status modal.
+     * - If not applied: displays "Apply for Opportunity →" and clicking opens application modal.
+     */
+    function updateApplyButtonState(hasApplied) {
+        const btnSideApplyModal = document.getElementById('btnSideApplyModal');
+
+        if (hasApplied) {
+            if (btnOpenApplyModal) {
+                btnOpenApplyModal.innerHTML = `<span>✓ Application Submitted (Pending Review)</span>`;
+                btnOpenApplyModal.classList.add('already-applied');
+                btnOpenApplyModal.title = 'Click to view application status';
+                btnOpenApplyModal.onclick = (e) => {
+                    e.preventDefault();
+                    openAlreadyAppliedModal();
+                };
+            }
+            if (btnSideApplyModal) {
+                btnSideApplyModal.innerHTML = `<span>✓ Application Submitted</span>`;
+                btnSideApplyModal.classList.add('already-applied');
+                btnSideApplyModal.title = 'Click to view application status';
+                btnSideApplyModal.onclick = (e) => {
+                    e.preventDefault();
+                    openAlreadyAppliedModal();
+                };
+            }
+        } else {
+            if (btnOpenApplyModal) {
+                btnOpenApplyModal.innerHTML = `<span>Apply for Opportunity &rarr;</span>`;
+                btnOpenApplyModal.classList.remove('already-applied');
+                btnOpenApplyModal.title = 'Apply for this opportunity';
+                btnOpenApplyModal.onclick = (e) => {
+                    e.preventDefault();
+                    openApplyModal();
+                };
+            }
+            if (btnSideApplyModal) {
+                btnSideApplyModal.innerHTML = `<span>Apply for Opportunity &rarr;</span>`;
+                btnSideApplyModal.classList.remove('already-applied');
+                btnSideApplyModal.title = 'Apply for this opportunity';
+                btnSideApplyModal.onclick = (e) => {
+                    e.preventDefault();
+                    openApplyModal();
+                };
+            }
+        }
+    }
+
+    function updateBookmarkUI(isBookmarked) {
+        if (!btnBookmarkOpp) return;
+        const svg = btnBookmarkOpp.querySelector('svg');
+        if (isBookmarked) {
+            btnBookmarkOpp.classList.add('active');
+            if (svg) svg.setAttribute('fill', 'currentColor');
+            if (bookmarkBtnText) bookmarkBtnText.textContent = 'Saved in Bookmarks';
+        } else {
+            btnBookmarkOpp.classList.remove('active');
+            if (svg) svg.setAttribute('fill', 'none');
+            if (bookmarkBtnText) bookmarkBtnText.textContent = 'Save Opportunity';
+        }
+    }
+
+    // =========================================================================
+    // Short Application Modal Logic
+    // =========================================================================
+
+    function openApplyModal() {
+        if (currentOpportunity && currentOpportunity.hasApplied) {
+            openAlreadyAppliedModal();
+            return;
+        }
+
+        if (!applyModal) return;
+
+        // Clear all previous errors
+        clearFormErrors();
+
+        // 1. Full Name pre-fill
+        if (appFullNameInput) {
+            appFullNameInput.value = currentUser.fullName || 'Aanya Deshmukh';
+            appFullNameInput.classList.remove('input-invalid');
+        }
+
+        // 2. Email pre-fill
+        if (appEmailInput) {
+            appEmailInput.value = currentUser.email || 'aanya.deshmukh@artsphere.com';
+            appEmailInput.classList.remove('input-invalid');
+        }
+
+        // 3. Artistic Discipline pre-fill / match
+        if (appDisciplineSelect) {
+            const userType = (currentUser.artistType || '').toLowerCase();
+            const oppDisc = (currentOpportunity?.discipline || currentOpportunity?.artCategory || '').toLowerCase();
+            
+            let matchedValue = 'Visual Arts';
+            const options = ['Visual Arts', 'Music', 'Dance', 'Photography', 'Writing', 'Film', 'Illustration', 'Design'];
+            
+            for (const opt of options) {
+                const optLower = opt.toLowerCase();
+                if (userType.includes(optLower) || oppDisc.includes(optLower)) {
+                    matchedValue = opt;
+                    break;
+                }
+            }
+            appDisciplineSelect.value = matchedValue;
+            appDisciplineSelect.classList.remove('input-invalid');
+        }
+
+        // 4. Portfolio Link pre-fill (optional)
+        if (appPortfolioInput) {
+            appPortfolioInput.value = currentUser.portfolioUrl || `${window.location.origin}/pages/artist-profile.html?id=${currentUser.id || 101}`;
+        }
+
+        // 5. Short Statement
+        if (appStatementInput) {
+            appStatementInput.value = '';
+            appStatementInput.classList.remove('input-invalid');
+            if (statementCharCount) {
+                statementCharCount.textContent = '0 / 500';
+                statementCharCount.style.color = '#877E9C';
+            }
+        }
+
+        // 6. Relevant Experience
+        if (appExperienceInput) {
+            appExperienceInput.value = '';
+        }
+
+        // 7. Eligibility Confirmation
+        if (appEligibilityCheck) {
+            appEligibilityCheck.checked = false;
+        }
+
+        // Display Modal
+        applyModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+
+        setTimeout(() => {
+            if (appStatementInput) appStatementInput.focus();
+        }, 100);
+    }
+
+    function closeApply() {
+        if (applyModal) {
+            applyModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+        clearFormErrors();
+    }
+
+    function clearFormErrors() {
+        if (nameError) nameError.classList.remove('visible');
+        if (emailError) emailError.classList.remove('visible');
+        if (disciplineError) disciplineError.classList.remove('visible');
+        if (statementError) statementError.classList.remove('visible');
+        if (confirmError) confirmError.classList.remove('visible');
+
+        if (appFullNameInput) appFullNameInput.classList.remove('input-invalid');
+        if (appEmailInput) appEmailInput.classList.remove('input-invalid');
+        if (appDisciplineSelect) appDisciplineSelect.classList.remove('input-invalid');
+        if (appStatementInput) appStatementInput.classList.remove('input-invalid');
+    }
+
+    // Modal Close Buttons
+    if (closeApplyModal) closeApplyModal.addEventListener('click', closeApply);
+    if (cancelApplyBtn) cancelApplyBtn.addEventListener('click', closeApply);
+    if (applyModal) {
+        applyModal.addEventListener('click', (e) => {
+            if (e.target === applyModal) closeApply();
+        });
+    }
+
+    // Live Character Counter on Short Statement
+    if (appStatementInput && statementCharCount) {
+        appStatementInput.addEventListener('input', () => {
+            const length = appStatementInput.value.length;
+            statementCharCount.textContent = `${length} / 500`;
+            if (length > 500) {
+                statementCharCount.style.color = '#D32F2F';
+            } else {
+                statementCharCount.style.color = '#877E9C';
+            }
+
+            if (length > 0 && length <= 500 && statementError) {
+                statementError.classList.remove('visible');
+                appStatementInput.classList.remove('input-invalid');
             }
         });
     }
 
-    // -------------------------------------------------------------
-    // Toast Notification
-    // -------------------------------------------------------------
-    function showToastNotification(message) {
-        let toast = document.querySelector('.opp-toast-alert');
-        if (!toast) {
-            toast = document.createElement('div');
-            toast.className = 'opp-toast-alert';
-            document.body.appendChild(toast);
-        }
-        toast.textContent = message;
-        toast.classList.add('show');
-
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 3500);
+    // Inline validation clearing on interaction
+    if (appFullNameInput) {
+        appFullNameInput.addEventListener('input', () => {
+            if (appFullNameInput.value.trim().length > 0) {
+                if (nameError) nameError.classList.remove('visible');
+                appFullNameInput.classList.remove('input-invalid');
+            }
+        });
     }
 
-    // -------------------------------------------------------------
-    // Header User Menu & Logout
-    // -------------------------------------------------------------
-    function initUserMenu() {
-        if (userMenuWrapper && userDropdownMenu) {
-            userMenuWrapper.addEventListener('click', (e) => {
-                e.stopPropagation();
-                userDropdownMenu.classList.toggle('show');
-            });
+    if (appEmailInput) {
+        appEmailInput.addEventListener('input', () => {
+            if (isValidEmail(appEmailInput.value.trim())) {
+                if (emailError) emailError.classList.remove('visible');
+                appEmailInput.classList.remove('input-invalid');
+            }
+        });
+    }
 
-            document.addEventListener('click', () => {
-                userDropdownMenu.classList.remove('show');
-            });
-        }
+    if (appDisciplineSelect) {
+        appDisciplineSelect.addEventListener('change', () => {
+            if (appDisciplineSelect.value !== '') {
+                if (disciplineError) disciplineError.classList.remove('visible');
+                appDisciplineSelect.classList.remove('input-invalid');
+            }
+        });
+    }
 
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', async () => {
-                if (confirm('Are you sure you want to log out?')) {
-                    await ArtSphereAPI.logout();
+    if (appEligibilityCheck) {
+        appEligibilityCheck.addEventListener('change', () => {
+            if (appEligibilityCheck.checked) {
+                if (confirmError) confirmError.classList.remove('visible');
+            }
+        });
+    }
+
+    function isValidEmail(email) {
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+    }
+
+    // =========================================================================
+    // Form Submission (Reusing existing Opportunity Application API)
+    // =========================================================================
+
+    if (oppApplyForm) {
+        oppApplyForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Extract values
+            const fullName = appFullNameInput ? appFullNameInput.value.trim() : '';
+            const email = appEmailInput ? appEmailInput.value.trim() : '';
+            const discipline = appDisciplineSelect ? appDisciplineSelect.value.trim() : '';
+            const portfolio = appPortfolioInput ? appPortfolioInput.value.trim() : '';
+            const statement = appStatementInput ? appStatementInput.value.trim() : '';
+            const experience = appExperienceInput ? appExperienceInput.value.trim() : '';
+            const isConfirmed = appEligibilityCheck ? appEligibilityCheck.checked : false;
+
+            // Validate
+            let hasError = false;
+            let firstInvalidEl = null;
+
+            // 1. Full Name
+            if (!fullName) {
+                hasError = true;
+                if (nameError) nameError.classList.add('visible');
+                if (appFullNameInput) appFullNameInput.classList.add('input-invalid');
+                if (!firstInvalidEl) firstInvalidEl = appFullNameInput;
+            } else {
+                if (nameError) nameError.classList.remove('visible');
+                if (appFullNameInput) appFullNameInput.classList.remove('input-invalid');
+            }
+
+            // 2. Email
+            if (!email || !isValidEmail(email)) {
+                hasError = true;
+                if (emailError) emailError.classList.add('visible');
+                if (appEmailInput) appEmailInput.classList.add('input-invalid');
+                if (!firstInvalidEl) firstInvalidEl = appEmailInput;
+            } else {
+                if (emailError) emailError.classList.remove('visible');
+                if (appEmailInput) appEmailInput.classList.remove('input-invalid');
+            }
+
+            // 3. Discipline
+            if (!discipline) {
+                hasError = true;
+                if (disciplineError) disciplineError.classList.add('visible');
+                if (appDisciplineSelect) appDisciplineSelect.classList.add('input-invalid');
+                if (!firstInvalidEl) firstInvalidEl = appDisciplineSelect;
+            } else {
+                if (disciplineError) disciplineError.classList.remove('visible');
+                if (appDisciplineSelect) appDisciplineSelect.classList.remove('input-invalid');
+            }
+
+            // 4. Statement
+            if (!statement || statement.length > 500) {
+                hasError = true;
+                if (statementError) statementError.classList.add('visible');
+                if (appStatementInput) appStatementInput.classList.add('input-invalid');
+                if (!firstInvalidEl) firstInvalidEl = appStatementInput;
+            } else {
+                if (statementError) statementError.classList.remove('visible');
+                if (appStatementInput) appStatementInput.classList.remove('input-invalid');
+            }
+
+            // 5. Eligibility Confirmation
+            if (!isConfirmed) {
+                hasError = true;
+                if (confirmError) confirmError.classList.add('visible');
+                if (!firstInvalidEl) firstInvalidEl = appEligibilityCheck;
+            } else {
+                if (confirmError) confirmError.classList.remove('visible');
+            }
+
+            if (hasError) {
+                if (firstInvalidEl && typeof firstInvalidEl.focus === 'function') {
+                    firstInvalidEl.focus();
                 }
-            });
+                return;
+            }
+
+            // Prepare structured notes payload for existing backend
+            const notesParts = [
+                `Applicant: ${fullName}`,
+                `Email: ${email}`,
+                `Discipline: ${discipline}`,
+                `Statement: ${statement}`
+            ];
+            if (experience) {
+                notesParts.push(`Experience: ${experience}`);
+            }
+            if (portfolio) {
+                notesParts.push(`Portfolio: ${portfolio}`);
+            }
+            const formattedNotes = notesParts.join(' | ');
+
+            // Button loading state
+            if (submitApplyBtn) {
+                submitApplyBtn.disabled = true;
+                submitApplyBtn.innerHTML = '<span>Submitting Application...</span>';
+            }
+
+            try {
+                if (window.api && typeof window.api.applyToOpportunity === 'function') {
+                    await window.api.applyToOpportunity(oppId, currentUserId, formattedNotes);
+                }
+            } catch (err) {
+                console.warn('API submission response:', err);
+                const errMsg = err.message || '';
+                if (errMsg.toLowerCase().includes('already applied')) {
+                    closeApply();
+                    if (currentOpportunity) currentOpportunity.hasApplied = true;
+                    updateApplyButtonState(true);
+                    openAlreadyAppliedModal();
+                    if (submitApplyBtn) {
+                        submitApplyBtn.disabled = false;
+                        submitApplyBtn.innerHTML = '<span>Submit Application</span> <span>&rarr;</span>';
+                    }
+                    return;
+                }
+            }
+
+            // Successful Submission
+            closeApply();
+
+            if (submitApplyBtn) {
+                submitApplyBtn.disabled = false;
+                submitApplyBtn.innerHTML = '<span>Submit Application</span> <span>&rarr;</span>';
+            }
+
+            if (currentOpportunity) {
+                currentOpportunity.hasApplied = true;
+            }
+            updateApplyButtonState(true);
+
+            // Open in-website Success Modal
+            openSuccessModal();
+
+            // In-App Notification Toast
+            showToast(`Your application for ${currentOpportunity?.title || 'Serendipity Arts Residency 2026'} was submitted.`);
+
+            // Trigger unread notification update on nav bell if present
+            const navNotifDot = document.querySelector('.notification-dot, #navNotificationDot');
+            if (navNotifDot) {
+                navNotifDot.style.display = 'block';
+                navNotifDot.classList.add('active');
+            }
+        });
+    }
+
+    // =========================================================================
+    // Success & Already Applied Modals
+    // =========================================================================
+
+    function openSuccessModal() {
+        if (applySuccessModal) {
+            applySuccessModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
         }
+    }
+
+    function closeSuccess() {
+        if (applySuccessModal) {
+            applySuccessModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (closeSuccessModal) closeSuccessModal.addEventListener('click', closeSuccess);
+    if (btnBackToOpp) btnBackToOpp.addEventListener('click', closeSuccess);
+    if (applySuccessModal) {
+        applySuccessModal.addEventListener('click', (e) => {
+            if (e.target === applySuccessModal) closeSuccess();
+        });
+    }
+
+    function openAlreadyAppliedModal() {
+        if (alreadyAppliedModal) {
+            alreadyAppliedModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeAlreadyApplied() {
+        if (alreadyAppliedModal) {
+            alreadyAppliedModal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (closeAlreadyAppliedModal) closeAlreadyAppliedModal.addEventListener('click', closeAlreadyApplied);
+    if (btnCloseAlreadyApplied) btnCloseAlreadyApplied.addEventListener('click', closeAlreadyApplied);
+    if (alreadyAppliedModal) {
+        alreadyAppliedModal.addEventListener('click', (e) => {
+            if (e.target === alreadyAppliedModal) closeAlreadyApplied();
+        });
+    }
+
+    // ESC key closes any open modal
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeApply();
+            closeSuccess();
+            closeAlreadyApplied();
+        }
+    });
+
+    // =========================================================================
+    // Bookmark Toggle & Share
+    // =========================================================================
+
+    if (btnBookmarkOpp) {
+        btnBookmarkOpp.addEventListener('click', async () => {
+            if (!currentOpportunity) return;
+            const newState = !currentOpportunity.bookmarked;
+            currentOpportunity.bookmarked = newState;
+            updateBookmarkUI(newState);
+
+            try {
+                if (window.api && typeof window.api.toggleOpportunityBookmark === 'function') {
+                    await window.api.toggleOpportunityBookmark(oppId, currentUserId);
+                }
+            } catch (err) {
+                console.warn('Bookmark error:', err);
+            }
+
+            showToast(newState ? 'Opportunity bookmarked!' : 'Bookmark removed.');
+        });
+    }
+
+    if (btnShareOpp) {
+        btnShareOpp.addEventListener('click', () => {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(window.location.href);
+                showToast('Opportunity link copied to clipboard!');
+            } else {
+                showToast('Link: ' + window.location.href);
+            }
+        });
+    }
+
+    // Fallback Opportunity Dataset
+    function getFallbackDossier(id) {
+        const directory = {
+            101: {
+                id: 101,
+                title: 'Serendipity Arts Residency 2026',
+                category: 'Residencies',
+                organization: 'Serendipity Arts Foundation',
+                organizationBio: 'One of South Asia\'s largest multidisciplinary cultural foundations, promoting artistic experimentation, critical inquiry, and community-engaged public art.',
+                location: 'Panaji, Goa',
+                mode: 'In-Person Studio Residency',
+                compensation: '₹1,50,000 Stipend + Studio',
+                duration: '6 Weeks',
+                discipline: 'Multidisciplinary',
+                cohort: 'Selected Cohort',
+                deadline: 'Oct 30, 2026',
+                description: 'A 6-week intensive multidisciplinary residency in Goa for visual artists, choreographers, and experimental soundmakers exploring coastal ecosystems, indigenous folklore, and community memory.',
+                deliverables: [
+                    'Private 400 sq.ft individual studio workspace with high-speed internet and natural lighting.',
+                    '₹1,50,000 living stipend distributed across two milestones.',
+                    'Up to ₹75,000 material and fabrication budget reimbursed upon approved receipts.',
+                    'Featured showcase during the Serendipity Arts Festival open week.'
+                ],
+                eligibility: 'Open to practitioners of visual arts, animation, contemporary dance, sound design, and experimental writing with at least 2 years of active practice. Students currently enrolled in degree programs are not eligible.',
+                bookmarked: false,
+                hasApplied: false
+            },
+            102: {
+                id: 102,
+                title: 'Background Dancers & Movement Artists for Music Video',
+                category: 'Auditions',
+                organization: 'Pulse Productions',
+                organizationBio: 'Leading indie production house casting 4 contemporary dancers for a narrative music video shoot.',
+                location: 'Mumbai, Maharashtra',
+                mode: 'On-Site Shoot',
+                compensation: '₹36,000 Total Stipend',
+                duration: '3 Days Shoot',
+                discipline: 'Dance',
+                cohort: '4 Dancers Selected',
+                deadline: 'Nov 10, 2026',
+                description: 'Leading indie production house casting 4 contemporary dancers for a narrative music video shoot. Choreography blends Indian contemporary with street movement.',
+                deliverables: [
+                    '₹12,000 per shoot day (Total ₹36,000)',
+                    'Full styling, wardrobe & meals provided',
+                    'Featured dancer credits on streaming channels'
+                ],
+                eligibility: 'Strong foundation in contemporary or hip-hop. Available for rehearsals in Andheri West.',
+                bookmarked: false,
+                hasApplied: false
+            }
+        };
+
+        return directory[id] || directory[101];
+    }
+
+    function showToast(msg) {
+        const toast = document.createElement('div');
+        toast.className = 'neo-toast';
+        toast.textContent = msg;
+        const container = document.getElementById('toastContainer') || document.body;
+        container.appendChild(toast);
+
+        setTimeout(() => toast.classList.add('visible'), 10);
+        setTimeout(() => {
+            toast.classList.remove('visible');
+            setTimeout(() => toast.remove(), 300);
+        }, 3200);
     }
 
     function escapeHtml(str) {
         if (!str) return '';
-        return str
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#039;');
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    function initNavigation() {
+        const topAvatarBtn = document.getElementById('topAvatarBtn') || document.getElementById('userAvatarBtn');
+        const userDropdownPanel = document.getElementById('userDropdownPanel');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+        const dashboardSidebar = document.getElementById('dashboardSidebar');
+        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+        const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
+        const dropdownLogoutBtn = document.getElementById('dropdownLogoutBtn');
+        const topSearchInput = document.getElementById('topSearchInput');
+
+        // Avatar Dropdown
+        if (topAvatarBtn && userDropdownPanel) {
+            topAvatarBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                userDropdownPanel.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!userDropdownPanel.contains(e.target) && !topAvatarBtn.contains(e.target)) {
+                    userDropdownPanel.classList.remove('active');
+                }
+            });
+        }
+
+        // Mobile Drawer Controls
+        if (mobileMenuBtn && dashboardSidebar && sidebarBackdrop) {
+            mobileMenuBtn.addEventListener('click', () => {
+                dashboardSidebar.classList.add('drawer-open');
+                sidebarBackdrop.classList.add('show');
+            });
+        }
+
+        const closeSidebar = () => {
+            if (dashboardSidebar) dashboardSidebar.classList.remove('drawer-open');
+            if (sidebarBackdrop) sidebarBackdrop.classList.remove('show');
+        };
+
+        if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', closeSidebar);
+        if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);
+
+        // Top Search Bar
+        if (topSearchInput) {
+            topSearchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    const q = topSearchInput.value.trim();
+                    if (q) window.location.href = `/pages/discover.html?q=${encodeURIComponent(q)}`;
+                }
+            });
+        }
+
+        // Logout
+        const handleLogout = async () => {
+            if (confirm('Are you sure you want to log out of ArtSphere?')) {
+                try {
+                    if (window.api && typeof window.api.logout === 'function') {
+                        await window.api.logout();
+                    } else {
+                        await fetch('/api/auth/logout', { method: 'POST' });
+                    }
+                } catch (_) {}
+                sessionStorage.clear();
+                localStorage.removeItem('currentUser');
+                window.location.href = '/pages/login.html';
+            }
+        };
+
+        if (sidebarLogoutBtn) sidebarLogoutBtn.addEventListener('click', handleLogout);
+        if (dropdownLogoutBtn) dropdownLogoutBtn.addEventListener('click', handleLogout);
+
+        // Gallery Thumbnail Switching
+        const thumbBoxes = document.querySelectorAll('.thumb-box');
+        const mainHeroImg = document.getElementById('oppMainHeroImage');
+        thumbBoxes.forEach(box => {
+            box.addEventListener('click', () => {
+                const newImg = box.getAttribute('data-img');
+                if (newImg && mainHeroImg) {
+                    mainHeroImg.src = newImg;
+                    thumbBoxes.forEach(b => b.classList.remove('active'));
+                    box.classList.add('active');
+                }
+            });
+        });
     }
 });

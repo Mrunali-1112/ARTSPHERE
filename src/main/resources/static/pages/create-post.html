@@ -3,247 +3,692 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Post – ArtSphere</title>
-    <!-- Fonts -->
+    <title>ArtSphere — Publish to Studio Feed</title>
+    <link rel="icon" type="image/png" href="/images/logo_nav.png">
+    
+    <!-- Modern Typography: Plus Jakarta Sans & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Pastel-Purple Workspace Stylesheet -->
     <link rel="stylesheet" href="/css/create-post.css">
 </head>
-<body>
-    <div class="app-layout">
-        <main class="screen-container create-post-screen">
+<body class="publisher-body">
 
-            <!-- Sticky Top Header Navbar -->
-            <header class="create-post-header">
-                <a href="/pages/feed.html" class="back-link-btn" aria-label="Cancel and go back">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C102C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
+    <!-- Mobile Drawer Overlay Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <div class="publisher-layout-container">
+        <!-- ============================================================
+             LEFT SIDEBAR (Sticky, ~250px wide)
+             ============================================================ -->
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
+            <!-- Brand Header -->
+            <div class="sidebar-brand-wrapper">
+                <a href="/pages/home.html" class="sidebar-brand-link">
+                    <div class="brand-sparkle-icon">✦</div>
+                    <div class="brand-text-block">
+                        <span class="brand-title">ArtSphere</span>
+                        <span class="brand-tagline">The Artist Community</span>
+                    </div>
+                </a>
+                <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close navigation">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Primary Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Main Navigation">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/home.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/discover.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Discover</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/communities.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Communities</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/events.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Events</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/collaborators.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 16v1a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v1"></path>
+                                    <path d="M18 8l4 4-4 4"></path>
+                                    <path d="M8 12h14"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Collaborate</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/opportunities.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Opportunities</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-divider"></div>
+
+            <!-- Secondary Navigation List -->
+            <nav class="sidebar-nav-group" aria-label="Communication">
+                <ul class="sidebar-nav-list">
+                    <li>
+                        <a href="/pages/messages.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Messages</span>
+                            <span class="sidebar-badge-count">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/notifications.html" class="sidebar-nav-item">
+                            <span class="nav-icon">
+                                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                                </svg>
+                            </span>
+                            <span class="nav-label">Notifications</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Bottom Section: Profile Mini-Card & System Actions -->
+            <div class="sidebar-bottom-section">
+                <!-- User Profile Mini-Card -->
+                <a href="/pages/artist-profile.html" class="sidebar-profile-card" id="sidebarProfileCard" title="View Profile">
+                    <div class="avatar-indicator-wrap">
+                        <img src="/images/user_avatar_nav.png" alt="Profile" class="sidebar-user-avatar" id="sidebarUserAvatar">
+                        <span class="online-status-dot"></span>
+                    </div>
+                    <div class="sidebar-user-meta">
+                        <span class="sidebar-user-name" id="sidebarUserName">Aanya D.</span>
+                        <span class="sidebar-user-role" id="sidebarUserRole">Visual Artist</span>
+                    </div>
+                    <svg class="sidebar-card-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
                 </a>
 
-                <a href="/pages/home.html" class="header-logo-link" aria-label="ArtSphere Home">
-                    <img src="/images/logo_header.png" alt="ArtSphere – The Artist Community" class="header-logo-img">
-                </a>
+                <!-- Utility Navigation -->
+                <ul class="sidebar-utility-list">
+                    <li>
+                        <a href="/pages/settings.html" class="sidebar-utility-item">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                                </svg>
+                            </span>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/pages/help-support.html" class="sidebar-utility-item">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </span>
+                            <span>Help & Support</span>
+                        </a>
+                    </li>
+                    <li>
+                        <button class="sidebar-utility-item logout-action" id="sidebarLogoutBtn">
+                            <span class="nav-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                            </span>
+                            <span>Logout</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </aside>
 
-                <div class="header-profile-dropdown" id="userMenuWrapper">
-                    <div class="avatar-clickable" id="headerUserAvatarBtn" role="button" aria-label="Open User Menu">
-                        <img src="/images/user_avatar_nav.png" alt="User Profile" class="header-user-avatar" id="headerUserAvatar">
+        <!-- ============================================================
+             MAIN CONTENT WRAPPER (Top Header + 2-Column Dashboard)
+             ============================================================ -->
+        <div class="publisher-main-wrapper">
+            <!-- Top Header -->
+            <header class="dashboard-top-header">
+                <div class="header-left-cluster">
+                    <button class="mobile-menu-trigger" id="mobileMenuTrigger" aria-label="Open navigation menu">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                    <!-- Search Input -->
+                    <div class="header-search-bar">
+                        <svg class="search-lens-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="topSearchInput" class="header-search-input" placeholder="Search artists, opportunities, events..." autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="header-right-cluster">
+                    <!-- Notification Bell -->
+                    <a href="/pages/notifications.html" class="header-icon-action" aria-label="Notifications" title="Notifications" id="headerNotificationLink">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-indicator-dot"></span>
+                    </a>
+
+                    <!-- Creator Avatar & Dropdown -->
+                    <div class="user-menu-container">
+                        <button class="header-avatar-button" id="userAvatarBtn" aria-label="Open User Menu" aria-expanded="false">
+                            <img src="/images/user_avatar_nav.png" alt="Profile" class="header-user-avatar" id="headerUserAvatar">
+                            <svg class="avatar-chevron-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+
+                        <!-- User Dropdown Menu -->
+                        <div class="header-dropdown-panel" id="userDropdownPanel">
+                            <div class="dropdown-header-info">
+                                <strong id="dropdownUserName">Aanya Deshmukh</strong>
+                                <span id="dropdownUserBio">Visual &amp; Digital Artist</span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a href="/pages/artist-profile.html" class="dropdown-item-link" id="dropdownProfileLink">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <span>My Artist Profile</span>
+                            </a>
+                            <a href="/pages/portfolio.html" class="dropdown-item-link" id="dropdownPortfolioLink">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                <span>My Portfolio</span>
+                            </a>
+                            <a href="/pages/create-collaboration.html" class="dropdown-item-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                <span>Post Collab Request</span>
+                            </a>
+                            <a href="/pages/settings.html" class="dropdown-item-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                <span>Settings</span>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <button class="dropdown-item-link text-danger" id="logoutBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                <span>Log Out</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </header>
 
-            <!-- Page Title Row (Matches page_26.jpg) -->
-            <div class="create-title-row">
-                <h1 class="page-title-text">Create Post</h1>
-                <p class="page-subtitle-text">Share your art, thoughts or creative journey with the ArtSphere community.</p>
-            </div>
+            <!-- Publisher Content Canvas -->
+            <main class="publisher-content-area">
+                <!-- Top Breadcrumb / Back Button -->
+                <div class="top-nav-bar-row">
+                    <a href="/pages/feed.html" class="back-pill-btn" id="btnBackToFeed">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        <span>Back to Studio Feed</span>
+                    </a>
+                </div>
 
-            <!-- Create Post Form Container -->
-            <form id="createPostForm" class="create-post-form">
-
-                <!-- 1. Media Upload Dropzone (Matches page_26.jpg) -->
-                <div class="form-group media-dropzone-group">
-                    <div class="media-dropzone" id="mediaDropzone">
-                        <input type="file" id="mediaFileInput" accept="image/*,video/mp4" style="display: none;">
-                        
-                        <div class="dropzone-content" id="dropzonePrompt">
-                            <div class="dropzone-icon-circle">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6C5CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                    <polyline points="21 15 16 10 5 21"></polyline>
-                                </svg>
+                <!-- Hero Section: Badges, Title, Subtitle, and Decorative Artwork Illustration -->
+                <section class="publisher-hero-header">
+                    <div class="publisher-hero-text">
+                        <div class="publisher-badge-cluster">
+                            <span class="badge-publisher-tag">STUDIO PUBLISHER</span>
+                            <span class="badge-stream-tag">COMMUNITY STREAM</span>
+                        </div>
+                        <h1 class="publisher-main-heading">Publish to Studio Feed</h1>
+                        <p class="publisher-subheading">
+                            Share your work in progress, artistic reflections, new showreels, or announcements with the multidisciplinary network.
+                        </p>
+                    </div>
+                    <div class="publisher-hero-art" aria-hidden="true">
+                        <div class="hero-art-bubble">
+                            <div class="art-card-illus">
+                                <div class="illus-mountain-frame">
+                                    <svg width="84" height="64" viewBox="0 0 84 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="84" height="64" rx="8" fill="#E8DDF4"/>
+                                        <path d="M12 48L32 24L48 40L60 28L72 48H12Z" fill="#C5B2E5"/>
+                                        <circle cx="26" cy="18" r="6" fill="#D7C7F2"/>
+                                    </svg>
+                                </div>
+                                <div class="illus-plus-bubble">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                </div>
                             </div>
-                            <h3 class="dropzone-title">Add Artwork / Image / Video</h3>
-                            <p class="dropzone-sub">Tap to upload or choose from gallery</p>
-                            <span class="dropzone-formats">JPG, PNG, MP4 (Max 10MB)</span>
-                        </div>
-
-                        <!-- Image Preview (Hidden initially) -->
-                        <div class="dropzone-preview" id="dropzonePreview" style="display: none;">
-                            <img src="" alt="Preview" class="preview-img" id="previewImg">
-                            <button type="button" class="btn-remove-media" id="btnRemoveMedia" aria-label="Remove image">&times;</button>
+                            <div class="sparkle-deco sparkle-1">✦</div>
+                            <div class="sparkle-deco sparkle-2">✦</div>
                         </div>
                     </div>
+                </section>
 
-                    <!-- Preset sample image quick pickers -->
-                    <div class="preset-pickers-row">
-                        <span class="preset-label">Or pick sample:</span>
-                        <button type="button" class="preset-thumb-btn" data-url="/images/post_a_brighter_day.png">A Brighter Day</button>
-                        <button type="button" class="preset-thumb-btn" data-url="/images/artwork_sunlit.png">Sunlit</button>
-                        <button type="button" class="preset-thumb-btn" data-url="/images/artwork_beyond_the_hills.png">Hills</button>
-                    </div>
-                </div>
-
-                <!-- 2. Caption Textarea (Matches page_26.jpg) -->
-                <div class="form-group">
-                    <div class="label-row">
-                        <label for="postCaptionInput" class="form-label">Caption</label>
-                        <span class="char-counter" id="charCounter">0/500</span>
-                    </div>
-                    <textarea id="postCaptionInput" class="form-textarea" rows="4" maxlength="500" placeholder="Tell your story, share your thoughts..." required></textarea>
-                </div>
-
-                <!-- 3. Art Form & Category Row (Matches page_26.jpg) -->
-                <div class="form-row-dual">
-                    <div class="form-group">
-                        <label for="postArtFormSelect" class="form-label">Art Form</label>
-                        <div class="select-wrapper">
-                            <select id="postArtFormSelect" class="form-select" required>
-                                <option value="" disabled selected>Select art form</option>
-                                <option value="Painting">Painting</option>
-                                <option value="Digital Art">Digital Art</option>
-                                <option value="Photography">Photography</option>
-                                <option value="Dance">Dance</option>
-                                <option value="Music">Music</option>
-                                <option value="Writing">Writing</option>
-                                <option value="Crafts">Crafts</option>
-                                <option value="Sculpture">Sculpture</option>
-                                <option value="Illustration">Illustration</option>
-                            </select>
-                            <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6F687A" stroke-width="2.5">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="postCategorySelect" class="form-label">Category</label>
-                        <div class="select-wrapper">
-                            <select id="postCategorySelect" class="form-select" required>
-                                <option value="" disabled selected>Select category</option>
-                                <option value="Showcase" selected>Showcase</option>
-                                <option value="Work in Progress">Work in Progress</option>
-                                <option value="Tutorial">Tutorial</option>
-                                <option value="Discussion">Discussion</option>
-                                <option value="Inspiration">Inspiration</option>
-                            </select>
-                            <svg class="select-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6F687A" stroke-width="2.5">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4. Tags Input & Suggestions (Matches page_26.jpg) -->
-                <div class="form-group">
-                    <label for="postTagsInput" class="form-label">Tags (optional)</label>
-                    <input type="text" id="postTagsInput" class="form-input" placeholder="Add tags (e.g. nature, digital art, sketch, portrait...)">
+                <!-- Two-Column Workspace Layout -->
+                <div class="publisher-workspace-grid">
                     
-                    <div class="suggested-tags-wrapper">
-                        <span class="tag-suggestion-pill" data-tag="#art">#art</span>
-                        <span class="tag-suggestion-pill" data-tag="#nature">#nature</span>
-                        <span class="tag-suggestion-pill" data-tag="#portrait">#portrait</span>
-                        <span class="tag-suggestion-pill" data-tag="#digital">#digital</span>
-                        <span class="tag-suggestion-pill" data-tag="#sketch">#sketch</span>
-                        <span class="tag-suggestion-pill" data-tag="#abstract">#abstract</span>
+                    <!-- Left Primary Column (Publishing Form) -->
+                    <div class="publisher-main-column">
+                        <form id="createPostForm" class="publisher-form">
+                            
+                            <!-- 1. Artwork or Visual Media Card -->
+                            <div class="workspace-card media-card">
+                                <div class="section-card-header">
+                                    <div class="card-header-icon-box purple-tint">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                            <polyline points="21 15 16 10 5 21"></polyline>
+                                        </svg>
+                                    </div>
+                                    <div class="card-header-titles">
+                                        <h2 class="card-title">Artwork or Visual Media</h2>
+                                        <p class="card-subtitle">Upload an image, video, or visual work.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Drag & Drop / File Input Box -->
+                                <div class="media-upload-container" id="mediaDropzone" tabindex="0" role="button" aria-label="Upload artwork dropzone">
+                                    <!-- Real Browser File Input -->
+                                    <input type="file" id="mediaFileInput" accept="image/jpeg,image/png,image/webp,image/jpg,video/mp4,video/quicktime,video/webm,audio/mp3,audio/mpeg,audio/wav" style="display: none;">
+                                    <!-- Fallback or Direct URL input for programmatic compatibility -->
+                                    <input type="hidden" id="postImageUrlInput" value="">
+
+                                    <!-- Empty State Dropzone Prompt -->
+                                    <div class="upload-dropzone-prompt" id="dropzonePrompt">
+                                        <div class="upload-cloud-icon-wrap">
+                                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                <polyline points="17 8 12 3 7 8"></polyline>
+                                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                                            </svg>
+                                        </div>
+                                        <p class="dropzone-primary-text">Drag &amp; drop your file here</p>
+                                        <p class="dropzone-secondary-text">or <span class="text-link-purple">click to upload</span></p>
+                                        <p class="dropzone-hint-text">Supports images (JPG, PNG, WEBP), videos (MP4), and audio (MP3) up to 20 MB</p>
+                                        
+                                        <!-- Preview Pill Button on Dropzone (matches design reference) -->
+                                        <button type="button" class="preview-mode-chip" id="previewTriggerChip" title="Click to select file or preview">
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                            </svg>
+                                            <span>Upload / Preview</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Selected Media Preview State (Replaces empty state when file is chosen) -->
+                                    <div class="upload-preview-active" id="dropzonePreview" style="display: none;">
+                                        <div class="preview-media-wrapper">
+                                            <img src="" alt="Selected Artwork Preview" class="preview-img" id="previewImg" style="display: none;">
+                                            <video controls class="preview-video" id="previewVideo" style="display: none;"></video>
+                                            <audio controls class="preview-audio" id="previewAudio" style="display: none; width: 100%; margin-top: 10px;"></audio>
+                                            <div class="preview-action-btns">
+                                                <button type="button" class="btn-change-preview" id="btnChangeMedia" aria-label="Change media">
+                                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                                    </svg>
+                                                    <span>Change</span>
+                                                </button>
+                                                <button type="button" class="btn-remove-preview" id="btnRemoveMedia" aria-label="Remove media">
+                                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                    </svg>
+                                                    <span>Remove</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="preview-meta-strip">
+                                            <div class="preview-file-info">
+                                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                                <span class="preview-filename" id="previewFilename">artwork.png</span>
+                                                <span class="preview-filesize" id="previewFilesize">1.2 MB</span>
+                                            </div>
+                                            <span class="preview-status-pill" id="previewStatusPill">Ready</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Quick Samples Section (Using Valid Real Project Images) -->
+                                <div class="quick-samples-wrapper">
+                                    <div class="quick-samples-label">
+                                        <span class="samples-bulb-icon">💡</span>
+                                        <span>Quick Samples</span>
+                                    </div>
+                                    <div class="quick-sample-chips">
+                                        <button type="button" class="sample-chip-pill" data-type="Digital Painting" data-url="/images/comm_event_digital_art.png">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                            <span>Digital Painting</span>
+                                        </button>
+                                        <button type="button" class="sample-chip-pill" data-type="Sound Studio" data-url="/images/comm_soundsphere.png">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5v14M7 9v6M2 12h2M20 12h2"/></svg>
+                                            <span>Sound Studio</span>
+                                        </button>
+                                        <button type="button" class="sample-chip-pill" data-type="Dance Study" data-url="/images/comm_move_together.png">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                                            <span>Dance Study</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. Caption & Artistic Thoughts Card -->
+                            <div class="workspace-card caption-card">
+                                <div class="section-card-header">
+                                    <div class="card-header-icon-box purple-tint">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                                        </svg>
+                                    </div>
+                                    <div class="card-header-titles">
+                                        <h2 class="card-title">Caption &amp; Artistic Thoughts</h2>
+                                    </div>
+                                    <div class="char-count-pill" id="charCounter">0 / 500</div>
+                                </div>
+                                <div class="card-input-body">
+                                    <textarea id="postCaptionInput" class="pastel-textarea" rows="4" maxlength="500" required placeholder="Describe your creative process, challenges, what materials you used, or what you learned..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- 3. Artistic Discipline + Tags (2 Column Row) -->
+                            <div class="form-dual-cards-row">
+                                <!-- Artistic Discipline -->
+                                <div class="workspace-card split-card">
+                                    <div class="section-card-header compact">
+                                        <div class="card-header-icon-box purple-tint mini">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
+                                                <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
+                                                <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
+                                                <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
+                                                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
+                                            </svg>
+                                        </div>
+                                        <h3 class="split-card-title">Artistic Discipline</h3>
+                                    </div>
+                                    <div class="select-wrapper">
+                                        <select id="postArtFormSelect" class="pastel-select" required>
+                                            <option value="Visual Arts & Painting" selected>Visual Arts &amp; Painting</option>
+                                            <option value="Digital Art & Animation">Digital Art &amp; Animation</option>
+                                            <option value="Music & Sound">Music &amp; Sound</option>
+                                            <option value="Photography">Photography</option>
+                                            <option value="Dance & Physical">Dance &amp; Physical</option>
+                                            <option value="Writing & Poetry">Writing &amp; Poetry</option>
+                                            <option value="Crafts & Sculpture">Crafts &amp; Sculpture</option>
+                                        </select>
+                                        <svg class="select-chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                    </div>
+                                </div>
+
+                                <!-- Tags Input -->
+                                <div class="workspace-card split-card">
+                                    <div class="section-card-header compact">
+                                        <div class="card-header-icon-box purple-tint mini">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                                                <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                                            </svg>
+                                        </div>
+                                        <h3 class="split-card-title">Tags</h3>
+                                    </div>
+                                    <input type="text" id="postTagsInput" class="pastel-input" placeholder="#gouache, #process, #sketchbook">
+                                </div>
+                            </div>
+
+                            <!-- 4. Action Controls Bar (Cancel & Publish) -->
+                            <div class="form-action-bar">
+                                <a href="/pages/feed.html" class="btn-action-cancel" id="btnCancel">Cancel</a>
+                                <button type="submit" class="btn-action-publish" id="btnSubmitPost">
+                                    <span>Publish to Feed</span>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Right Secondary Column (Principles & Collaboration Prompts) -->
+                    <div class="publisher-sidebar-column">
+                        <!-- 1. Studio Feed Principles Card -->
+                        <div class="workspace-card sidebar-card principles-card">
+                            <div class="sidebar-card-header">
+                                <span class="card-sparkle-motif">✦</span>
+                                <h3 class="sidebar-card-title">Studio Feed Principles</h3>
+                            </div>
+                            <div class="principles-item-stack">
+                                <div class="principle-item">
+                                    <div class="principle-icon-circle pink-tint">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                    </div>
+                                    <div class="principle-content">
+                                        <h4 class="principle-title">Celebrate the Process</h4>
+                                        <p class="principle-desc">Rough sketches, failed tests, and questions are just as welcome as polished masterworks.</p>
+                                    </div>
+                                </div>
+                                <div class="principle-item">
+                                    <div class="principle-icon-circle teal-tint">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                    </div>
+                                    <div class="principle-content">
+                                        <h4 class="principle-title">Constructive Critique</h4>
+                                        <p class="principle-desc">Share insights generously and offer respectful feedback to fellow creators.</p>
+                                    </div>
+                                </div>
+                                <div class="principle-item">
+                                    <div class="principle-icon-circle amber-tint">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                    </div>
+                                    <div class="principle-content">
+                                        <h4 class="principle-title">No Algorithmic Spam</h4>
+                                        <p class="principle-desc">Keep posts grounded in genuine artistic practice.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Looking for Co-creators Card -->
+                        <div class="workspace-card sidebar-card cocreators-card">
+                            <div class="sidebar-card-header">
+                                <span class="card-users-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                </span>
+                                <h3 class="sidebar-card-title">Looking for Co-creators?</h3>
+                            </div>
+                            <!-- Overlapping Avatar illustration -->
+                            <div class="cocreator-avatar-cluster">
+                                <img src="/images/avatar_riya.png" alt="Creator avatar" class="cocreator-avatar-circle av-1">
+                                <img src="/images/artist_arjun_thumb.png" alt="Creator avatar" class="cocreator-avatar-circle av-2">
+                                <img src="/images/artist_kavya_avatar.png" alt="Creator avatar" class="cocreator-avatar-circle av-3">
+                                <div class="cocreator-plus-badge">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                </div>
+                            </div>
+                            <p class="cocreators-desc">
+                                If you need collaborators for a specific project with defined roles, publish an open call on the Collaborations board instead.
+                            </p>
+                            <a href="/pages/create-collaboration.html" class="btn-cocreator-pitch">
+                                <span>Post Collab Pitch</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+
+            <!-- Universal Pastel Footer -->
+            <footer class="publisher-footer">
+                <div class="footer-inner-grid">
+                    <div class="footer-brand-col">
+                        <a href="/pages/home.html" class="footer-brand-link">
+                            <span class="footer-brand-motif">✦</span>
+                            <span>ArtSphere</span>
+                        </a>
+                        <p class="footer-brand-bio">
+                            The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
+                        </p>
+                        <div class="footer-copyright">&copy; 2026 ArtSphere Network. All rights reserved.</div>
+                    </div>
+
+                    <div class="footer-links-col">
+                        <div class="footer-col-heading">DIRECTORY</div>
+                        <ul class="footer-nav-list">
+                            <li><a href="/pages/discover.html">Discover Artists</a></li>
+                            <li><a href="/pages/discover.html?category=Music">Musicians</a></li>
+                            <li><a href="/pages/discover.html?category=Visual+Arts">Visual Artists</a></li>
+                            <li><a href="/pages/discover.html?category=Dance">Dancers</a></li>
+                            <li><a href="/pages/discover.html?category=Photography">Photographers</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-links-col">
+                        <div class="footer-col-heading">PLATFORM</div>
+                        <ul class="footer-nav-list">
+                            <li><a href="/pages/home.html">Studio Feed</a></li>
+                            <li><a href="/pages/communities.html">Communities</a></li>
+                            <li><a href="/pages/events.html">Events &amp; Jams</a></li>
+                            <li><a href="/pages/collaborators.html">Collaborations</a></li>
+                            <li><a href="/pages/opportunities.html">Open Calls</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-links-col">
+                        <div class="footer-col-heading">ACCOUNT</div>
+                        <ul class="footer-nav-list">
+                            <li><a href="/pages/artist-profile.html" id="footerProfileLink">Artist Profile</a></li>
+                            <li><a href="/pages/my-applications.html">My Applications</a></li>
+                            <li><a href="/pages/settings.html">Account Settings</a></li>
+                            <li><a href="/pages/help-support.html">Help &amp; Guidelines</a></li>
+                        </ul>
+                        <div class="footer-badge-wrap">
+                            <span class="footer-pill-badge">NO ADS. PURE ART.</span>
+                        </div>
                     </div>
                 </div>
-
-                <!-- 5. Post Visibility (Matches page_26.jpg: Public, Followers, Only Me) -->
-                <div class="form-group">
-                    <label class="form-label">Post Visibility</label>
-                    <p class="visibility-subtext">Who can see your post?</p>
-                    
-                    <div class="visibility-options-row">
-                        <label class="visibility-option-label active">
-                            <input type="radio" name="visibility" value="Public" checked>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="2" y1="12" x2="22" y2="12"></line>
-                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                            </svg>
-                            <span>Public</span>
-                        </label>
-
-                        <label class="visibility-option-label">
-                            <input type="radio" name="visibility" value="Followers">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="9" cy="7" r="4"></circle>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                            </svg>
-                            <span>Followers</span>
-                        </label>
-
-                        <label class="visibility-option-label">
-                            <input type="radio" name="visibility" value="Only Me">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                            </svg>
-                            <span>Only Me</span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- 6. Post Action Button -->
-                <div class="submit-action-group">
-                    <button type="submit" id="btnPublishPost" class="btn-publish-post">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="22" y1="2" x2="11" y2="13"></line>
-                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                        </svg>
-                        <span>Post</span>
-                    </button>
-                </div>
-
-            </form>
-
-            <!-- Bottom Navigation Bar -->
-            <nav class="bottom-nav-bar" aria-label="Main Navigation">
-                <a href="/pages/home.html" class="nav-item" aria-label="Home">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
-                    <span class="nav-label">Home</span>
-                </a>
-
-                <a href="/pages/discover.html" class="nav-item" aria-label="Discover">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
-                    </svg>
-                    <span class="nav-label">Discover</span>
-                </a>
-
-                <!-- Central + Action Button -->
-                <div class="nav-item-center">
-                    <button class="nav-fab-btn" id="centralCreateBtn" aria-label="Create New Content" onclick="window.location.href='/pages/create-post.html'">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                    </button>
-                </div>
-
-                <a href="/pages/feed.html" class="nav-item" aria-label="Feed">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                        <line x1="8" y1="21" x2="16" y2="21"></line>
-                        <line x1="12" y1="17" x2="12" y2="21"></line>
-                    </svg>
-                    <span class="nav-label">Feed</span>
-                </a>
-
-                <a href="/pages/artist-profile.html?id=101" class="nav-item" id="bottomNavProfile" aria-label="Profile">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                    <span class="nav-label">Profile</span>
-                </a>
-            </nav>
-
-        </main>
+            </footer>
+        </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Mobile Bottom Navigation (Visible on narrow screens) -->
+    <nav class="mobile-bottom-navbar" aria-label="Mobile Navigation">
+        <a href="/pages/home.html" class="mobile-nav-tab">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="/pages/discover.html" class="mobile-nav-tab">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>Discover</span>
+        </a>
+        <a href="/pages/create-post.html" class="mobile-nav-tab plus-action-tab active" aria-label="Create Post">
+            <div class="mobile-plus-circle">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </div>
+            <span>+</span>
+        </a>
+        <a href="/pages/messages.html" class="mobile-nav-tab">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>Messages</span>
+        </a>
+        <a href="/pages/artist-profile.html" class="mobile-nav-tab" id="mobileProfileTab">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <!-- Toast Notification Banner Container -->
+    <div id="toastContainer" class="dashboard-toast-container"></div>
+
+    <!-- Essential Scripts -->
     <script src="/js/api.js"></script>
     <script src="/js/create-post.js"></script>
 </body>

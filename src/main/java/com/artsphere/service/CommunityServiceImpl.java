@@ -10,6 +10,9 @@ import com.artsphere.repository.ArtworkRepository;
 import com.artsphere.repository.CommunityRepository;
 import com.artsphere.repository.PostRepository;
 import com.artsphere.repository.UserRepository;
+import com.artsphere.model.User;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,20 +29,41 @@ public class CommunityServiceImpl implements CommunityService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final ArtworkRepository artworkRepository;
+    private final NotificationService notificationService;
 
     public CommunityServiceImpl(CommunityRepository communityRepository,
                                 UserRepository userRepository,
                                 PostRepository postRepository,
-                                ArtworkRepository artworkRepository) {
+                                ArtworkRepository artworkRepository,
+                                NotificationService notificationService) {
         this.communityRepository = communityRepository;
         this.userRepository = userRepository;
         this.postRepository = postRepository;
         this.artworkRepository = artworkRepository;
+        this.notificationService = notificationService;
+    }
+
+    private Long resolveCurrentUserId(Long currentUserId) {
+        if (currentUserId != null) {
+            return currentUserId;
+        }
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getName())) {
+                Optional<User> u = userRepository.findByUsername(auth.getName());
+                if (u.isPresent()) {
+                    return u.get().getId();
+                }
+            }
+        } catch (Exception ignored) {}
+        return userRepository.findByUsername("mrunali")
+                .map(User::getId)
+                .orElseGet(() -> userRepository.findAll().stream().findFirst().map(User::getId).orElse(101L));
     }
 
     @Override
     public List<CommunityResponse> getCommunities(String category, String search, Long currentUserId) {
-        Long userId = (currentUserId != null) ? currentUserId : 101L;
+        Long userId = resolveCurrentUserId(currentUserId);
         List<Community> list = communityRepository.findAll(category, search);
         return list.stream()
                 .map(c -> mapToResponse(c, userId))
@@ -48,7 +72,7 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     public CommunityDetailResponse getCommunityDetails(Long id, Long currentUserId) {
-        Long userId = (currentUserId != null) ? currentUserId : 101L;
+        Long userId = resolveCurrentUserId(currentUserId);
         Community c = communityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Community not found with id: " + id));
 
@@ -102,7 +126,7 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     @Transactional
     public Map<String, Object> joinCommunity(Long id, Long currentUserId) {
-        Long userId = (currentUserId != null) ? currentUserId : 101L;
+        Long userId = resolveCurrentUserId(currentUserId);
         Community c = communityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Community not found with id: " + id));
 
@@ -120,6 +144,21 @@ public class CommunityServiceImpl implements CommunityService {
         communityRepository.addMember(id, userId, "MEMBER");
         int count = communityRepository.countMembers(id);
 
+        try {
+            notificationService.createNotification(
+                    userId,
+                    "COMMUNITY",
+                    "Welcome to " + c.getName() + " Guild",
+                    "You are designated as community MEMBER. Check the creator moderation guidelines and introductions.",
+                    userId,
+                    c.getName(),
+                    c.getCoverImage() != null && !c.getCoverImage().isBlank() ? c.getCoverImage() : "/images/category_fine_art.png",
+                    "COMMUNITY",
+                    id,
+                    "/pages/communities.html?id=" + id
+            );
+        } catch (Exception ignored) {}
+
         Map<String, Object> resp = new HashMap<>();
         resp.put("communityId", id);
         resp.put("joined", true);
@@ -132,7 +171,7 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     @Transactional
     public Map<String, Object> leaveCommunity(Long id, Long currentUserId) {
-        Long userId = (currentUserId != null) ? currentUserId : 101L;
+        Long userId = resolveCurrentUserId(currentUserId);
         communityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Community not found with id: " + id));
 
@@ -157,7 +196,7 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     public List<PostResponse> getCommunityPosts(Long id, String category, Long currentUserId) {
-        Long userId = (currentUserId != null) ? currentUserId : 101L;
+        Long userId = resolveCurrentUserId(currentUserId);
         communityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Community not found with id: " + id));
 
@@ -168,7 +207,7 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     @Transactional
     public PostResponse createCommunityPost(Long id, CommunityPostCreateRequest request, Long currentUserId) {
-        Long userId = (currentUserId != null) ? currentUserId : 101L;
+        Long userId = resolveCurrentUserId(currentUserId);
         communityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Community not found with id: " + id));
 
@@ -197,7 +236,7 @@ public class CommunityServiceImpl implements CommunityService {
 
     @Override
     public List<CommunityEventResponse> getCommunityEvents(Long id, String type, Long currentUserId) {
-        Long userId = (currentUserId != null) ? currentUserId : 101L;
+        Long userId = resolveCurrentUserId(currentUserId);
         communityRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Community not found with id: " + id));
 
@@ -231,7 +270,7 @@ public class CommunityServiceImpl implements CommunityService {
     @Override
     @Transactional
     public Map<String, Object> registerForEvent(Long eventId, Long currentUserId) {
-        Long userId = (currentUserId != null) ? currentUserId : 101L;
+        Long userId = resolveCurrentUserId(currentUserId);
         boolean registered = communityRepository.registerEvent(eventId, userId);
 
         Map<String, Object> res = new HashMap<>();

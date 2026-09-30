@@ -3,219 +3,381 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ArtSphere – The Artist Community</title>
+    <title>ArtSphere — The Independent Artist Community</title>
     <link rel="stylesheet" href="/css/common.css">
     <link rel="stylesheet" href="/css/landing.css">
 </head>
 <body>
-    <div class="mobile-frame-container wide-landing">
-        <main class="screen-container landing-screen">
-            <!-- Header Navbar -->
-            <header class="landing-header">
-                <a href="/pages/landing.html" class="logo-brand">
-                    <img src="/images/logo_nav.png" alt="ArtSphere – The Artist Community">
-                </a>
-                <button class="btn-hamburger" id="hamburgerBtn" aria-label="Open Navigation">
-                    <span></span>
+    <!-- Universal Floating Capsule Navigation -->
+    <header class="capsule-nav-wrapper" id="navWrapper">
+        <nav class="capsule-nav">
+            <a href="/pages/landing.html" class="nav-brand">
+                <span class="brand-motif">✦</span>
+                <span>ArtSphere</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="/pages/home.html" class="nav-link">Home</a>
+                <a href="/pages/discover.html" class="nav-link">Discover</a>
+                <a href="/pages/communities.html" class="nav-link">Communities</a>
+                <a href="/pages/events.html" class="nav-link">Events</a>
+                <a href="/pages/collaborators.html" class="nav-link">Collaborate</a>
+                <a href="/pages/opportunities.html" class="nav-link">Opportunities</a>
+            </div>
+            <div class="nav-actions">
+                <a href="/pages/login.html" class="btn-pill-secondary">Log In</a>
+                <a href="/pages/signup.html" class="btn-pill-primary">Join ArtSphere <span class="btn-arrow">&rarr;</span></a>
+                <button class="nav-mobile-toggle" id="navMobileToggle" aria-label="Toggle navigation">
                     <span></span>
                     <span></span>
                 </button>
-            </header>
+            </div>
+        </nav>
+    </header>
 
-            <!-- Hero Section -->
-            <section class="landing-hero">
-                <div class="landing-hero-left">
-                    <h1 class="hero-title">
-                        Every Artist.<br>
-                        <span class="title-accent">Every Passion.</span>
-                    </h1>
-                    <div class="title-underline-bar"></div>
-                    <p class="hero-description">
-                        A unified space for musicians, dancers, painters, writers and all creators to
-                        connect, collaborate and create something extraordinary.
-                    </p>
-                    <div class="hero-actions">
-                        <a href="/pages/login.html" class="btn-hero-explore">
-                            <span style="display:flex; align-items:center; gap:10px;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="9" cy="7" r="4"></circle>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                </svg>
-                                Explore Artists
-                            </span>
-                            <span>&rarr;</span>
-                        </a>
-                        <a href="/pages/signup.html" class="btn-hero-join">
-                            <span style="display:flex; align-items:center; gap:10px;">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 20h9"></path>
-                                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                                </svg>
-                                Join ArtSphere
-                            </span>
-                            <span>&rarr;</span>
-                        </a>
+    <div class="page-wrapper">
+        <main>
+            <!-- Hero Section (Asymmetric 7 + 5 Grid) -->
+            <section class="landing-hero-section">
+                <div class="grid-12">
+                    <div class="col-7 col-md-8 col-sm-4 hero-left-content">
+                        <div class="pill-tag accent-yellow">
+                            <span>✦</span>
+                            <span>THE INDEPENDENT CREATIVE NETWORK</span>
+                        </div>
+                        <h1 class="text-display hero-title">
+                            Every Artist.<br>
+                            <span class="hero-title-accent">Every Passion.</span>
+                        </h1>
+                        <p class="hero-lead-text">
+                            A dedicated, un-algorithmic space for musicians, dancers, visual artists, photographers, and writers to collaborate across disciplines, find live gigs, and showcase authentic craft.
+                        </p>
+                        <div class="hero-actions-row">
+                            <a href="/pages/signup.html" class="btn-pill-primary hero-main-btn">
+                                <span>Join ArtSphere Now</span>
+                                <span>&rarr;</span>
+                            </a>
+                            <a href="/pages/discover.html" class="btn-pill-secondary hero-sec-btn">
+                                <span>Explore Directory</span>
+                                <span>&nearr;</span>
+                            </a>
+                        </div>
+                        <div class="hero-proof-points">
+                            <div class="proof-point">
+                                <span class="proof-motif">✦</span>
+                                <span>Direct Collabs</span>
+                            </div>
+                            <div class="proof-point">
+                                <span class="proof-motif">◇</span>
+                                <span>Verified Portfolios</span>
+                            </div>
+                            <div class="proof-point">
+                                <span class="proof-motif">✦</span>
+                                <span>Open Calls & Jams</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="landing-hero-right">
-                    <img src="/images/hero_collage_clean.png" alt="Artists of ArtSphere" class="hero-img-collage">
+                    <div class="col-5 col-md-8 col-sm-4 hero-right-content">
+                        <!-- Editorial Spotlight Card -->
+                        <div class="spotlight-card card-cream">
+                            <div class="spotlight-card-header">
+                                <span class="pill-tag">CREATOR SPOTLIGHT</span>
+                                <span class="spotlight-location">Mumbai, MH</span>
+                            </div>
+                            <div class="spotlight-creator-row">
+                                <img src="/images/artist_profile_avatar.png" alt="Aanya Deshmukh" class="spotlight-avatar">
+                                <div class="spotlight-creator-meta">
+                                    <h3 class="spotlight-name">Aanya Deshmukh</h3>
+                                    <p class="spotlight-role">Visual & Digital Artist</p>
+                                </div>
+                            </div>
+                            <div class="spotlight-art-preview">
+                                <img src="/images/artwork_sunlit.png" alt="Featured artwork Sunlit" class="spotlight-art-img">
+                                <div class="spotlight-art-caption">
+                                    <span class="art-title">"Sunlit" (2024)</span>
+                                    <span class="art-category-pill">Digital Oil</span>
+                                </div>
+                            </div>
+                            <div class="spotlight-stats-row">
+                                <div class="spotlight-stat">
+                                    <span class="stat-val">1.8K</span>
+                                    <span class="stat-lbl">Followers</span>
+                                </div>
+                                <div class="spotlight-stat">
+                                    <span class="stat-val">24</span>
+                                    <span class="stat-lbl">Artworks</span>
+                                </div>
+                                <div class="spotlight-stat">
+                                    <span class="stat-badge-avail">Open for Collabs</span>
+                                </div>
+                            </div>
+                            <a href="/pages/artist-profile.html?id=101" class="btn-pill-secondary spotlight-cta">
+                                <span>View Full Profile</span>
+                                <span>&rarr;</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <!-- Explore Artists by Art Form -->
-            <section class="section-art-forms">
-                <div class="section-header-row">
-                    <h2>Explore Artists by Art Form</h2>
-                    <a href="/pages/signup.html" class="link-view-all">View All &gt;</a>
+            <!-- Modular Art Form Taxonomy (Bento Grid) -->
+            <section class="section-taxonomy">
+                <div class="taxonomy-header-row">
+                    <div>
+                        <div class="eyebrow">DISCIPLINES</div>
+                        <h2 class="text-h1">Explore Across Art Forms</h2>
+                    </div>
+                    <a href="/pages/discover.html" class="link-editorial-arrow">
+                        <span>Browse All Creators</span>
+                        <span>&rarr;</span>
+                    </a>
                 </div>
-                <div class="art-form-cards-scroll">
-                    <!-- Musicians -->
-                    <div class="art-card musicians">
-                        <div class="icon-bubble">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+
+                <div class="grid-12 taxonomy-grid">
+                    <!-- Musicians (4 cols) -->
+                    <a href="/pages/discover.html?artForm=Musicians" class="col-4 col-md-4 col-sm-4 art-discipline-card card-base">
+                        <div class="discipline-top">
+                            <span class="discipline-badge">SOUND & VOICE</span>
+                            <span class="discipline-arrow">&nearr;</span>
+                        </div>
+                        <div class="discipline-icon-box">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 18V5l12-2v13"></path>
+                                <circle cx="6" cy="18" r="3"></circle>
+                                <circle cx="18" cy="16" r="3"></circle>
                             </svg>
                         </div>
-                        <h3>Musicians</h3>
-                        <p>Create. Perform.<br>Inspire.</p>
-                        <div class="card-bottom-bar"></div>
-                    </div>
+                        <h3 class="text-h2 discipline-title">Musicians</h3>
+                        <p class="discipline-copy">Composers, vocalists, acoustic guitarists, producers, and session performers.</p>
+                        <div class="discipline-bottom-tag">2.1K+ Artists</div>
+                    </a>
 
-                    <!-- Dancers -->
-                    <div class="art-card dancers">
-                        <div class="icon-bubble">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="5" r="2"/>
-                                <path d="m15 22-3-4-2 2-3-4"/>
-                                <path d="m18 13-6-2-4 3"/>
-                                <path d="m9 9 3 4 5-3"/>
+                    <!-- Dancers (4 cols) -->
+                    <a href="/pages/discover.html?artForm=Dancers" class="col-4 col-md-4 col-sm-4 art-discipline-card card-cream">
+                        <div class="discipline-top">
+                            <span class="discipline-badge">BODY & MOTION</span>
+                            <span class="discipline-arrow">&nearr;</span>
+                        </div>
+                        <div class="discipline-icon-box">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="5" r="2"></circle>
+                                <path d="m15 22-3-4-2 2-3-4"></path>
+                                <path d="m18 13-6-2-4 3"></path>
+                                <path d="m9 9 3 4 5-3"></path>
                             </svg>
                         </div>
-                        <h3>Dancers</h3>
-                        <p>Move. Express.<br>Inspire.</p>
-                        <div class="card-bottom-bar"></div>
-                    </div>
+                        <h3 class="text-h2 discipline-title">Dancers</h3>
+                        <p class="discipline-copy">Contemporary, classical Indian, street hip-hop, and theatre choreographers.</p>
+                        <div class="discipline-bottom-tag">1.4K+ Artists</div>
+                    </a>
 
-                    <!-- Visual Artists -->
-                    <div class="art-card visual-artists">
-                        <div class="icon-bubble">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <!-- Visual Artists (4 cols) -->
+                    <a href="/pages/discover.html?artForm=Visual+Artists" class="col-4 col-md-8 col-sm-4 art-discipline-card card-yellow">
+                        <div class="discipline-top">
+                            <span class="discipline-badge" style="background:#0A0A0A; color:#FFFFFF;">HOTLIST</span>
+                            <span class="discipline-arrow">&nearr;</span>
+                        </div>
+                        <div class="discipline-icon-box">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M12 2C6.49 2 2 6.49 2 12c0 5.51 4.49 10 10 10 1.25 0 2.27-.92 2.27-2.16 0-.58-.23-1.11-.64-1.5-.4-.4-.63-.93-.63-1.51 0-1.24 1.02-2.25 2.26-2.25H17c2.76 0 5-2.24 5-5 0-5.51-4.49-9.58-10-9.58zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 8 6.5 8s1.5.67 1.5 1.5S7.33 11 6.5 11zm3-4C8.67 7 8 6.33 8 5.5S8.67 4 9.5 4s1.5.67 1.5 1.5S10.33 7 9.5 7zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 4 14.5 4s1.5.67 1.5 1.5S15.33 7 14.5 7zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 8 17.5 8s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
                             </svg>
                         </div>
-                        <h3>Visual Artists</h3>
-                        <p>Imagine. Create.<br>Inspire.</p>
-                        <div class="card-bottom-bar"></div>
-                    </div>
+                        <h3 class="text-h2 discipline-title">Visual Artists</h3>
+                        <p class="discipline-copy">Oil painters, digital illustrators, concept designers, and ceramic sculptors.</p>
+                        <div class="discipline-bottom-tag">3.8K+ Artists</div>
+                    </a>
 
-                    <!-- Photographers -->
-                    <div class="art-card photographers">
-                        <div class="icon-bubble">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                                <circle cx="12" cy="13" r="4"></circle>
-                            </svg>
+                    <!-- Photographers (6 cols) -->
+                    <a href="/pages/discover.html?artForm=Photographers" class="col-6 col-md-4 col-sm-4 art-discipline-card card-base">
+                        <div class="discipline-top">
+                            <span class="discipline-badge">LENS & MOMENT</span>
+                            <span class="discipline-arrow">&nearr;</span>
                         </div>
-                        <h3>Photographers</h3>
-                        <p>Capture. Freeze.<br>Inspire.</p>
-                        <div class="card-bottom-bar"></div>
-                    </div>
+                        <div class="discipline-horizontal-body">
+                            <div class="discipline-icon-box">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                                    <circle cx="12" cy="13" r="4"></circle>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-h2 discipline-title">Photographers</h3>
+                                <p class="discipline-copy">Documentary, street monochrome, architectural, and editorial fashion photographers.</p>
+                            </div>
+                        </div>
+                        <div class="discipline-bottom-tag">980+ Photographers</div>
+                    </a>
 
-                    <!-- Writers -->
-                    <div class="art-card writers">
-                        <div class="icon-bubble">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
-                                <line x1="16" y1="8" x2="2" y2="22"></line>
-                                <line x1="17.5" y1="15" x2="9" y2="15"></line>
-                            </svg>
+                    <!-- Writers & Poets (6 cols) -->
+                    <a href="/pages/discover.html?artForm=Writers" class="col-6 col-md-4 col-sm-4 art-discipline-card card-cream">
+                        <div class="discipline-top">
+                            <span class="discipline-badge">TEXT & VERSE</span>
+                            <span class="discipline-arrow">&nearr;</span>
                         </div>
-                        <h3>Writers</h3>
-                        <p>Write. Share.<br>Inspire.</p>
-                        <div class="card-bottom-bar"></div>
+                        <div class="discipline-horizontal-body">
+                            <div class="discipline-icon-box">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
+                                    <line x1="16" y1="8" x2="2" y2="22"></line>
+                                    <line x1="17.5" y1="15" x2="9" y2="15"></line>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-h2 discipline-title">Writers & Lyricists</h3>
+                                <p class="discipline-copy">Spoken word poets, scriptwriters, song lyricists, and storytelling authors.</p>
+                            </div>
+                        </div>
+                        <div class="discipline-bottom-tag">720+ Creators</div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Metrics Strip (Shared Borders Neo-Brutalism) -->
+            <section class="section-metrics">
+                <div class="metrics-modular-strip">
+                    <div class="metric-cell">
+                        <span class="metric-motif">✦</span>
+                        <div class="metric-num">10,000+</div>
+                        <div class="metric-label">Registered Artists</div>
+                    </div>
+                    <div class="metric-cell">
+                        <span class="metric-motif">◇</span>
+                        <div class="metric-num">5,200+</div>
+                        <div class="metric-label">Cross-Art Collaborations</div>
+                    </div>
+                    <div class="metric-cell">
+                        <span class="metric-motif">✦</span>
+                        <div class="metric-num">2,400+</div>
+                        <div class="metric-label">Exhibits & Workshops</div>
+                    </div>
+                    <div class="metric-cell">
+                        <span class="metric-motif">◇</span>
+                        <div class="metric-num">60+</div>
+                        <div class="metric-label">Active Guilds & Hubs</div>
                     </div>
                 </div>
             </section>
 
-            <!-- Stats Bar -->
-            <section class="section-stats">
-                <div class="stats-card-container">
-                    <div class="stat-item">
-                        <div class="stat-icon" style="color: #6C35CA;">👥</div>
-                        <div class="stat-number">10K+</div>
-                        <div class="stat-label">Artists</div>
+            <!-- Why ArtSphere Bento Grid -->
+            <section class="section-manifesto">
+                <div class="manifesto-header">
+                    <div class="eyebrow">THE SYSTEM</div>
+                    <h2 class="text-h1">Built for Genuine Creative Partnership</h2>
+                    <p class="manifesto-sub">ArtSphere rejects follower algorithms and influencer vanity metrics. We focus entirely on multidisciplinary craftsmanship.</p>
+                </div>
+
+                <div class="grid-12 manifesto-bento">
+                    <!-- Feature 1 (7 cols) -->
+                    <div class="col-7 col-md-8 col-sm-4 card-base manifesto-card">
+                        <div class="pill-tag">01 / DISCOVERY</div>
+                        <h3 class="text-h2 manifesto-card-title">Interdisciplinary Matchmaking</h3>
+                        <p class="manifesto-card-copy">
+                            A musician needs an album cover. A dancer needs live original percussion. A filmmaker needs storyboard illustrations. ArtSphere breaks down artistic silos to make cross-medium collaboration natural.
+                        </p>
+                        <div class="manifesto-interactive-pill-row">
+                            <span class="tag-example">Musician &times; Illustrator</span>
+                            <span class="tag-example">Choreographer &times; Filmmaker</span>
+                            <span class="tag-example">Poet &times; Vocalist</span>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-icon" style="color: #D83C7E;">🤝</div>
-                        <div class="stat-number">5K+</div>
-                        <div class="stat-label">Collaborations</div>
+
+                    <!-- Feature 2 (5 cols) -->
+                    <div class="col-5 col-md-8 col-sm-4 card-cream manifesto-card">
+                        <div class="pill-tag">02 / OPPORTUNITIES</div>
+                        <h3 class="text-h2 manifesto-card-title">Curated Open Calls & Gigs</h3>
+                        <p class="manifesto-card-copy">
+                            Direct applications to curated casting calls, gallery residencies, grants, and paid creative commissions with zero agency commission cuts.
+                        </p>
+                        <a href="/pages/opportunities.html" class="manifesto-card-link">Explore Active Gigs &rarr;</a>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-icon" style="color: #E66F22;">📅</div>
-                        <div class="stat-number">2K+</div>
-                        <div class="stat-label">Events</div>
+
+                    <!-- Feature 3 (5 cols) -->
+                    <div class="col-5 col-md-8 col-sm-4 card-cream manifesto-card">
+                        <div class="pill-tag">03 / EVENTS</div>
+                        <h3 class="text-h2 manifesto-card-title">Real-World Jams & Workshops</h3>
+                        <p class="manifesto-card-copy">
+                            Connect offline. Attend studio workshops, poetry open mics, live drawing sessions, and collaborative recording jams organized by local community leads.
+                        </p>
+                        <a href="/pages/events.html" class="manifesto-card-link">View Upcoming Events &rarr;</a>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-icon" style="color: #1CA18E;">🌐</div>
-                        <div class="stat-number">50+</div>
-                        <div class="stat-label">Communities</div>
+
+                    <!-- Feature 4 (7 cols) -->
+                    <div class="col-7 col-md-8 col-sm-4 card-yellow manifesto-card">
+                        <div class="pill-tag" style="background:#0A0A0A; color:#FFFFFF;">04 / INTEGRITY</div>
+                        <h3 class="text-h2 manifesto-card-title">High-Fidelity Portfolio Ownership</h3>
+                        <p class="manifesto-card-copy">
+                            Full-resolution artwork presentation, lossless audio streaming, customizable bio sections, and verified direct contact channels. Your craft is showcased in editorial clarity.
+                        </p>
+                        <a href="/pages/signup.html" class="btn-pill-primary" style="margin-top:16px;">Claim Your Handle &rarr;</a>
                     </div>
                 </div>
             </section>
 
-            <!-- Why Join ArtSphere -->
-            <section class="section-why-join">
-                <div class="why-join-box">
-                    <h2 class="why-title">
-                        <span class="sparkle">&#10022;</span>
-                        Why Join ArtSphere?
-                        <span class="sparkle">&#10022;</span>
-                    </h2>
-                    <div class="why-features-grid">
-                        <div class="why-feature-item">
-                            <div class="why-feature-icon">👥</div>
-                            <h4>Connect</h4>
-                            <p>Meet artists across all art forms.</p>
-                        </div>
-                        <div class="why-feature-item">
-                            <div class="why-feature-icon">🔗</div>
-                            <h4>Collaborate</h4>
-                            <p>Find the right people for your next project.</p>
-                        </div>
-                        <div class="why-feature-item">
-                            <div class="why-feature-icon">📢</div>
-                            <h4>Opportunities</h4>
-                            <p>Discover gigs, auditions and open calls.</p>
-                        </div>
-                        <div class="why-feature-item">
-                            <div class="why-feature-icon">📅</div>
-                            <h4>Events</h4>
-                            <p>Join workshops, jams and live events.</p>
-                        </div>
-                        <div class="why-feature-item">
-                            <div class="why-feature-icon">📊</div>
-                            <h4>Grow</h4>
-                            <p>Build your brand and showcase your talent.</p>
+            <!-- Bottom CTA Banner -->
+            <section class="section-bottom-cta">
+                <div class="cta-banner-card">
+                    <div class="cta-content">
+                        <div class="pill-tag accent-orange">START CREATING</div>
+                        <h2 class="text-display cta-headline">Ready to find your next collaborator?</h2>
+                        <p class="cta-subtitle">Join thousands of artists across India and the globe building extraordinary creative work together.</p>
+                        <div class="cta-action-row">
+                            <a href="/pages/signup.html" class="btn-pill-primary cta-btn">Join ArtSphere Today &rarr;</a>
+                            <a href="/pages/login.html" class="btn-pill-secondary cta-btn">Sign In to Account</a>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            <!-- Bottom CTA -->
-            <section class="landing-bottom-cta">
-                <h3>Ready to begin your creative journey?</h3>
-                <p>Join thousands of artists already on ArtSphere.</p>
-                <a href="/pages/signup.html" class="btn-cta-join">
-                    Join ArtSphere Now &rarr;
-                </a>
-                <div class="bottom-brush-banner">
-                    <img src="/images/landing_bottom_decor.png" alt="Creative brush decoration">
                 </div>
             </section>
         </main>
+
+        <!-- Editorial Full Footer -->
+        <footer class="editorial-footer">
+            <div class="grid-12 footer-grid">
+                <div class="col-5 col-md-8 col-sm-4 footer-col-brand">
+                    <a href="/pages/landing.html" class="footer-logo">
+                        <span class="brand-motif">✦</span>
+                        <span>ArtSphere</span>
+                    </a>
+                    <p class="footer-bio">
+                        The independent multidisciplinary creative network. Connecting musicians, dancers, visual artists, photographers, and writers worldwide.
+                    </p>
+                    <div class="footer-stamp">&copy; 2026 ArtSphere Network. All rights reserved.</div>
+                </div>
+
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">DIRECTORY</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/discover.html">Discover Artists</a></li>
+                        <li><a href="/pages/discover.html?artForm=Musicians">Musicians</a></li>
+                        <li><a href="/pages/discover.html?artForm=Visual+Artists">Visual Artists</a></li>
+                        <li><a href="/pages/discover.html?artForm=Dancers">Dancers</a></li>
+                        <li><a href="/pages/discover.html?artForm=Photographers">Photographers</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-2 col-md-2 col-sm-2 footer-col-links">
+                    <div class="footer-heading">PLATFORM</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/home.html">Feed & Stream</a></li>
+                        <li><a href="/pages/communities.html">Communities</a></li>
+                        <li><a href="/pages/events.html">Events & Jams</a></li>
+                        <li><a href="/pages/collaborators.html">Collaborations</a></li>
+                        <li><a href="/pages/opportunities.html">Open Calls</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-3 col-md-4 col-sm-4 footer-col-links">
+                    <div class="footer-heading">COMMUNITY</div>
+                    <ul class="footer-list">
+                        <li><a href="/pages/help-support.html">Help & Guidelines</a></li>
+                        <li><a href="/pages/login.html">Account Sign In</a></li>
+                        <li><a href="/pages/signup.html">Create Portfolio</a></li>
+                    </ul>
+                    <div class="footer-badge-box">
+                        <span class="pill-tag accent-yellow">NO ADS. PURE ART.</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
 
     <script src="/js/api.js"></script>

@@ -20,10 +20,14 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
-    public PostServiceImpl(PostRepository postRepository, UserRepository userRepository) {
+    public PostServiceImpl(PostRepository postRepository,
+                           UserRepository userRepository,
+                           NotificationService notificationService) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -140,9 +144,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public boolean toggleLike(Long postId, Long currentUserId) {
-        if (!postRepository.existsById(postId)) {
-            throw new ResourceNotFoundException("Post not found with id: " + postId);
-        }
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found with id: " + postId));
         Long uid = currentUserId != null ? currentUserId : 101L;
         boolean alreadyLiked = postRepository.isLikedByUser(postId, uid);
         if (alreadyLiked) {
@@ -150,6 +153,26 @@ public class PostServiceImpl implements PostService {
             return false;
         } else {
             postRepository.addLike(postId, uid);
+            if (!uid.equals(post.getUserId())) {
+                try {
+                    var senderOpt = userRepository.findById(uid);
+                    String senderName = senderOpt.map(u -> u.getFullName() != null ? u.getFullName() : u.getUsername()).orElse("An artist");
+                    String senderAvatar = senderOpt.map(u -> u.getAvatarUrl() != null ? u.getAvatarUrl() : u.getProfilePicture()).orElse("/images/artist_profile_avatar.png");
+                    String artworkTitle = post.getTitle() != null && !post.getTitle().isBlank() ? post.getTitle() : "artwork";
+                    notificationService.createNotification(
+                            post.getUserId(),
+                            "ARTWORK",
+                            senderName + " liked your artwork",
+                            "\"" + artworkTitle + "\"",
+                            uid,
+                            senderName,
+                            senderAvatar,
+                            "POST",
+                            postId,
+                            "/pages/feed.html?postId=" + postId
+                    );
+                } catch (Exception ignored) {}
+            }
             return true;
         }
     }
@@ -236,6 +259,27 @@ public class PostServiceImpl implements PostService {
             cr.setAuthorName("Artist Member");
             cr.setAuthorUsername("artist");
             cr.setAuthorAvatar("/images/user_avatar_nav.png");
+        });
+
+        postRepository.findById(postId).ifPresent(p -> {
+            if (!authorId.equals(p.getUserId())) {
+                try {
+                    String senderName = cr.getAuthorName() != null ? cr.getAuthorName() : "An artist";
+                    String senderAvatar = cr.getAuthorAvatar() != null ? cr.getAuthorAvatar() : "/images/artist_profile_avatar.png";
+                    notificationService.createNotification(
+                            p.getUserId(),
+                            "COMMUNITY",
+                            senderName + " commented on your artwork",
+                            "\"" + saved.getContent() + "\"",
+                            authorId,
+                            senderName,
+                            senderAvatar,
+                            "POST",
+                            postId,
+                            "/pages/feed.html?postId=" + postId
+                    );
+                } catch (Exception ignored) {}
+            }
         });
 
         return cr;
